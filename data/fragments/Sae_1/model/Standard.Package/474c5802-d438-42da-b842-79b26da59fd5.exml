@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="sae_1" version="4">
+  <OBJECT>
+    <ID name="sae_1" mc="Standard.Package" uid="474c5802-d438-42da-b842-79b26da59fd5"/>
+    <PID name="Sae_1" mc="Standard.Project" uid="92e1eaf5-901a-4aa7-8f81-c50573679711"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[sae_1]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Bien" mc="Standard.Class" uid="d46244cf-338c-491f-9335-21b8b82b595f"/>
+        <COMPID name="Louer" mc="Standard.Class" uid="48f8f55c-05cf-4051-8991-3878e7155b6a"/>
+        <COMPID name="Locataire" mc="Standard.Class" uid="e3931666-7fc9-4eeb-858f-75a78d0c6911"/>
+        <COMPID name="Immeuble" mc="Standard.Class" uid="53320ca9-96f2-4360-8985-3549ba7ec855"/>
+        <COMPID name="Entreprise" mc="Standard.Class" uid="5706e2b2-c071-4ea7-89ee-16d508a6d0b5"/>
+        <COMPID name="Relevé" mc="Standard.Class" uid="fd88557e-8a54-4688-9b99-1462c5a16341"/>
+        <COMPID name="Impot" mc="Standard.Class" uid="ca4d9a25-0978-4504-b29f-12df14fd70de"/>
+        <COMPID name="ICC" mc="Standard.Class" uid="b64baee4-47a6-44c9-bf10-62aba347f346"/>
+        <COMPID name="Facture" mc="Standard.Class" uid="2d5ad251-126f-43fe-a942-0997bcc1174c"/>
+        <COMPID name="Diagnostic" mc="Standard.Class" uid="b5194946-6121-47b9-bc1d-a3b885a2e6d0"/>
+        <COMPID name="Assurance" mc="Standard.Class" uid="a009827b-e449-4a80-939e-2fdc1b038bf8"/>
+        <COMPID name="Compteur" mc="Standard.Class" uid="79931338-1b81-4175-966c-6c9255a1c683"/>
+        <COMPID name="Quotite" mc="Standard.Class" uid="84d3fe77-a31d-4db4-8c45-ce700b486fea"/>
+        <COMPID name="Attacher" mc="Standard.Class" uid="1a2d393a-98ac-4efa-b760-a2055bd9cdb5"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe sae_1" mc="Standard.ClassDiagram" uid="d0c514fd-2e39-47a4-a366-01726df80727"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
