@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Ellisa/modelio/Modelio Open Source 4.1/bundle/java/javadesigner.jar"/>
+	<classpathentry kind="lib" path="javadesigner.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
