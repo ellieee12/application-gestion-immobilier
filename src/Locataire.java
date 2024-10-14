@@ -21,4 +21,40 @@ public class Locataire {
     @objid ("5bd0c773-4941-44b3-bde8-72005abbab2d")
     private Date date_naissance;
 
+	public Locataire(String nom, String prenom, String telephone, String mail, String id_locataire,
+			Date date_naissance) {
+		Nom = nom;
+		Prenom = prenom;
+		Telephone = telephone;
+		this.mail = mail;
+		this.id_locataire = id_locataire;
+		this.date_naissance = date_naissance;
+	}
+
+	public String getNom() {
+		return Nom;
+	}
+
+	public String getPrenom() {
+		return Prenom;
+	}
+
+	public String getTelephone() {
+		return Telephone;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public String getId_locataire() {
+		return id_locataire;
+	}
+
+	public Date getDate_naissance() {
+		return date_naissance;
+	}
+    
+    
+
 }

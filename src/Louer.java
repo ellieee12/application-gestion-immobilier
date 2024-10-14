@@ -41,5 +41,88 @@ public class Louer {
 
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
+    
+    private Locataire locataire;
+    
+    private ICC icc;
+
+	public Louer(Date date_debut, String type, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
+			float caution_TTC, String bail, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+		super();
+		Date_debut = date_debut;
+		Type = type;
+		this.nb_mois = nb_mois;
+		this.loyer_TTC = loyer_TTC;
+		this.provision_chargement_TTC = provision_chargement_TTC;
+		this.caution_TTC = caution_TTC;
+		this.bail = bail;
+		this.etat_lieux = etat_lieux;
+		this.date_derniere_reg = date_derniere_reg;
+		this.loyer_paye = loyer_paye;
+		this.montant_reel_paye = montant_reel_paye;
+		this.locataire = locataire;
+	}
+
+	public Date getDate_debut() {
+		return Date_debut;
+	}
+
+	public String getType() {
+		return Type;
+	}
+
+	public int getNb_mois() {
+		return nb_mois;
+	}
+
+	public float getLoyer_TTC() {
+		return loyer_TTC;
+	}
+
+	public int getProvision_chargement_TTC() {
+		return provision_chargement_TTC;
+	}
+
+	public float getCaution_TTC() {
+		return caution_TTC;
+	}
+
+	public String getBail() {
+		return bail;
+	}
+
+	public String getEtat_lieux() {
+		return etat_lieux;
+	}
+
+	public Date getDate_derniere_reg() {
+		return date_derniere_reg;
+	}
+
+	public boolean isLoyer_paye() {
+		return loyer_paye;
+	}
+
+	public String getAnnee() {
+		return annee;
+	}
+
+	public char getTrimestre() {
+		return trimestre;
+	}
+
+	public float getMontant_reel_paye() {
+		return montant_reel_paye;
+	}
+
+	public Locataire getLocataire() {
+		return locataire;
+	}
+
+	public ICC getIcc() {
+		return icc;
+	}
+    
+    
 
 }

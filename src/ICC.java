@@ -11,4 +11,24 @@ public class ICC {
     @objid ("358c5528-6984-4540-9ce6-1bca17a61ee5")
     private float indice;
 
+	public ICC(String annee, String trimestre, float indice) {
+		this.annee = annee;
+		this.trimestre = trimestre;
+		this.indice = indice;
+	}
+
+	public String getAnnee() {
+		return annee;
+	}
+
+	public String getTrimestre() {
+		return trimestre;
+	}
+
+	public float getIndice() {
+		return indice;
+	}
+    
+    
+
 }
