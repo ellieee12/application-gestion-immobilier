@@ -28,7 +28,5 @@ public class ICC {
 	public float getIndice() {
 		return indice;
 	}
-    
-    
 
 }

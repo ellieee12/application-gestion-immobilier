@@ -4,5 +4,9 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 public class Attacher {
     @objid ("2e4f5c8c-4f35-4819-9110-27f6f812c278")
     private float pourcentage;
+    
+    public Attacher(float pourcentage) {
+    	this.pourcentage = pourcentage;
+    }
 
 }

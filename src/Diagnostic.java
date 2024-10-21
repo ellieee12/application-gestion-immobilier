@@ -12,4 +12,10 @@ public class Diagnostic {
     @objid ("3faafe2f-37ff-4b84-bd76-544889479d1e")
     private String type_diagnostic;
 
+	public Diagnostic(int id_diagnostic, Date date_validite, String type_diagnostic) {
+		this.id_diagnostic = id_diagnostic;
+		this.date_validite = date_validite;
+		this.type_diagnostic = type_diagnostic;
+	}
+	
 }

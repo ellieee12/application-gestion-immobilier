@@ -7,5 +7,10 @@ public class Quotite {
 
     @objid ("53025aa5-ddb0-4a0f-b728-0c1084764576")
     private float quotite_jurisprudence;
+    
+    public Quotite(String type_quotite, float quotite_jurisprudence) {
+    	this.type_quotite = type_quotite;
+    	this.quotite_jurisprudence = quotite_jurisprudence;
+    }
 
 }
