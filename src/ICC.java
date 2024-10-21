@@ -6,23 +6,29 @@ public class ICC {
     private String annee;
 
     @objid ("bfaa15a3-e8d9-4ec2-920c-87fbdcb061d4")
-    private String trimestre;
+    private enum trimestre{
+    	T1,
+    	T2,
+    	T3;
+    };
+    
+    private trimestre trimestre_actuel;
 
     @objid ("358c5528-6984-4540-9ce6-1bca17a61ee5")
     private float indice;
 
-	public ICC(String annee, String trimestre, float indice) {
+	public ICC(String annee,trimestre trimestre_actuel, float indice) {
 		this.annee = annee;
-		this.trimestre = trimestre;
 		this.indice = indice;
+		this.trimestre_actuel = trimestre_actuel;
 	}
 
 	public String getAnnee() {
 		return annee;
 	}
 
-	public String getTrimestre() {
-		return trimestre;
+	public trimestre getTrimestre() {
+		return this.trimestre_actuel;
 	}
 
 	public float getIndice() {
