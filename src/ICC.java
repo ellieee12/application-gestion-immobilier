@@ -23,14 +23,26 @@ public class ICC {
 		this.trimestre_actuel = trimestre_actuel;
 	}
 
+	/**
+	 * 
+	 * @return Année actuelle
+	 */
 	public String getAnnee() {
 		return annee;
 	}
 
+	/**
+	 * 
+	 * @return Trimestre actuel
+	 */
 	public trimestre getTrimestre() {
 		return this.trimestre_actuel;
 	}
 
+	/**
+	 * 
+	 * @return Indice ICC
+	 */
 	public float getIndice() {
 		return indice;
 	}

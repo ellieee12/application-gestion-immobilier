@@ -54,52 +54,99 @@ public class Louer {
 		this.montant_reel_paye = montant_reel_paye;
 		this.locataire = locataire;
 	}
-
+	
+	/**
+	 * 
+	 * @return Date de début
+	 */
 	public Date getDate_debut() {
 		return Date_debut;
 	}
 
-
+	/**
+	 * 
+	 * @return Nombre de mois de Location
+	 */
 	public int getNb_mois() {
 		return nb_mois;
 	}
-
+	
+	/**
+	 * 
+	 * @return Loyer TTC
+	 */
 	public float getLoyer_TTC() {
 		return loyer_TTC;
 	}
 
+	/**
+	 * 
+	 * @return Provisions chargement TTC
+	 */
 	public float getProvision_chargement_TTC() {
 		return provision_chargement_TTC;
 	}
 
+	/**
+	 * 
+	 * @return Prix Caution TTC
+	 */
 	public float getCaution_TTC() {
 		return caution_TTC;
 	}
 
+	/**
+	 * 
+	 * @return Bail
+	 */
 	public String getBail() {
 		return bail;
 	}
 
+	/**
+	 * 
+	 * @return Etat du lieu
+	 */
 	public ETAT getEtat_lieux() {
 		return etat_lieux;
 	}
 
+	/**
+	 * 
+	 * @return Date de la dernière régularisation
+	 */
 	public Date getDate_derniere_reg() {
 		return date_derniere_reg;
 	}
 
+	/**
+	 * 
+	 * @return Vrai ou Faux si loyer est payé
+	 */
 	public boolean isLoyer_paye() {
 		return loyer_paye;
 	}
 
+	/**
+	 * 
+	 * @return Montant reel payé
+	 */
 	public float getMontant_reel_paye() {
 		return montant_reel_paye;
 	}
 
+	/**
+	 * 
+	 * @return Locataire de la classe Locataire
+	 */
 	public Locataire getLocataire() {
 		return locataire;
 	}
 
+	/**
+	 * 
+	 * @return l'ICC 
+	 */
 	public ICC getIcc() {
 		return icc;
 	}
