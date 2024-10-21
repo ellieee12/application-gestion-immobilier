@@ -1,11 +1,12 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Biens extends IllegalArgumentException {
+public class Batiment extends Immeuble {
 	
-	private Map<String,Bien> biens;
-	
-	public Biens() {
+    private Map<String,Bien> biens;
+
+	public Batiment(String adresse, String cp, String ville, String id_immeuble) {
+		super(adresse, cp, ville, id_immeuble);
 		this.biens = new HashMap<String, Bien>();
 	}
 	
@@ -25,6 +26,5 @@ public class Biens extends IllegalArgumentException {
 	public Bien getBien(String id_bien) {
 		return this.biens.get(id_bien);
 	}
-	
 	
 }

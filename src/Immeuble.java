@@ -14,29 +14,18 @@ public class Immeuble {
     @objid ("8e2af955-5e2d-4e0d-9326-7b01561a7055")
     private String id_immeuble;
 
-    @objid ("cd6fd5a3-dc34-4bb9-8230-492096c1887c")
-    private String type_immeuble;
-
     @objid ("1722c1eb-dd52-4379-9fe8-56481b664377")
     private String periode_construction;
 
-	public Immeuble(String adresse, String cp, String ville, String id_immeuble, String type_immeuble) {
+	public Immeuble(String adresse, String cp, String ville, String id_immeuble) {
 		this.adresse = adresse;
 		this.cp = cp;
 		this.ville = ville;
 		this.id_immeuble = id_immeuble;
 	}
 
-	public void setType_immeuble(String type_immeuble) {
-		this.type_immeuble = type_immeuble;
-	}
-
 	public void setPeriode_construction(String periode_construction) {
 		this.periode_construction = periode_construction;
 	}
-	
-	
-    
-    
 
 }
