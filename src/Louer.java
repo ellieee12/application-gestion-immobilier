@@ -4,7 +4,10 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
 public class Louer {
     @objid ("31ca14d9-9889-4d81-8b50-04fb2870dbc2")
-    private Date Date_debut;
+    private Date date_debut;
+    
+    @objid ("bb01d782-39bb-4323-bd19-fe9bb4151d45")
+    private boolean colocation;
 
     @objid ("00988291-cf19-449a-beb2-d44abfff94ab")
     private int nb_mois;
@@ -39,10 +42,10 @@ public class Louer {
     
     private ICC icc;
 
-	public Louer(Date date_debut, String type, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
-			float caution_TTC, String bail, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
-		this.Date_debut = date_debut;
-		this.Type = type;
+	public Louer(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
+			float caution_TTC, String bail, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+		this.date_debut = date_debut;
+		this.colocation = colocation;
 		this.nb_mois = nb_mois;
 		this.loyer_TTC = loyer_TTC;
 		this.provision_chargement_TTC = provision_chargement_TTC;
@@ -56,7 +59,7 @@ public class Louer {
 	}
 
 	public Date getDate_debut() {
-		return Date_debut;
+		return date_debut;
 	}
 
 
