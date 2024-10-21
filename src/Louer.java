@@ -39,10 +39,10 @@ public class Louer {
     
     private ICC icc;
 
-	public Louer(Date date_debut, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
-			float caution_TTC, String bail, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
-		super();
-		Date_debut = date_debut;
+	public Louer(Date date_debut, String type, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
+			float caution_TTC, String bail, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+		this.Date_debut = date_debut;
+		this.Type = type;
 		this.nb_mois = nb_mois;
 		this.loyer_TTC = loyer_TTC;
 		this.provision_chargement_TTC = provision_chargement_TTC;
@@ -103,7 +103,5 @@ public class Louer {
 	public ICC getIcc() {
 		return icc;
 	}
-    
-    
 
 }

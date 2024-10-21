@@ -23,9 +23,9 @@ public class Locataire {
 
 	public Locataire(String nom, String prenom, String telephone, String mail, String id_locataire,
 			Date date_naissance) {
-		Nom = nom;
-		Prenom = prenom;
-		Telephone = telephone;
+		this.Nom = nom;
+		this.Prenom = prenom;
+		this.Telephone = telephone;
 		this.mail = mail;
 		this.id_locataire = id_locataire;
 		this.date_naissance = date_naissance;
@@ -54,7 +54,5 @@ public class Locataire {
 	public Date getDate_naissance() {
 		return date_naissance;
 	}
-    
-    
 
 }
