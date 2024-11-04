@@ -1,15 +1,15 @@
 
 public class Maison extends Immeuble {
 
-	private Bien bien;
+	private Logement logement;
 	
-	public Maison(String adresse, String cp, String ville, String id_immeuble, Bien bien) {
+	public Maison(String adresse, String cp, String ville, String id_immeuble, Logement logement) {
 		super(adresse, cp, ville, id_immeuble);
-		this.bien = bien;
+		this.logement = logement;
 	}
 
-	public Bien getBien() {
-		return bien;
+	public Bien getLogement() {
+		return logement;
 	}
 
 }
