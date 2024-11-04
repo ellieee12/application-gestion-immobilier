@@ -9,4 +9,9 @@ public class Relevé {
     @objid ("79758f35-1f69-47df-935f-95086ca9a7b9")
     private int indexcomp;
 
+    public Relevé(Date date_relevé, int indexcomp) {
+    	this.date_relevé = date_relevé;
+    	this.indexcomp = indexcomp;
+    }
+    
 }

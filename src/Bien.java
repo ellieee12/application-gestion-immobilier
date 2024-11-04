@@ -21,5 +21,14 @@ public class Bien {
     @objid ("d56b34c5-f27c-46b4-8270-24c7eebb90e5")
     private String id_bien;
 
-    
+	public Bien(String type_bien, float surface_habitable, int nb_pieces, int num_etage, Date date_acquisition,
+			String id_bien) {
+		this.type_bien = type_bien;
+		this.Surface_habitable = surface_habitable;
+		this.nb_pieces = nb_pieces;
+		this.num_etage = num_etage;
+		this.date_acquisition = date_acquisition;
+		this.id_bien = id_bien;
+	}
+
 }

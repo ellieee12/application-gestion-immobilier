@@ -19,4 +19,13 @@ public class Compteur {
     @objid ("bd3d853e-9e11-43e8-8c03-de5e0da2eee4")
     public List<Relevé> date_relevé  = new ArrayList<Relevé> ();
 
+	public Compteur(String id_compteur, String typecomp, float prix_abonnement, List<Bien> bien,
+			List<Relevé> date_relevé) {
+		this.id_compteur = id_compteur;
+		this.typecomp = typecomp;
+		this.prix_abonnement = prix_abonnement;
+		this.bien = bien;
+		this.date_relevé = date_relevé;
+	}
+
 }

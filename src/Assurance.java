@@ -7,5 +7,10 @@ public class Assurance {
 
     @objid ("6405a2ff-8ccd-435d-9849-65078924c626")
     private int montant;
+
+	public Assurance(String num_police, int montant) {
+		this.num_police = num_police;
+		this.montant = montant;
+	}
     
 }

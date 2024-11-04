@@ -13,5 +13,12 @@ public class Impot {
 
     @objid ("69f61a19-76c8-4cf2-9123-780441461695")
     private String annee;
+    
+    public Impot(int id_impot, String nom, float montant, String annee) {
+    	this.id_impot = id_impot;
+    	this.nom = nom;
+    	this.montant = montant;
+    	this.annee = annee;
+    }
 
 }
