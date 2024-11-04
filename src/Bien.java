@@ -21,4 +21,5 @@ public class Bien {
     @objid ("d56b34c5-f27c-46b4-8270-24c7eebb90e5")
     private String id_bien;
 
+    
 }

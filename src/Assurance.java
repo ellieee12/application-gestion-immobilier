@@ -7,5 +7,5 @@ public class Assurance {
 
     @objid ("6405a2ff-8ccd-435d-9849-65078924c626")
     private int montant;
-
+    
 }
