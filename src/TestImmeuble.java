@@ -1,5 +1,8 @@
 import static org.junit.Assert.assertTrue;
 
+import java.Batiment;
+import java.Bien;
+import java.Maison;
 import java.util.Date;
 
 import org.junit.Before;

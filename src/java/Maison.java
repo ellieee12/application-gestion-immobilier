@@ -1,3 +1,4 @@
+package java;
 
 public class Maison extends Immeuble {
 
