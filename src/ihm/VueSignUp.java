@@ -1,3 +1,5 @@
+package ihm;
+import controleur.ControleurLogInSignUp;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,8 +13,6 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import java.awt.Color;
@@ -23,11 +23,9 @@ public class VueSignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtNomOuEmail;
-	private JButton btnSignUp;
 	private ControleurLogInSignUp controleur;
 	private JPasswordField passwordFieldMDP;
 	private JPasswordField passwordFieldMDPConfirmer;
-	private JLabel lblConnection;
 
 	/**
 	 * Launch the application.
@@ -49,6 +47,9 @@ public class VueSignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public VueSignUp() {
+		this.controleur = ControleurLogInSignUp.getControleur();
+		this.controleur.setVueSignUp(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -122,7 +123,8 @@ public class VueSignUp extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnSignUp = new JButton("Sign Up");
+		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp.addActionListener(controleur);
 		btnSignUp.setFont(new Font("Roboto", Font.PLAIN, 10));
 		panel.add(btnSignUp);
 		
@@ -135,17 +137,14 @@ public class VueSignUp extends JFrame {
 		panel_4.add(lblNewLabel_4);
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		lblConnection = new JLabel(" Connectez-vous!");
+		JLabel lblConnection = new JLabel(" Connectez-vous!");
+		lblConnection.addMouseListener(controleur);
 		lblConnection.setFont(new Font("Roboto", Font.PLAIN, 10));
 		lblConnection.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblConnection.setForeground(new Color(0, 0, 160));
 		panel_4.add(lblConnection);
 	}
-	
-	public JButton getBtnSignUp() {
-		return this.btnSignUp;
-	}
-	
+
 	public String getNouveauMDP() {
 		return String.valueOf(this.passwordFieldMDP.getPassword());
 	}
@@ -158,9 +157,6 @@ public class VueSignUp extends JFrame {
 		return this.txtNomOuEmail.getText();
 	}
 	
-	public JLabel getLblConnection() {
-		return this.lblConnection;
-	}
 	
 	
 
