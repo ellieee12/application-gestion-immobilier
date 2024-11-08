@@ -1,3 +1,5 @@
+package ihm;
+import controleur.ControleurLogInSignUp;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,9 +16,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import java.awt.Color;
@@ -45,9 +44,11 @@ public class VueLogin extends JFrame {
 	}
 	
 	public VueLogin() {
+		@SuppressWarnings("unused")
 		VueSignUp vueSignUp=new VueSignUp();
-		ControleurLogInSignUp controleur = new ControleurLogInSignUp(this, vueSignUp);
-		vueSignUp.getBtnSignUp().addActionListener(controleur);
+		ControleurLogInSignUp controleur = ControleurLogInSignUp.getControleur();
+		controleur.setVueLogin(this);
+		controleur.initialiserControleur();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
