@@ -1,3 +1,4 @@
+package java;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("53320ca9-96f2-4360-8985-3549ba7ec855")
@@ -16,15 +17,6 @@ public class Immeuble {
 
     @objid ("1722c1eb-dd52-4379-9fe8-56481b664377")
     private String periode_construction;
-    
-    public Immeuble(String adresse, String cp, String ville, String id_immeuble, String type_immeuble, String periode_construction) {
-    	this.adresse = adresse;
-    	this.cp = cp;
-    	this.ville = ville;
-    	this.id_immeuble = id_immeuble;
-    	this.type_immeuble = type_immeuble;
-    	this.periode_construction = periode_construction;
-    }
 
 	public Immeuble(String adresse, String cp, String ville, String id_immeuble) {
 		this.adresse = adresse;
