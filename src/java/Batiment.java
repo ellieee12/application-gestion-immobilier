@@ -7,10 +7,9 @@ public class Batiment extends Immeuble {
 	
     private Map<String,Bien> biens;
 
-	public Batiment(String adresse, String cp, String ville, String id_immeuble, Bien bien) {
+	public Batiment(String adresse, String cp, String ville, String id_immeuble) {
 		super(adresse, cp, ville, id_immeuble);
 		this.biens = new HashMap<String, Bien>();
-		this.addBien(bien);
 	}
 	
 	public void addBien(Bien bien) throws IllegalArgumentException {
