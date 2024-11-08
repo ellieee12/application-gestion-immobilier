@@ -12,12 +12,14 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class VueMesImmeubles extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -69,8 +71,18 @@ public class VueMesImmeubles extends JFrame {
 		JButton SupprimerImeuble = new JButton("Supprimer");
 		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
 		
-		table = new JTable();
-		contentPane.add(table, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"E"
+			}
+		));
+		scrollPane.setViewportView(table_1);
 	}
 
 }

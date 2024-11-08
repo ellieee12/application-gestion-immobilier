@@ -14,14 +14,11 @@ public class ControleurMesBiens implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton  b = (JButton) e.getSource();
-		if(true) {
-			
-		}
+		JButton  b = (JButton) e.getSource();		
 		
 	}
 
-	public static ControleurMesBiens getControlleur() {
+	public static ControleurMesBiens getControleur() {
 		return controleurMesBiens;
 	}
 }

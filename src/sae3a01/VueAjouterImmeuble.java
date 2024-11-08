@@ -28,9 +28,10 @@ public class VueAjouterImmeuble extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField;
+	private JTextField textField_adresse;
+	private JTextField textField_code_postal;
+	private JTextField textField_ville;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -46,6 +47,22 @@ public class VueAjouterImmeuble extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public String getTypeImmeuble() {
+		return comboBox.getSelectedItem().toString();
+	}
+	
+	public String getAdresse() {
+		return textField_adresse.getText();
+	}
+	
+	public String getCP() {
+		return textField_code_postal.getText();
+	}
+	
+	public String getVille() {
+		return textField_ville.getText();
 	}
 
 	/**
@@ -72,7 +89,7 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelChamps.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Maison", "Batiment"}));
 		panel_2.add(comboBox, BorderLayout.NORTH);
 		
@@ -80,32 +97,32 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelChamps.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1, BorderLayout.NORTH);
-		textField_1.setColumns(10);
+		textField_adresse = new JTextField();
+		panel_1.add(textField_adresse, BorderLayout.NORTH);
+		textField_adresse.setColumns(10);
 		
 		JPanel panel_3 = new JPanel();
 		PanelChamps.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		textField_2 = new JTextField();
-		panel_3.add(textField_2, BorderLayout.NORTH);
-		textField_2.setColumns(10);
+		textField_code_postal = new JTextField();
+		panel_3.add(textField_code_postal, BorderLayout.NORTH);
+		textField_code_postal.setColumns(10);
 		
 		JPanel panel_5 = new JPanel();
 		PanelChamps.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JTextField();
-		panel_5.add(textField, BorderLayout.NORTH);
-		textField.setColumns(10);
+		textField_ville = new JTextField();
+		panel_5.add(textField_ville, BorderLayout.NORTH);
+		textField_ville.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
 		PanelChamps.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		panel_4.add(formattedTextField, BorderLayout.NORTH);
+		JFormattedTextField formattedTextField_date = new JFormattedTextField();
+		panel_4.add(formattedTextField_date, BorderLayout.NORTH);
 		
 		JPanel PanelBouton = new JPanel();
 		contentPane.add(PanelBouton, BorderLayout.SOUTH);

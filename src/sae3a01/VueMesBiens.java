@@ -11,8 +11,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
-import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class VueMesBiens extends JFrame {
 
@@ -97,6 +99,7 @@ public class VueMesBiens extends JFrame {
 		JButton Valider = new JButton("Ajouter");
 		PanelBoutonValider.add(Valider, BorderLayout.SOUTH);
 		
+		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
 		PanelBoutonSupprimer.setLayout(new BorderLayout(0, 0));
@@ -104,8 +107,21 @@ public class VueMesBiens extends JFrame {
 		JButton Supprimer = new JButton("Supprimer");
 		PanelBoutonSupprimer.add(Supprimer, BorderLayout.NORTH);
 		
-		table = new JTable();
-		contentPane.add(table, BorderLayout.CENTER);
+		
+		
+		DefaultTableModel t = new DefaultTableModel(new Object[] {"e", "u"}, 0);
+		JTable table = new JTable(t);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id bien", "Num\u00E9ro \u00E9tage", "Surface habitable"
+			}
+		));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setViewportView(table);
 	}
 
 }
