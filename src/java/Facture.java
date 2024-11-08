@@ -30,6 +30,17 @@ public class Facture {
 
     @objid ("4d80e5bb-456e-45e4-a2a8-44de6b0443c2")
     private boolean imputable_locataire;
-
-
+    
+    public Facture(Date date_emission, Date date_paiement, String numero, String designation, float montant, String mode_paiement, String numero_devis, float montant_reel_paye, boolean imputable_locataire) {
+    	this.date_emission = date_emission;
+    	this.date_paiement = date_paiement;
+    	this.numero = numero;
+    	this.designation = designation;
+    	this.montant = montant;
+    	this.mode_paiement = mode_paiement;
+    	this.numero_devis = numero_devis;
+    	this.montant_reel_paye = montant_reel_paye;
+    	this.imputable_locataire = imputable_locataire;
+    }
+    
 }

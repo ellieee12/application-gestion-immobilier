@@ -1,17 +1,19 @@
+package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import ihm.VueLogin;
+import ihm.VueSignUp;
+import modele.ModeleLoginSignUp;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
-
+	
+	private static ControleurLogInSignUp controleur;
+	
 	private enum Etat{
 		LOGIN,SIGNUP
 	}
@@ -20,9 +22,10 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 	private ModeleLoginSignUp modele;
 	private Etat etat;
 
-	public ControleurLogInSignUp(VueLogin vueLogin,VueSignUp vueSignUp) {
-		this.vueLogin=vueLogin;
-		this.vueSignUp=vueSignUp;
+	//VueLogin vueLogin,VueSignUp vueSignUp
+	private ControleurLogInSignUp() {}
+	
+	public void initialiserControleur() {
 		this.etat=Etat.LOGIN;
 		this.modele=new ModeleLoginSignUp();
 	}
@@ -49,6 +52,7 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 			
 		case SIGNUP:
 			if (s.equals("Sign Up")) {
+				System.out.println("Try");
 				String username = this.vueSignUp.getNouveauUsername();
 				String mdp1=this.vueSignUp.getNouveauMDP();
 				String mdp2=this.vueSignUp.getNouveauMDPConfirmation();
@@ -91,6 +95,21 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 			break;
 		}
 		
+	}
+	
+	public static synchronized ControleurLogInSignUp getControleur() {
+		if (controleur == null) {
+			controleur = new ControleurLogInSignUp();
+		}
+		return controleur;
+	}
+	
+	public void setVueLogin(VueLogin vueLogin) {
+		this.vueLogin=vueLogin;
+	}
+	
+	public void setVueSignUp(VueSignUp vueSignUp) {
+		this.vueSignUp=vueSignUp;
 	}
 
 }

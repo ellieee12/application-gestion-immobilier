@@ -27,4 +27,16 @@ public class Entreprise {
     @objid ("f2e30709-b53d-435a-9d6a-704c6f3e1760")
     private String IBAN;
 
+	public Entreprise(String siret, String nom, String adresse, String cp, String ville, String mail, String telephone,
+			String iBAN) {
+		this.siret = siret;
+		this.nom = nom;
+		this.adresse = adresse;
+		this.cp = cp;
+		this.ville = ville;
+		this.mail = mail;
+		this.telephone = telephone;
+		this.IBAN = iBAN;
+	}
+
 }

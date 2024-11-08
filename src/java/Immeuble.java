@@ -17,7 +17,6 @@ public class Immeuble {
 
     @objid ("1722c1eb-dd52-4379-9fe8-56481b664377")
     private String periode_construction;
-
 	public Immeuble(String adresse, String cp, String ville, String id_immeuble) {
 		this.adresse = adresse;
 		this.cp = cp;
