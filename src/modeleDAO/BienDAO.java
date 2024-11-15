@@ -14,7 +14,7 @@ public class BienDAO{
 	}
 	
 	public ResultSet getAllBiens() throws SQLException {
-		String req = "select id_bien, nb_pieces, numero_etage,surface_habitable,date_acquisition,type_bien from bien";
+		String req = "select id_bien,type_bien,numero_etage,surface_habitable,nb_pieces,date_acquisition from bien";
 		Statement stmt = this.mySQLCon.getConnection().createStatement();
 		return stmt.executeQuery(req);
 	}
@@ -33,9 +33,11 @@ public class BienDAO{
 		return 0;
 	}
 	
-	public int ajouterBien() {
+	public int ajouterBien(int num_etage,) {
+		try {
+			//String req =
+		}
 		return 0;
-		//TODO :add actions
 	}
 	
 }
