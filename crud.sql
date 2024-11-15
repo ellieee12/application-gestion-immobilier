@@ -23,7 +23,7 @@ create table bien(
     surface_habitable decimal(5,2),
     date_acquisition date,
     type_bien char(1),
-    id_immeuble int not null,
+    id_immeuble varchar(20) not null,
     constraint pk_bien primary key(id_bien),
     constraint ck_bien_type check(type_bien in ('G','L')),
     constraint fk_bien_immeuble foreign key(id_immeuble) references immeuble(id_immeuble)
