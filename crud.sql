@@ -6,7 +6,7 @@ drop table if exists immeuble;
 drop table if exists locataire;
 
 create table Immeuble (
-    id_immeuble int not null,
+    id_immeuble varchar(20) not null,
     adresse VARCHAR(50) not null,
     code_postale CHAR(5) not null,
     ville VARCHAR(50) not null,
@@ -17,7 +17,7 @@ create table Immeuble (
 );
 
 create table bien(
-    id_bien int not null,
+    id_bien varchar(20) not null,
     nb_pieces int,
     numero_etage int,
     surface_habitable decimal(5,2),

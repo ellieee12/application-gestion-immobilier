@@ -1,5 +1,6 @@
 package modeleDAO;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,9 +34,14 @@ public class BienDAO{
 		return 0;
 	}
 	
-	public int ajouterBien(int num_etage,) {
+	public int ajouterBien(int num_etage, Date date_acquisition,String id_bien,int nb_pieces, float surface_habitable, String id_immeuble) {
 		try {
-			//String req =
+			String req = "insert into bien (id_bien,nb_pieces,numero_etage,surface_habitable,date_acquisition,type_bien,id_immeuble) values (?,?,?,?,?,?,?)";
+			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+			stmt.setString(1, id_bien);
+			
+		}catch(Exception e){
+			System.out.println(e);
 		}
 		return 0;
 	}
