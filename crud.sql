@@ -21,7 +21,7 @@ create table bien(
     nb_pieces int,
     numero_etage int,
     surface_habitable decimal(5,2),
-    date_acquisition date not null,
+    date_acquisition date,
     type_bien char(1),
     id_immeuble int not null,
     constraint pk_bien primary key(id_bien),
