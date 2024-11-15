@@ -1,4 +1,4 @@
-package java;
+package classes;
 import java.util.Date;
 
 public class Logement extends Bien {

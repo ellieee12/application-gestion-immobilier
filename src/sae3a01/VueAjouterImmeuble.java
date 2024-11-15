@@ -1,28 +1,19 @@
 package sae3a01;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JList;
-import javax.swing.JEditorPane;
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JToolBar;
-import javax.swing.JLayeredPane;
-import javax.swing.JFormattedTextField;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class VueAjouterImmeuble extends JFrame {
 
@@ -31,7 +22,8 @@ public class VueAjouterImmeuble extends JFrame {
 	private JTextField textField_adresse;
 	private JTextField textField_code_postal;
 	private JTextField textField_ville;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
+	private JFormattedTextField formattedTextField_date;
 
 	/**
 	 * Launch the application.
@@ -64,11 +56,24 @@ public class VueAjouterImmeuble extends JFrame {
 	public String getVille() {
 		return textField_ville.getText();
 	}
+	
+	public String getPeriodeConstruction() {
+		return this.formattedTextField_date.getText();
+	}
+	
+	public boolean isComplet() {
+		return !this.getAdresse().isEmpty() && !this.getTypeImmeuble().isEmpty()
+				&& !this.getCP().isEmpty() && !this.getVille().isEmpty();
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public VueAjouterImmeuble() {
+		ControleurAjouterImmeuble controleur = ControleurAjouterImmeuble.getControleur();
+		controleur.initialiserControleur();
+		controleur.setVueAjouterImmeuble(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -89,8 +94,8 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelChamps.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Maison", "Batiment"}));
+		comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Maison", "Batiment"}));
 		panel_2.add(comboBox, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
@@ -121,20 +126,18 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelChamps.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedTextField_date = new JFormattedTextField();
+		this.formattedTextField_date = new JFormattedTextField();
 		panel_4.add(formattedTextField_date, BorderLayout.NORTH);
 		
 		JPanel PanelBouton = new JPanel();
 		contentPane.add(PanelBouton, BorderLayout.SOUTH);
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnNewButton_1.addActionListener(controleur);
 		PanelBouton.add(btnNewButton_1);
 		
 		JButton btnNewButton = new JButton("Valider");
+		btnNewButton.addActionListener(controleur);
 		PanelBouton.add(btnNewButton);
 		
 		JPanel PanelLibellé = new JPanel();
@@ -176,4 +179,5 @@ public class VueAjouterImmeuble extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Periode Construction");
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
 	}
+	
 }

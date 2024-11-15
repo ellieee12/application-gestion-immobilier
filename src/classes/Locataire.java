@@ -1,4 +1,4 @@
-package java;
+package classes;
 import java.util.Date;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 

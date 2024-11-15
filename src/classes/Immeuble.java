@@ -1,4 +1,4 @@
-package java;
+package classes;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("53320ca9-96f2-4360-8985-3549ba7ec855")
@@ -27,5 +27,24 @@ public class Immeuble {
 	public void setPeriode_construction(String periode_construction) {
 		this.periode_construction = periode_construction;
 	}
+
+	public String getId_immeuble() {
+		return this.id_immeuble;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+	
+	
+	
 
 }

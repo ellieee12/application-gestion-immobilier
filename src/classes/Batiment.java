@@ -1,4 +1,4 @@
-package java;
+package classes;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.OptionalInt;
