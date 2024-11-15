@@ -6,7 +6,7 @@ drop table if exists immeuble;
 drop table if exists locataire;
 
 create table Immeuble (
-    id_immeuble int auto_increment not null,
+    id_immeuble varchar(20) not null,
     adresse VARCHAR(50) not null,
     code_postale CHAR(5) not null,
     ville VARCHAR(50) not null,
@@ -17,13 +17,13 @@ create table Immeuble (
 );
 
 create table bien(
-    id_bien int auto_increment not null,
+    id_bien varchar(20) not null,
     nb_pieces int,
     numero_etage int,
     surface_habitable decimal(5,2),
-    date_acquisition date not null,
+    date_acquisition date,
     type_bien char(1),
-    id_immeuble int not null,
+    id_immeuble varchar(20) not null,
     constraint pk_bien primary key(id_bien),
     constraint ck_bien_type check(type_bien in ('G','L')),
     constraint fk_bien_immeuble foreign key(id_immeuble) references immeuble(id_immeuble)
@@ -43,21 +43,21 @@ create table Locataire (
 );
 
 -- Insert sample data into Immeuble
-insert into Immeuble (adresse, code_postale, ville, periode_construction, type_immeuble)
+insert into Immeuble (id_immeuble, adresse, code_postale, ville, periode_construction, type_immeuble)
 values 
-('123 Rue de Paris', '75001', 'Paris', '1990-2000', 'B'),
-('45 Avenue Victor Hugo', '69002', 'Lyon', '1980-1990', 'M'),
-('78 Rue de Lille', '59000', 'Lille', '2000-2010', 'B'),
-('10 Boulevard Gambetta', '06000', 'Nice', '1970-1980', 'M');
+(1,'123 Rue de Paris', '75001', 'Paris', '1990-2000', 'B'),
+(2,'45 Avenue Victor Hugo', '69002', 'Lyon', '1980-1990', 'M'),
+(3,'78 Rue de Lille', '59000', 'Lille', '2000-2010', 'B'),
+(4,'10 Boulevard Gambetta', '06000', 'Nice', '1970-1980', 'M');
 
 -- Insert sample data into Bien
-insert into bien (nb_pieces, numero_etage, surface_habitable, date_acquisition, type_bien, id_immeuble)
+insert into bien (id_bien, nb_pieces, numero_etage, surface_habitable, date_acquisition, type_bien, id_immeuble)
 values 
-(3, 1, 75.50, '2020-01-15', 'G', 1),
-(2, 3, 45.00, '2021-05-10', 'L', 1),
-(4, 2, 80.75, '2019-11-20', 'G', 2),
-(1, 0, 30.25, '2023-03-05', 'L', 3),
-(5, 4, 120.50, '2018-07-30', 'G', 4);
+(1, 3, 1, 75.50, '2020-01-15', 'G', 1),
+(2, 2, 3, 45.00, '2021-05-10', 'L', 1),
+(3, 4, 2, 80.75, '2019-11-20', 'G', 2),
+(4, 1, 0, 30.25, '2023-03-05', 'L', 3),
+(5, 5, 4, 120.50, '2018-07-30', 'G', 4);
 
 -- Insert sample data into Locataire
 insert into locataire (nom, prenom, telephone, mail, date_naissance, adresse, code_postal, ville)
