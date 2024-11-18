@@ -64,19 +64,4 @@ public class ImmeubleDAO {
 		}
 		return true;
 	}
-	
-	public int updateImmeublePeriodeConstruction(String id_immeuble,String periode_construction) {
-		try {
-			String req = "update immeuble set periode_construction=? where id_immeuble=?";
-			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
-			stmt.setString(1, periode_construction);
-			stmt.setString(2, id_immeuble);
-			int nbLignesModifiees = stmt.executeUpdate();
-			stmt.close();
-			return nbLignesModifiees;
-		}catch(Exception e){
-			System.out.println(e);
-		}
-		return 0;
-	}
 }
