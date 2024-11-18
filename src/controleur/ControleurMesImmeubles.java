@@ -1,4 +1,4 @@
-package sae3a01;
+package controleur;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import classes.Batiment;
 import classes.Immeuble;
 import classes.Maison;
+import ihm.VueAjouterImmeuble;
+import ihm.VueMesImmeubles;
 import modeleDAO.ImmeubleDAO;
 
 public class ControleurMesImmeubles implements ActionListener {

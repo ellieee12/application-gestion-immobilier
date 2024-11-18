@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import ihm.VueAjouterBien;
 
@@ -31,6 +32,9 @@ public class ControleurAjouterBien implements ActionListener {
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
+				if (this.dao.bienExiste(this.vue.getChampsIdBien())) {
+					JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+				}
 				int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
 						this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
 						"1", this.vue.getComboBoxTypeBien());

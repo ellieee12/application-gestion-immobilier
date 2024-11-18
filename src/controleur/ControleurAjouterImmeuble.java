@@ -1,4 +1,4 @@
-package sae3a01;
+package controleur;
 
 import modeleDAO.ImmeubleDAO;
 
@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+import ihm.VueAjouterImmeuble;
+import ihm.VueMesImmeubles;
 
 public class ControleurAjouterImmeuble implements ActionListener {
 	
@@ -22,7 +25,8 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		this.vue=vue;
 		this.dao = new ImmeubleDAO();
 	}
-
+	
+	//TODO : gerer les champs vides
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
