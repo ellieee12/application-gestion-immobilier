@@ -31,6 +31,18 @@ public class Bien {
 		return id_bien;
 	}
 
+	public OptionalInt getNum_etage() {
+		return num_etage;
+	}
+
+	public Date getDate_acquisition() {
+		return date_acquisition;
+	}
+	
+	public Boolean isLogement() {
+		return this.getClass().equals(Logement.class);
+	}
+
 	public void setNum_etage(OptionalInt num_etage) {
 		this.num_etage = num_etage;
 	}

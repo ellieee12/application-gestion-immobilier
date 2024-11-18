@@ -212,20 +212,28 @@ public class VueAjouterBien extends JFrame {
 	        java.util.Date parsedDate = sdf.parse(formattedTextField.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
-	        e.printStackTrace();
 	        return null; // Retourne null en cas d'erreur
 	    }
 	}
 	
-	public int getChampsNumeroEtage () {
+	public Integer getChampsNumeroEtage () {
+		if(textFieldNumeroEtage.getText().equals("")) {
+			return null;
+		}
 		return Integer.valueOf(textFieldNumeroEtage.getText());
 	}
 	
-	public int getChampsNombreDePiece () {
+	public Integer getChampsNombreDePiece () {
+		if(textFieldNombreDePieces.getText().equals("")) {
+			return null;
+		}
 		return Integer.valueOf(textFieldNombreDePieces.getText());
 	}
 	
-	public float getChampsSurfaceHabitable () {
+	public Float getChampsSurfaceHabitable () {
+		if(textFieldSurfaceHabitable.getText().equals("")) {
+			return null;
+		}
 		return Float.valueOf(textFieldSurfaceHabitable.getText());
 	}
 	

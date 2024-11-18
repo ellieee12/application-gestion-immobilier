@@ -1,9 +1,8 @@
 package controleur;
 
-import classes.Batiment;
+import classes.Bien;
 import classes.Garage;
 import classes.Logement;
-import classes.Maison;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
 
@@ -11,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,87 +19,66 @@ import modeleDAO.BienDAO;
 
 public class ControleurMesBiens implements ActionListener {
 
-	private static ControleurMesBiens controleurMesBiens;
-	
 	private VueMesBiens vue;
-	private List<String> Id;
-	private List<Class<?>> type;
-	private List<Integer> numeroEtage;
-	private List<Float> surfaceHabitable;
-	private List<Integer> nombrePiece;
-	private List<Date> date;
+	private List<Bien> bien;
 	
-	private ControleurMesBiens(VueMesBiens vue) {
+	public ControleurMesBiens(VueMesBiens vue) {
 		try {
 			this.vue = vue;
-			this.Id = new LinkedList<>();
-			this.type = new LinkedList<>();
-			this.numeroEtage = new LinkedList<>();
-			this.surfaceHabitable = new LinkedList<>();
-			this.nombrePiece = new LinkedList<>();
-			this.date = new LinkedList<>();
+			this.bien = new LinkedList<>();
 			
 			BienDAO bien = new BienDAO();
 			ResultSet rs = bien.getAllBiens();
 			while(rs.next()) {
-				Id.add(rs.getString(1));
-				if (rs.getString(2) == "G") {
-					type.add(Garage.class);
+				if (rs.getString(2).equals("L")) {
+					this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));
 				} else {
-					type.add(Logement.class);
+					this.bien.add(new Garage(rs.getDate(6), rs.getString(1)));
 				}
-				numeroEtage.add(rs.getInt(3));
-				surfaceHabitable.add(rs.getFloat(4));
-				nombrePiece.add(rs.getInt(5));
-				date.add(rs.getDate(6));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static synchronized ControleurMesBiens getControleur(VueMesBiens vue) {
-		if (controleurMesBiens == null) {
-			controleurMesBiens = new ControleurMesBiens(vue);
-		}
-		return controleurMesBiens;
-		
-	}
-	
 	public void Update() {
-		controleurMesBiens = null;
-		getControleur(this.vue);
+		try {
+			this.bien = new LinkedList<>();
+			
+			BienDAO bien = new BienDAO();
+			ResultSet rs = bien.getAllBiens();
+			while(rs.next()) {
+				if (rs.getString(2).equals("L")) {
+					this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));
+				} else {
+					this.bien.add(new Garage(rs.getDate(6), rs.getString(1)));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.vue.buildTable(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton  b = (JButton) e.getSource();	
 		if (b.getText() == "Ajouter") {
-			new VueAjouterBien();
+			try {
+				VueAjouterBien frame = new VueAjouterBien();
+				frame.setVisible(true);
+			} catch (Exception error) {
+				error.printStackTrace();
+			}
 		} else if (b.getText() == "Supprimer") {
 			BienDAO bien = new BienDAO();
-			int rs = bien.supprimerBien(this.Id.get(this.vue.getLigneChoisi()));
+			int rs = bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
 			this.Update();
 		}
 		
 	}
 
-	public List<String> getId() {
-		return Id;
-	}
-	public List<Class<?>> getType() {
-		return type;
-	}
-	public List<Integer> getNumeroEtage() {
-		return numeroEtage;
-	}
-	public List<Float> getSurfaceHabitable() {
-		return surfaceHabitable;
-	}
-	public List<Integer> getNombrePiece() {
-		return nombrePiece;
-	}
-	public List<Date> getDate() {
-		return date;
+	public List<Bien> getBien() {
+		return this.bien;
 	}
 }

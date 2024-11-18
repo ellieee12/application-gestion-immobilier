@@ -34,25 +34,50 @@ public class BienDAO{
 		return 0;
 	}
 	
-	public int ajouterBien(int num_etage, Date date_acquisition,String id_bien,int nb_pieces, float surface_habitable, String id_immeuble,String type_bien) {
+	public int ajouterBien(Integer num_etage, Date date_acquisition, String id_bien, Integer nb_pieces, 
+            Float surface_habitable, String id_immeuble, String type_bien) {
 		try {
-			String req = "insert into bien (id_bien,nb_pieces,numero_etage,surface_habitable,date_acquisition,type_bien,id_immeuble) values (?,?,?,?,?,?,?)";
+			String req = "INSERT INTO bien (id_bien, nb_pieces, numero_etage, surface_habitable, date_acquisition, type_bien, id_immeuble) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+		
 			stmt.setString(1, id_bien);
-			stmt.setInt(2, nb_pieces);
-			stmt.setInt(3, nb_pieces);
-			stmt.setFloat(4,surface_habitable);
-			stmt.setDate(5, date_acquisition);
+		
+			if (nb_pieces != null) {
+				stmt.setInt(2, nb_pieces);
+			} else {
+				stmt.setNull(2, java.sql.Types.INTEGER);
+			}
+			
+			if (num_etage != null) {
+				stmt.setInt(3, num_etage);
+			} else {
+				stmt.setNull(3, java.sql.Types.INTEGER);
+			}
+			
+			if (surface_habitable != null) {
+				stmt.setFloat(4, surface_habitable);
+			} else {
+				stmt.setNull(4, java.sql.Types.FLOAT);
+			}
+			
+			if (date_acquisition != null) {
+				stmt.setDate(5, date_acquisition);
+			} else {
+				stmt.setNull(5, java.sql.Types.DATE);
+			}
+			
 			stmt.setString(6, type_bien);
-			stmt.setString(7,id_immeuble);
+			stmt.setString(7, id_immeuble);
+			
 			int i = stmt.executeUpdate();
 			stmt.close();
 			return i;
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return 0;
 	}
+
 	
 	public boolean bienExiste(String id_bien) {
 		try {

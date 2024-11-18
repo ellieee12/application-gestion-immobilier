@@ -26,7 +26,7 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		this.dao = new ImmeubleDAO();
 	}
 	
-	//TODO : gerer les champs vides
+	//TODO : gerer les champs vides                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
