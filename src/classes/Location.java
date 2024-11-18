@@ -3,7 +3,7 @@ import java.util.Date;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
-public class Louer {
+public class Location {
     @objid ("31ca14d9-9889-4d81-8b50-04fb2870dbc2")
     private Date date_debut;
     
@@ -42,8 +42,8 @@ public class Louer {
     private Locataire locataire;
     
     private ICC icc;
-
-	public Louer(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
+ 
+	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
 			float caution_TTC, String bail, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
