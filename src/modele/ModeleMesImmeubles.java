@@ -1,4 +1,4 @@
-package sae3a01;
+package modele;
 
 import classes.Immeuble;
 import java.util.ArrayList;

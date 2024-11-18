@@ -1,4 +1,4 @@
-package sae3a01;
+package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controleur.ControleurAjouterImmeuble;
 
 public class VueAjouterImmeuble extends JFrame {
 

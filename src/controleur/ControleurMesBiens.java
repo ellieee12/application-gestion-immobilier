@@ -1,9 +1,12 @@
-package sae3a01;
+package controleur;
 
 import classes.Batiment;
 import classes.Garage;
 import classes.Logement;
 import classes.Maison;
+import ihm.VueAjouterBien;
+import ihm.VueMesBiens;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;

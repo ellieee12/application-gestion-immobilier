@@ -1,7 +1,10 @@
-package sae3a01;
+package controleur;
 
 import classes.Batiment;
 import classes.Maison;
+import ihm.VueAjouterImmeuble;
+import ihm.VueMesImmeubles;
+import modele.ModeleMesImmeubles;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
