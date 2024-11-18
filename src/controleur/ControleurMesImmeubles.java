@@ -1,23 +1,29 @@
 package controleur;
 
 import java.awt.EventQueue;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JTable;
 
 import classes.Batiment;
 import classes.Immeuble;
 import classes.Maison;
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
+import ihm.VueMesBiens;
 import modeleDAO.ImmeubleDAO;
 
-public class ControleurMesImmeubles implements ActionListener {
+public class ControleurMesImmeubles extends MouseAdapter implements ActionListener {
 	
 	private static ControleurMesImmeubles controleur;
 	
@@ -32,10 +38,10 @@ public class ControleurMesImmeubles implements ActionListener {
 			ImmeubleDAO immeubleDAO = new ImmeubleDAO();
 			ResultSet rs = immeubleDAO.getAllImmeubles();
 			while(rs.next()) {
-				if (rs.getString(2).equals("M")) {
-					immeuble.add(new Maison(rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)));
+				if (rs.getString(6).equals("M")) {
+					immeuble.add(new Maison(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(5)));
 				} else {
-					immeuble.add(new Batiment(rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)));
+					immeuble.add(new Batiment(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(5)));
 				}
 				
 			}
@@ -52,6 +58,10 @@ public class ControleurMesImmeubles implements ActionListener {
 		
 	}
 	
+	public List<Immeuble> getImmeuble() {
+		return immeuble;
+	}
+
 	public void Update() {
 		controleur = null;
 		getControleur(this.vue);
@@ -80,5 +90,24 @@ public class ControleurMesImmeubles implements ActionListener {
 		}
 	}
 	
+		
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		JTable table =(JTable) e.getSource();
+        Point point = e.getPoint();
+        int row = table.rowAtPoint(point);
+        	if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+        		EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						VueMesBiens frame = new VueMesBiens(immeuble.get(table.getSelectedRow()).getId_immeuble());
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+        	}
+	}	
 
 }

@@ -19,6 +19,14 @@ public class ImmeubleDAO {
 		return rs;
 	}
 	
+	public ResultSet getInfoImmeuble(String idImmeuble) throws SQLException {
+		String req = "select adresse,code_postale,ville from immeuble where id_immeuble = ?";
+		PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+		stmt.setString(1, idImmeuble);
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
 	public int supprimerImmeuble(String id) {
 		try {
 			String req = "delete from immeuble where id_immeuble=?";
