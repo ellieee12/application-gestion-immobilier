@@ -8,7 +8,6 @@ public class TestImmeubleDAO {
 		ImmeubleDAO immeubleDAO = new ImmeubleDAO();
 		immeubleDAO.supprimerImmeuble("99");
 		immeubleDAO.ajouterImmeuble("99", "Doe Street", "99999", "Ohio", "9999-9999", "B");
-		immeubleDAO.updateImmeublePeriodeConstruction("99", "1212-1212");
 		if (immeubleDAO.immeubleExiste("99")) {
 			System.out.println("99 existe");
 		}

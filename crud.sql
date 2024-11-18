@@ -1,9 +1,12 @@
+use saes3;
 set autocommit=0;
 start transaction;
 
-drop table if exists bien;
-drop table if exists immeuble;
-drop table if exists locataire;
+DROP TABLE IF EXISTS location; 
+DROP TABLE IF EXISTS bien;
+DROP TABLE IF EXISTS locataire;
+DROP TABLE IF EXISTS icc;
+DROP TABLE IF EXISTS immeuble;
 
 create table Immeuble (
     id_immeuble varchar(20) not null,
@@ -30,7 +33,7 @@ create table bien(
 );
 
 create table Locataire (
-    id_locataire int auto_increment not null,
+    id_locataire varchar(20) not null,
     nom VARCHAR(30) not null,
     prenom VARCHAR(30) not null,
     telephone CHAR(15) not null,
@@ -41,6 +44,34 @@ create table Locataire (
     ville VARCHAR(50) not null,
     constraint pk_locataire primary key(id_locataire)
 );
+
+create table icc (
+    annee date not null,
+    trimestre smallint not null,
+    indice int not null,
+    constraint pk_icc primary key(annee, trimestre)
+);
+
+CREATE TABLE Location(
+    id_bien VARCHAR(20),
+    id_locataire VARCHAR(20),
+    date_debut DATE,
+    nb_mois INT,
+    provision_charges_ttc decimal(15,2),
+    loyer_ttc decimal(15,2),
+    caution_ttc decimal(15,2),
+    bail VARCHAR(50),
+    etat_lieux VARCHAR(50),
+    date_derniere_reg DATE,
+    montant_reel_paye decimal(15,2),
+    annee date NOT NULL,
+    trimestre smallint NOT NULL,
+    constraint pk_location PRIMARY KEY(id_bien, id_locataire, date_debut),
+    constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
+    constraint fk_location_id_locataire FOREIGN KEY (id_locataire) REFERENCES Locataire(id_locataire),
+    constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
+);
+
 
 -- Insert sample data into Immeuble
 insert into Immeuble (id_immeuble, adresse, code_postale, ville, periode_construction, type_immeuble)
@@ -60,12 +91,33 @@ values
 (5, 5, 4, 120.50, '2018-07-30', 'G', 4);
 
 -- Insert sample data into Locataire
-insert into locataire (nom, prenom, telephone, mail, date_naissance, adresse, code_postal, ville)
+insert into locataire (id_locataire,nom, prenom, telephone, mail, date_naissance, adresse, code_postal, ville)
 values 
-('Dupont', 'Marie', '0123456789', 'marie.dupont@example.com', '1992-03-12', '8 Rue de Rivoli', '75004', 'Paris'),
-('Leroy', 'Pierre', '0123456790', 'pierre.leroy@example.com', '1985-07-21', '22 Boulevard Voltaire', '75011', 'Paris'),
-('Martin', 'Lucie', '0123456791', 'lucie.martin@example.com', '1990-05-17', '56 Rue Saint-Jean', '69001', 'Lyon'),
-('Bernard', 'Julien', '0123456792', 'julien.bernard@example.com', '1993-09-23', '34 Rue de Lille', '59000', 'Lille'),
-('Rousseau', 'Sophie', '0123456793', 'sophie.rousseau@example.com', '1988-12-11', '19 Avenue des Fleurs', '06000', 'Nice');
+(1,'Dupont', 'Marie', '0123456789', 'marie.dupont@example.com', '1992-03-12', '8 Rue de Rivoli', '75004', 'Paris'),
+(2,'Leroy', 'Pierre', '0123456790', 'pierre.leroy@example.com', '1985-07-21', '22 Boulevard Voltaire', '75011', 'Paris'),
+(3,'Martin', 'Lucie', '0123456791', 'lucie.martin@example.com', '1990-05-17', '56 Rue Saint-Jean', '69001', 'Lyon'),
+(4,'Bernard', 'Julien', '0123456792', 'julien.bernard@example.com', '1993-09-23', '34 Rue de Lille', '59000', 'Lille'),
+(5,'Rousseau', 'Sophie', '0123456793', 'sophie.rousseau@example.com', '1988-12-11', '19 Avenue des Fleurs', '06000', 'Nice');
+
+-- Insert sample data into ICC
+INSERT INTO icc (annee, trimestre, indice)
+VALUES
+('2023-01-01', 1, 125),
+('2023-04-01', 2, 130),
+('2023-07-01', 3, 135),
+('2023-10-01', 4, 140),
+('2024-01-01', 1, 145);
+
+-- Insert sample data into Location
+INSERT INTO Location (
+    id_bien, id_locataire, date_debut, nb_mois, provision_charges_ttc, loyer_ttc, 
+    caution_ttc, bail, etat_lieux, date_derniere_reg, montant_reel_paye, annee, trimestre
+)
+VALUES
+(1, 1, '2023-01-01', 12, 150.00, 750.00, 1500.00, 'Bail_001', 'Etat_001', '2023-12-01', 9000.00, '2023-01-01', 1),
+(2, 2, '2023-04-01', 6, 100.00, 500.00, 1000.00, 'Bail_002', 'Etat_002', '2023-10-01', 3000.00, '2023-04-01', 2),
+(3, 3, '2023-07-01', 9, 200.00, 1000.00, 2000.00, 'Bail_003', 'Etat_003', '2023-10-01', 7000.00, '2023-07-01', 3),
+(4, 4, '2023-10-01', 24, 250.00, 1200.00, 2400.00, 'Bail_004', 'Etat_004', '2024-10-01', 12000.00, '2023-10-01', 4),
+(5, 5, '2024-01-01', 18, 300.00, 1500.00, 3000.00, 'Bail_005', 'Etat_005', '2024-06-01', 18000.00, '2024-01-01', 1);
 
 commit;
