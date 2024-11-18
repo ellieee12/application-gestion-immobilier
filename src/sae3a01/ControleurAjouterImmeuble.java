@@ -1,7 +1,6 @@
 package sae3a01;
 
-import classes.Batiment;
-import classes.Maison;
+import modeleDAO.ImmeubleDAO;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -16,12 +15,14 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	
 	private VueAjouterImmeuble vue;
 	private ModeleMesImmeubles modele;
+	private ImmeubleDAO dao;
 	
 	private ControleurAjouterImmeuble() {}
 	
 	public void initialiserControleur(VueAjouterImmeuble vue) {
 		this.modele = new ModeleMesImmeubles();
 		this.vue=vue;
+		this.dao = new ImmeubleDAO();
 	}
 
 	@Override
@@ -35,8 +36,8 @@ public class ControleurAjouterImmeuble implements ActionListener {
 			if (vue.isComplet()) {
 				if (!this.modele.immeubleExiste(this.vue.getAdresse(),this.vue.getCP(), this.vue.getVille())) {
 					if (this.vue.getTypeImmeuble()=="Maison") {
-						this.modele.getList().add(new Maison(this.vue.getAdresse(),
-								this.vue.getCP(), this.vue.getVille(),"random"));
+						this.dao.ajouterImmeuble("random", this.vue.getAdresse(),this.vue.getCP(),
+								this.vue.getVille(),this.vue.getPeriodeConstruction(), "M");
 						if (!this.vue.getPeriodeConstruction().isEmpty()) {
 							this.modele.getDernierImmeuble().setPeriode_construction(this.vue.getPeriodeConstruction());;
 						}
@@ -53,10 +54,10 @@ public class ControleurAjouterImmeuble implements ActionListener {
 						});
 						this.vue.dispose();
 					} else {
-						this.modele.getList().add(new Batiment(this.vue.getAdresse(),
-								this.vue.getCP(), this.vue.getVille(),"random"));
+						this.dao.ajouterImmeuble("random", this.vue.getAdresse(),this.vue.getCP(),
+								this.vue.getVille(),this.vue.getPeriodeConstruction(), "B");
 						if (!this.vue.getPeriodeConstruction().isEmpty()) {
-							this.modele.getDernierImmeuble().setPeriode_construction(this.vue.getPeriodeConstruction());;
+							this.modele.getDernierImmeuble().setPeriode_construction(this.vue.getPeriodeConstruction());
 						}
 						//ferme cette page et ouvre mesImmeubles
 						EventQueue.invokeLater(new Runnable() {

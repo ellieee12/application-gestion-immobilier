@@ -76,7 +76,7 @@ public class ControleurMesBiens implements ActionListener {
 		JButton  b = (JButton) e.getSource();	
 		if (b.getText() == "Ajouter") {
 			new VueAjouterBien();
-		} else if (b.getText() == "Suprimer") {
+		} else if (b.getText() == "Supprimer") {
 			BienDAO bien = new BienDAO();
 			int rs = bien.supprimerBien(this.Id.get(this.vue.getLigneChoisi()));
 			this.Update();

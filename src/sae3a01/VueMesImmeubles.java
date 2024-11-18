@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.util.Date;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +20,7 @@ public class VueMesImmeubles extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table_1;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -73,15 +75,24 @@ public class VueMesImmeubles extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		DefaultTableModel t = new DefaultTableModel(new Object[] {"e", "u"}, 0);
+		this.table = new JTable(t);
+		this.table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"E"
+				"Id immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
 			}
-		));
-		scrollPane.setViewportView(table_1);
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, Date.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		
+		scrollPane.setViewportView(table);
 	}
 
 }
