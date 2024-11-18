@@ -168,7 +168,8 @@ public class VueAjouterBien extends JFrame {
 		PanelBoutons.add(ButtonValider);
 		
 		//mise en place du controleur
-		ControleurAjouterBien controleur = ControleurAjouterBien.getControleurAjouterBien(this);
+		ControleurAjouterBien controleur = ControleurAjouterBien.getControleurAjouterBien();
+		controleur.initialiserControleur(this);
 		comboBox.addActionListener(controleur);
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);

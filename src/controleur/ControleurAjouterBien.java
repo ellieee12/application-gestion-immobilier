@@ -14,24 +14,27 @@ public class ControleurAjouterBien implements ActionListener {
 	private static ControleurAjouterBien controleur;
 	private VueAjouterBien vue;
 	
+	public void initialiserControleur(VueAjouterBien vue) {
+		this.vue = vue;
+	}
+	
 	//Constructeur du controleur
-	private ControleurAjouterBien (VueAjouterBien vue) {}
+	private ControleurAjouterBien () {}
 	
 	public void actionPerformed (ActionEvent e) {
+		
+		JComboBox ComboBoxselected = (JComboBox) e.getSource();
+		String optionSelected = (String) ComboBoxselected.getSelectedItem();
+		
 		if (e.getSource() instanceof JButton) {
 			String s = ((JButton) e.getSource()).getText();
 
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
-				
 			}
 		} else {
-			JComboBox ComboBoxselected = (JComboBox) e.getSource();
-			String optionSelected = (String) ComboBoxselected.getSelectedItem();
-			
 			if (optionSelected == "Garage") {
-				
 				this.vue.desactiverChamps();
 			}else {
 				this.vue.activerChamps();
@@ -39,9 +42,9 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 	
-	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
+	public static synchronized ControleurAjouterBien getControleurAjouterBien () {
 		if (controleur == null) {
-			controleur = new ControleurAjouterBien(vue);
+			controleur = new ControleurAjouterBien();
 		}
 		return controleur;
 	}
