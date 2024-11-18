@@ -1,6 +1,6 @@
 package controleur;
 
-import classes.Bien;
+import modeleDAO.BienDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,9 +13,11 @@ public class ControleurAjouterBien implements ActionListener {
 	
 	private static ControleurAjouterBien controleur;
 	private VueAjouterBien vue;
+	private BienDAO dao;
 	
 	public void initialiserControleur(VueAjouterBien vue) {
 		this.vue = vue;
+		this.dao = new BienDAO();
 	}
 	
 	//Constructeur du controleur
@@ -23,17 +25,20 @@ public class ControleurAjouterBien implements ActionListener {
 	
 	public void actionPerformed (ActionEvent e) {
 		
-		JComboBox ComboBoxselected = (JComboBox) e.getSource();
-		String optionSelected = (String) ComboBoxselected.getSelectedItem();
-		
 		if (e.getSource() instanceof JButton) {
 			String s = ((JButton) e.getSource()).getText();
 
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
+				int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
+						this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
+						"1", this.vue.getComboBoxTypeBien());
+				System.out.println(i + " lignes ajoutées");
 			}
 		} else {
+			JComboBox ComboBoxselected = (JComboBox) e.getSource();
+			String optionSelected = (String) ComboBoxselected.getSelectedItem();
 			if (optionSelected == "Garage") {
 				this.vue.desactiverChamps();
 			}else {
