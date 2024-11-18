@@ -54,4 +54,16 @@ public class BienDAO{
 		return 0;
 	}
 	
+	public boolean bienExiste(String id_bien) {
+		try {
+			String req = "select * from bien where id_bien=?";
+			PreparedStatement stmt =  this.mySQLCon.getConnection().prepareStatement(req);
+			stmt.setString(1, id_bien);
+			ResultSet rs = stmt.executeQuery();
+			return rs.next();
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return true;
+	}
 }
