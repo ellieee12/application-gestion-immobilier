@@ -34,7 +34,7 @@ public class BienDAO{
 		return 0;
 	}
 	
-	public void ajouterBien(int num_etage, Date date_acquisition,String id_bien,int nb_pieces, float surface_habitable, String id_immeuble,String type_bien) {
+	public int ajouterBien(int num_etage, Date date_acquisition,String id_bien,int nb_pieces, float surface_habitable, String id_immeuble,String type_bien) {
 		try {
 			String req = "insert into bien (id_bien,nb_pieces,numero_etage,surface_habitable,date_acquisition,type_bien,id_immeuble) values (?,?,?,?,?,?,?)";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
@@ -46,9 +46,11 @@ public class BienDAO{
 			stmt.setString(6, type_bien);
 			stmt.setString(7,id_immeuble);
 			int i = stmt.executeUpdate();
+			stmt.close();
 		}catch(Exception e){
 			System.out.println(e);
 		}
+		return 0;
 	}
 	
 }

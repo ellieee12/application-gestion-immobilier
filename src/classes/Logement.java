@@ -7,8 +7,7 @@ public class Logement extends Bien {
 	private int nb_pieces;
 	
 	public Logement(Date date_acquisition, String id_bien,int nb_pieces, float surface_habitable) {
-		super(date_acquisition, id_bien);
-		this.nb_pieces= nb_pieces;
+		super(nb_pieces, date_acquisition, id_bien);
 		this.surface_habitable = surface_habitable;
 	}
 

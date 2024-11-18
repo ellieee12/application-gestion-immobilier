@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurAjouterBien;
 
@@ -12,13 +13,14 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxEditor;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 
 public class VueAjouterBien extends JFrame {
 
@@ -29,7 +31,6 @@ public class VueAjouterBien extends JFrame {
 	private JTextField textFieldNumeroEtage;
 	private JTextField textFieldNombreDePieces;
 	private JTextField textFieldSurfaceHabitable;
-	private JComboBox<String> comboBox;
 
 	/**
 	 * Launch the application.
@@ -118,17 +119,9 @@ public class VueAjouterBien extends JFrame {
 		PanelChamps.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox<String> comboBox = new JComboBox();
+		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Logement", "Garage"}));
 		panel.add(comboBox, BorderLayout.NORTH);
-		
-		JPanel panel_1 = new JPanel();
-		PanelChamps.add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		textFieldIdBien = new JTextField();
-		panel_1.add(textFieldIdBien, BorderLayout.NORTH);
-		textFieldIdBien.setColumns(10);
 		
 		JPanel panel_2 = new JPanel();
 		PanelChamps.add(panel_2);
@@ -137,6 +130,22 @@ public class VueAjouterBien extends JFrame {
 		textFieldDateAcquisition = new JTextField();
 		panel_2.add(textFieldDateAcquisition, BorderLayout.NORTH);
 		textFieldDateAcquisition.setColumns(10);
+		
+		
+		JPanel panel_1 = new JPanel();
+		PanelChamps.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		JFormattedTextField formattedTextField;
+		formattedTextField = new JFormattedTextField();
+		try {
+			formattedTextField = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		panel_1.add(formattedTextField, BorderLayout.NORTH);
+		
 		
 		JPanel panel_7 = new JPanel();
 		PanelChamps.add(panel_7);
@@ -191,29 +200,5 @@ public class VueAjouterBien extends JFrame {
 		textFieldNombreDePieces.setEnabled(true);
 		textFieldNumeroEtage.setEnabled(true);
 		textFieldSurfaceHabitable.setEnabled(true);
-	}
-	
-	public String getChampsIdBien () {
-		return String.valueOf(textFieldIdBien.getText());
-	}
-	
-	public Date getChampsDateAcquisition () {
-		return Date.valueOf(textFieldDateAcquisition.getText());
-	}
-	
-	public int getChampsNumeroEtage () {
-		return Integer.valueOf(textFieldNumeroEtage.getText());
-	}
-	
-	public int getChampsNombreDePiece () {
-		return Integer.valueOf(textFieldIdBien.getText());
-	}
-	
-	public float getChampsSurfaceHabitable () {
-		return Float.valueOf(textFieldSurfaceHabitable.getText());
-	}
-	
-	public String getComboBoxTypeBien () {
-		return (String) comboBox.getSelectedItem();
 	}
 }
