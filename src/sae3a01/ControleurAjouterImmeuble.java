@@ -19,8 +19,9 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	
 	private ControleurAjouterImmeuble() {}
 	
-	public void initialiserControleur() {
+	public void initialiserControleur(VueAjouterImmeuble vue) {
 		this.modele = new ModeleMesImmeubles();
+		this.vue=vue;
 	}
 
 	@Override
@@ -85,10 +86,6 @@ public class ControleurAjouterImmeuble implements ActionListener {
 			controleur = new ControleurAjouterImmeuble();
 		}
 		return controleur;
-	}
-	
-	public void setVueAjouterImmeuble(VueAjouterImmeuble vue) {
-		this.vue=vue;
 	}
 
 }

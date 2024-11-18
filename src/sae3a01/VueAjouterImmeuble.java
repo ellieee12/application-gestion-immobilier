@@ -71,8 +71,7 @@ public class VueAjouterImmeuble extends JFrame {
 	 */
 	public VueAjouterImmeuble() {
 		ControleurAjouterImmeuble controleur = ControleurAjouterImmeuble.getControleur();
-		controleur.initialiserControleur();
-		controleur.setVueAjouterImmeuble(this);
+		controleur.initialiserControleur(this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
