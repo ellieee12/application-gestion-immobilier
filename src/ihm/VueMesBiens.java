@@ -31,27 +31,13 @@ public class VueMesBiens extends JFrame {
 	private DefaultTableModel t;
 	private JButton valider;
 	private JButton supprimer;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesBiens frame = new VueMesBiens();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private String idImmeuble;
 
 	/**
 	 * Create the frame.
 	 */
-	public VueMesBiens(/*String NomImmeuble*/) {
+	public VueMesBiens(String idImmeuble) {
+		this.idImmeuble=idImmeuble;
 		ControleurMesBiens controleur = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -65,7 +51,7 @@ public class VueMesBiens extends JFrame {
 		contentPane.add(PanelInformations, BorderLayout.NORTH);
 		PanelInformations.setLayout(new BorderLayout(0, 5));
 		
-		JLabel lblNewLabel = new JLabel("Immeuble A"/*NomImmeuble*/);
+		JLabel lblNewLabel = new JLabel("Immeuble "+this.idImmeuble);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		PanelInformations.add(lblNewLabel, BorderLayout.NORTH);
 		
@@ -79,7 +65,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelAdresse);
 		PanelAdresse.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Adresse");
+		JLabel lblNewLabel_1 = new JLabel("Adresse : "+controleur.getAdresse());
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelAdresse.add(lblNewLabel_1, BorderLayout.NORTH);
 		
@@ -87,7 +73,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelCP);
 		PanelCP.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Code Postal");
+		JLabel lblNewLabel_2 = new JLabel("Code Postal : "+controleur.getCp());
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelCP.add(lblNewLabel_2, BorderLayout.NORTH);
 		
@@ -95,7 +81,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelVille);
 		PanelVille.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Ville");
+		JLabel lblNewLabel_3 = new JLabel("Ville : "+controleur.getVille());
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelVille.add(lblNewLabel_3, BorderLayout.NORTH);
 		
@@ -159,6 +145,10 @@ public class VueMesBiens extends JFrame {
 
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
+	}
+
+	public String getIdImmeuble() {
+		return idImmeuble;
 	}
 
 }

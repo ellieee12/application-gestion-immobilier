@@ -20,6 +20,14 @@ public class BienDAO{
 		return stmt.executeQuery(req);
 	}
 	
+	public ResultSet getBiensFromOneImmeuble(String idImmeuble) throws SQLException {
+		String req = "select id_bien,type_bien,numero_etage,surface_habitable,nb_pieces,date_acquisition from bien where id_immeuble = ?;";
+		PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+		stmt.setString(1, idImmeuble);
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
 	public int supprimerBien(String id) {
 		try {
 			String req = "delete from bien where id_bien=?";

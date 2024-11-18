@@ -10,11 +10,18 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Date;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import classes.Immeuble;
+import controleur.ControleurMesBiens;
+import controleur.ControleurMesImmeubles;
 
 public class VueMesImmeubles extends JFrame {
 
@@ -42,6 +49,7 @@ public class VueMesImmeubles extends JFrame {
 	 * Create the frame.
 	 */
 	public VueMesImmeubles() {
+		ControleurMesImmeubles controleur = ControleurMesImmeubles.getControleur(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -64,6 +72,7 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton AjouterImmeuble = new JButton("Ajouter");
 		PanelBoutonNouveau.add(AjouterImmeuble, BorderLayout.SOUTH);
+		AjouterImmeuble.addActionListener(controleur);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -71,28 +80,40 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton SupprimerImeuble = new JButton("Supprimer");
 		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
+		SupprimerImeuble.addActionListener(controleur);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		DefaultTableModel t = new DefaultTableModel(new Object[] {"e", "u"}, 0);
-		this.table = new JTable(t);
-		this.table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class, Date.class
+		DefaultTableModel t = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					String.class, String.class, String.class, String.class, String.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				};
+				boolean[] columnEditables = new boolean[] {
+						false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		for (Immeuble i : controleur.getImmeuble()) {
+			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
+		}
+		this.table = new JTable(t);
+		this.table.setModel(t);
 		
 		scrollPane.setViewportView(table);
+		
+		this.table.addMouseListener(controleur);
 	}
 	
 	public int getLigneChoisi() {
