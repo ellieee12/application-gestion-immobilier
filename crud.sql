@@ -10,7 +10,7 @@ create table Immeuble (
     adresse VARCHAR(50) not null,
     code_postale CHAR(5) not null,
     ville VARCHAR(50) not null,
-    periode_construction VARCHAR(50)not null,
+    periode_construction VARCHAR(50),
     type_immeuble char(1) not null,
     constraint pk_immeuble primary key(id_immeuble),
     constraint ck_immeuble_type check(type_immeuble in ('B','M'))
