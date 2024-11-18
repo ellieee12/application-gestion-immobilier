@@ -64,4 +64,16 @@ public class ImmeubleDAO {
 		}
 		return true;
 	}
+	
+	public ResultSet getImmeubles() throws SQLException {
+		String req = "select * from immeuble "
+				+ "where id_immeuble not in ("
+				+ "select b.id_immeuble "
+				+ "from bien b, immeuble i "
+				+ "where b.id_immeuble=i.id_immeuble "
+				+ "and i.type_immeuble='M' );";
+		Statement stmt = this.mySQLCon.getConnection().createStatement();
+		ResultSet rs = stmt.executeQuery(req);
+		return rs;
+	}
 }
