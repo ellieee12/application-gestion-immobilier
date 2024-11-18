@@ -1,14 +1,23 @@
 package controleur;
 
 import modeleDAO.BienDAO;
+import modeleDAO.ImmeubleDAO;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import classes.Garage;
+import classes.Immeuble;
+import classes.Logement;
 import ihm.VueAjouterBien;
 
 public class ControleurAjouterBien implements ActionListener {
@@ -16,14 +25,24 @@ public class ControleurAjouterBien implements ActionListener {
 	private static ControleurAjouterBien controleur;
 	private VueAjouterBien vue;
 	private BienDAO dao;
-	
-	public void initialiserControleur(VueAjouterBien vue) {
-		this.vue = vue;
-		this.dao = new BienDAO();
-	}
+	private List<String> Immeubles;
 	
 	//Constructeur du controleur
-	private ControleurAjouterBien () {}
+	private ControleurAjouterBien (VueAjouterBien vue) {
+		try {
+			this.vue = vue;
+			this.dao = new BienDAO();
+			this.Immeubles = new LinkedList<>();
+			
+			ImmeubleDAO Immeuble = new ImmeubleDAO();
+			ResultSet rs = Immeuble.getImmeubles();
+			while(rs.next()) {
+				this.Immeubles.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void actionPerformed (ActionEvent e) {
 		
@@ -44,7 +63,7 @@ public class ControleurAjouterBien implements ActionListener {
 					}else{
 						int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
 								this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
-								"1", this.vue.getComboBoxTypeBien());
+								this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
 						System.out.println(i + " lignes ajoutées");
 					}
 				}else {
@@ -88,11 +107,15 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 	
-	public static synchronized ControleurAjouterBien getControleurAjouterBien () {
+	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
 		if (controleur == null) {
-			controleur = new ControleurAjouterBien();
+			controleur = new ControleurAjouterBien(vue);
 		}
 		return controleur;
+	}
+
+	public List<String> getImmeubles() {
+		return Immeubles;
 	}
 	
 	

@@ -33,6 +33,7 @@ public class VueAjouterBien extends JFrame {
 	private JTextField textFieldSurfaceHabitable;
 	private JFormattedTextField formattedTextField;
 	private JComboBox<String> comboBox;
+	private JComboBox<String> comboBox_Immeuble;
 
 	/**
 	 * Launch the application.
@@ -54,6 +55,9 @@ public class VueAjouterBien extends JFrame {
 	 * Create the frame.
 	 */
 	public VueAjouterBien() {
+		//mise en place du controleur
+		ControleurAjouterBien controleur = ControleurAjouterBien.getControleurAjouterBien(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -113,6 +117,13 @@ public class VueAjouterBien extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("Surface habitable");
 		panel_10.add(lblNewLabel_5, BorderLayout.NORTH);
 		
+		JPanel panel_12 = new JPanel();
+		PanelLibellé.add(panel_12);
+		panel_12.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_7 = new JLabel("Immeuble");
+		panel_12.add(lblNewLabel_7, BorderLayout.NORTH);
+		
 		JPanel PanelChamps = new JPanel();
 		contentPane.add(PanelChamps, BorderLayout.CENTER);
 		PanelChamps.setLayout(new GridLayout(0, 1, 0, 3));
@@ -170,6 +181,18 @@ public class VueAjouterBien extends JFrame {
 		panel_11.add(textFieldSurfaceHabitable, BorderLayout.NORTH);
 		textFieldSurfaceHabitable.setColumns(10);
 		
+		JPanel panel_13 = new JPanel();
+		PanelChamps.add(panel_13);
+		panel_13.setLayout(new BorderLayout(0, 0));
+		
+		//comboBox Immeuble
+		comboBox_Immeuble = new JComboBox();
+		for (String s: controleur.getImmeubles()) {
+			comboBox_Immeuble.addItem(s);
+		}
+		
+		panel_13.add(comboBox_Immeuble, BorderLayout.NORTH);
+		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
 		
@@ -179,12 +202,14 @@ public class VueAjouterBien extends JFrame {
 		JButton ButtonValider = new JButton("Valider");
 		PanelBoutons.add(ButtonValider);
 		
-		//mise en place du controleur
-		ControleurAjouterBien controleur = ControleurAjouterBien.getControleurAjouterBien();
-		controleur.initialiserControleur(this);
+		//action du controleur
 		comboBox.addActionListener(controleur);
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
+	}
+
+	public String getSelectedImmeuble() {
+		return comboBox_Immeuble.getSelectedItem().toString();
 	}
 	
 	//Methode pour désactiver les champs
