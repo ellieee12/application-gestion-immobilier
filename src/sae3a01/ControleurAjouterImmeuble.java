@@ -14,13 +14,11 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	private static ControleurAjouterImmeuble controleur;
 	
 	private VueAjouterImmeuble vue;
-	private ModeleMesImmeubles modele;
 	private ImmeubleDAO dao;
 	
 	private ControleurAjouterImmeuble() {}
 	
 	public void initialiserControleur(VueAjouterImmeuble vue) {
-		this.modele = new ModeleMesImmeubles();
 		this.vue=vue;
 		this.dao = new ImmeubleDAO();
 	}
@@ -34,13 +32,10 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		} else if (b.getText() == "Valider") {
 			// créer une instance de Immeuble
 			if (vue.isComplet()) {
-				if (!this.modele.immeubleExiste(this.vue.getAdresse(),this.vue.getCP(), this.vue.getVille())) {
+				if (!this.dao.immeubleExiste(this.vue.getId())) {
 					if (this.vue.getTypeImmeuble()=="Maison") {
-						this.dao.ajouterImmeuble("random", this.vue.getAdresse(),this.vue.getCP(),
-								this.vue.getVille(),this.vue.getPeriodeConstruction(), "M");
-						if (!this.vue.getPeriodeConstruction().isEmpty()) {
-							this.modele.getDernierImmeuble().setPeriode_construction(this.vue.getPeriodeConstruction());;
-						}
+						this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),
+								this.vue.getCP(),this.vue.getVille(),this.vue.getPeriodeConstruction(), "M");
 						//ferme cette page et ouvre mesImmeubles
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
@@ -54,11 +49,8 @@ public class ControleurAjouterImmeuble implements ActionListener {
 						});
 						this.vue.dispose();
 					} else {
-						this.dao.ajouterImmeuble("random", this.vue.getAdresse(),this.vue.getCP(),
+						this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),this.vue.getCP(),
 								this.vue.getVille(),this.vue.getPeriodeConstruction(), "B");
-						if (!this.vue.getPeriodeConstruction().isEmpty()) {
-							this.modele.getDernierImmeuble().setPeriode_construction(this.vue.getPeriodeConstruction());
-						}
 						//ferme cette page et ouvre mesImmeubles
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {

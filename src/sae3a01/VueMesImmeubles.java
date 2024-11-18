@@ -81,7 +81,7 @@ public class VueMesImmeubles extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
+				"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
@@ -93,6 +93,10 @@ public class VueMesImmeubles extends JFrame {
 		});
 		
 		scrollPane.setViewportView(table);
+	}
+	
+	public int getLigneChoisi() {
+		return this.table.getSelectedRow();
 	}
 
 }
