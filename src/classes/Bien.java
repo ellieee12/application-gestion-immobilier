@@ -18,7 +18,11 @@ public class Bien {
     private String id_bien;
 
 	public Bien(Integer num_etage, Date date_acquisition, String id_bien) {
-		this.num_etage = OptionalInt.of(num_etage);
+		if (num_etage == null) {
+			this.num_etage = OptionalInt.empty();
+		} else {
+			this.num_etage = OptionalInt.of(num_etage);
+		}
 		this.date_acquisition = date_acquisition;
 		this.id_bien = id_bien;
 	}

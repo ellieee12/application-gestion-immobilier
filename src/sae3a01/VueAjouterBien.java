@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import controleur.ControleurAjouterBien;
+
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -14,7 +17,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
 public class VueAjouterBien extends JFrame {

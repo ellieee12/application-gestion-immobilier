@@ -1,6 +1,6 @@
 package controleur;
 
-import java.Bien;
+import classes.Bien;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
