@@ -14,6 +14,11 @@ import java.util.Date;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import classes.Bien;
+import classes.Logement;
+import controleur.ControleurMesBiens;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +28,9 @@ public class VueMesBiens extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private DefaultTableModel t;
+	private JButton valider;
+	private JButton supprimer;
 	
 	/**
 	 * Launch the application.
@@ -44,6 +52,7 @@ public class VueMesBiens extends JFrame {
 	 * Create the frame.
 	 */
 	public VueMesBiens(/*String NomImmeuble*/) {
+		ControleurMesBiens controleur = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -98,39 +107,50 @@ public class VueMesBiens extends JFrame {
 		PanelBouton.add(PanelBoutonValider);
 		PanelBoutonValider.setLayout(new BorderLayout(0, 0));
 		
-		JButton Valider = new JButton("Ajouter");
-		PanelBoutonValider.add(Valider, BorderLayout.SOUTH);
+		this.valider = new JButton("Ajouter");
+		this.valider.addActionListener(controleur);
+		PanelBoutonValider.add(valider, BorderLayout.SOUTH);
 		
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
 		PanelBoutonSupprimer.setLayout(new BorderLayout(0, 0));
 		
-		JButton Supprimer = new JButton("Supprimer");
-		PanelBoutonSupprimer.add(Supprimer, BorderLayout.NORTH);
+		this.supprimer = new JButton("Supprimer");
+		this.supprimer.addActionListener(controleur);
+		PanelBoutonSupprimer.add(supprimer, BorderLayout.NORTH);
 		
 		
 		
-		DefaultTableModel t = new DefaultTableModel(new Object[] {"e", "u"}, 0);
-		this.table = new JTable(t);
-		this.table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Date d'acquisition"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Class.class, Integer.class, Float.class, Integer.class, Date.class
+		this.t = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Date d'acquisition"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					String.class, String.class, Integer.class, Float.class, Integer.class, Date.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+
+		buildTable(controleur);
+		this.table = new JTable(t);
+		this.table.setModel(this.t);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(this.table);
+	}
+
+	public void buildTable(ControleurMesBiens controleur) {
+		this.t.setRowCount(0);
+		for (Bien b : controleur.getBien()) {
+			this.t.addRow(new Object[] {b.getId_bien(), b.getClass().getSimpleName(),b.getNum_etage().isPresent()?b.getNum_etage().getAsInt():null, b.isLogement()?((Logement) b).getNb_pieces():null, b.isLogement()?((Logement) b).getSurface_habitable():null, b.getDate_acquisition()} );
+		}
 	}
 
 	public int getLigneChoisi() {
@@ -138,3 +158,4 @@ public class VueMesBiens extends JFrame {
 	}
 
 }
+
