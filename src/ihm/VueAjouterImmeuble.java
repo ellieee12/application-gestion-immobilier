@@ -24,6 +24,7 @@ public class VueAjouterImmeuble extends JFrame {
 	private JTextField textField_adresse;
 	private JTextField textField_code_postal;
 	private JTextField textField_ville;
+	private JTextField textField_id;
 	private JComboBox<String> comboBox;
 	private JFormattedTextField formattedTextField_date;
 
@@ -59,13 +60,17 @@ public class VueAjouterImmeuble extends JFrame {
 		return textField_ville.getText();
 	}
 	
+	public String getId() {
+		return textField_id.getText();
+	}
+
 	public String getPeriodeConstruction() {
 		return this.formattedTextField_date.getText();
 	}
 	
 	public boolean isComplet() {
 		return !this.getAdresse().isEmpty() && !this.getTypeImmeuble().isEmpty()
-				&& !this.getCP().isEmpty() && !this.getVille().isEmpty();
+				&& !this.getCP().isEmpty() && !this.getVille().isEmpty() && !this.getId().isEmpty();
 	}
 
 	/**
@@ -89,7 +94,7 @@ public class VueAjouterImmeuble extends JFrame {
 		
 		JPanel PanelChamps = new JPanel();
 		contentPane.add(PanelChamps, BorderLayout.CENTER);
-		PanelChamps.setLayout(new GridLayout(0, 1, 0, 0));
+		PanelChamps.setLayout(new GridLayout(0, 1, 0, 5));
 		
 		JPanel panel_2 = new JPanel();
 		PanelChamps.add(panel_2);
@@ -122,6 +127,14 @@ public class VueAjouterImmeuble extends JFrame {
 		textField_ville = new JTextField();
 		panel_5.add(textField_ville, BorderLayout.NORTH);
 		textField_ville.setColumns(10);
+		
+		JPanel panel_6 = new JPanel();
+		PanelChamps.add(panel_6);
+		panel_6.setLayout(new BorderLayout(0, 0));
+		
+		textField_id = new JTextField();
+		panel_6.add(textField_id, BorderLayout.NORTH);
+		textField_id.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
 		PanelChamps.add(panel_4);
@@ -172,6 +185,13 @@ public class VueAjouterImmeuble extends JFrame {
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Ville");
 		panel_10.add(lblNewLabel_2_1, BorderLayout.NORTH);
+		
+		JPanel panel_11 = new JPanel();
+		PanelLibellé.add(panel_11);
+		panel_11.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_5 = new JLabel("Id Immeuble");
+		panel_11.add(lblNewLabel_5, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		PanelLibellé.add(panel);
