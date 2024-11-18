@@ -47,6 +47,7 @@ public class BienDAO{
 			stmt.setString(7,id_immeuble);
 			int i = stmt.executeUpdate();
 			stmt.close();
+			return i;
 		}catch(Exception e){
 			System.out.println(e);
 		}
