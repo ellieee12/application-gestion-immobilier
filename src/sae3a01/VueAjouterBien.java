@@ -123,6 +123,15 @@ public class VueAjouterBien extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Logement", "Garage"}));
 		panel.add(comboBox, BorderLayout.NORTH);
 		
+		JPanel panel_2 = new JPanel();
+		PanelChamps.add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		textFieldDateAcquisition = new JTextField();
+		panel_2.add(textFieldDateAcquisition, BorderLayout.NORTH);
+		textFieldDateAcquisition.setColumns(10);
+		
+		
 		JPanel panel_1 = new JPanel();
 		PanelChamps.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -137,13 +146,6 @@ public class VueAjouterBien extends JFrame {
 		}
 		panel_1.add(formattedTextField, BorderLayout.NORTH);
 		
-		JPanel panel_2 = new JPanel();
-		PanelChamps.add(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
-		
-		textFieldDateAcquisition = new JTextField();
-		panel_2.add(textFieldDateAcquisition, BorderLayout.NORTH);
-		textFieldDateAcquisition.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
 		PanelChamps.add(panel_7);

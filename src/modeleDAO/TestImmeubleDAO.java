@@ -19,7 +19,6 @@ public class TestImmeubleDAO {
 		}
 		immeubleDAO.supprimerImmeuble("99");
 		immeubleDAO.ajouterImmeuble("99", "Doe Street", "99999", "Ohio", "9999-9999", "B");
-		
-		
+
 	}
 }
