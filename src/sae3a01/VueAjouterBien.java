@@ -5,12 +5,17 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class VueAjouterBien extends JFrame {
 
@@ -110,9 +115,15 @@ public class VueAjouterBien extends JFrame {
 		PanelChamps.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1, BorderLayout.NORTH);
-		textField_1.setColumns(10);
+		JFormattedTextField formattedTextField;
+		formattedTextField = new JFormattedTextField();
+		try {
+			formattedTextField = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		panel_1.add(formattedTextField, BorderLayout.NORTH);
 		
 		JPanel panel_2 = new JPanel();
 		PanelChamps.add(panel_2);

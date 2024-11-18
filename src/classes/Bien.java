@@ -1,5 +1,6 @@
 package classes;
 import java.util.Date;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
@@ -16,7 +17,8 @@ public class Bien {
     @objid ("d56b34c5-f27c-46b4-8270-24c7eebb90e5")
     private String id_bien;
 
-	public Bien(Date date_acquisition, String id_bien) {
+	public Bien(Integer num_etage, Date date_acquisition, String id_bien) {
+		this.num_etage = OptionalInt.of(num_etage);
 		this.date_acquisition = date_acquisition;
 		this.id_bien = id_bien;
 	}

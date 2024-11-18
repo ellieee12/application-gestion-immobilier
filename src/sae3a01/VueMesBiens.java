@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Date;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
@@ -110,18 +112,29 @@ public class VueMesBiens extends JFrame {
 		
 		
 		DefaultTableModel t = new DefaultTableModel(new Object[] {"e", "u"}, 0);
-		JTable table = new JTable(t);
-		table.setModel(new DefaultTableModel(
+		this.table = new JTable(t);
+		this.table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Id bien", "Num\u00E9ro \u00E9tage", "Surface habitable"
+				"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Date d'acquisition"
 			}
-		));
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Class.class, Integer.class, Float.class, Integer.class, Date.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(this.table);
+	}
+
+	public int getLigneChoisi() {
+		return this.table.getSelectedRow();
 	}
 
 }
