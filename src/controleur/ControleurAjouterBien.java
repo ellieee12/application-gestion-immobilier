@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import sae3a01.VueAjouterBien;
+import ihm.VueAjouterBien;
 
 public class ControleurAjouterBien implements ActionListener {
 	

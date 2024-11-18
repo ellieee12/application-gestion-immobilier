@@ -1,4 +1,4 @@
-package sae3a01;
+package controleur;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import classes.Immeuble;
+import ihm.VueAjouterImmeuble;
+import ihm.VueMesImmeubles;
+import modele.ModeleMesImmeubles;
 
 public class ControleurMesImmeubles implements ActionListener {
 	

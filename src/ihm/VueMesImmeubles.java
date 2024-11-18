@@ -1,4 +1,4 @@
-package sae3a01;
+package ihm;
 
 import java.awt.EventQueue;
 
