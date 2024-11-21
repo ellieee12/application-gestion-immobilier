@@ -3,12 +3,20 @@ package modeleDAO;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class LocataireDAO {
 	private MySQLCon mySQLCon;
 	
 	public LocataireDAO() {
 		this.mySQLCon=MySQLCon.getInstance();
+	}
+	
+	public ResultSet getAllLocataires() throws SQLException {
+		String req = "select * from locataire";
+		Statement stmt = this.mySQLCon.getConnection().createStatement();
+		return stmt.executeQuery(req);
 	}
 	
 	public int ajouterLocataire(String id_locataire, String nom, String prenom, String mail, String telephone, Date date_naissance ) {
