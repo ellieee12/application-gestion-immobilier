@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -10,6 +11,9 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import classes.ICC;
+import classes.Locataire;
+import classes.Location;
 import ihm.VueAjouterLocation;
 import modeleDAO.BienDAO;
 import modeleDAO.LocataireDAO;
@@ -23,6 +27,13 @@ public class ControleurAjouterLocation implements ActionListener{
 	private LocataireDAO locataireDAO;
 	private List<String> locataires;
 	private List<String> biens;
+	private List<String> id_locataires;	
+	
+	//add a new method
+	public String getIDLocataire(String nomPrenom) {
+	        return this.id_locataires.get(this.locataires.indexOf(nomPrenom));
+	}
+
 	
 	private boolean verifComplet() {
 		if (!this.vue.isComplet()) {
@@ -33,6 +44,20 @@ public class ControleurAjouterLocation implements ActionListener{
 		return true;
 	}
 	
+	private boolean verifLocationExiste() {
+		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
+				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Cet location existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean allVerifs() {
+		return verifComplet() && !verifLocationExiste();
+	}
+	
 	public ControleurAjouterLocation(VueAjouterLocation vue) throws SQLException {
 		this.vue=vue;
 		this.bienDAO=new BienDAO();
@@ -40,16 +65,16 @@ public class ControleurAjouterLocation implements ActionListener{
 		this.locataireDAO=new LocataireDAO();
 		this.locataires=new LinkedList<>();
 		this.biens=new LinkedList<>();
-		
+		this.id_locataires=new LinkedList<>();
 		ResultSet locatairesRS = this.locataireDAO.getAllLocataires();
 		while (locatairesRS.next()) {
 			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
+			this.id_locataires.add(locatairesRS.getString(1));
 		}
 		ResultSet biensRS = this.bienDAO.getAllBiens();
 		while (biensRS.next()) {
 			this.biens.add(biensRS.getString(1));
 		}
-		
 	}
 
 	@Override
@@ -58,8 +83,17 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
 		} else if(bouton.getText().equals("Valider")) {
-			if (verifComplet()) {
-				//this.locationDAO.ajouterLocation(null, null, null);
+			if (allVerifs()) {
+				try {
+					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
+							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
+							this.vue.getCaution(), this.vue.getChampsEtatLieux(), this.vue.getDateDerniereRegularisation(),
+							this.vue.isPaye(), this.vue.getMontantReelPaye());
+					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), 
+							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 	}

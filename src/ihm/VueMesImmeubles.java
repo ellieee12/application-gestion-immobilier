@@ -19,7 +19,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import classes.Bien;
 import classes.Immeuble;
+import classes.Logement;
 import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
 
@@ -28,6 +30,8 @@ public class VueMesImmeubles extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private DefaultTableModel t;
+
 
 	/**
 	 * Launch the application.
@@ -85,7 +89,7 @@ public class VueMesImmeubles extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		DefaultTableModel t = new DefaultTableModel(
+		this.t = new DefaultTableModel(
 				new Object[][] {
 				},
 				new String[] {
@@ -105,15 +109,20 @@ public class VueMesImmeubles extends JFrame {
 					return columnEditables[column];
 				}
 			};
-		for (Immeuble i : controleur.getImmeuble()) {
-			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
-		}
+		this.buildTable(controleur);
 		this.table = new JTable(t);
 		this.table.setModel(t);
 		
 		scrollPane.setViewportView(table);
 		
 		this.table.addMouseListener(controleur);
+	}
+	
+	public void buildTable(ControleurMesImmeubles controleur) {
+		this.t.setRowCount(0);
+		for (Immeuble i : controleur.getImmeuble()) {
+			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
+		}
 	}
 	
 	public int getLigneChoisi() {

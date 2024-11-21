@@ -63,9 +63,23 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	}
 
 	public void Update() {
-		controleur = null;
-		getControleur(this.vue);
-	}
+        try {
+            this.immeuble = new LinkedList<>();
+            
+            ImmeubleDAO immeuble = new ImmeubleDAO();
+            ResultSet rs = immeuble.getAllImmeubles();
+            while(rs.next()) {
+                if (rs.getString(2).equals("M")) {
+                    this.immeuble.add(new Maison(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
+                } else {
+                    this.immeuble.add(new Batiment(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.vue.buildTable(this);
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

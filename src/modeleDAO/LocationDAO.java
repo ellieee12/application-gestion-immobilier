@@ -47,7 +47,7 @@ private MySQLCon mySQLCon;
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-		
+		return 0;
 	}
 	
 	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) {

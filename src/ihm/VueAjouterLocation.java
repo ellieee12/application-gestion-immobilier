@@ -297,6 +297,9 @@ public class VueAjouterLocation extends JFrame {
 		
 		JButton ButtonValider = new JButton("Valider");
 		PanelBoutons.add(ButtonValider);
+		
+		ButtonAnnuler.addActionListener(controleur);
+		ButtonValider.addActionListener(controleur);
 	}
 
 	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {

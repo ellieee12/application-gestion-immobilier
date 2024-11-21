@@ -23,9 +23,7 @@ public class Location {
     private float caution_TTC;
 
     @objid ("6e77ee39-435d-4483-829f-978f06898e78")
-    private ETAT etat_lieux;
-    
-    private enum ETAT{TRES_MAUVAIS, MAUVAIS, MOYEN, BON, TRES_BON}
+    private String etat_lieux;
 
     @objid ("0722a716-ccae-4173-bd3d-0cca8f62598d")
     private Date date_derniere_reg;
@@ -35,13 +33,9 @@ public class Location {
 
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
-    
-    private Locataire locataire;
-    
-    private ICC icc;
  
-	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
-			float caution_TTC, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+			float caution_TTC, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -52,7 +46,6 @@ public class Location {
 		this.date_derniere_reg = date_derniere_reg;
 		this.loyer_paye = loyer_paye;
 		this.montant_reel_paye = montant_reel_paye;
-		this.locataire = locataire;
 	}
 
 	public Date getDate_debut() {
@@ -92,12 +85,5 @@ public class Location {
 		return montant_reel_paye;
 	}
 
-	public Locataire getLocataire() {
-		return locataire;
-	}
-
-	public ICC getIcc() {
-		return icc;
-	}
 
 }
