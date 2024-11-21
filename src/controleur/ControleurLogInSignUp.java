@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import ihm.VueLogin;
+import ihm.VueMenu;
 import ihm.VueSignUp;
 import modele.ModeleLoginSignUp;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
@@ -43,6 +44,8 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 				}else {
 					if (this.modele.mdpCorrecte(username, mdp)){
 						vueLogin.setVisible(false);
+						VueMenu frame = new VueMenu();
+						frame.setVisible(true);
 					}else {
 						JOptionPane.showMessageDialog(vueSignUp, "Mot de passe incorrecte","Erreur",JOptionPane.WARNING_MESSAGE);
 					}
