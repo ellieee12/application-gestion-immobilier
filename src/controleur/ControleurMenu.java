@@ -1,12 +1,10 @@
 package controleur;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import ihm.VueAjouterImmeuble;
 import ihm.VueAjouterLocation;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;

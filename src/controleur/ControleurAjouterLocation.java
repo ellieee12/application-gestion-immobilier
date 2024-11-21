@@ -47,7 +47,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		JButton bouton = (JButton) e.getSource();
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
-		}else if(bouton.getText().equals("Valider")) {
+		} else if(bouton.getText().equals("Valider")) {
 			
 		}
 		

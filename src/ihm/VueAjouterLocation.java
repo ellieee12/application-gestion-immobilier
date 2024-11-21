@@ -129,13 +129,6 @@ public class VueAjouterLocation extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("Loyer Payé : ");
 		panel_3.add(lblNewLabel_3, BorderLayout.NORTH);
 		
-		JPanel panel_4 = new JPanel();
-		panelLibellé.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_4 = new JLabel("Bail : ");
-		panel_4.add(lblNewLabel_4, BorderLayout.NORTH);
-		
 		JPanel panel_5 = new JPanel();
 		panelLibellé.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
@@ -223,15 +216,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		chckbxLoyerPaye = new JCheckBox("");
 		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
-		
-		JPanel panel_c_bail = new JPanel();
-		panelChamps.add(panel_c_bail);
-		panel_c_bail.setLayout(new BorderLayout(0, 0));
-		
-		textFieldBail = new JFormattedTextField(currencyFormatter);
-		textFieldBail.setValue(0.0);
-		panel_c_bail.add(textFieldBail, BorderLayout.NORTH);
-		textFieldBail.setColumns(10);
 		
 		JPanel panel_c_date_debut_location = new JPanel();
 		panelChamps.add(panel_c_date_debut_location);
