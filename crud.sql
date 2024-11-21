@@ -109,13 +109,13 @@ values
 (5, 5, 4, 120.50, '2018-07-30', 'G', 4);
 
 -- Insert sample data into Locataire
-insert into locataire (id_locataire,nom, prenom, telephone, mail, date_naissance, adresse, code_postale, ville)
+insert into locataire (id_locataire,nom, prenom, telephone, mail, date_naissance)
 values 
-(1,'Dupont', 'Marie', '0123456789', 'marie.dupont@example.com', '1992-03-12', '8 Rue de Rivoli', '75004', 'Paris'),
-(2,'Leroy', 'Pierre', '0123456790', 'pierre.leroy@example.com', '1985-07-21', '22 Boulevard Voltaire', '75011', 'Paris'),
-(3,'Martin', 'Lucie', '0123456791', 'lucie.martin@example.com', '1990-05-17', '56 Rue Saint-Jean', '69001', 'Lyon'),
-(4,'Bernard', 'Julien', '0123456792', 'julien.bernard@example.com', '1993-09-23', '34 Rue de Lille', '59000', 'Lille'),
-(5,'Rousseau', 'Sophie', '0123456793', 'sophie.rousseau@example.com', '1988-12-11', '19 Avenue des Fleurs', '06000', 'Nice');
+(1,'Dupont', 'Marie', '0123456789', 'marie.dupont@example.com', '1992-03-12'),
+(2,'Leroy', 'Pierre', '0123456790', 'pierre.leroy@example.com', '1985-07-21'),
+(3,'Martin', 'Lucie', '0123456791', 'lucie.martin@example.com', '1990-05-17'),
+(4,'Bernard', 'Julien', '0123456792', 'julien.bernard@example.com', '1993-09-23'),
+(5,'Rousseau', 'Sophie', '0123456793', 'sophie.rousseau@example.com', '1988-12-11');
 
 -- Insert sample data into ICC
 INSERT INTO icc (annee, trimestre, indice)
