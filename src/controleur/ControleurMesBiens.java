@@ -53,9 +53,15 @@ public class ControleurMesBiens implements ActionListener {
 	public void Update() {
 		try {
 			this.bien = new LinkedList<>();
-			
 			BienDAO bien = new BienDAO();
-			ResultSet rs = bien.getAllBiens();
+			ImmeubleDAO immeuble = new ImmeubleDAO();
+			ResultSet rs = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
+			ResultSet rs2 = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
+			while(rs2.next()) {
+				this.adresse = rs2.getString(1);
+				this.cp = rs2.getString(2);
+				this.ville = rs2.getString(3);
+			}
 			while(rs.next()) {
 				if (rs.getString(2).equals("L")) {
 					this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));

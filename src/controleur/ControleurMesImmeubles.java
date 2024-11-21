@@ -71,8 +71,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Ajouter") {
-			//fermer cette page et ouvrir ajouterImmeuble
-			this.vue.dispose();
+			//ouvrir ajouterImmeuble
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
