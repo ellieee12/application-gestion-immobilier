@@ -41,9 +41,6 @@ create table Locataire (
     telephone CHAR(15) not null,
     mail VARCHAR(50) ,
     date_naissance DATE,
-    adresse VARCHAR(50) not null,
-    code_postale CHAR(5) not null,
-    ville VARCHAR(50) not null,
     constraint pk_locataire primary key(id_locataire)
 );
 
