@@ -33,7 +33,7 @@ public class ControleurMenu implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Mes Immeubles") {
 			try {
-				VueAjouterImmeuble frame = new VueAjouterImmeuble();
+				VueMesImmeubles frame = new VueMesImmeubles();
 				frame.setVisible(true);
 			} catch (Exception e1) {
 				e1.printStackTrace();
