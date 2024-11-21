@@ -53,7 +53,6 @@ create table icc (
 
 CREATE TABLE Location(
     id_bien VARCHAR(20) not null,
-    id_locataire VARCHAR(20) not null,
     date_debut DATE not null,
     nb_mois INT,
     provision_charges_ttc decimal(15,2),
@@ -64,9 +63,8 @@ CREATE TABLE Location(
     montant_reel_paye decimal(15,2),
     annee date NOT NULL,
     trimestre smallint NOT NULL,
-    constraint pk_location PRIMARY KEY(id_bien, id_locataire, date_debut),
+    constraint pk_location PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
-    constraint fk_location_id_locataire FOREIGN KEY (id_locataire) REFERENCES Locataire(id_locataire),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
 );
 
@@ -79,15 +77,15 @@ CREATE TABLE Document_Location(
     id_locataire VARCHAR(20) NOT NULL,
     date_debut DATE NOT NULL,
     CONSTRAINT pk_document_location PRIMARY KEY(id_document),
-    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, id_locataire, date_debut) REFERENCES Location(id_bien, id_locataire, date_debut)
+    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut)
 );
 
 CREATE TABLE Louer(
    id_bien VARCHAR(20),
    date_debut DATE,
    id_locataire VARCHAR(20),
-   constraint pk_louer PRIMARY KEY(id_bien, date_debut, id_locataire),
-   constraint fk_louer_location FOREIGN KEY(id_bien, id_locataire, date_debut)REFERENCES Location(id_bien, id_locataire, date_debut),
+   constraint pk_louer PRIMARY KEY(id_bien, date_debut),
+   constraint fk_louer_location FOREIGN KEY(id_bien, date_debut)REFERENCES Location(id_bien, date_debut),
    constraint fk_louer_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
 );
 
@@ -130,15 +128,15 @@ VALUES
 
 -- Insert sample data into Location
 INSERT INTO Location (
-    id_bien, id_locataire, date_debut, nb_mois, provision_charges_ttc, loyer_ttc, 
-    caution_ttc, bail, etat_lieux, date_derniere_reg, montant_reel_paye, annee, trimestre
+    id_bien, date_debut, nb_mois, provision_charges_ttc, loyer_ttc, 
+    caution_ttc, etat_lieux, date_derniere_reg, montant_reel_paye, annee, trimestre
 )
 VALUES
-(1, 1, '2023-01-01', 12, 150.00, 750.00, 1500.00, 'Bail_001', 'Etat_001', '2023-12-01', 9000.00, '2023-01-01', 1),
-(2, 2, '2023-04-01', 6, 100.00, 500.00, 1000.00, 'Bail_002', 'Etat_002', '2023-10-01', 3000.00, '2023-04-01', 2),
-(3, 3, '2023-07-01', 9, 200.00, 1000.00, 2000.00, 'Bail_003', 'Etat_003', '2023-10-01', 7000.00, '2023-07-01', 3),
-(4, 4, '2023-10-01', 24, 250.00, 1200.00, 2400.00, 'Bail_004', 'Etat_004', '2024-10-01', 12000.00, '2023-10-01', 4),
-(5, 5, '2024-01-01', 18, 300.00, 1500.00, 3000.00, 'Bail_005', 'Etat_005', '2024-06-01', 18000.00, '2024-01-01', 1);
+(1, '2023-01-01', 12, 150.00, 750.00, 1500.00, 'Etat_001', '2023-12-01', 9000.00, '2023-01-01', 1),
+(2, '2023-04-01', 6, 100.00, 500.00, 1000.00, 'Etat_002', '2023-10-01', 3000.00, '2023-04-01', 2),
+(3, '2023-07-01', 9, 200.00, 1000.00, 2000.00, 'Etat_003', '2023-10-01', 7000.00, '2023-07-01', 3),
+(4, '2023-10-01', 24, 250.00, 1200.00, 2400.00, 'Etat_004', '2024-10-01', 12000.00, '2023-10-01', 4),
+(5, '2024-01-01', 18, 300.00, 1500.00, 3000.00, 'Etat_005', '2024-06-01', 18000.00, '2024-01-01', 1);
 
 
 INSERT INTO Louer (id_bien, date_debut, id_locataire)

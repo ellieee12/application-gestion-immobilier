@@ -76,8 +76,8 @@ public class Location {
 		return caution_TTC;
 	}
 
-	public ETAT getEtat_lieux() {
-		return etat_lieux;
+	public String getEtat_lieux() {
+		return etat_lieux.toString();
 	}
 
 	public Date getDate_derniere_reg() {
