@@ -32,7 +32,6 @@ public class VueAjouterLocation extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JFormattedTextField textFieldBail;
 	private JFormattedTextField textFieldDateDebutLocation;
 	private JFormattedTextField textFieldNombreMoisPrevus;
 	private JFormattedTextField textFieldLoyerLocataire;
@@ -60,6 +59,12 @@ public class VueAjouterLocation extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public boolean isComplet() {
+		return !this.getSelectedBien().isEmpty() && !this.getDateDebutLocation().toString().isEmpty()
+				&& !this.getNbMoisPrevus().toString().isEmpty() 
+				&& !this.getDateDerniereRegularisation().toString().isEmpty();
 	}
 
 	/**
@@ -280,7 +285,8 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_montant_reel);
 		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
 		
-		formattedMontantReelPaye = new JFormattedTextField();
+		formattedMontantReelPaye = new JFormattedTextField(currencyFormatter);
+		formattedMontantReelPaye.setValue(0.0);
 		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		
 		JPanel PanelBoutons = new JPanel();
@@ -336,16 +342,12 @@ public class VueAjouterLocation extends JFrame {
 	public boolean isPaye() {
 		return this.chckbxLoyerPaye.isSelected();
 	}
-	
-	public Float getBail() {
-		return Float.valueOf(this.textFieldBail.getText());
-	}
 
 	public Date getDateDebutLocation() {
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
-	        java.util.Date parsedDate = sdf.parse(this.textFieldBail.getText());
+	        java.util.Date parsedDate = sdf.parse(this.textFieldDateDebutLocation.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
 	        return null; 
@@ -366,6 +368,10 @@ public class VueAjouterLocation extends JFrame {
 	
 	public Float getCaution() {
 		return Float.valueOf(this.formattedCaution.getText());
+	}
+	
+	public Float getMontantReelPaye() {
+		return Float.valueOf(this.formattedMontantReelPaye.getText());
 	}
 	
 	public Date getDateDerniereRegularisation() {

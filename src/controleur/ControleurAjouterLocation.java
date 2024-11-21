@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import ihm.VueAjouterLocation;
 import modeleDAO.BienDAO;
@@ -22,6 +23,15 @@ public class ControleurAjouterLocation implements ActionListener{
 	private LocataireDAO locataireDAO;
 	private List<String> locataires;
 	private List<String> biens;
+	
+	private boolean verifComplet() {
+		if (!this.vue.isComplet()) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
+	}
 	
 	public ControleurAjouterLocation(VueAjouterLocation vue) throws SQLException {
 		this.vue=vue;
@@ -48,7 +58,9 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
 		} else if(bouton.getText().equals("Valider")) {
-			
+			if (verifComplet()) {
+				//this.locationDAO.ajouterLocation(null, null, null);
+			}
 		}
 	}
 	
