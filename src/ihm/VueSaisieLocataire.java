@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurSaisieLocataire;
+import java.awt.FlowLayout;
 
 public class VueSaisieLocataire extends JFrame {
 
@@ -26,7 +27,6 @@ public class VueSaisieLocataire extends JFrame {
 	private JTextField textFieldPrenom;
 	private JTextField textFieldTel;
 	private JTextField textFieldMail;
-	private JTextField textField_4;
 	private JTextField textFieldDateDeNaissance;
 	private JTextField textFieldId;
 
@@ -49,6 +49,7 @@ public class VueSaisieLocataire extends JFrame {
 	public String getNom() {
 		return textFieldNom.getText();
 	}
+	
 	public String getPrenom() {
 		return textFieldPrenom.getText();
 	}
@@ -101,12 +102,12 @@ public class VueSaisieLocataire extends JFrame {
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 30));
 		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.WEST);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel panelLibellés = new JPanel();
+		contentPane.add(panelLibellés, BorderLayout.WEST);
+		panelLibellés.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
+		panelLibellés.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("Nom :");
@@ -114,7 +115,7 @@ public class VueSaisieLocataire extends JFrame {
 		panel_2.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
+		panelLibellés.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_2 = new JLabel("Prenom :");
@@ -122,7 +123,7 @@ public class VueSaisieLocataire extends JFrame {
 		panel_3.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		JPanel panel_6 = new JPanel();
-		panel.add(panel_6);
+		panelLibellés.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_3 = new JLabel("Téléphone :");
@@ -130,7 +131,7 @@ public class VueSaisieLocataire extends JFrame {
 		panel_6.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_10 = new JPanel();
-		panel.add(panel_10);
+		panelLibellés.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_4 = new JLabel("Mail :");
@@ -138,7 +139,7 @@ public class VueSaisieLocataire extends JFrame {
 		panel_10.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		JPanel panel_11 = new JPanel();
-		panel.add(panel_11);
+		panelLibellés.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_5 = new JLabel("Date de naissance :");
@@ -146,19 +147,19 @@ public class VueSaisieLocataire extends JFrame {
 		panel_11.add(lblNewLabel_5, BorderLayout.NORTH);
 		
 		JPanel panel_12 = new JPanel();
-		panel.add(panel_12);
+		panelLibellés.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_6 = new JLabel("Identifiant :");
 		lblNewLabel_6.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_12.add(lblNewLabel_6, BorderLayout.NORTH);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel panelChamps = new JPanel();
+		contentPane.add(panelChamps, BorderLayout.CENTER);
+		panelChamps.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4);
+		panelChamps.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		textFieldNom = new JTextField();
@@ -166,7 +167,7 @@ public class VueSaisieLocataire extends JFrame {
 		textFieldNom.setColumns(10);
 		
 		JPanel panel_5 = new JPanel();
-		panel_1.add(panel_5);
+		panelChamps.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		textFieldPrenom = new JTextField();
@@ -174,7 +175,7 @@ public class VueSaisieLocataire extends JFrame {
 		textFieldPrenom.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
-		panel_1.add(panel_7);
+		panelChamps.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
 		textFieldTel = new JTextField();
@@ -182,7 +183,7 @@ public class VueSaisieLocataire extends JFrame {
 		textFieldTel.setColumns(10);
 		
 		JPanel panel_8 = new JPanel();
-		panel_1.add(panel_8);
+		panelChamps.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
 		textFieldMail = new JTextField();
@@ -190,10 +191,10 @@ public class VueSaisieLocataire extends JFrame {
 		textFieldMail.setColumns(10);
 		
 		JPanel panel_9 = new JPanel();
-		panel_1.add(panel_9);
+		panelChamps.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
-		textField_4 = new JTextField();
+		new JTextField();
 		try {
 			textFieldDateDeNaissance = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e) {
@@ -203,26 +204,26 @@ public class VueSaisieLocataire extends JFrame {
 		textFieldDateDeNaissance.setColumns(10);
 		
 		JPanel panel_13 = new JPanel();
-		panel_1.add(panel_13);
+		panelChamps.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
 		textFieldId = new JTextField();
 		panel_13.add(textFieldId, BorderLayout.NORTH);
 		textFieldId.setColumns(10);
 		
-		JPanel panel_14 = new JPanel();
-		contentPane.add(panel_14, BorderLayout.SOUTH);
-		panel_14.setLayout(new BorderLayout(0, 0));
-		
-		JButton btnNewButton = new JButton("Créer");
-		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
-		btnNewButton.addActionListener(controleur);
-		panel_14.add(btnNewButton, BorderLayout.EAST);
+		JPanel panelBoutons = new JPanel();
+		contentPane.add(panelBoutons, BorderLayout.SOUTH);
+		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
 		btnNewButton_1.setFont(new Font("Roboto", Font.PLAIN, 11));
 		btnNewButton_1.addActionListener(controleur);
-		panel_14.add(btnNewButton_1, BorderLayout.WEST);
+		panelBoutons.add(btnNewButton_1);
+		
+		JButton btnNewButton = new JButton("Ajouter");
+		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnNewButton.addActionListener(controleur);
+		panelBoutons.add(btnNewButton);
 	}
 
 }
