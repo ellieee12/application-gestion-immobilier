@@ -3,7 +3,6 @@ package modeleDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import controleur.ControleurLogInSignUp;
 
 public class MySQLCon {
 	private static MySQLCon mySQLCon;

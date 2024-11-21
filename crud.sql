@@ -2,6 +2,8 @@ use saes3;
 set autocommit=0;
 start transaction;
 
+drop table if exists louer;
+drop table if exists Document_Location;
 DROP TABLE IF EXISTS location; 
 DROP TABLE IF EXISTS bien;
 DROP TABLE IF EXISTS locataire;
@@ -37,10 +39,10 @@ create table Locataire (
     nom VARCHAR(30) not null,
     prenom VARCHAR(30) not null,
     telephone CHAR(15) not null,
-    mail VARCHAR(50) not null,
-    date_naissance DATE not null,
+    mail VARCHAR(50) ,
+    date_naissance DATE,
     adresse VARCHAR(50) not null,
-    code_postal CHAR(5) not null,
+    code_postale CHAR(5) not null,
     ville VARCHAR(50) not null,
     constraint pk_locataire primary key(id_locataire)
 );
@@ -53,9 +55,9 @@ create table icc (
 );
 
 CREATE TABLE Location(
-    id_bien VARCHAR(20),
-    id_locataire VARCHAR(20),
-    date_debut DATE,
+    id_bien VARCHAR(20) not null,
+    id_locataire VARCHAR(20) not null,
+    date_debut DATE not null,
     nb_mois INT,
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
@@ -71,6 +73,28 @@ CREATE TABLE Location(
     constraint fk_location_id_locataire FOREIGN KEY (id_locataire) REFERENCES Locataire(id_locataire),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
 );
+
+CREATE TABLE Document_Location(
+    id_document INT not null auto_increment,
+    filepath VARCHAR(50) not null,
+    description VARCHAR(100),
+    date_enregistrement DATE,
+    id_bien VARCHAR(20) NOT NULL,
+    id_locataire VARCHAR(20) NOT NULL,
+    date_debut DATE NOT NULL,
+    CONSTRAINT pk_document_location PRIMARY KEY(id_document),
+    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, id_locataire, date_debut) REFERENCES Location(id_bien, id_locataire, date_debut)
+);
+
+CREATE TABLE Louer(
+   id_bien VARCHAR(20),
+   date_debut DATE,
+   id_locataire VARCHAR(20),
+   constraint pk_louer PRIMARY KEY(id_bien, date_debut, id_locataire),
+   constraint fk_louer_location FOREIGN KEY(id_bien, id_locataire, date_debut)REFERENCES Location(id_bien, id_locataire, date_debut),
+   constraint fk_louer_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
+);
+
 
 
 -- Insert sample data into Immeuble
@@ -91,7 +115,7 @@ values
 (5, 5, 4, 120.50, '2018-07-30', 'G', 4);
 
 -- Insert sample data into Locataire
-insert into locataire (id_locataire,nom, prenom, telephone, mail, date_naissance, adresse, code_postal, ville)
+insert into locataire (id_locataire,nom, prenom, telephone, mail, date_naissance, adresse, code_postale, ville)
 values 
 (1,'Dupont', 'Marie', '0123456789', 'marie.dupont@example.com', '1992-03-12', '8 Rue de Rivoli', '75004', 'Paris'),
 (2,'Leroy', 'Pierre', '0123456790', 'pierre.leroy@example.com', '1985-07-21', '22 Boulevard Voltaire', '75011', 'Paris'),
@@ -120,4 +144,12 @@ VALUES
 (4, 4, '2023-10-01', 24, 250.00, 1200.00, 2400.00, 'Bail_004', 'Etat_004', '2024-10-01', 12000.00, '2023-10-01', 4),
 (5, 5, '2024-01-01', 18, 300.00, 1500.00, 3000.00, 'Bail_005', 'Etat_005', '2024-06-01', 18000.00, '2024-01-01', 1);
 
+
+INSERT INTO Louer (id_bien, date_debut, id_locataire)
+VALUES
+(1, '2023-01-01', 1),
+(2, '2023-04-01', 2),
+(3, '2023-07-01', 3),
+(4, '2023-10-01', 4),
+(5, '2024-01-01', 5);
 commit;

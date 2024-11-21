@@ -8,20 +8,28 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
 public class VueAjouterLocation extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldBail;
-	private JTextField textFieldDateDebutLocation;
-	private JTextField textFieldNombreMoisPrevus;
-	private JTextField textFieldLoyerLocataire;
+	private JFormattedTextField textFieldDateDebutLocation;
+	private JFormattedTextField textFieldNombreMoisPrevus;
+	private JFormattedTextField textFieldLoyerLocataire;
 
 	/**
 	 * Launch the application.
@@ -50,6 +58,7 @@ public class VueAjouterLocation extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
 		contentPane = new JPanel();
@@ -64,14 +73,14 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panelLibellé = new JPanel();
 		contentPane.add(panelLibellé, BorderLayout.WEST);
-		panelLibellé.setLayout(new GridLayout(0, 1, 0, 0));
+		panelLibellé.setLayout(new GridLayout(12, 1, 0, 0));
 		
-		JPanel panel = new JPanel();
-		panelLibellé.add(panel);
-		panel.setLayout(new BorderLayout(5, 0));
+		JPanel panel_L_Locataire = new JPanel();
+		panelLibellé.add(panel_L_Locataire);
+		panel_L_Locataire.setLayout(new BorderLayout(5, 0));
 		
 		JLabel lblNewLabel = new JLabel("Locataire : ");
-		panel.add(lblNewLabel, BorderLayout.NORTH);
+		panel_L_Locataire.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
 		panelLibellé.add(panel_1);
@@ -152,91 +161,122 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
-		panelChamps.setLayout(new GridLayout(13, 1, 0, 0));
+		panelChamps.setLayout(new GridLayout(12, 1, 0, 0));
 		
-		JPanel panel_12 = new JPanel();
-		panelChamps.add(panel_12);
-		panel_12.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_Locataire = new JPanel();
+		panelChamps.add(panel_c_Locataire);
+		panel_c_Locataire.setLayout(new BorderLayout(0, 0));
 		
 		JComboBox comboBoxLocataire = new JComboBox();
-		panel_12.add(comboBoxLocataire, BorderLayout.NORTH);
+		panel_c_Locataire.add(comboBoxLocataire, BorderLayout.NORTH);
 		
-		JPanel panel_13 = new JPanel();
-		panelChamps.add(panel_13);
-		panel_13.setLayout(new BorderLayout(0, 0));
-		
+		JPanel panel_c_edl = new JPanel();
+		panelChamps.add(panel_c_edl);
+		panel_c_edl.setLayout(new BorderLayout(0, 0));
 		JComboBox comboBoxEtatsDesLieux = new JComboBox();
 		comboBoxEtatsDesLieux.setModel(new DefaultComboBoxModel(new String[] {"Tres mauvais", "Mauvais", "Moyen", "Bon", "Tres Bon"}));
-		panel_13.add(comboBoxEtatsDesLieux, BorderLayout.NORTH);
+		panel_c_edl.add(comboBoxEtatsDesLieux, BorderLayout.NORTH);
 		
-		JPanel panel_14 = new JPanel();
-		panelChamps.add(panel_14);
-		panel_14.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_colocation = new JPanel();
+		panelChamps.add(panel_c_colocation);
+		panel_c_colocation.setLayout(new BorderLayout(0, 0));
 		
 		JCheckBox chckbxColocation = new JCheckBox("");
-		panel_14.add(chckbxColocation, BorderLayout.WEST);
+		panel_c_colocation.add(chckbxColocation, BorderLayout.WEST);
 		
-		JPanel panel_15 = new JPanel();
-		panelChamps.add(panel_15);
-		panel_15.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_loyer_paye = new JPanel();
+		panelChamps.add(panel_c_loyer_paye);
+		panel_c_loyer_paye.setLayout(new BorderLayout(0, 0));
 		
 		JCheckBox chckbxLoyerPaye = new JCheckBox("");
-		panel_15.add(chckbxLoyerPaye, BorderLayout.WEST);
+		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
 		
-		JPanel panel_16 = new JPanel();
-		panelChamps.add(panel_16);
-		panel_16.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_bail = new JPanel();
+		panelChamps.add(panel_c_bail);
+		panel_c_bail.setLayout(new BorderLayout(0, 0));
 		
 		textFieldBail = new JTextField();
-		panel_16.add(textFieldBail, BorderLayout.NORTH);
+		panel_c_bail.add(textFieldBail, BorderLayout.NORTH);
 		textFieldBail.setColumns(10);
 		
-		JPanel panel_17 = new JPanel();
-		panelChamps.add(panel_17);
-		panel_17.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_date_debut_location = new JPanel();
+		panelChamps.add(panel_c_date_debut_location);
+		panel_c_date_debut_location.setLayout(new BorderLayout(0, 0));
 		
-		textFieldDateDebutLocation = new JTextField();
-		panel_17.add(textFieldDateDebutLocation, BorderLayout.NORTH);
+		textFieldDateDebutLocation = new JFormattedTextField();
+		try {
+			textFieldDateDebutLocation = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		panel_c_date_debut_location.add(textFieldDateDebutLocation, BorderLayout.NORTH);
 		textFieldDateDebutLocation.setColumns(10);
 		
-		JPanel panel_18 = new JPanel();
-		panelChamps.add(panel_18);
-		panel_18.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_nb_mois = new JPanel();
+		panelChamps.add(panel_c_nb_mois);
+		panel_c_nb_mois.setLayout(new BorderLayout(0, 0));
 		
-		textFieldNombreMoisPrevus = new JTextField();
-		panel_18.add(textFieldNombreMoisPrevus, BorderLayout.NORTH);
+		textFieldNombreMoisPrevus = new JFormattedTextField();
+		panel_c_nb_mois.add(textFieldNombreMoisPrevus, BorderLayout.NORTH);
 		textFieldNombreMoisPrevus.setColumns(10);
 		
-		JPanel panel_19 = new JPanel();
-		panelChamps.add(panel_19);
-		panel_19.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_loyer = new JPanel();
+		panelChamps.add(panel_c_loyer);
+		panel_c_loyer.setLayout(new BorderLayout(0, 0));
 		
-		textFieldLoyerLocataire = new JTextField();
+		textFieldLoyerLocataire = new JFormattedTextField(currencyFormatter);
+		textFieldLoyerLocataire.setValue(0.0);
 		textFieldLoyerLocataire.setColumns(10);
-		panel_19.add(textFieldLoyerLocataire, BorderLayout.NORTH);
 		
-		JPanel panel_20 = new JPanel();
-		panelChamps.add(panel_20);
-		panel_20.setLayout(new BorderLayout(0, 0));
+		panel_c_loyer.add(textFieldLoyerLocataire, BorderLayout.NORTH);
 		
-		JPanel panel_21 = new JPanel();
-		panelChamps.add(panel_21);
-		panel_21.setLayout(new BorderLayout(0, 0));
+		JPanel panel_c_provisions = new JPanel();
+		panelChamps.add(panel_c_provisions);
+		panel_c_provisions.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_22 = new JPanel();
-		panelChamps.add(panel_22);
-		panel_22.setLayout(new BorderLayout(0, 0));
+		JFormattedTextField formattedProvisionCharges = new JFormattedTextField(currencyFormatter);
+		formattedProvisionCharges.setValue(0.0);
+		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
-		JPanel panel_23 = new JPanel();
-		panelChamps.add(panel_23);
-		panel_23.setLayout(new BorderLayout(0, 0));
+		JPanel panel__c_caution = new JPanel();
+		panelChamps.add(panel__c_caution);
+		panel__c_caution.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_24 = new JPanel();
-		panelChamps.add(panel_24);
-		panel_24.setLayout(new BorderLayout(0, 0));
+		JFormattedTextField formattedCaution = new JFormattedTextField(currencyFormatter);
+		formattedCaution.setValue(0.0);
+		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
+		
+		JPanel panel_c_date_derniere_reg = new JPanel();
+		panelChamps.add(panel_c_date_derniere_reg);
+		panel_c_date_derniere_reg.setLayout(new BorderLayout(0, 0));
+		
+		JFormattedTextField formattedDateDerniereRegularisation = new JFormattedTextField();
+		try {
+			formattedDateDerniereRegularisation = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		panel_c_date_derniere_reg.add(formattedDateDerniereRegularisation, BorderLayout.NORTH);
+		
+		JPanel panel_c_montant_reel = new JPanel();
+		panelChamps.add(panel_c_montant_reel);
+		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
+		
+		JFormattedTextField formattedMontantReelPaye = new JFormattedTextField();
+		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		
 		JPanel panelBoutons = new JPanel();
 		contentPane.add(panelBoutons, BorderLayout.SOUTH);
+	}
+
+	private NumberFormatter generateCurrencyFormatter() {
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00€");
+		decimalFormat.setDecimalSeparatorAlwaysShown(true);
+		NumberFormatter numberFormatter= new NumberFormatter(decimalFormat);
+		numberFormatter.setValueClass(Double.class);
+		numberFormatter.setAllowsInvalid(false);
+		numberFormatter.setMinimum(0.0);
+		return numberFormatter;
 	}
 
 }
