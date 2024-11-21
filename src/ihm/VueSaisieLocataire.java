@@ -4,25 +4,31 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class VueSaisieLocataire extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textFieldNom;
+	private JTextField textFieldPrenom;
+	private JTextField textFieldTel;
+	private JTextField textFieldMail;
 	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textFieldDateDeNaissance;
+	private JTextField textFieldId;
 
 	/**
 	 * Launch the application.
@@ -38,6 +44,10 @@ public class VueSaisieLocataire extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public String getNom() {
+		return textFieldNom.getText();
 	}
 
 	/**
@@ -116,49 +126,54 @@ public class VueSaisieLocataire extends JFrame {
 		panel_1.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JTextField();
-		panel_4.add(textField, BorderLayout.NORTH);
-		textField.setColumns(10);
+		textFieldNom = new JTextField();
+		panel_4.add(textFieldNom, BorderLayout.NORTH);
+		textFieldNom.setColumns(10);
 		
 		JPanel panel_5 = new JPanel();
 		panel_1.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		textField_1 = new JTextField();
-		panel_5.add(textField_1, BorderLayout.NORTH);
-		textField_1.setColumns(10);
+		textFieldPrenom = new JTextField();
+		panel_5.add(textFieldPrenom, BorderLayout.NORTH);
+		textFieldPrenom.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		textField_2 = new JTextField();
-		panel_7.add(textField_2, BorderLayout.NORTH);
-		textField_2.setColumns(10);
+		textFieldTel = new JTextField();
+		panel_7.add(textFieldTel, BorderLayout.NORTH);
+		textFieldTel.setColumns(10);
 		
 		JPanel panel_8 = new JPanel();
 		panel_1.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		textField_3 = new JTextField();
-		panel_8.add(textField_3, BorderLayout.NORTH);
-		textField_3.setColumns(10);
+		textFieldMail = new JTextField();
+		panel_8.add(textFieldMail, BorderLayout.NORTH);
+		textFieldMail.setColumns(10);
 		
 		JPanel panel_9 = new JPanel();
 		panel_1.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
 		textField_4 = new JTextField();
-		panel_9.add(textField_4, BorderLayout.NORTH);
-		textField_4.setColumns(10);
+		try {
+			textFieldDateDeNaissance = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		panel_9.add(textFieldDateDeNaissance, BorderLayout.NORTH);
+		textFieldDateDeNaissance.setColumns(10);
 		
 		JPanel panel_13 = new JPanel();
 		panel_1.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
-		textField_5 = new JTextField();
-		panel_13.add(textField_5, BorderLayout.NORTH);
-		textField_5.setColumns(10);
+		textFieldId = new JTextField();
+		panel_13.add(textFieldId, BorderLayout.NORTH);
+		textFieldId.setColumns(10);
 		
 		JPanel panel_14 = new JPanel();
 		contentPane.add(panel_14, BorderLayout.SOUTH);
