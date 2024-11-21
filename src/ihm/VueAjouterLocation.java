@@ -8,28 +8,43 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Locale;
-
-import javax.swing.SwingConstants;
+import java.text.SimpleDateFormat;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
+
+import controleur.ControleurAjouterLocation;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
+import javax.swing.JButton;
 
 public class VueAjouterLocation extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldBail;
+	private JFormattedTextField textFieldBail;
 	private JFormattedTextField textFieldDateDebutLocation;
 	private JFormattedTextField textFieldNombreMoisPrevus;
 	private JFormattedTextField textFieldLoyerLocataire;
+	private JComboBox<String> comboBoxLocataire;
+	private JComboBox<String> comboBoxBiens;
+	private JComboBox comboBoxEtatsDesLieux;
+	private JCheckBox chckbxColocation;
+	private JCheckBox chckbxLoyerPaye;
+	private JFormattedTextField formattedProvisionCharges;
+	private JFormattedTextField formattedCaution;
+	private JFormattedTextField formattedDateDerniereRegularisation;
+	private JFormattedTextField formattedMontantReelPaye;
 
 	/**
 	 * Launch the application.
@@ -49,15 +64,19 @@ public class VueAjouterLocation extends JFrame {
 
 	/**
 	 * Create the application.
+	 * @throws SQLException 
 	 */
-	public VueAjouterLocation() {
+	public VueAjouterLocation() throws SQLException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws SQLException 
 	 */
-	private void initialize() {
+	@SuppressWarnings("unchecked")
+	private void initialize() throws SQLException {
+		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
 		NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
@@ -73,7 +92,7 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panelLibellé = new JPanel();
 		contentPane.add(panelLibellé, BorderLayout.WEST);
-		panelLibellé.setLayout(new GridLayout(12, 1, 0, 0));
+		panelLibellé.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_L_Locataire = new JPanel();
 		panelLibellé.add(panel_L_Locataire);
@@ -81,6 +100,13 @@ public class VueAjouterLocation extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Locataire : ");
 		panel_L_Locataire.add(lblNewLabel, BorderLayout.NORTH);
+		
+		JPanel panel_l_bien = new JPanel();
+		panelLibellé.add(panel_l_bien);
+		panel_l_bien.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lbl_Bien = new JLabel("Bien :");
+		panel_l_bien.add(lbl_Bien, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
 		panelLibellé.add(panel_1);
@@ -161,19 +187,26 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
-		panelChamps.setLayout(new GridLayout(12, 1, 0, 0));
+		panelChamps.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_c_Locataire = new JPanel();
 		panelChamps.add(panel_c_Locataire);
 		panel_c_Locataire.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox comboBoxLocataire = new JComboBox();
+		initialiserComboBoxLocataires(controleur);
 		panel_c_Locataire.add(comboBoxLocataire, BorderLayout.NORTH);
+		
+		JPanel panel = new JPanel();
+		panelChamps.add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		initialiserComboBoxBiens(controleur);
+		panel.add(comboBoxBiens, BorderLayout.NORTH);
 		
 		JPanel panel_c_edl = new JPanel();
 		panelChamps.add(panel_c_edl);
 		panel_c_edl.setLayout(new BorderLayout(0, 0));
-		JComboBox comboBoxEtatsDesLieux = new JComboBox();
+		comboBoxEtatsDesLieux = new JComboBox<String>();
 		comboBoxEtatsDesLieux.setModel(new DefaultComboBoxModel(new String[] {"Tres mauvais", "Mauvais", "Moyen", "Bon", "Tres Bon"}));
 		panel_c_edl.add(comboBoxEtatsDesLieux, BorderLayout.NORTH);
 		
@@ -181,21 +214,22 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_colocation);
 		panel_c_colocation.setLayout(new BorderLayout(0, 0));
 		
-		JCheckBox chckbxColocation = new JCheckBox("");
+		chckbxColocation = new JCheckBox("");
 		panel_c_colocation.add(chckbxColocation, BorderLayout.WEST);
 		
 		JPanel panel_c_loyer_paye = new JPanel();
 		panelChamps.add(panel_c_loyer_paye);
 		panel_c_loyer_paye.setLayout(new BorderLayout(0, 0));
 		
-		JCheckBox chckbxLoyerPaye = new JCheckBox("");
+		chckbxLoyerPaye = new JCheckBox("");
 		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
 		
 		JPanel panel_c_bail = new JPanel();
 		panelChamps.add(panel_c_bail);
 		panel_c_bail.setLayout(new BorderLayout(0, 0));
 		
-		textFieldBail = new JTextField();
+		textFieldBail = new JFormattedTextField(currencyFormatter);
+		textFieldBail.setValue(0.0);
 		panel_c_bail.add(textFieldBail, BorderLayout.NORTH);
 		textFieldBail.setColumns(10);
 		
@@ -234,7 +268,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_provisions);
 		panel_c_provisions.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedProvisionCharges = new JFormattedTextField(currencyFormatter);
+		formattedProvisionCharges = new JFormattedTextField(currencyFormatter);
 		formattedProvisionCharges.setValue(0.0);
 		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
@@ -242,7 +276,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel__c_caution);
 		panel__c_caution.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedCaution = new JFormattedTextField(currencyFormatter);
+		formattedCaution = new JFormattedTextField(currencyFormatter);
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
@@ -250,7 +284,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_date_derniere_reg);
 		panel_c_date_derniere_reg.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedDateDerniereRegularisation = new JFormattedTextField();
+		formattedDateDerniereRegularisation = new JFormattedTextField();
 		try {
 			formattedDateDerniereRegularisation = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e) {
@@ -262,11 +296,31 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_montant_reel);
 		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
 		
-		JFormattedTextField formattedMontantReelPaye = new JFormattedTextField();
+		formattedMontantReelPaye = new JFormattedTextField();
 		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		
-		JPanel panelBoutons = new JPanel();
-		contentPane.add(panelBoutons, BorderLayout.SOUTH);
+		JPanel PanelBoutons = new JPanel();
+		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
+		
+		JButton ButtonAnnuler = new JButton("Annuler");
+		PanelBoutons.add(ButtonAnnuler);
+		
+		JButton ButtonValider = new JButton("Valider");
+		PanelBoutons.add(ButtonValider);
+	}
+
+	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {
+		comboBoxBiens = new JComboBox<String>();
+		for (String s : controleur.getBiens()) {
+			comboBoxBiens.addItem(s);
+		}
+	}
+
+	private void initialiserComboBoxLocataires(ControleurAjouterLocation controleur) {
+		comboBoxLocataire = new JComboBox<String>();
+		for (String s : controleur.getLocataires()) {
+			comboBoxLocataire.addItem(s);
+		}
 	}
 
 	private NumberFormatter generateCurrencyFormatter() {
@@ -278,5 +332,68 @@ public class VueAjouterLocation extends JFrame {
 		numberFormatter.setMinimum(0.0);
 		return numberFormatter;
 	}
+	
+	public String getSelectedBien() {
+		return this.comboBoxBiens.getSelectedItem().toString();
+	}
+	
+	public String getSelectedLocataire() {
+		return this.comboBoxLocataire.getSelectedItem().toString();
+	}
+	
+	public String getChampsEtatLieux() {
+		return this.comboBoxEtatsDesLieux.getSelectedItem().toString();
+	}
+	
+	public boolean isColocation() {
+		return this.chckbxColocation.isSelected();
+	}
+	
+	public boolean isPaye() {
+		return this.chckbxLoyerPaye.isSelected();
+	}
+	
+	public Float getBail() {
+		return Float.valueOf(this.textFieldBail.getText());
+	}
 
+	public Date getDateDebutLocation() {
+		try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        sdf.setLenient(false);
+	        java.util.Date parsedDate = sdf.parse(this.textFieldBail.getText());
+	        return new Date(parsedDate.getTime());
+	    } catch (Exception e) {
+	        return null; 
+	    }
+	}
+	
+	public Integer getNbMoisPrevus() {
+		return (Integer.valueOf(this.textFieldNombreMoisPrevus.getText()));
+	}
+	
+	public Float getLoyer() {
+		return Float.valueOf(this.textFieldLoyerLocataire.getText());
+	}
+	
+	public Float getProvisionsCharges() {
+		return Float.valueOf(this.formattedProvisionCharges.getText());
+	}
+	
+	public Float getCaution() {
+		return Float.valueOf(this.formattedCaution.getText());
+	}
+	
+	public Date getDateDerniereRegularisation() {
+		try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        sdf.setLenient(false);
+	        java.util.Date parsedDate = sdf.parse(this.formattedDateDerniereRegularisation.getText());
+	        return new Date(parsedDate.getTime());
+	    } catch (Exception e) {
+	        return null; 
+	    }
+	}
+	
+	
 }

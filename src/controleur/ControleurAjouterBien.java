@@ -53,23 +53,24 @@ public class ControleurAjouterBien implements ActionListener {
 				this.vue.dispose();
 			} else if (s == "Valider") {
 				//vérifier si l'identifiant existe dans la base de données
-				verificationBienExiste();
-				verificationChampIDBien();
-				verificationChampsDateAcquisition();
-				if (this.vue.getComboBoxTypeBien().equals("L")) {
-					if (this.vue.getChampsNombreDePiece()==null || this.vue.getChampsNumeroEtage()==null || 
-							this.vue.getChampsSurfaceHabitable()==null){
+				if (verificationBienExiste()) {
+					JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+				}else if(!verificationChampIDBien()) {
+					JOptionPane.showMessageDialog(this.vue, "Veillez saisir l'identifiant du bien","Attention", JOptionPane.WARNING_MESSAGE);
+				}else if(!verificationChampsDateAcquisition()) {
+					try {
+						throw new ParseException("Format du date d'acquisition invalide",0);
+					}catch(ParseException pEx) {
+						JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
+					}
+				}else if (isLogement()) {
+					if (champsLogementNonRemplis()){
 						JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
 					}else{
-						int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
-								this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
-								this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
-						System.out.println(i + " lignes ajoutées");
+						ajouterLogement();
 					}
 				}else {
-					int i = this.dao.ajouterBien(null, this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(), null, null, 
-							"1", this.vue.getComboBoxTypeBien());
-					System.out.println(i + " lignes ajoutées");
+					ajouterGarage();
 				}
 				
 			}
@@ -85,26 +86,38 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 
-	private void verificationChampsDateAcquisition() {
-		try {
-			if (this.vue.getChampsDateAcquisition()==null) {
-				throw new ParseException("Format du date d'acquisition invalide",0);
-			}
-		}catch(ParseException pEx) {
-			JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
-		}
+	private void ajouterGarage() {
+		int i = this.dao.ajouterBien(null, this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(), null, null, 
+				"1", this.vue.getComboBoxTypeBien());
+		System.out.println(i + " lignes ajoutées");
 	}
 
-	private void verificationChampIDBien() {
-		if (this.vue.getChampsIdBien()==null) {
-			JOptionPane.showMessageDialog(this.vue, "Veillez saisir l'identifiant du bien","Attention", JOptionPane.WARNING_MESSAGE);
-		}
+	private void ajouterLogement() {
+		int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
+				this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
+				this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
+		System.out.println(i + " lignes ajoutées");
 	}
 
-	private void verificationBienExiste() {
-		if (this.dao.bienExiste(this.vue.getChampsIdBien())) {
-			JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
-		}
+	private boolean champsLogementNonRemplis() {
+		return this.vue.getChampsNombreDePiece()==null || this.vue.getChampsNumeroEtage()==null || 
+				this.vue.getChampsSurfaceHabitable()==null;
+	}
+
+	private boolean isLogement() {
+		return this.vue.getComboBoxTypeBien().equals("L");
+	}
+
+	private boolean verificationChampsDateAcquisition() {
+		return this.vue.getChampsDateAcquisition()!=null;
+	}
+
+	private boolean verificationChampIDBien() {
+		return this.vue.getChampsIdBien()!=null && !this.vue.getChampsIdBien().isEmpty();
+	}
+
+	private boolean verificationBienExiste() {
+		return this.dao.bienExiste(this.vue.getChampsIdBien());
 	}
 	
 	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
