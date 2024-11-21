@@ -26,7 +26,43 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		this.dao = new ImmeubleDAO();
 	}
 	
-	//TODO : gerer les champs vides                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	private boolean verifImmeubleExiste() {
+		if (this.dao.immeubleExiste(this.vue.getId())) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Cet immeuble existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean verifComplet() {
+		if (!this.vue.isComplet()) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean allVerifs() {
+		return verifComplet() && !verifImmeubleExiste();
+	}
+	
+	// ouvre mes immeubles et ferme cette page
+	private void valider() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VueMesImmeubles frame = new VueMesImmeubles();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		this.vue.dispose();
+	}
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
@@ -34,46 +70,16 @@ public class ControleurAjouterImmeuble implements ActionListener {
 			//ferme cette page
 			this.vue.dispose();
 		} else if (b.getText() == "Valider") {
-			// créer une instance de Immeuble
-			if (vue.isComplet()) {
-				if (!this.dao.immeubleExiste(this.vue.getId())) {
-					if (this.vue.getTypeImmeuble()=="Maison") {
-						this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),
-								this.vue.getCP(),this.vue.getVille(),this.vue.getPeriodeConstruction(), "M");
-						//ferme cette page et ouvre mesImmeubles
-						EventQueue.invokeLater(new Runnable() {
-							public void run() {
-								try {
-									VueMesImmeubles frame = new VueMesImmeubles();
-									frame.setVisible(true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-						this.vue.dispose();
-					} else {
-						this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),this.vue.getCP(),
-								this.vue.getVille(),this.vue.getPeriodeConstruction(), "B");
-						//ferme cette page et ouvre mesImmeubles
-						EventQueue.invokeLater(new Runnable() {
-							public void run() {
-								try {
-									VueMesImmeubles frame = new VueMesImmeubles();
-									frame.setVisible(true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-						this.vue.dispose();
-					}
+			if (allVerifs()) {
+				if (this.vue.getTypeImmeuble()=="Maison") {
+					this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),
+							this.vue.getCP(),this.vue.getVille(),this.vue.getPeriodeConstruction(), "M");
+					valider();
 				} else {
-					JOptionPane.showMessageDialog(this.vue, "Cet immeuble existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+					this.dao.ajouterImmeuble(this.vue.getId(), this.vue.getAdresse(),this.vue.getCP(),
+							this.vue.getVille(),this.vue.getPeriodeConstruction(), "B");
+					valider();
 				}
-				
-			} else {
-				JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

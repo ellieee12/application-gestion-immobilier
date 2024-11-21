@@ -1,22 +1,22 @@
 package ihm;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.awt.event.ActionEvent;
+import controleur.ControleurSaisieLocataire;
 
 public class VueSaisieLocataire extends JFrame {
 
@@ -49,11 +49,46 @@ public class VueSaisieLocataire extends JFrame {
 	public String getNom() {
 		return textFieldNom.getText();
 	}
+	public String getPrenom() {
+		return textFieldPrenom.getText();
+	}
+	
+	public String getTel() {
+		return textFieldTel.getText();
+	}
+	
+	public String getMail() {
+		return textFieldMail.getText();
+	}
+	
+	public Date getDateDeNaissance () {
+		try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        sdf.setLenient(false);
+	        java.util.Date parsedDate = sdf.parse(textFieldDateDeNaissance.getText());
+	        return new Date(parsedDate.getTime());
+	    } catch (Exception e) {
+	        return null; // Retourne null en cas d'erreur
+	    }
+	}
+	
+	public String getId() {
+		return textFieldId.getText();
+	}
+	
+	public boolean isComplet() {
+		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty() && !this.getTel().isEmpty()
+				&& !this.getMail().isEmpty() && !this.getId().isEmpty();
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public VueSaisieLocataire() {
+		
+		ControleurSaisieLocataire controleur = ControleurSaisieLocataire.getControleur();
+		controleur.initialiserControleur(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -181,14 +216,12 @@ public class VueSaisieLocataire extends JFrame {
 		
 		JButton btnNewButton = new JButton("Créer");
 		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnNewButton.addActionListener(controleur);
 		panel_14.add(btnNewButton, BorderLayout.EAST);
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
 		btnNewButton_1.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnNewButton_1.addActionListener(controleur);
 		panel_14.add(btnNewButton_1, BorderLayout.WEST);
 	}
 
