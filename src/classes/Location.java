@@ -1,5 +1,5 @@
 package classes;
-import java.util.Date;
+import java.sql.Date;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
@@ -22,9 +22,6 @@ public class Location {
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;
 
-    @objid ("673f9bea-a6a1-4391-989c-c6fba3e2a3f7")
-    private String bail;
-
     @objid ("6e77ee39-435d-4483-829f-978f06898e78")
     private ETAT etat_lieux;
     
@@ -44,14 +41,13 @@ public class Location {
     private ICC icc;
  
 	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
-			float caution_TTC, String bail, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+			float caution_TTC, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
 		this.loyer_TTC = loyer_TTC;
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
-		this.bail = bail;
 		this.etat_lieux = etat_lieux;
 		this.date_derniere_reg = date_derniere_reg;
 		this.loyer_paye = loyer_paye;
@@ -78,10 +74,6 @@ public class Location {
 
 	public float getCaution_TTC() {
 		return caution_TTC;
-	}
-
-	public String getBail() {
-		return bail;
 	}
 
 	public ETAT getEtat_lieux() {

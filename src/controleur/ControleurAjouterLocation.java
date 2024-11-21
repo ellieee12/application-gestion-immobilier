@@ -50,7 +50,6 @@ public class ControleurAjouterLocation implements ActionListener{
 		} else if(bouton.getText().equals("Valider")) {
 			
 		}
-		
 	}
 	
 	public List<String> getLocataires(){
