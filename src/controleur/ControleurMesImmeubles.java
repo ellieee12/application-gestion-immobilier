@@ -95,7 +95,6 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	public void mouseClicked(MouseEvent e) {
 		JTable table =(JTable) e.getSource();
         Point point = e.getPoint();
-        int row = table.rowAtPoint(point);
         	if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
         		EventQueue.invokeLater(new Runnable() {
 				public void run() {
