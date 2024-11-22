@@ -2,7 +2,6 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -11,8 +10,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import classes.ICC;
-import classes.Locataire;
 import classes.Location;
 import ihm.VueAjouterLocation;
 import modeleDAO.BienDAO;

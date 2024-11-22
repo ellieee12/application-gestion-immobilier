@@ -57,7 +57,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Annuler") {
 			this.vue.dispose();
-		} else if (b.getText() == "Créer") {
+		} else if (b.getText() == "Ajouter") {
 			if (allVerif()) {
 				this.dao.ajouterLocataire(this.vue.getId(), this.vue.getNom(),
 						this.vue.getPrenom(),this.vue.getTel(),this.vue.getMail(),this.vue.getDateDeNaissance());

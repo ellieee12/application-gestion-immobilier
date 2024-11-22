@@ -28,18 +28,32 @@ public class BienDAO{
 		return rs;
 	}
 	
-	public int supprimerBien(String id) {
+	public void supprimerBien(String id) {
 		try {
+			String reqDeleteLouer = "delete from Louer where id_bien = ?";
+			PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareStatement(reqDeleteLouer);
+			stmtDeleteLouer.setString(1, id);
+			int nbLignesSupprimeesLouer = stmtDeleteLouer.executeUpdate();
+			stmtDeleteLouer.close();
+			System.out.println(nbLignesSupprimeesLouer+" lignes supprimées dans le table (Louer)");
+			
+			String reqDeleteLocation = "delete from location where id_bien =?";
+			PreparedStatement stmtDeleteLocation = this.mySQLCon.getConnection().prepareStatement(reqDeleteLocation);
+			stmtDeleteLocation.setString(1, id);
+			int nbLignesSupprimeesLocation = stmtDeleteLocation.executeUpdate();
+			stmtDeleteLocation.close();
+			System.out.println(nbLignesSupprimeesLocation+" lignes supprimées dans le table (Location)");
+		
 			String req = "delete from bien where id_bien=?";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
 			stmt.setString(1, id);
 			int nbLignesSupprimees = stmt.executeUpdate();
+			System.out.println(nbLignesSupprimees+" lignes supprimées (Bien)");
+			
 			stmt.close();
-			return nbLignesSupprimees;
 		}catch(Exception e){
 			System.out.println(e);
 		}
-		return 0;
 	}
 	
 	public int ajouterBien(Integer num_etage, Date date_acquisition, String id_bien, Integer nb_pieces, 

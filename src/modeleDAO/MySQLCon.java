@@ -35,4 +35,8 @@ public class MySQLCon {
 			System.out.println(e);
 		}
 	}
+	
+	public static void rollback() {
+		MySQLCon.rollback();
+	}
 }
