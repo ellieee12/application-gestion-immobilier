@@ -28,6 +28,5 @@ public class TestBienDAO {
 		this.bDAO.ajouterBien(3, Date.valueOf("12/01/2004"), "testBien001", 4, 42.3f, "1", "L");
 		
 	}
-	
 
 }
