@@ -317,7 +317,7 @@ public class VueAjouterLocation extends JFrame {
 	}
 
 	private NumberFormatter generateCurrencyFormatter() {
-		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00€");
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		decimalFormat.setDecimalSeparatorAlwaysShown(true);
 		NumberFormatter numberFormatter= new NumberFormatter(decimalFormat);
 		numberFormatter.setValueClass(Double.class);
@@ -362,6 +362,7 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public Float getLoyer() {
+		
 		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
 	

@@ -2,6 +2,7 @@ package modeleDAO;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import classes.Location;
@@ -52,11 +53,14 @@ private MySQLCon mySQLCon;
 	
 	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) {
 		try {
-			String req="select * from location where id_bien=? and id_locataire=? and date_debut=?";
+			String req="select * from louer where id_bien=? and id_locataire=? and date_debut=?";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
 			stmt.setString(1, id_bien);
 			stmt.setDate(3, date_debut);
 			stmt.setString(2, id_locataire);
+			System.out.println("yes");
+			ResultSet rs = stmt.executeQuery();
+			return rs.next();
 		}catch(Exception e) {
 			System.out.println(e);
 		}
