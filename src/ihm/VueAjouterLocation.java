@@ -18,6 +18,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurAjouterLocation;
+import modeleDAO.DAOException;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -71,17 +72,19 @@ public class VueAjouterLocation extends JFrame {
 	/**
 	 * Create the application.
 	 * @throws SQLException 
+	 * @throws DAOException 
 	 */
-	public VueAjouterLocation() throws SQLException {
+	public VueAjouterLocation() throws SQLException, DAOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws SQLException 
+	 * @throws DAOException 
 	 */
 	@SuppressWarnings("unchecked")
-	private void initialize() throws SQLException {
+	private void initialize() throws DAOException, SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
 		NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
