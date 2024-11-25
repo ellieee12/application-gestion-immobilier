@@ -1,11 +1,7 @@
 package ihm;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
@@ -13,19 +9,19 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurAjouterLocation;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
 
 public class VueAjouterLocation extends JFrame {
 
@@ -80,7 +76,6 @@ public class VueAjouterLocation extends JFrame {
 	 * Initialize the contents of the frame.
 	 * @throws SQLException 
 	 */
-	@SuppressWarnings("unchecked")
 	private void initialize() throws SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
 		NumberFormatter currencyFormatter = generateCurrencyFormatter();
@@ -113,13 +108,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		JLabel lbl_Bien = new JLabel("Bien :");
 		panel_l_bien.add(lbl_Bien, BorderLayout.NORTH);
-		
-		JPanel panel_1 = new JPanel();
-		panelLibellé.add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_1 = new JLabel("Etat des Lieux : ");
-		panel_1.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panel_2 = new JPanel();
 		panelLibellé.add(panel_2);
@@ -201,14 +189,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		initialiserComboBoxBiens(controleur);
 		panel.add(comboBoxBiens, BorderLayout.NORTH);
-		
-		JPanel panel_c_edl = new JPanel();
-		panelChamps.add(panel_c_edl);
-		panel_c_edl.setLayout(new BoxLayout(panel_c_edl, BoxLayout.X_AXIS));
-		
-		JButton btnNewButton = new JButton("Ajouter");
-		panel_c_edl.add(btnNewButton);
-		btnNewButton.addActionListener(controleur);
 		
 		JPanel panel_c_colocation = new JPanel();
 		panelChamps.add(panel_c_colocation);

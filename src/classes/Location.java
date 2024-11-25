@@ -22,9 +22,6 @@ public class Location {
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;
 
-    @objid ("6e77ee39-435d-4483-829f-978f06898e78")
-    private String etat_lieux;
-
     @objid ("0722a716-ccae-4173-bd3d-0cca8f62598d")
     private Date date_derniere_reg;
 
@@ -35,14 +32,13 @@ public class Location {
     private float montant_reel_paye;
  
 	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye) {
+			float caution_TTC, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
 		this.loyer_TTC = loyer_TTC;
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
-		this.etat_lieux = etat_lieux;
 		this.date_derniere_reg = date_derniere_reg;
 		this.loyer_paye = loyer_paye;
 		this.montant_reel_paye = montant_reel_paye;
@@ -67,10 +63,6 @@ public class Location {
 
 	public float getCaution_TTC() {
 		return caution_TTC;
-	}
-
-	public String getEtat_lieux() {
-		return etat_lieux.toString();
 	}
 
 	public Date getDate_derniere_reg() {
