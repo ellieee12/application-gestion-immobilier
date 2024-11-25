@@ -28,21 +28,6 @@ public class VueAjouterImmeuble extends JFrame {
 	private JComboBox<String> comboBox;
 	private JFormattedTextField formattedTextField_date;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueAjouterImmeuble frame = new VueAjouterImmeuble();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public String getTypeImmeuble() {
 		return comboBox.getSelectedItem().toString();
@@ -76,9 +61,8 @@ public class VueAjouterImmeuble extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueAjouterImmeuble() {
-		ControleurAjouterImmeuble controleur = ControleurAjouterImmeuble.getControleur();
-		controleur.initialiserControleur(this);
+	public VueAjouterImmeuble(VueMesImmeubles vueImmeubles) {
+		ControleurAjouterImmeuble controleur = new ControleurAjouterImmeuble(this,vueImmeubles);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

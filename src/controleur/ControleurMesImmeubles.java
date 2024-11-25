@@ -28,7 +28,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	private VueMesImmeubles vue;
 	private List<Immeuble> immeuble;
 	
-	private ControleurMesImmeubles(VueMesImmeubles vue) {
+	public ControleurMesImmeubles(VueMesImmeubles vue) {
 		try {
 			this.vue = vue;
 			this.immeuble = new LinkedList<Immeuble>();
@@ -47,14 +47,14 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			e.printStackTrace();
 		}
 	}
-	
-	public static synchronized ControleurMesImmeubles getControleur(VueMesImmeubles vue) {
-		if (controleur == null) {
-			controleur = new ControleurMesImmeubles(vue);
-		}
-		return controleur;
-		
-	}
+//	
+//	public static synchronized ControleurMesImmeubles getControleur(VueMesImmeubles vue) {
+//		if (controleur == null) {
+//			controleur = new ControleurMesImmeubles(vue);
+//		}
+//		return controleur;
+//		
+//	}
 	
 	public List<Immeuble> getImmeuble() {
 		return immeuble;
@@ -84,16 +84,12 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Ajouter") {
 			//ouvrir ajouterImmeuble
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						VueAjouterImmeuble frame = new VueAjouterImmeuble();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				try {
+					VueAjouterImmeuble frame = new VueAjouterImmeuble(this.vue);
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
-			});
 		} else if (b.getText() == "Supprimer") {
 			String[] options = {"Suppimer","Annuler"};
 			JOptionPane pane = new JOptionPane();
@@ -104,9 +100,9 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
 			if (resultat==JOptionPane.YES_OPTION) {
 				ImmeubleDAO immeuble = new ImmeubleDAO();
-				immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()-1).getId_immeuble());
-				this.Update();
-			}	
+				immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
+			}
+			this.Update();
 		}
 	}
 	

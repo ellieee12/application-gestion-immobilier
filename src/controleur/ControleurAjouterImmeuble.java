@@ -16,12 +16,13 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	
 	private static ControleurAjouterImmeuble controleur;
 	
+	private VueMesImmeubles vueImmeubles;
 	private VueAjouterImmeuble vue;
 	private ImmeubleDAO dao;
 	
-	private ControleurAjouterImmeuble() {}
 	
-	public void initialiserControleur(VueAjouterImmeuble vue) {
+	public ControleurAjouterImmeuble(VueAjouterImmeuble vue, VueMesImmeubles vueImmeubles) {
+		this.vueImmeubles=vueImmeubles;
 		this.vue=vue;
 		this.dao = new ImmeubleDAO();
 	}
@@ -50,16 +51,17 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	
 	// ouvre mes immeubles et ferme cette page
 	private void valider() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesImmeubles frame = new VueMesImmeubles();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VueMesImmeubles frame = new VueMesImmeubles();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+		this.vueImmeubles.getControleurMesImmeubles().Update();
 		this.vue.dispose();
 	}
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
@@ -84,11 +86,11 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		}
 	}
 	
-	public static synchronized ControleurAjouterImmeuble getControleur() {
-		if (controleur == null) {
-			controleur = new ControleurAjouterImmeuble();
-		}
-		return controleur;
-	}
+//	public static synchronized ControleurAjouterImmeuble getControleur() {
+//		if (controleur == null) {
+//			controleur = new ControleurAjouterImmeuble();
+//		}
+//		return controleur;
+//	}
 
 }

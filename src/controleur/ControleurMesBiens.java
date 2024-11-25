@@ -77,7 +77,7 @@ public class ControleurMesBiens implements ActionListener {
 		JButton  b = (JButton) e.getSource();	
 		if (b.getText() == "Ajouter") {
 			try {
-				VueAjouterBien frame = new VueAjouterBien();
+				VueAjouterBien frame = new VueAjouterBien(this.vue);
 				frame.setVisible(true);
 			} catch (Exception error) {
 				error.printStackTrace();

@@ -31,6 +31,7 @@ public class VueMesImmeubles extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel t;
+	private ControleurMesImmeubles controleurMesImmeubles;
 
 
 	/**
@@ -53,7 +54,8 @@ public class VueMesImmeubles extends JFrame {
 	 * Create the frame.
 	 */
 	public VueMesImmeubles() {
-		ControleurMesImmeubles controleur = ControleurMesImmeubles.getControleur(this);
+		controleurMesImmeubles = new ControleurMesImmeubles(this);
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -76,7 +78,7 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton AjouterImmeuble = new JButton("Ajouter");
 		PanelBoutonNouveau.add(AjouterImmeuble, BorderLayout.SOUTH);
-		AjouterImmeuble.addActionListener(controleur);
+		AjouterImmeuble.addActionListener(controleurMesImmeubles);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -84,7 +86,7 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton SupprimerImeuble = new JButton("Supprimer");
 		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
-		SupprimerImeuble.addActionListener(controleur);
+		SupprimerImeuble.addActionListener(controleurMesImmeubles);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -109,13 +111,13 @@ public class VueMesImmeubles extends JFrame {
 					return columnEditables[column];
 				}
 			};
-		this.buildTable(controleur);
-		this.table = new JTable(t);
-		this.table.setModel(t);
+		this.buildTable(controleurMesImmeubles);
+		this.table = new JTable(this.t);
+		this.table.setModel(this.t);
 		
 		scrollPane.setViewportView(table);
 		
-		this.table.addMouseListener(controleur);
+		this.table.addMouseListener(controleurMesImmeubles);
 	}
 	
 	public void buildTable(ControleurMesImmeubles controleur) {
@@ -129,4 +131,7 @@ public class VueMesImmeubles extends JFrame {
 		return this.table.getSelectedRow();
 	}
 
+	public ControleurMesImmeubles getControleurMesImmeubles() {
+		return this.controleurMesImmeubles;
+	}
 }
