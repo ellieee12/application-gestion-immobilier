@@ -14,6 +14,7 @@ import classes.Location;
 import ihm.VueAjouterLocation;
 import ihm.VueEnregistrerDocumentsLocation;
 import modeleDAO.BienDAO;
+import modeleDAO.DAOException;
 import modeleDAO.LocataireDAO;
 import modeleDAO.LocationDAO;
 
@@ -57,7 +58,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		return verifComplet() && !verifLocationExiste();
 	}
 	
-	public ControleurAjouterLocation(VueAjouterLocation vue) throws SQLException {
+	public ControleurAjouterLocation(VueAjouterLocation vue) throws SQLException, DAOException {
 		this.vue=vue;
 		this.bienDAO=new BienDAO();
 		this.locationDAO=new LocationDAO();

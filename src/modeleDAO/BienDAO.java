@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import classes.Bien;
 import classes.Garage;
@@ -16,6 +18,7 @@ import classes.Logement;
 public class BienDAO{
 	
 	private final MySQLCon mySQLCon;
+	private static final Logger logger = Logger.getLogger(BienDAO.class.getName());
 	
 	/**
 	 * Constructeur prenant une connexion à la base de données
@@ -27,13 +30,18 @@ public class BienDAO{
 	/**
 	 * Récupère tous les biens immobiliers de la base de données
 	 * @return Un result set de tous les objets Bien
+	 * @throws DAOException 
 	 * @throws SQLException
 	 */
-	public ResultSet getAllBiens() throws SQLException {
-//		String req = "select id_bien,type_bien,numero_etage,surface_habitable,nb_pieces,date_acquisition from bien";
-		String req = "{call getAllBiens()}";
-		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-		return stmt.executeQuery(req);
+	public ResultSet getAllBiens() throws DAOException {
+		try {
+			String req = "{call getAllBiens()}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			return stmt.executeQuery(req);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de tous les bien.",e);
+			throw new DAOException("Erreurs lors de la récupération de tous les bien.",e);
+		}
 	}
 	
 	/**
@@ -53,8 +61,9 @@ public class BienDAO{
 	/**
 	 * Supprimer tous les biens ayant un identifiant donné
 	 * @param identifiant d'un bien donné
+	 * @throws DAOException 
 	 */
-	public void supprimerBien(String id_bien) {
+	public void supprimerBien(String id_bien) throws DAOException {
 		try {
 			String req = "{CALL deleteBien(?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -62,8 +71,9 @@ public class BienDAO{
 			int i = stmt.executeUpdate();
 			System.out.println(i+" lignes supprimées");
 			stmt.close();
-		}catch(Exception e){
-			System.out.println(e);
+		}catch(SQLException e){
+			logger.log(Level.SEVERE,"Erreurs lors de la suppression d'un bien",e);
+			throw new DAOException("Erreurs lors de la suppression d'un bien",e);
 		}
 	}
 	
@@ -72,8 +82,9 @@ public class BienDAO{
 	 * @param Object Bien contenant toutes les informations concernées
 	 * @param L'identifiant de l'immeuble auquel le bien est associé
 	 * @return Le nombre des biens ajouté dans la base de données
+	 * @throws DAOException 
 	 */
-	public int ajouterBien(Bien b, String id_immeuble) {
+	public int ajouterBien(Bien b, String id_immeuble) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			if (b instanceof Garage) {
@@ -96,18 +107,19 @@ public class BienDAO{
 			int i = stmt.executeUpdate();
 			stmt.close();
 			return i;
-		} catch (Exception e) {
-			System.out.println(e);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
+			throw new DAOException("Erreurs lors de la création d'un bien",e);
 		}
-		return 0;
 	}
 	
 	/**
 	 * Récupère tous les biens associés à partir d'un identifiant bien donné
 	 * @param L'identifiant de l'immeuble auquel le bien est associé
 	 * @return Object Bien obtenu à partir de l'identifiant bien donné
+	 * @throws DAOException 
 	 */
-	public Bien getBienById(String id_bien) {
+	public Bien getBienById(String id_bien) throws DAOException {
 		try {
 			String req = "{CALL getBienById(?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -120,8 +132,9 @@ public class BienDAO{
 					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4));
 				}
 			}
-		}catch(Exception e) {
-			System.out.println(e);
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération du bien par son identifiant.",e);
+			throw new DAOException("Erreurs lors de la récupération du bien par son identifiant.",e);
 		}
 		return null;
 	}
@@ -130,8 +143,9 @@ public class BienDAO{
 	 * 
 	 * @param id_bien
 	 * @return
+	 * @throws DAOException 
 	 */
-	public boolean bienExiste(String id_bien) {
+	public boolean bienExiste(String id_bien) throws DAOException {
 		return this.getBienById(id_bien)!=null;
 	}
 	
