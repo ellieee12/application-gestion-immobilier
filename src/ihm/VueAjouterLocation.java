@@ -59,9 +59,9 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public boolean isComplet() {
-		return !this.getSelectedBien().isEmpty() && !this.getDateDebutLocation().toString().isEmpty()
+		return true;/*!this.getSelectedBien().isEmpty() && this.getDateDebutLocation()!=null
 				&& !this.getNbMoisPrevus().toString().isEmpty() 
-				&& !this.getDateDerniereRegularisation().toString().isEmpty();
+				&& this.getDateDerniereRegularisation()!=null;*/
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class VueAjouterLocation extends JFrame {
 	 */
 	private void initialize() throws SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
-		NumberFormatter currencyFormatter = generateCurrencyFormatter();
+		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
 		contentPane = new JPanel();
@@ -229,7 +229,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_loyer);
 		panel_c_loyer.setLayout(new BorderLayout(0, 0));
 		
-		textFieldLoyerLocataire = new JFormattedTextField(currencyFormatter);
+		textFieldLoyerLocataire = new JFormattedTextField();
 		textFieldLoyerLocataire.setValue(0.0);
 		textFieldLoyerLocataire.setColumns(10);
 		
@@ -239,7 +239,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_provisions);
 		panel_c_provisions.setLayout(new BorderLayout(0, 0));
 		
-		formattedProvisionCharges = new JFormattedTextField(currencyFormatter);
+		formattedProvisionCharges = new JFormattedTextField();
 		formattedProvisionCharges.setValue(0.0);
 		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
@@ -247,7 +247,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel__c_caution);
 		panel__c_caution.setLayout(new BorderLayout(0, 0));
 		
-		formattedCaution = new JFormattedTextField(currencyFormatter);
+		formattedCaution = new JFormattedTextField();
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
@@ -267,7 +267,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_montant_reel);
 		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
 		
-		formattedMontantReelPaye = new JFormattedTextField(currencyFormatter);
+		formattedMontantReelPaye = new JFormattedTextField();
 		formattedMontantReelPaye.setValue(0.0);
 		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		

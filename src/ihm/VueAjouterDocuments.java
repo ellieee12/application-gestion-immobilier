@@ -2,7 +2,6 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -14,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import classes.Location;
+import controleur.ControleurAjouterDocuments;
+
 public class VueAjouterDocuments extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -22,27 +24,25 @@ public class VueAjouterDocuments extends JFrame {
 	private JLabel caution;
 	private JLabel electricite;
 	private JLabel eau;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueAjouterDocuments frame = new VueAjouterDocuments();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton bEtatDesLieux;
+	private JButton bCaution;
+	private JButton bElectricite;
+	private JButton bEau;
+	private Location loc;
+	private String idBien;
+	private String idLocataire;
+	private ControleurAjouterDocuments controleur;
 
 	/**
 	 * Create the frame.
 	 */
-	public VueAjouterDocuments() {
+	public VueAjouterDocuments(Location loc, String idBien, String idLocataire) {
+		this.loc=loc;
+		this.idBien=idBien;
+		this.idLocataire=idLocataire;
+		
+		this.controleur = new ControleurAjouterDocuments(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -108,8 +108,9 @@ public class VueAjouterDocuments extends JFrame {
 		panel_4.add(panel_8, BorderLayout.EAST);
 		panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.X_AXIS));
 		
-		JButton btnNewButton = new JButton("Choisir");
-		panel_8.add(btnNewButton);
+		this.bEtatDesLieux = new JButton("Choisir");
+		panel_8.add(this.bEtatDesLieux);
+		bEtatDesLieux.addActionListener(controleur);
 		
 		JPanel panel_5 = new JPanel();
 		panelChamps.add(panel_5);
@@ -122,8 +123,9 @@ public class VueAjouterDocuments extends JFrame {
 		panel_5.add(panel_9, BorderLayout.EAST);
 		panel_9.setLayout(new BoxLayout(panel_9, BoxLayout.X_AXIS));
 		
-		JButton btnNewButton_1 = new JButton("Choisir");
-		panel_9.add(btnNewButton_1);
+		this.bCaution = new JButton("Choisir");
+		panel_9.add(this.bCaution);
+		bCaution.addActionListener(controleur);
 		
 		JPanel panel_6 = new JPanel();
 		panelChamps.add(panel_6);
@@ -136,8 +138,9 @@ public class VueAjouterDocuments extends JFrame {
 		panel_6.add(panel_10, BorderLayout.EAST);
 		panel_10.setLayout(new BoxLayout(panel_10, BoxLayout.X_AXIS));
 		
-		JButton btnNewButton_3 = new JButton("Choisir");
-		panel_10.add(btnNewButton_3);
+		this.bEau = new JButton("Choisir");
+		panel_10.add(this.bEau);
+		bEau.addActionListener(controleur);
 		
 		JPanel panel_7 = new JPanel();
 		panelChamps.add(panel_7);
@@ -150,8 +153,41 @@ public class VueAjouterDocuments extends JFrame {
 		panel_7.add(panel_11, BorderLayout.EAST);
 		panel_11.setLayout(new BoxLayout(panel_11, BoxLayout.X_AXIS));
 		
-		JButton btnNewButton_2 = new JButton("Choisir");
-		panel_11.add(btnNewButton_2);
+		this.bElectricite = new JButton("Choisir");
+		panel_11.add(this.bElectricite);
+		bElectricite.addActionListener(controleur);
+	}
+	
+	public ControleurAjouterDocuments getControleur() {
+		return controleur;
+	}
+
+	public JButton getbEtatDesLieux() {
+		return bEtatDesLieux;
+	}
+
+	public JButton getbCaution() {
+		return bCaution;
+	}
+
+	public JButton getbElectricite() {
+		return bElectricite;
+	}
+
+	public JButton getbEau() {
+		return bEau;
+	}
+
+	public Location getLoc() {
+		return loc;
+	}
+
+	public String getIdBien() {
+		return idBien;
+	}
+
+	public String getIdLocataire() {
+		return idLocataire;
 	}
 
 	public void afficherNomFichier(String nomFichier, JLabel label) {

@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import classes.DocumentLocation;
+import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
 import modeleDAO.DocumentLocationDAO;
 
@@ -19,6 +22,8 @@ public class ControleurEnregistrerDocument implements ActionListener{
 	private String idBien;
 	private String idLocataire;
 	private String pathName;
+	private File file;
+	private VueAjouterDocuments vueDoc;
 	
 	public ControleurEnregistrerDocument(VueEnregistrerDocumentsLocation vue, 
 			Date dateDebut, String idBien, String idLocataire) {
@@ -34,7 +39,9 @@ public class ControleurEnregistrerDocument implements ActionListener{
 		DocumentLocationDAO dao = new DocumentLocationDAO();
 		String b = ((JButton)e.getSource()).getText();
 		if (b.equals("Choisir un fichier")){
+			System.out.println("3");
 			File fichier = this.selectionnerUnFichier();
+			this.file = fichier;
 //			System.out.println(fichier.getAbsolutePath());
 			if (!(fichier==null)) {
 				this.vue.afficherNomFichier(fichier.getName());
@@ -44,11 +51,14 @@ public class ControleurEnregistrerDocument implements ActionListener{
 			this.vue.dispose();
 		}else if(b.equals("Enregistrer")) {
 			if (this.pathName=="") {
+				System.out.println("2");
 				JOptionPane.showMessageDialog(this.vue, 
 						"Fichier non valide","Attention", JOptionPane.WARNING_MESSAGE);
 			}else {
-				dao.ajouterDocument(this.pathName, this.vue.getDescription(), this.idBien,
-						this.idLocataire, this.dateDebut);
+				System.out.println("1");
+				DocumentLocation doc = new DocumentLocation(this.file, this.vue.getDescription(), 
+						new Date(Calendar.getInstance().getTime().getTime()));
+				this.vueDoc.getControleur().setDoc(doc);
 				this.vue.dispose();
 			}
 		}

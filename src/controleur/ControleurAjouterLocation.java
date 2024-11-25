@@ -11,7 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import classes.Location;
+import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
+import ihm.VueEnregistrerDocumentsLocation;
 import modeleDAO.BienDAO;
 import modeleDAO.LocataireDAO;
 import modeleDAO.LocationDAO;
@@ -86,9 +88,11 @@ public class ControleurAjouterLocation implements ActionListener{
 							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
 							this.vue.getCaution(), this.vue.getDateDerniereRegularisation(),
 							this.vue.isPaye(), this.vue.getMontantReelPaye());
-					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), 
+					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
 							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
-					
+					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
+							this.vue.getSelectedLocataire());
+					frame.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
