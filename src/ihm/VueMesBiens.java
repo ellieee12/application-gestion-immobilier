@@ -32,13 +32,14 @@ public class VueMesBiens extends JFrame {
 	private JButton valider;
 	private JButton supprimer;
 	private String idImmeuble;
+	private ControleurMesBiens controleurMesBiens;
 
 	/**
 	 * Create the frame.
 	 */
 	public VueMesBiens(String idImmeuble) {
 		this.idImmeuble=idImmeuble;
-		ControleurMesBiens controleur = new ControleurMesBiens(this);
+		controleurMesBiens = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -65,7 +66,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelAdresse);
 		PanelAdresse.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Adresse : "+controleur.getAdresse());
+		JLabel lblNewLabel_1 = new JLabel("Adresse : "+controleurMesBiens.getAdresse());
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelAdresse.add(lblNewLabel_1, BorderLayout.NORTH);
 		
@@ -73,7 +74,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelCP);
 		PanelCP.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Code Postal : "+controleur.getCp());
+		JLabel lblNewLabel_2 = new JLabel("Code Postal : "+controleurMesBiens.getCp());
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelCP.add(lblNewLabel_2, BorderLayout.NORTH);
 		
@@ -81,7 +82,7 @@ public class VueMesBiens extends JFrame {
 		PanelInformationsBatiment.add(PanelVille);
 		PanelVille.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Ville : "+controleur.getVille());
+		JLabel lblNewLabel_3 = new JLabel("Ville : "+controleurMesBiens.getVille());
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		PanelVille.add(lblNewLabel_3, BorderLayout.NORTH);
 		
@@ -94,7 +95,7 @@ public class VueMesBiens extends JFrame {
 		PanelBoutonValider.setLayout(new BorderLayout(0, 0));
 		
 		this.valider = new JButton("Ajouter");
-		this.valider.addActionListener(controleur);
+		this.valider.addActionListener(controleurMesBiens);
 		PanelBoutonValider.add(valider, BorderLayout.SOUTH);
 		
 		
@@ -103,7 +104,7 @@ public class VueMesBiens extends JFrame {
 		PanelBoutonSupprimer.setLayout(new BorderLayout(0, 0));
 		
 		this.supprimer = new JButton("Supprimer");
-		this.supprimer.addActionListener(controleur);
+		this.supprimer.addActionListener(controleurMesBiens);
 		PanelBoutonSupprimer.add(supprimer, BorderLayout.NORTH);
 		
 		this.t = new DefaultTableModel(
@@ -127,7 +128,7 @@ public class VueMesBiens extends JFrame {
 				}
 			};
 
-		buildTable(controleur);
+		buildTable(controleurMesBiens);
 		this.table = new JTable(t);
 		this.table.setModel(this.t);
 		
@@ -149,6 +150,10 @@ public class VueMesBiens extends JFrame {
 
 	public String getIdImmeuble() {
 		return idImmeuble;
+	}
+	
+	public ControleurMesBiens getControleurMesBiens() {
+		return this.controleurMesBiens;
 	}
 
 }

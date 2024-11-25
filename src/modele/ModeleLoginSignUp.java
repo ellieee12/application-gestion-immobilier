@@ -10,7 +10,7 @@ public class ModeleLoginSignUp {
 	}
 	
 	public boolean compteExiste(String username) {
-		return this.listeMDP.containsKey(username);
+		return this.listeMDP.keySet().contains(username);
 	}
 	
 	public void addCompte(String username, String mdp) {

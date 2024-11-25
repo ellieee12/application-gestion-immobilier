@@ -19,7 +19,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import classes.Bien;
 import classes.Immeuble;
+import classes.Logement;
 import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
 
@@ -28,6 +30,9 @@ public class VueMesImmeubles extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private DefaultTableModel t;
+	private ControleurMesImmeubles controleurMesImmeubles;
+
 
 	/**
 	 * Launch the application.
@@ -49,8 +54,9 @@ public class VueMesImmeubles extends JFrame {
 	 * Create the frame.
 	 */
 	public VueMesImmeubles() {
-		ControleurMesImmeubles controleur = ControleurMesImmeubles.getControleur(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		controleurMesImmeubles = new ControleurMesImmeubles(this);
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,7 +78,7 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton AjouterImmeuble = new JButton("Ajouter");
 		PanelBoutonNouveau.add(AjouterImmeuble, BorderLayout.SOUTH);
-		AjouterImmeuble.addActionListener(controleur);
+		AjouterImmeuble.addActionListener(controleurMesImmeubles);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -80,12 +86,12 @@ public class VueMesImmeubles extends JFrame {
 		
 		JButton SupprimerImeuble = new JButton("Supprimer");
 		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
-		SupprimerImeuble.addActionListener(controleur);
+		SupprimerImeuble.addActionListener(controleurMesImmeubles);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		DefaultTableModel t = new DefaultTableModel(
+		this.t = new DefaultTableModel(
 				new Object[][] {
 				},
 				new String[] {
@@ -105,19 +111,27 @@ public class VueMesImmeubles extends JFrame {
 					return columnEditables[column];
 				}
 			};
-		for (Immeuble i : controleur.getImmeuble()) {
-			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
-		}
-		this.table = new JTable(t);
-		this.table.setModel(t);
+		this.buildTable(controleurMesImmeubles);
+		this.table = new JTable(this.t);
+		this.table.setModel(this.t);
 		
 		scrollPane.setViewportView(table);
 		
-		this.table.addMouseListener(controleur);
+		this.table.addMouseListener(controleurMesImmeubles);
+	}
+	
+	public void buildTable(ControleurMesImmeubles controleur) {
+		this.t.setRowCount(0);
+		for (Immeuble i : controleur.getImmeuble()) {
+			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
+		}
 	}
 	
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
 
+	public ControleurMesImmeubles getControleurMesImmeubles() {
+		return this.controleurMesImmeubles;
+	}
 }

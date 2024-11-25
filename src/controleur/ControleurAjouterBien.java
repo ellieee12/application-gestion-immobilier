@@ -19,18 +19,20 @@ import classes.Garage;
 import classes.Immeuble;
 import classes.Logement;
 import ihm.VueAjouterBien;
+import ihm.VueMesBiens;
 
 public class ControleurAjouterBien implements ActionListener {
 	
-	private static ControleurAjouterBien controleur;
+	private VueMesBiens vueBiens;
 	private VueAjouterBien vue;
 	private BienDAO dao;
 	private List<String> Immeubles;
 	
 	//Constructeur du controleur
-	private ControleurAjouterBien (VueAjouterBien vue) {
+	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) {
 		try {
 			this.vue = vue;
+			this.vueBiens=vueBiens;
 			this.dao = new BienDAO();
 			this.Immeubles = new LinkedList<>();
 			
@@ -125,12 +127,12 @@ public class ControleurAjouterBien implements ActionListener {
 		return this.dao.bienExiste(this.vue.getChampsIdBien());
 	}
 	
-	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
-		if (controleur == null) {
-			controleur = new ControleurAjouterBien(vue);
-		}
-		return controleur;
-	}
+//	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
+//		if (controleur == null) {
+//			controleur = new ControleurAjouterBien(vue);
+//		}
+//		return controleur;
+//	}
 
 	public List<String> getImmeubles() {
 		return Immeubles;

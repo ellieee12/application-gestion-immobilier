@@ -17,8 +17,8 @@ public class TestImmeuble {
 	@SuppressWarnings("deprecation")
 	@Before
 	public void setUp() {
-		m = new Maison("10 rue des champs", "31000", "Toulouse", "1");
-		b = new Batiment("10 rue des champs", "31000", "Toulouse", "1");
+		//m = new Maison("10 rue des champs", "31000", "Toulouse", "1");
+		//b = new Batiment("10 rue des champs", "31000", "Toulouse", "1");
 	}
 
 	@Test

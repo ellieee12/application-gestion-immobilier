@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import modeleDAO.BienDAO;
 import modeleDAO.ImmeubleDAO;
@@ -51,38 +52,49 @@ public class ControleurMesBiens implements ActionListener {
 	}
 	
 	public void Update() {
-		try {
-			this.bien = new LinkedList<>();
-			
-			BienDAO bien = new BienDAO();
-			ResultSet rs = bien.getAllBiens();
-			while(rs.next()) {
-				if (rs.getString(2).equals("L")) {
-					this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));
-				} else {
-					this.bien.add(new Garage(rs.getDate(6), rs.getString(1)));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		this.vue.buildTable(this);
-	}
+        try {
+            this.bien = new LinkedList<>();
+            
+            BienDAO bien = new BienDAO();
+            ImmeubleDAO immeuble = new ImmeubleDAO();
+            ResultSet rs = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
+			ResultSet rs2 = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
+            while(rs.next()) {
+                if (rs.getString(2).equals("L")) {
+                    this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));
+                } else {
+                    this.bien.add(new Garage(rs.getDate(6), rs.getString(1)));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.vue.buildTable(this);
+    }
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton  b = (JButton) e.getSource();	
 		if (b.getText() == "Ajouter") {
 			try {
-				VueAjouterBien frame = new VueAjouterBien();
+				VueAjouterBien frame = new VueAjouterBien(this.vue);
 				frame.setVisible(true);
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
 		} else if (b.getText() == "Supprimer") {
-			BienDAO bien = new BienDAO();
-			int rs = bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
-			this.Update();
+			String[] options = {"Suppimer","Annuler"};
+			JOptionPane pane = new JOptionPane();
+			@SuppressWarnings("static-access")
+			int resultat=pane.showOptionDialog(this.vue, 
+					"Tous les locations associées à ce bien seront également supprimées.",
+					"Attention", 
+					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+			if (resultat==JOptionPane.YES_OPTION) {
+				BienDAO bien = new BienDAO();
+				bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+				this.Update();
+			}
 		}
 		
 	}

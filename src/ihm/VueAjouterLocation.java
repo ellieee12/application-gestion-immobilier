@@ -24,6 +24,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 
 public class VueAjouterLocation extends JFrame {
 
@@ -32,13 +34,11 @@ public class VueAjouterLocation extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JFormattedTextField textFieldBail;
 	private JFormattedTextField textFieldDateDebutLocation;
 	private JFormattedTextField textFieldNombreMoisPrevus;
 	private JFormattedTextField textFieldLoyerLocataire;
 	private JComboBox<String> comboBoxLocataire;
 	private JComboBox<String> comboBoxBiens;
-	private JComboBox comboBoxEtatsDesLieux;
 	private JCheckBox chckbxColocation;
 	private JCheckBox chckbxLoyerPaye;
 	private JFormattedTextField formattedProvisionCharges;
@@ -61,6 +61,12 @@ public class VueAjouterLocation extends JFrame {
 			}
 		});
 	}
+	
+	public boolean isComplet() {
+		return !this.getSelectedBien().isEmpty() && !this.getDateDebutLocation().toString().isEmpty()
+				&& !this.getNbMoisPrevus().toString().isEmpty() 
+				&& !this.getDateDerniereRegularisation().toString().isEmpty();
+	}
 
 	/**
 	 * Create the application.
@@ -78,7 +84,7 @@ public class VueAjouterLocation extends JFrame {
 	private void initialize() throws SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
 		NumberFormatter currencyFormatter = generateCurrencyFormatter();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -128,13 +134,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		JLabel lblNewLabel_3 = new JLabel("Loyer Payé : ");
 		panel_3.add(lblNewLabel_3, BorderLayout.NORTH);
-		
-		JPanel panel_4 = new JPanel();
-		panelLibellé.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_4 = new JLabel("Bail : ");
-		panel_4.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		panelLibellé.add(panel_5);
@@ -205,10 +204,11 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panel_c_edl = new JPanel();
 		panelChamps.add(panel_c_edl);
-		panel_c_edl.setLayout(new BorderLayout(0, 0));
-		comboBoxEtatsDesLieux = new JComboBox<String>();
-		comboBoxEtatsDesLieux.setModel(new DefaultComboBoxModel(new String[] {"Tres mauvais", "Mauvais", "Moyen", "Bon", "Tres Bon"}));
-		panel_c_edl.add(comboBoxEtatsDesLieux, BorderLayout.NORTH);
+		panel_c_edl.setLayout(new BoxLayout(panel_c_edl, BoxLayout.X_AXIS));
+		
+		JButton btnNewButton = new JButton("Ajouter");
+		panel_c_edl.add(btnNewButton);
+		btnNewButton.addActionListener(controleur);
 		
 		JPanel panel_c_colocation = new JPanel();
 		panelChamps.add(panel_c_colocation);
@@ -223,15 +223,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		chckbxLoyerPaye = new JCheckBox("");
 		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
-		
-		JPanel panel_c_bail = new JPanel();
-		panelChamps.add(panel_c_bail);
-		panel_c_bail.setLayout(new BorderLayout(0, 0));
-		
-		textFieldBail = new JFormattedTextField(currencyFormatter);
-		textFieldBail.setValue(0.0);
-		panel_c_bail.add(textFieldBail, BorderLayout.NORTH);
-		textFieldBail.setColumns(10);
 		
 		JPanel panel_c_date_debut_location = new JPanel();
 		panelChamps.add(panel_c_date_debut_location);
@@ -296,7 +287,8 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_montant_reel);
 		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
 		
-		formattedMontantReelPaye = new JFormattedTextField();
+		formattedMontantReelPaye = new JFormattedTextField(currencyFormatter);
+		formattedMontantReelPaye.setValue(0.0);
 		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		
 		JPanel PanelBoutons = new JPanel();
@@ -307,6 +299,9 @@ public class VueAjouterLocation extends JFrame {
 		
 		JButton ButtonValider = new JButton("Valider");
 		PanelBoutons.add(ButtonValider);
+		
+		ButtonAnnuler.addActionListener(controleur);
+		ButtonValider.addActionListener(controleur);
 	}
 
 	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {
@@ -324,7 +319,7 @@ public class VueAjouterLocation extends JFrame {
 	}
 
 	private NumberFormatter generateCurrencyFormatter() {
-		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00€");
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		decimalFormat.setDecimalSeparatorAlwaysShown(true);
 		NumberFormatter numberFormatter= new NumberFormatter(decimalFormat);
 		numberFormatter.setValueClass(Double.class);
@@ -341,10 +336,6 @@ public class VueAjouterLocation extends JFrame {
 		return this.comboBoxLocataire.getSelectedItem().toString();
 	}
 	
-	public String getChampsEtatLieux() {
-		return this.comboBoxEtatsDesLieux.getSelectedItem().toString();
-	}
-	
 	public boolean isColocation() {
 		return this.chckbxColocation.isSelected();
 	}
@@ -352,16 +343,12 @@ public class VueAjouterLocation extends JFrame {
 	public boolean isPaye() {
 		return this.chckbxLoyerPaye.isSelected();
 	}
-	
-	public Float getBail() {
-		return Float.valueOf(this.textFieldBail.getText());
-	}
 
 	public Date getDateDebutLocation() {
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
-	        java.util.Date parsedDate = sdf.parse(this.textFieldBail.getText());
+	        java.util.Date parsedDate = sdf.parse(this.textFieldDateDebutLocation.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
 	        return null; 
@@ -373,6 +360,7 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public Float getLoyer() {
+		
 		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
 	
@@ -382,6 +370,10 @@ public class VueAjouterLocation extends JFrame {
 	
 	public Float getCaution() {
 		return Float.valueOf(this.formattedCaution.getText());
+	}
+	
+	public Float getMontantReelPaye() {
+		return Float.valueOf(this.formattedMontantReelPaye.getText());
 	}
 	
 	public Date getDateDerniereRegularisation() {

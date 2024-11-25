@@ -1,5 +1,5 @@
 package classes;
-import java.util.Date;
+import java.sql.Date;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
@@ -22,13 +22,8 @@ public class Location {
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;
 
-    @objid ("673f9bea-a6a1-4391-989c-c6fba3e2a3f7")
-    private String bail;
-
     @objid ("6e77ee39-435d-4483-829f-978f06898e78")
-    private ETAT etat_lieux;
-    
-    private enum ETAT{TRES_MAUVAIS, MAUVAIS, MOYEN, BON, TRES_BON}
+    private String etat_lieux;
 
     @objid ("0722a716-ccae-4173-bd3d-0cca8f62598d")
     private Date date_derniere_reg;
@@ -38,25 +33,19 @@ public class Location {
 
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
-    
-    private Locataire locataire;
-    
-    private ICC icc;
  
-	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, int provision_chargement_TTC,
-			float caution_TTC, String bail, ETAT etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye, Locataire locataire, ICC icc) {
+	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+			float caution_TTC, String etat_lieux, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
 		this.loyer_TTC = loyer_TTC;
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
-		this.bail = bail;
 		this.etat_lieux = etat_lieux;
 		this.date_derniere_reg = date_derniere_reg;
 		this.loyer_paye = loyer_paye;
 		this.montant_reel_paye = montant_reel_paye;
-		this.locataire = locataire;
 	}
 
 	public Date getDate_debut() {
@@ -80,12 +69,8 @@ public class Location {
 		return caution_TTC;
 	}
 
-	public String getBail() {
-		return bail;
-	}
-
-	public ETAT getEtat_lieux() {
-		return etat_lieux;
+	public String getEtat_lieux() {
+		return etat_lieux.toString();
 	}
 
 	public Date getDate_derniere_reg() {
@@ -100,12 +85,5 @@ public class Location {
 		return montant_reel_paye;
 	}
 
-	public Locataire getLocataire() {
-		return locataire;
-	}
-
-	public ICC getIcc() {
-		return icc;
-	}
 
 }

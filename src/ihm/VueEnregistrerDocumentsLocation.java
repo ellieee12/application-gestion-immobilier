@@ -30,6 +30,7 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblNomFichier;
 	private JTextArea textAreaDescription;
+	private ControleurEnregistrerDocument controleur;
 
 	/**
 	 * Launch the application.
@@ -51,7 +52,7 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 	 * Create the frame.
 	 */
 	public VueEnregistrerDocumentsLocation() {
-		ControleurEnregistrerDocument controleur = new ControleurEnregistrerDocument(this);
+		this.controleur = new ControleurEnregistrerDocument(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -127,5 +128,11 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 	public String getDescription() {
 		return this.textAreaDescription.getText();
 	}
+
+	public ControleurEnregistrerDocument getControleur() {
+		return controleur;
+	}
+	
+	
 
 }

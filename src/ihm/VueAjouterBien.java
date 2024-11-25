@@ -36,29 +36,13 @@ public class VueAjouterBien extends JFrame {
 	private JComboBox<String> comboBox_Immeuble;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueAjouterBien frame = new VueAjouterBien();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public VueAjouterBien() {
+	public VueAjouterBien(VueMesBiens vueBiens) {
 		//mise en place du controleur
-		ControleurAjouterBien controleur = ControleurAjouterBien.getControleurAjouterBien(this);
+		ControleurAjouterBien controleur = new ControleurAjouterBien(this,vueBiens);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
