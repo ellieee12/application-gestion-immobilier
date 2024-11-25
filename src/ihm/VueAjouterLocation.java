@@ -24,6 +24,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 
 public class VueAjouterLocation extends JFrame {
 
@@ -37,7 +39,6 @@ public class VueAjouterLocation extends JFrame {
 	private JFormattedTextField textFieldLoyerLocataire;
 	private JComboBox<String> comboBoxLocataire;
 	private JComboBox<String> comboBoxBiens;
-	private JComboBox comboBoxEtatsDesLieux;
 	private JCheckBox chckbxColocation;
 	private JCheckBox chckbxLoyerPaye;
 	private JFormattedTextField formattedProvisionCharges;
@@ -203,10 +204,11 @@ public class VueAjouterLocation extends JFrame {
 		
 		JPanel panel_c_edl = new JPanel();
 		panelChamps.add(panel_c_edl);
-		panel_c_edl.setLayout(new BorderLayout(0, 0));
-		comboBoxEtatsDesLieux = new JComboBox<String>();
-		comboBoxEtatsDesLieux.setModel(new DefaultComboBoxModel(new String[] {"Tres mauvais", "Mauvais", "Moyen", "Bon", "Tres Bon"}));
-		panel_c_edl.add(comboBoxEtatsDesLieux, BorderLayout.NORTH);
+		panel_c_edl.setLayout(new BoxLayout(panel_c_edl, BoxLayout.X_AXIS));
+		
+		JButton btnNewButton = new JButton("Ajouter");
+		panel_c_edl.add(btnNewButton);
+		btnNewButton.addActionListener(controleur);
 		
 		JPanel panel_c_colocation = new JPanel();
 		panelChamps.add(panel_c_colocation);
@@ -332,10 +334,6 @@ public class VueAjouterLocation extends JFrame {
 	
 	public String getSelectedLocataire() {
 		return this.comboBoxLocataire.getSelectedItem().toString();
-	}
-	
-	public String getChampsEtatLieux() {
-		return this.comboBoxEtatsDesLieux.getSelectedItem().toString();
 	}
 	
 	public boolean isColocation() {

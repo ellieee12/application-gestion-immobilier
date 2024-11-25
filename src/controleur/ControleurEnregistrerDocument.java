@@ -55,4 +55,10 @@ public class ControleurEnregistrerDocument implements ActionListener{
 		return null;
 	}
 
+	public String getPathName() {
+		return pathName;
+	}
+	
+	
+
 }
