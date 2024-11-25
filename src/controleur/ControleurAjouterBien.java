@@ -52,6 +52,7 @@ public class ControleurAjouterBien implements ActionListener {
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
+				int i=0;
 				//vérifier si l'identifiant existe dans la base de données
 				if (verificationBienExiste()) {
 					JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
@@ -67,11 +68,16 @@ public class ControleurAjouterBien implements ActionListener {
 					if (champsLogementNonRemplis()){
 						JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
 					}else{
-						ajouterLogement();
+						i = ajouterLogement();
+						
 					}
 				}else {
-					ajouterGarage();
+					i = ajouterGarage();
 				}
+				
+				this.vueBiens.getControleurMesBiens().Update();
+				this.vue.dispose();
+				System.out.println(i + " lignes ajoutées");
 				
 			}
 				
@@ -86,6 +92,7 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 
+<<<<<<< Updated upstream
 	private void ajouterGarage() {
 		int i = this.dao.ajouterBien(null, this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(), null, null, 
 				"1", this.vue.getComboBoxTypeBien());
@@ -97,6 +104,18 @@ public class ControleurAjouterBien implements ActionListener {
 				this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
 				this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
 		System.out.println(i + " lignes ajoutées");
+=======
+	private int ajouterGarage() {
+		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien());
+		int i = this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
+		return i;
+	}
+
+	private int ajouterLogement() {
+		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable());
+		int i = this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
+		return i;
+>>>>>>> Stashed changes
 	}
 
 	private boolean champsLogementNonRemplis() {
