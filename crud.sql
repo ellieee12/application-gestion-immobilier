@@ -71,7 +71,7 @@ CREATE TABLE Location(
 
 CREATE TABLE Document_Location(
     id_document INT not null auto_increment,
-    filepath VARCHAR(50) not null,
+    filepath VARCHAR(500) not null,
     description VARCHAR(100),
     date_enregistrement DATE,
     id_bien VARCHAR(20) NOT NULL,
@@ -148,3 +148,5 @@ VALUES
 (4, '2023-10-01', 4),
 (5, '2024-01-01', 5);
 commit;
+
+create function getAllBien return  
