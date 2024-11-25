@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import classes.Location;
 
@@ -12,6 +13,46 @@ private MySQLCon mySQLCon;
 	
 	public LocationDAO() {
 		this.mySQLCon=MySQLCon.getInstance();
+	}
+	
+	public ResultSet getAllLocations() throws SQLException {
+		String req = "select * from location";
+		Statement stmt = this.mySQLCon.getConnection().createStatement();
+		ResultSet rs = stmt.executeQuery(req);
+		return rs;
+	}
+	
+	public void supprimerLocation(String id, Date date_debut) {
+		try {
+			// Supprimer dans la table Louer
+	        String reqDeleteLouer = "DELETE FROM louer WHERE id_bien = ? AND date_debut = ?";
+	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareStatement(reqDeleteLouer);
+	        stmtDeleteLouer.setString(1, id);
+	        stmtDeleteLouer.setDate(2, date_debut);
+	        stmtDeleteLouer.executeUpdate();
+	        stmtDeleteLouer.close();
+	        
+	        //Supprimer dans la table Documents location
+	        String reqdeleteDocumentLocation  = "DELETE FROM Document_Location WHERE id_bien = ? AND date_debut = ?";
+	        PreparedStatement stmtDeleteDocumentLocation = this.mySQLCon.getConnection().prepareStatement(reqdeleteDocumentLocation);
+	        stmtDeleteDocumentLocation.setString(1, id);
+	        stmtDeleteDocumentLocation.setDate(2, date_debut);
+	        stmtDeleteDocumentLocation.executeUpdate();
+	        stmtDeleteDocumentLocation.close();
+	        
+			
+	        //Supprimer dans la table Location
+			String reqDeleteLocation = "delete from Location where id_bien = ? and date_debut = ?";
+			PreparedStatement stmtDeleteLocation = this.mySQLCon.getConnection().prepareStatement(reqDeleteLocation);
+			stmtDeleteLocation.setString(1, id);
+			stmtDeleteLocation.setDate(2, date_debut);
+			int nbLignesSupprimeesLocation = stmtDeleteLocation.executeUpdate();
+			stmtDeleteLocation.close();
+			System.out.println(nbLignesSupprimeesLocation+" lignes supprimées dans le table (Louer)");	
+	
+		}catch(Exception e){
+			System.out.println(e);
+		}
 	}
 	
 	public int ajouterLocation(
