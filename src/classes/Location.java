@@ -4,6 +4,9 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
 public class Location {
+	
+	private String idBien;
+	
     @objid ("31ca14d9-9889-4d81-8b50-04fb2870dbc2")
     private Date date_debut;
     
@@ -34,8 +37,9 @@ public class Location {
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
  
-	public Location(Date date_debut, int colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+	public Location(String idBien,Date date_debut, int colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
 			float caution_TTC, Date date_derniere_reg, int loyer_paye, float montant_reel_paye) {
+		this.idBien = idBien;
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -45,6 +49,10 @@ public class Location {
 		this.date_derniere_reg = date_derniere_reg;
 		this.loyer_paye = loyer_paye;
 		this.montant_reel_paye = montant_reel_paye;
+	}
+	
+	public String getIdBien () {
+		return idBien;
 	}
 
 	public Date getDate_debut() {
@@ -60,8 +68,11 @@ public class Location {
 		return loyer_TTC;
 	}
 	
-	public int getColocation() {
-		return colocation;
+	public String getColocation() {
+		if (this.colocation == 0) {
+			return "Non";
+		}
+		return "Oui";
 	}
 
 	public float getProvision_chargement_TTC() {
@@ -80,8 +91,11 @@ public class Location {
 		return date_derniere_reg;
 	}
 
-	public int isLoyer_paye() {
-		return loyer_paye;
+	public String isLoyer_paye() {
+		if (this.loyer_paye == 0) {
+			return "Non";
+		}
+		return "Oui";
 	}
 
 	public float getMontant_reel_paye() {
