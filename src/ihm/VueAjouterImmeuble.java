@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurAjouterImmeuble;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class VueAjouterImmeuble extends JFrame {
 
@@ -129,52 +131,59 @@ public class VueAjouterImmeuble extends JFrame {
 		
 		JPanel PanelBouton = new JPanel();
 		contentPane.add(PanelBouton, BorderLayout.SOUTH);
+		PanelBouton.setLayout(new BoxLayout(PanelBouton, BoxLayout.X_AXIS));
+		
+		JLabel lblNewLabel_6 = new JLabel("<html><font size='3' color=red>*</font> <font size='3'color=black> Champs obligatoires</font></html>");
+		PanelBouton.add(lblNewLabel_6);
+		
+		JPanel panel_12 = new JPanel();
+		PanelBouton.add(panel_12);
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
+		panel_12.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(controleur);
-		PanelBouton.add(btnNewButton_1);
 		
 		JButton btnNewButton = new JButton("Valider");
+		panel_12.add(btnNewButton);
 		btnNewButton.addActionListener(controleur);
-		PanelBouton.add(btnNewButton);
 		
 		JPanel PanelLibellé = new JPanel();
 		contentPane.add(PanelLibellé, BorderLayout.WEST);
-		PanelLibellé.setLayout(new GridLayout(0, 1, 0, 0));
+		PanelLibellé.setLayout(new GridLayout(0, 1, 2, 0));
 		
 		JPanel panel_7 = new JPanel();
 		PanelLibellé.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Type d'immeuble         ");
+		JLabel lblNewLabel_3 = new JLabel("<html><font size='3' color=black>Type d'immeuble</font> <font size='3'color=red>*</font></html>");
 		panel_7.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_8 = new JPanel();
 		PanelLibellé.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Adresse");
+		JLabel lblNewLabel_1 = new JLabel("<html><font size='3' color=black>Adresse</font> <font size='3'color=red>*</font></html>");
 		panel_8.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panel_9 = new JPanel();
 		PanelLibellé.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Code Postal");
+		JLabel lblNewLabel_2 = new JLabel("<html><font size='3' color=black>Code postal</font> <font size='3'color=red>*</font></html>");
 		panel_9.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		JPanel panel_10 = new JPanel();
 		PanelLibellé.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Ville");
+		JLabel lblNewLabel_2_1 = new JLabel("<html><font size='3' color=black>Ville</font> <font size='3'color=red>*</font></html>");
 		panel_10.add(lblNewLabel_2_1, BorderLayout.NORTH);
 		
 		JPanel panel_11 = new JPanel();
 		PanelLibellé.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_5 = new JLabel("Id Immeuble");
+		JLabel lblNewLabel_5 = new JLabel("<html><font size='3' color=black>Id Immeuble</font> <font size='3'color=red>*</font></html>");
 		panel_11.add(lblNewLabel_5, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
