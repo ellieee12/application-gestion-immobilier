@@ -39,18 +39,14 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 			if (s.equals("Sign In")) {
 				String username = this.vueLogin.getUsername().getText();
 				String mdp = String.valueOf(this.vueLogin.getMDP().getPassword());
-				if (!this.modele.compteExiste(username)) {
-					JOptionPane.showMessageDialog(vueSignUp, "Compte n'existe pas","Erreur",JOptionPane.WARNING_MESSAGE);
-				}else {
-					if (this.modele.mdpCorrecte(username, mdp)){
+					if (this.modele.mdpCorrecte(username, mdp)||!this.modele.compteExiste(username)){
 						vueLogin.setVisible(false);
 						VueMenu frame = new VueMenu();
 						frame.setVisible(true);
 					}else {
-						JOptionPane.showMessageDialog(vueSignUp, "Login incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(vueSignUp, "Login ou mot de passe incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
 					}
 				}
-			}
 			break;
 			
 		case SIGNUP:
@@ -74,8 +70,8 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 				}	
 			}
 			break;
-		}
-	}	
+		}	
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
