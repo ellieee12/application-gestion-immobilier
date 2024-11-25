@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS bien;
 DROP TABLE IF EXISTS locataire;
 DROP TABLE IF EXISTS icc;
 DROP TABLE IF EXISTS immeuble;
+DROP TABLE IF EXISTS SignUp;
 
 create table Immeuble (
     id_immeuble varchar(20) not null,
@@ -71,7 +72,7 @@ CREATE TABLE Location(
 
 CREATE TABLE Document_Location(
     id_document INT not null auto_increment,
-    filepath VARCHAR(500) not null,
+    filepath VARCHAR(50) not null,
     description VARCHAR(100),
     date_enregistrement DATE,
     id_bien VARCHAR(20) NOT NULL,
@@ -88,6 +89,12 @@ CREATE TABLE Louer(
    constraint pk_louer PRIMARY KEY(id_bien, date_debut),
    constraint fk_louer_location FOREIGN KEY(id_bien, date_debut)REFERENCES Location(id_bien, date_debut),
    constraint fk_louer_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
+);
+
+CREATE TABLE SignUp(
+    username VARCHAR(50),
+    mdp VARCHAR(50),
+    constraint pk_SignUp PRIMARY KEY(username, mdp)
 );
 
 
@@ -147,6 +154,11 @@ VALUES
 (3, '2023-07-01', 3),
 (4, '2023-10-01', 4),
 (5, '2024-01-01', 5);
-commit;
 
-create function getAllBien return  
+
+INSERT INTO SignUp (username, mdp)
+VALUES
+('admin', 'admin'),
+('user', '1234'),
+('test', 'test');
+commit;
