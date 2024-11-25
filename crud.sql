@@ -59,7 +59,6 @@ CREATE TABLE Location(
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
-    etat_lieux VARCHAR(50),
     date_derniere_reg DATE,
     montant_reel_paye decimal(15,2),
     annee date NOT NULL,
