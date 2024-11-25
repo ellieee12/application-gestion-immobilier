@@ -50,14 +50,6 @@ public class BienDAO{
 		return rs;
 	}
 	
-<<<<<<< Updated upstream
-	public int supprimerBien(String id) {
-		try {
-			String req = "delete from bien where id_bien=?";
-			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
-			stmt.setString(1, id);
-			int nbLignesSupprimees = stmt.executeUpdate();
-=======
 	/**
 	 * Supprimer tous les biens ayant un identifiant donné
 	 * @param identifiant d'un bien donné
@@ -69,13 +61,10 @@ public class BienDAO{
 			stmt.setString(1, id_bien);
 			int i = stmt.executeUpdate();
 			System.out.println(i+" lignes supprimées");
->>>>>>> Stashed changes
 			stmt.close();
-			return nbLignesSupprimees;
 		}catch(Exception e){
 			System.out.println(e);
 		}
-		return 0;
 	}
 	
 	/**

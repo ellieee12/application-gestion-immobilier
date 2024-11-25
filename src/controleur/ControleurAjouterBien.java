@@ -92,19 +92,6 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 
-<<<<<<< Updated upstream
-	private void ajouterGarage() {
-		int i = this.dao.ajouterBien(null, this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(), null, null, 
-				"1", this.vue.getComboBoxTypeBien());
-		System.out.println(i + " lignes ajoutées");
-	}
-
-	private void ajouterLogement() {
-		int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
-				this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
-				this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
-		System.out.println(i + " lignes ajoutées");
-=======
 	private int ajouterGarage() {
 		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien());
 		int i = this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
@@ -115,7 +102,6 @@ public class ControleurAjouterBien implements ActionListener {
 		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable());
 		int i = this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
 		return i;
->>>>>>> Stashed changes
 	}
 
 	private boolean champsLogementNonRemplis() {
