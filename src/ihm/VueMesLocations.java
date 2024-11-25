@@ -9,15 +9,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import classes.Immeuble;
+import classes.Location;
+import controleur.ControleurMesImmeubles;
+import controleur.ControleurMesLocations;
 
 public class VueMesLocations extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-
+	private DefaultTableModel t;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -60,6 +68,58 @@ public class VueMesLocations extends JFrame {
 		
 		JButton AjouterImmeuble = new JButton("Ajouter");
 		PanelBoutonNouveau.add(AjouterImmeuble, BorderLayout.SOUTH);
+		
+		JPanel PanelBoutonSupprimer = new JPanel();
+		PanelBouton.add(PanelBoutonSupprimer);
+		PanelBoutonSupprimer.setLayout(new BorderLayout(0, 0));
+		
+		JButton SupprimerImeuble = new JButton("Supprimer");
+		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		this.t = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					String.class, String.class, String.class, String.class, String.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				};
+				boolean[] columnEditables = new boolean[] {
+						false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			};
+			//this.buildTable(controleurMesImmeubles);
+			this.table = new JTable(this.t);
+			this.table.setModel(this.t);
+			
+			scrollPane.setViewportView(table);
+			
+			//this.table.addMouseListener(controleurMesImmeubles);
 	}
+	
+	public void buildTable(ControleurMesLocations controleur) {
+		this.t.setRowCount(0);
+		for (Location l : controleur.getLocation()) {
+			t.addRow(new Object [] {l.getDate_debut(), l.getColocation(), l.getNb_mois(), l.getLoyer_TTC(), l.getProvision_chargement_TTC(),
+					l.getCaution_TTC(), l.getDate_derniere_reg(), l.isLoyer_paye(), l.getMontant_reel_paye()});
+		}
+	}
+	/*
+	public int getLigneChoisi() {
+		return this.table.getSelectedRow();
+	}
+	*/
+	
 
 }
