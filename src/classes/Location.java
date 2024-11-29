@@ -34,8 +34,8 @@ public class Location {
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
  
-	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, Date date_derniere_reg, boolean loyer_paye, float montant_reel_paye) {
+	public Location(Date date_debut, int colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+			float caution_TTC, Date date_derniere_reg, int loyer_paye, float montant_reel_paye) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -64,11 +64,8 @@ public class Location {
 		return loyer_TTC;
 	}
 	
-	public String getColocation() {
-		if (this.colocation == 0) {
-			return "Non";
-		}
-		return "Oui";
+	public boolean getColocation() {
+		return this.colocation == 1;
 	}
 
 	public float getProvision_chargement_TTC() {
@@ -83,11 +80,8 @@ public class Location {
 		return date_derniere_reg;
 	}
 
-	public String isLoyer_paye() {
-		if (this.loyer_paye == 0) {
-			return "Non";
-		}
-		return "Oui";
+	public boolean isLoyer_paye() {
+		return this.loyer_paye == 1;
 	}
 
 	public float getMontant_reel_paye() {
