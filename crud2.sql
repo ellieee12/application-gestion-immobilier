@@ -13,6 +13,7 @@ DROP PROCEDURE IF EXISTS addImmeuble$$
 DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
 DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
+DROP PROCEDURE IF EXISTS getMdpByUsername$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -122,10 +123,10 @@ BEGIN
     );
 END$$
 
-CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50), v_mdp VARCHAR(50))
+CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50))
 
 BEGIN
-    SELECT * from signup where username = v_username and mdp = v_mdp;
+    SELECT * from signup where username = v_username;
 END$$
 
 CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
@@ -133,6 +134,12 @@ CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
 BEGIN 
     INSERT INTO signup(username,mdp)
     VALUES (v_username, v_mdp);
+END$$
+
+CREATE PROCEDURE getMdpByUsername (v_username VARCHAR(50))
+
+BEGIN 
+    SELECT mdp from signup where username = v_username;
 END$$
 
 
