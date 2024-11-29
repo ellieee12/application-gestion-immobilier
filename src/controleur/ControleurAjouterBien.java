@@ -1,8 +1,10 @@
 package controleur;
 
 import modeleDAO.BienDAO;
+import modeleDAO.DAOException;
 import modeleDAO.ImmeubleDAO;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -16,7 +18,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import classes.Garage;
-import classes.Immeuble;
 import classes.Logement;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
@@ -54,26 +55,38 @@ public class ControleurAjouterBien implements ActionListener {
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
+				int i=0;
 				//vérifier si l'identifiant existe dans la base de données
-				if (verificationBienExiste()) {
-					JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
-				}else if(!verificationChampIDBien()) {
-					JOptionPane.showMessageDialog(this.vue, "Veillez saisir l'identifiant du bien","Attention", JOptionPane.WARNING_MESSAGE);
-				}else if(!verificationChampsDateAcquisition()) {
-					try {
-						throw new ParseException("Format du date d'acquisition invalide",0);
-					}catch(ParseException pEx) {
-						JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
+				try {
+					if (verificationBienExiste()) {
+						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+					}else if(!verificationChampIDBien()) {
+						JOptionPane.showMessageDialog(this.vue, "Veillez saisir l'identifiant du bien","Attention", JOptionPane.WARNING_MESSAGE);
+					}else if(!verificationChampsDateAcquisition()) {
+						try {
+							throw new ParseException("Format du date d'acquisition invalide",0);
+						}catch(ParseException pEx) {
+							JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
+						}
+					}else if (isLogement()) {
+						if (champsLogementNonRemplis()){
+							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
+						}else{
+							i = ajouterLogement();
+							
+						}
+					}else {
+						i = ajouterGarage();
 					}
-				}else if (isLogement()) {
-					if (champsLogementNonRemplis()){
-						JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
-					}else{
-						ajouterLogement();
-					}
-				}else {
-					ajouterGarage();
+				} catch (HeadlessException e1) {
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					e1.printStackTrace();
 				}
+				
+				this.vueBiens.getControleurMesBiens().Update();
+				this.vue.dispose();
+				System.out.println(i + " lignes ajoutées");
 				
 			}
 				
@@ -88,21 +101,16 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 
-	private void ajouterGarage() {
-		int i = this.dao.ajouterBien(null, this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(), null, null, 
-				"1", this.vue.getComboBoxTypeBien());
-		this.vueBiens.getControleurMesBiens().Update();
-		this.vue.dispose();
-		System.out.println(i + " lignes ajoutées");
+	private int ajouterGarage() throws DAOException {
+		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien());
+		int i = this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
+		return i;
 	}
 
-	private void ajouterLogement() {
-		int i = this.dao.ajouterBien(this.vue.getChampsNumeroEtage(), this.vue.getChampsDateAcquisition(),
-				this.vue.getChampsIdBien(), this.vue.getChampsNumeroEtage(), this.vue.getChampsSurfaceHabitable(),
-				this.vue.getSelectedImmeuble(), this.vue.getComboBoxTypeBien());
-		this.vueBiens.getControleurMesBiens().Update();
-		this.vue.dispose();
-		System.out.println(i + " lignes ajoutées");
+	private int ajouterLogement() throws DAOException {
+		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable());
+		int i = this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
+		return i;
 	}
 
 	private boolean champsLogementNonRemplis() {
@@ -122,7 +130,7 @@ public class ControleurAjouterBien implements ActionListener {
 		return this.vue.getChampsIdBien()!=null && !this.vue.getChampsIdBien().isEmpty();
 	}
 
-	private boolean verificationBienExiste() {
+	private boolean verificationBienExiste() throws DAOException {
 		return this.dao.bienExiste(this.vue.getChampsIdBien());
 	}
 	

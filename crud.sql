@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS bien;
 DROP TABLE IF EXISTS locataire;
 DROP TABLE IF EXISTS icc;
 DROP TABLE IF EXISTS immeuble;
+DROP TABLE IF EXISTS SignUp;
 
 create table Immeuble (
     id_immeuble varchar(20) not null,
@@ -55,13 +56,14 @@ CREATE TABLE Location(
     id_bien VARCHAR(20) not null,
     date_debut DATE not null,
     nb_mois INT,
+    colocation TINYINT(1),
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
-    etat_lieux VARCHAR(50),
     date_derniere_reg DATE,
     montant_reel_paye decimal(15,2),
     annee date NOT NULL,
+    loyer_paye TINYINT(1),
     trimestre smallint NOT NULL,
     constraint pk_location PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
@@ -87,6 +89,12 @@ CREATE TABLE Louer(
    constraint pk_louer PRIMARY KEY(id_bien, date_debut),
    constraint fk_louer_location FOREIGN KEY(id_bien, date_debut)REFERENCES Location(id_bien, date_debut),
    constraint fk_louer_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
+);
+
+CREATE TABLE SignUp(
+    username VARCHAR(50),
+    mdp VARCHAR(50),
+    constraint pk_SignUp PRIMARY KEY(username, mdp)
 );
 
 
@@ -128,15 +136,15 @@ VALUES
 
 -- Insert sample data into Location
 INSERT INTO Location (
-    id_bien, date_debut, nb_mois, provision_charges_ttc, loyer_ttc, 
-    caution_ttc, etat_lieux, date_derniere_reg, montant_reel_paye, annee, trimestre
+    id_bien, date_debut, nb_mois,colocation , provision_charges_ttc, loyer_ttc, 
+    caution_ttc, date_derniere_reg, montant_reel_paye, annee, loyer_paye, trimestre
 )
 VALUES
-(1, '2023-01-01', 12, 150.00, 750.00, 1500.00, 'Etat_001', '2023-12-01', 9000.00, '2023-01-01', 1),
-(2, '2023-04-01', 6, 100.00, 500.00, 1000.00, 'Etat_002', '2023-10-01', 3000.00, '2023-04-01', 2),
-(3, '2023-07-01', 9, 200.00, 1000.00, 2000.00, 'Etat_003', '2023-10-01', 7000.00, '2023-07-01', 3),
-(4, '2023-10-01', 24, 250.00, 1200.00, 2400.00, 'Etat_004', '2024-10-01', 12000.00, '2023-10-01', 4),
-(5, '2024-01-01', 18, 300.00, 1500.00, 3000.00, 'Etat_005', '2024-06-01', 18000.00, '2024-01-01', 1);
+(1, '2023-01-01', 12, 1, 150.00, 750.00, 1500.00, '2023-12-01', 9000.00, '2023-01-01', 0, 1),
+(2, '2023-04-01', 6, 0, 100.00, 500.00, 1000.00, '2023-10-01', 3000.00, '2023-04-01', 1,  2),
+(3, '2023-07-01', 9, 1, 200.00, 1000.00, 2000.00, '2023-10-01', 7000.00, '2023-07-01', 1, 3),
+(4, '2023-10-01', 24, 0, 250.00, 1200.00, 2400.00, '2024-10-01', 12000.00, '2023-10-01', 0, 4),
+(5, '2024-01-01', 18, 1, 300.00, 1500.00, 3000.00, '2024-06-01', 18000.00, '2024-01-01', 1, 1);
 
 
 INSERT INTO Louer (id_bien, date_debut, id_locataire)
@@ -146,4 +154,11 @@ VALUES
 (3, '2023-07-01', 3),
 (4, '2023-10-01', 4),
 (5, '2024-01-01', 5);
+
+
+INSERT INTO SignUp (username, mdp)
+VALUES
+('admin', 'admin'),
+('user', '1234'),
+('test', 'test');
 commit;

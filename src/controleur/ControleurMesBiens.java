@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import modeleDAO.BienDAO;
+import modeleDAO.DAOException;
 import modeleDAO.ImmeubleDAO;
 
 public class ControleurMesBiens implements ActionListener {
@@ -92,7 +93,11 @@ public class ControleurMesBiens implements ActionListener {
 					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
 			if (resultat==JOptionPane.YES_OPTION) {
 				BienDAO bien = new BienDAO();
-				bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+				try {
+					bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
 				this.Update();
 			}
 		}
