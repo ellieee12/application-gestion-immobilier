@@ -125,13 +125,13 @@ END$$
 CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50), v_mdp VARCHAR(50))
 
 BEGIN
-    SELECT * from Compte where username = v_username and mdp = v_mdp;
+    SELECT * from signup where username = v_username and mdp = v_mdp;
 END$$
 
 CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
 
 BEGIN 
-    INSERT INTO Compte(username,mdp)
+    INSERT INTO signup(username,mdp)
     VALUES (v_username, v_mdp);
 END$$
 
