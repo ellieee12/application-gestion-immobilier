@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurAjouterImmeuble;
 import java.awt.FlowLayout;
@@ -24,7 +26,7 @@ public class VueAjouterImmeuble extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField_adresse;
-	private JTextField textField_code_postal;
+	private JFormattedTextField textField_code_postal;
 	private JTextField textField_ville;
 	private JTextField textField_id;
 	private JComboBox<String> comboBox;
@@ -102,7 +104,11 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelChamps.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		textField_code_postal = new JTextField();
+		try {
+			textField_code_postal = new JFormattedTextField(new MaskFormatter("#####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		panel_3.add(textField_code_postal, BorderLayout.NORTH);
 		textField_code_postal.setColumns(10);
 		

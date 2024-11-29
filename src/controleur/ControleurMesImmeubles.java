@@ -19,11 +19,10 @@ import classes.Maison;
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
 import ihm.VueMesBiens;
+import modeleDAO.DAOException;
 import modeleDAO.ImmeubleDAO;
 
 public class ControleurMesImmeubles extends MouseAdapter implements ActionListener {
-	
-	private static ControleurMesImmeubles controleur;
 	
 	private VueMesImmeubles vue;
 	private List<Immeuble> immeuble;
@@ -36,13 +35,12 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			ImmeubleDAO immeubleDAO = new ImmeubleDAO();
 			ResultSet rs = immeubleDAO.getAllImmeubles();
 			while(rs.next()) {
-				if (rs.getString(6).equals("M")) {
-					immeuble.add(new Maison(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(5)));
-				} else {
-					immeuble.add(new Batiment(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(5)));
-				}
-				
-			}
+                if (rs.getString(2).equals("M")) {
+                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                } else {
+                    this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
+                }
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -68,9 +66,9 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
             ResultSet rs = immeuble.getAllImmeubles();
             while(rs.next()) {
                 if (rs.getString(2).equals("M")) {
-                    this.immeuble.add(new Maison(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
+                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
                 } else {
-                    this.immeuble.add(new Batiment(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
+                    this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
                 }
             }
         } catch (SQLException e) {
@@ -100,7 +98,11 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
 			if (resultat==JOptionPane.YES_OPTION) {
 				ImmeubleDAO immeuble = new ImmeubleDAO();
-				immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
+				try {
+					immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
 			}
 			this.Update();
 		}

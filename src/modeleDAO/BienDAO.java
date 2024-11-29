@@ -1,11 +1,8 @@
 package modeleDAO;
 
 import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,7 +81,7 @@ public class BienDAO{
 	 * @return Le nombre des biens ajouté dans la base de données
 	 * @throws DAOException 
 	 */
-	public int ajouterBien(Bien b, String id_immeuble) throws DAOException {
+	public void ajouterBien(Bien b, String id_immeuble) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			if (b instanceof Garage) {
@@ -106,7 +103,7 @@ public class BienDAO{
 			}
 			int i = stmt.executeUpdate();
 			stmt.close();
-			return i;
+			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
 			throw new DAOException("Erreurs lors de la création d'un bien",e);

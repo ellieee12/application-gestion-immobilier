@@ -38,7 +38,7 @@ public class ControleurAjouterBien implements ActionListener {
 			this.Immeubles = new LinkedList<>();
 			
 			ImmeubleDAO Immeuble = new ImmeubleDAO();
-			ResultSet rs = Immeuble.getImmeubles();
+			ResultSet rs = Immeuble.getImmeublesPourAjouterBien();
 			while(rs.next()) {
 				this.Immeubles.add(rs.getString(1));
 			}
@@ -55,7 +55,6 @@ public class ControleurAjouterBien implements ActionListener {
 			if (s == "Annuler") {
 				this.vue.dispose();
 			} else if (s == "Valider") {
-				int i=0;
 				//vérifier si l'identifiant existe dans la base de données
 				try {
 					if (verificationBienExiste()) {
@@ -72,11 +71,11 @@ public class ControleurAjouterBien implements ActionListener {
 						if (champsLogementNonRemplis()){
 							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
 						}else{
-							i = ajouterLogement();
+							 ajouterLogement();
 							
 						}
 					}else {
-						i = ajouterGarage();
+						ajouterGarage();
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
@@ -86,7 +85,6 @@ public class ControleurAjouterBien implements ActionListener {
 				
 				this.vueBiens.getControleurMesBiens().Update();
 				this.vue.dispose();
-				System.out.println(i + " lignes ajoutées");
 				
 			}
 				
@@ -101,16 +99,14 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 
-	private int ajouterGarage() throws DAOException {
+	private void ajouterGarage() throws DAOException {
 		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien());
-		int i = this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
-		return i;
+		this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
 	}
 
-	private int ajouterLogement() throws DAOException {
+	private void ajouterLogement() throws DAOException {
 		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable());
-		int i = this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
-		return i;
+		this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
 	}
 
 	private boolean champsLogementNonRemplis() {
