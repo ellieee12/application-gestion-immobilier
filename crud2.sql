@@ -11,6 +11,8 @@ DROP PROCEDURE IF EXISTS getImmeubleById$$
 DROP PROCEDURE IF EXISTS deleteImmeuble$$
 DROP PROCEDURE IF EXISTS addImmeuble$$
 DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
+DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
+DROP PROCEDURE IF EXISTS insertCompte$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -118,6 +120,19 @@ BEGIN
         where b.id_immeuble=i.id_immeuble
         and i.type_immeuble='M'
     );
+END$$
+
+CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50), v_mdp VARCHAR(50))
+
+BEGIN
+    SELECT * from Compte where username = v_username and mdp = v_mdp;
+END$$
+
+CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
+
+BEGIN 
+    INSERT INTO Compte(username,mdp)
+    VALUES (v_username, v_mdp);
 END$$
 
 
