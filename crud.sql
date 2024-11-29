@@ -72,7 +72,7 @@ CREATE TABLE Location(
 
 CREATE TABLE Document_Location(
     id_document INT not null auto_increment,
-    filepath VARCHAR(50) not null,
+    filepath VARCHAR(200) not null,
     description VARCHAR(100),
     date_enregistrement DATE,
     id_bien VARCHAR(20) NOT NULL,

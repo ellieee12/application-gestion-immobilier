@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import classes.Location;
+import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
 import ihm.VueEnregistrerDocumentsLocation;
 import modeleDAO.BienDAO;
@@ -27,7 +28,6 @@ public class ControleurAjouterLocation implements ActionListener{
 	private List<String> locataires;
 	private List<String> biens;
 	private List<String> id_locataires;	
-	private ControleurEnregistrerDocument controleurDoc;
 	
 	//add a new method
 	public String getIDLocataire(String nomPrenom) {
@@ -82,23 +82,18 @@ public class ControleurAjouterLocation implements ActionListener{
 		JButton bouton = (JButton) e.getSource();
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
-		} else if (bouton.getText().equals("Ajouter")) {
-			try {
-				VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation();
-				frame.setVisible(true);
-				this.controleurDoc = frame.getControleur();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
 		} else if (bouton.getText().equals("Valider")) {
 			if (allVerifs()) {
 				try {
 					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
 							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-							this.vue.getCaution(), this.controleurDoc.getPathName(), this.vue.getDateDerniereRegularisation(),
+							this.vue.getCaution(), this.vue.getDateDerniereRegularisation(),
 							this.vue.isPaye(), this.vue.getMontantReelPaye());
-					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), 
+					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
 							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
+					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
+							this.vue.getSelectedLocataire());
+					frame.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
