@@ -1,102 +1,113 @@
 package controleur;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.sql.Date;
 
 import javax.swing.JButton;
 
 import classes.DocumentLocation;
 import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
+import modeleDAO.DocumentLocationDAO;
 
 public class ControleurAjouterDocuments implements ActionListener {
 	
+	private enum DocumentEnCours {
+		CAUTION("CAUTION"),EAU("EAU"),ELEC("ELEC"),ETAT_LIEU("ETAT_LIEU");
+		
+		private final String description;
+		
+		DocumentEnCours(String description) {
+			this.description=description;
+		}
+		
+		String getDescription(){
+			return this.description;
+		}
+		
+	}
+	private DocumentEnCours documentEnCours;
 	private VueAjouterDocuments vue;
-	private DocumentLocation docEtat, docCaution, docEau, docElec,docPlaceHolder;
+	private DocumentLocation docEtat, docCaution, docEau, docElec;
+	private Date dateDebut;
+	private String idBien;
+	private String idLocataire;
 	
-	public ControleurAjouterDocuments(VueAjouterDocuments vue) {
+	public ControleurAjouterDocuments(VueAjouterDocuments vue,Date dateDebut, String idBien, String idLocataire) {
 		this.vue=vue;
+		this.idBien=idBien;
+		this.idLocataire=idLocataire;
+		this.dateDebut=dateDebut;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();	
-		WindowAdapter listener = new WindowAdapter() {
-			public void saveDoc (WindowEvent evt) {
-				Frame frame = (Frame) evt.getSource();
-				ControleurAjouterDocuments.docEtat=this.docPlaceHolder;
-				this.vue.getbEtatDesLieux().setText(this.docEtat.getFileName());
+		try {
+			if (b.equals(this.vue.getbEtatDesLieux())){
+				this.documentEnCours=DocumentEnCours.ETAT_LIEU;
+				 initialiserFenetreEnregistrerUnDocument();
+			}else if (b.equals(vue.getbCaution())) {
+				this.documentEnCours=DocumentEnCours.CAUTION;
+				initialiserFenetreEnregistrerUnDocument();
+			}else if(b.equals(vue.getbEau())) {
+				this.documentEnCours=DocumentEnCours.EAU;
+				initialiserFenetreEnregistrerUnDocument();
+			}else if (b.equals(vue.getbElectricite())) {
+				this.documentEnCours=DocumentEnCours.ELEC;
+				initialiserFenetreEnregistrerUnDocument();
 			}
-		};
-		if (b.equals(this.vue.getbEtatDesLieux())) {
-			try {
-				VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation(
-						this.vue.getLoc().getDate_debut(),this.vue.getIdBien(),this.vue.getIdLocataire());
-				frame.setVisible(true);
-				
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else if (b.equals(vue.getbCaution())) {
-			try {
-				VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation(
-						this.vue.getLoc().getDate_debut(),this.vue.getIdBien(),this.vue.getIdLocataire());
-				frame.setVisible(true);
-				this.docCaution=this.docPlaceHolder;
-				this.vue.getbCaution().setText(this.docCaution.getFileName());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else if (b.equals(vue.getbEau())) {
-			try {
-				VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation(
-						this.vue.getLoc().getDate_debut(),this.vue.getIdBien(),this.vue.getIdLocataire());
-				frame.setVisible(true);
-				this.docEau=this.docPlaceHolder;
-				this.vue.getbEau().setText(this.docEau.getFileName());
-			} catch (Exception e1) { 
-				
-			}
-		} else if (b.equals(vue.getbElectricite())) {
-			try {
-				VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation(
-						this.vue.getLoc().getDate_debut(),this.vue.getIdBien(),this.vue.getIdLocataire());
-				frame.setVisible(true);
-				this.docElec=this.docPlaceHolder;
-				this.vue.getbElectricite().setText(this.docElec.getFileName());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+		}catch (Exception e1) {
+			e1.printStackTrace();
 		}
-		// à la fin
-		//dao.ajouterDocument(this.pathName, this.vue.getDescription(), this.idBien,
-		//this.idLocataire, this.dateDebut);
+		if (b.getText().equals("Enregistrer")) {
+			System.out.println("entered");
+			this.ajouterDocumentDAO(docCaution);
+			this.ajouterDocumentDAO(docEau);
+			this.ajouterDocumentDAO(docElec);
+			this.ajouterDocumentDAO(docEtat);
+			this.vue.dispose();
+		}
+	}
+
+	private void ajouterDocumentDAO(DocumentLocation document) {
+		if (document!=null) {
+			DocumentLocationDAO dao = new DocumentLocationDAO();
+			dao.ajouterDocument(document,this.idBien,this.idLocataire,this.dateDebut);
+		}
+	}
+	
+	private void initialiserFenetreEnregistrerUnDocument() {
+		VueEnregistrerDocumentsLocation frame;
+		frame = new VueEnregistrerDocumentsLocation(
+				this.vue.getLoc().getDate_debut(),this.vue.getIdBien(),this.vue.getIdLocataire(),this.vue,this);
+		frame.setVisible(true);
 	}
 
 	public void setDocEtat(DocumentLocation doc) {
 		this.docEtat = doc;
+		this.vue.afficherNomFichier(this.docEtat.getFileName(), this.vue.getEtatDesLieux());
 	}
 
 	public void setDocCaution(DocumentLocation docCaution) {
 		this.docCaution = docCaution;
+		this.vue.afficherNomFichier(this.docCaution.getFileName(), this.vue.getCaution());
 	}
 
 	public void setDocEau(DocumentLocation docEau) {
 		this.docEau = docEau;
+		this.vue.afficherNomFichier(this.docEau.getFileName(), this.vue.getEau());
 	}
 
 	public void setDocElec(DocumentLocation docElec) {
 		this.docElec = docElec;
+		this.vue.afficherNomFichier(this.docElec.getFileName(), this.vue.getElectricite());
 	}
 	
-	public void setDoc(DocumentLocation doc ) {
-		this.docPlaceHolder=doc;
+	public String getDocumentEnCours() {
+		return this.documentEnCours.getDescription();
 	}
-	
 
 	
 }

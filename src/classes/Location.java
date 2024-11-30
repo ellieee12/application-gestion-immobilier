@@ -11,7 +11,7 @@ public class Location {
     private Date date_debut;
     
     @objid ("bb01d782-39bb-4323-bd19-fe9bb4151d45")
-    private int colocation;
+    private boolean colocation;
 
     @objid ("00988291-cf19-449a-beb2-d44abfff94ab")
     private int nb_mois;
@@ -28,14 +28,11 @@ public class Location {
     @objid ("0722a716-ccae-4173-bd3d-0cca8f62598d")
     private Date date_derniere_reg;
 
-    @objid ("0f2f30df-8cfa-4d88-a265-1a9e7024388b")
-    private int loyer_paye;
-
     @objid ("af4e756c-2789-43c7-ba2f-2f22246cccfe")
     private float montant_reel_paye;
  
-	public Location(Date date_debut, int colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, Date date_derniere_reg, int loyer_paye, float montant_reel_paye) {
+	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+			float caution_TTC, Date date_derniere_reg, float montant_reel_paye) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -43,7 +40,6 @@ public class Location {
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
 		this.date_derniere_reg = date_derniere_reg;
-		this.loyer_paye = loyer_paye;
 		this.montant_reel_paye = montant_reel_paye;
 	}
 	
@@ -64,8 +60,8 @@ public class Location {
 		return loyer_TTC;
 	}
 	
-	public boolean getColocation() {
-		return this.colocation == 1;
+	public boolean isColocation() {
+		return this.colocation;
 	}
 
 	public float getProvision_chargement_TTC() {
@@ -78,10 +74,6 @@ public class Location {
 
 	public Date getDate_derniere_reg() {
 		return date_derniere_reg;
-	}
-
-	public boolean isLoyer_paye() {
-		return this.loyer_paye == 1;
 	}
 
 	public float getMontant_reel_paye() {

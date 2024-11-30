@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controleur.ControleurAjouterDocuments;
 import controleur.ControleurEnregistrerDocument;
 
 public class VueEnregistrerDocumentsLocation extends JFrame {
@@ -22,8 +23,9 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 	private JTextArea textAreaDescription;
 	private ControleurEnregistrerDocument controleur;
 
-	public VueEnregistrerDocumentsLocation(Date dateDebut, String idBien, String idLocataire) {
-		this.controleur = new ControleurEnregistrerDocument(this,dateDebut,idBien,idLocataire);
+	public VueEnregistrerDocumentsLocation(Date dateDebut, String idBien, String idLocataire,VueAjouterDocuments vueAjouterDocuments,
+			 ControleurAjouterDocuments controleurAjouterDocument) {
+		this.controleur = new ControleurEnregistrerDocument(this,vueAjouterDocuments, controleurAjouterDocument);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

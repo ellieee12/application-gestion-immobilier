@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import ihm.VueLogin;
 import ihm.VueMenu;
 import ihm.VueSignUp;
-import modele.ModeleLoginSignUp;
 import modeleDAO.BienDAO;
 import modeleDAO.LogInSignUpDAO;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{

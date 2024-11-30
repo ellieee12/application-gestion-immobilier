@@ -3,7 +3,8 @@ package modeleDAO;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
-import java.util.Calendar;
+
+import classes.DocumentLocation;
 
 public class DocumentLocationDAO {
 	private MySQLCon mySQLCon;
@@ -12,13 +13,13 @@ public class DocumentLocationDAO {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
-	public boolean ajouterDocument(String filepath, String description,String id_bien, String id_locataire, Date date_debut) {
+	public boolean ajouterDocument(DocumentLocation doc, String id_bien, String id_locataire, Date date_debut) {
 		try {
 			String req = "insert into document_location(filepath, description, date_enregistrement, id_bien,id_locataire, date_debut) "
 					+ "values(?,?,?,?,?,?)";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
-			stmt.setString(1, filepath);
-			stmt.setString(2, description);
+			stmt.setString(1, doc.getFilePath());
+			stmt.setString(2, doc.getDescription());
 			stmt.setDate(3,Date.valueOf(LocalDate.now()));
 			stmt.setString(4, id_bien);
 			stmt.setString(5, id_locataire);

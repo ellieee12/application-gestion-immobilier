@@ -37,7 +37,6 @@ public class VueAjouterLocation extends JFrame {
 	private JComboBox<String> comboBoxLocataire;
 	private JComboBox<String> comboBoxBiens;
 	private JCheckBox chckbxColocation;
-	private JCheckBox chckbxLoyerPaye;
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
 	private JFormattedTextField formattedDateDerniereRegularisation;
@@ -79,7 +78,6 @@ public class VueAjouterLocation extends JFrame {
 	 * @throws SQLException 
 	 * @throws DAOException 
 	 */
-	@SuppressWarnings("unchecked")
 	private void initialize() throws DAOException, SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
 		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
@@ -119,13 +117,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("Colocation : ");
 		panel_2.add(lblNewLabel_2, BorderLayout.NORTH);
-		
-		JPanel panel_3 = new JPanel();
-		panelLibellé.add(panel_3);
-		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_3 = new JLabel("Loyer Payé : ");
-		panel_3.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		panelLibellé.add(panel_5);
@@ -200,13 +191,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		chckbxColocation = new JCheckBox("");
 		panel_c_colocation.add(chckbxColocation, BorderLayout.WEST);
-		
-		JPanel panel_c_loyer_paye = new JPanel();
-		panelChamps.add(panel_c_loyer_paye);
-		panel_c_loyer_paye.setLayout(new BorderLayout(0, 0));
-		
-		chckbxLoyerPaye = new JCheckBox("");
-		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
 		
 		JPanel panel_c_date_debut_location = new JPanel();
 		panelChamps.add(panel_c_date_debut_location);
@@ -301,16 +285,6 @@ public class VueAjouterLocation extends JFrame {
 			comboBoxLocataire.addItem(s);
 		}
 	}
-
-	private NumberFormatter generateCurrencyFormatter() {
-		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-		decimalFormat.setDecimalSeparatorAlwaysShown(true);
-		NumberFormatter numberFormatter= new NumberFormatter(decimalFormat);
-		numberFormatter.setValueClass(Double.class);
-		numberFormatter.setAllowsInvalid(false);
-		numberFormatter.setMinimum(0.0);
-		return numberFormatter;
-	}
 	
 	public String getSelectedBien() {
 		return this.comboBoxBiens.getSelectedItem().toString();
@@ -322,10 +296,6 @@ public class VueAjouterLocation extends JFrame {
 	
 	public boolean isColocation() {
 		return this.chckbxColocation.isSelected();
-	}
-	
-	public boolean isPaye() {
-		return this.chckbxLoyerPaye.isSelected();
 	}
 
 	public Date getDateDebutLocation() {
