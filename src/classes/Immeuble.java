@@ -51,6 +51,4 @@ public class Immeuble {
 	public String getPeriode_construction() {
 		return periode_construction;
 	}
-	
-
 }

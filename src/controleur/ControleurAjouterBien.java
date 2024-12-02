@@ -55,6 +55,7 @@ public class ControleurAjouterBien implements ActionListener {
 				this.vue.dispose();
 			} else if (s == "Valider") {
 				//vérifier si l'identifiant existe dans la base de données
+<<<<<<< Updated upstream
 				if (verificationBienExiste()) {
 					JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
 				}else if(!verificationChampIDBien()) {
@@ -64,6 +65,30 @@ public class ControleurAjouterBien implements ActionListener {
 						throw new ParseException("Format du date d'acquisition invalide",0);
 					}catch(ParseException pEx) {
 						JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
+=======
+				try {
+					if (verificationBienExiste()) {
+						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+					}else if(!verificationChampIDBien()) {
+						JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+					}else if(!verificationChampsDateAcquisition()) {
+						try {
+							throw new ParseException("Veuillez remplir tout les champs",0);
+						}catch(ParseException pEx) {
+							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+						}
+					}else if (isLogement()) {
+						if (champsLogementNonRemplis()){
+							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+						}else{
+							 ajouterLogement();
+							
+						}
+					}else {
+						ajouterGarage();
+						this.vueBiens.getControleurMesBiens().Update();
+						this.vue.dispose();
+>>>>>>> Stashed changes
 					}
 				}else if (isLogement()) {
 					if (champsLogementNonRemplis()){
@@ -75,6 +100,11 @@ public class ControleurAjouterBien implements ActionListener {
 					ajouterGarage();
 				}
 				
+<<<<<<< Updated upstream
+=======
+				
+				
+>>>>>>> Stashed changes
 			}
 				
 		} else {

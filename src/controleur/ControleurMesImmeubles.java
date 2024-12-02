@@ -36,6 +36,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			ImmeubleDAO immeubleDAO = new ImmeubleDAO();
 			ResultSet rs = immeubleDAO.getAllImmeubles();
 			while(rs.next()) {
+<<<<<<< Updated upstream
 				if (rs.getString(6).equals("M")) {
 					immeuble.add(new Maison(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(5)));
 				} else {
@@ -43,6 +44,14 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 				}
 				
 			}
+=======
+                if (rs.getString(6).equals("M")) {
+                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                } else {
+                    this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
+                }
+            }
+>>>>>>> Stashed changes
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -55,10 +64,6 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 //		return controleur;
 //		
 //	}
-	
-	public List<Immeuble> getImmeuble() {
-		return immeuble;
-	}
 
 	public void Update() {
         try {
@@ -67,8 +72,13 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
             ImmeubleDAO immeuble = new ImmeubleDAO();
             ResultSet rs = immeuble.getAllImmeubles();
             while(rs.next()) {
+<<<<<<< Updated upstream
                 if (rs.getString(2).equals("M")) {
                     this.immeuble.add(new Maison(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
+=======
+                if (rs.getString(6).equals("M")) {
+                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+>>>>>>> Stashed changes
                 } else {
                     this.immeuble.add(new Batiment(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(1), rs.getString(5)));
                 }
@@ -123,5 +133,9 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			});
         	}
 	}	
+	
+	public List<Immeuble> getImmeuble() {
+		return immeuble;
+	}
 
 }

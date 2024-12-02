@@ -19,9 +19,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import classes.Batiment;
 import classes.Bien;
 import classes.Immeuble;
 import classes.Logement;
+import classes.Maison;
 import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
 

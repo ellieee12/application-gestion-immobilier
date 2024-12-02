@@ -42,13 +42,12 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			ResultSet rs = locationDAO.getAllLocations();
 			
 			while(rs.next()) {
-				location.add(new Location(rs.getString(1),rs.getDate(2), rs.getInt(4), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
-						rs.getFloat(7), rs.getDate(8), rs.getInt(11), rs.getFloat(9)));
+				location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
+						rs.getFloat(7), rs.getDate(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public List<Location> getLocation(){
@@ -62,8 +61,8 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
             LocationDAO location = new LocationDAO();
             ResultSet rs = location.getAllLocations();
             while(rs.next()) {
-				this.location.add(new Location(rs.getString(1),rs.getDate(2), rs.getInt(4), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
-						rs.getFloat(7), rs.getDate(8), rs.getInt(11), rs.getFloat(9)));
+				this.location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
+						rs.getFloat(7), rs.getDate(8)));
 			}
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,11 @@
 /Tests/
 /classes/
+<<<<<<< Updated upstream
 /modeleDAO/
 /ihm/
 /controleur/
+=======
+/controleur/
+/ihm/
+/modeleDAO/
+>>>>>>> Stashed changes

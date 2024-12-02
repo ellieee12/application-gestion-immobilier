@@ -56,14 +56,14 @@ public class VueMesBiens extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		PanelInformations.add(lblNewLabel, BorderLayout.NORTH);
 		
-		JPanel PanelInformationsBatiment = new JPanel();
-		PanelInformationsBatiment.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		PanelInformationsBatiment.setBorder(new TitledBorder(null, "Informations du batiment", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 12), null));
-		PanelInformations.add(PanelInformationsBatiment, BorderLayout.SOUTH);
-		PanelInformationsBatiment.setLayout(new GridLayout(3, 1, 0, 3));
+		JPanel PanelInformationsImmeuble = new JPanel();
+		PanelInformationsImmeuble.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		PanelInformationsImmeuble.setBorder(new TitledBorder(null, "Informations de l'Immeuble", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 12), null));
+		PanelInformations.add(PanelInformationsImmeuble, BorderLayout.SOUTH);
+		PanelInformationsImmeuble.setLayout(new GridLayout(3, 1, 0, 3));
 		
 		JPanel PanelAdresse = new JPanel();
-		PanelInformationsBatiment.add(PanelAdresse);
+		PanelInformationsImmeuble.add(PanelAdresse);
 		PanelAdresse.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("Adresse : "+controleurMesBiens.getAdresse());
@@ -71,7 +71,7 @@ public class VueMesBiens extends JFrame {
 		PanelAdresse.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel PanelCP = new JPanel();
-		PanelInformationsBatiment.add(PanelCP);
+		PanelInformationsImmeuble.add(PanelCP);
 		PanelCP.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_2 = new JLabel("Code Postal : "+controleurMesBiens.getCp());
@@ -79,7 +79,7 @@ public class VueMesBiens extends JFrame {
 		PanelCP.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		JPanel PanelVille = new JPanel();
-		PanelInformationsBatiment.add(PanelVille);
+		PanelInformationsImmeuble.add(PanelVille);
 		PanelVille.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_3 = new JLabel("Ville : "+controleurMesBiens.getVille());

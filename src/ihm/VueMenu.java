@@ -58,15 +58,15 @@ public class VueMenu extends JFrame {
 		JButton boutonMesImmeubles = new JButton("Mes Immeubles");
 		panelBoutonsPages.add(boutonMesImmeubles);
 		
-		JButton boutonAjouterLocation = new JButton("Ajouter une Location");
-		panelBoutonsPages.add(boutonAjouterLocation);
-		
 		JButton boutonAjouterLocataire = new JButton("Ajouter un Locataire");
 		panelBoutonsPages.add(boutonAjouterLocataire);
 		
+		JButton boutonMesLocation = new JButton("Mes Locations");
+		panelBoutonsPages.add(boutonMesLocation);
+		
 		boutonMesImmeubles.addActionListener(controleur);
 		boutonAjouterLocataire.addActionListener(controleur);
-		boutonAjouterLocation.addActionListener(controleur);
+		boutonMesLocation.addActionListener(controleur);
 	}
 
 }
