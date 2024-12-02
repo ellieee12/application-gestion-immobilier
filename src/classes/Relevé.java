@@ -14,5 +14,23 @@ public class Relevé {
     	this.date_relevé = date_relevé;
     	this.indexcomp = indexcomp;
     }
+
+	public Date getDate_relevé() {
+		return date_relevé;
+	}
+
+	public void setDate_relevé(Date date_relevé) {
+		this.date_relevé = date_relevé;
+	}
+
+	public int getIndexcomp() {
+		return indexcomp;
+	}
+
+	public void setIndexcomp(int indexcomp) {
+		this.indexcomp = indexcomp;
+	}
+    
+    
     
 }

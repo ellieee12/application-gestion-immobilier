@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controleur.ControleurRegularisation;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -16,9 +19,16 @@ public class VueRegularisation extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField champEau;
+	private JTextField champElec;
+	private JTextField champOrdure;
+	private JLabel lblEau;
+	private JLabel lblElec;
+	private JLabel lblEntretien;
+	private JLabel lblOrdures;
+	private JLabel lblTotal;
+	private JLabel lblProvision;
+	private JLabel lblReste;
 
 	/**
 	 * Launch the application.
@@ -40,7 +50,9 @@ public class VueRegularisation extends JFrame {
 	 * Create the frame.
 	 */
 	public VueRegularisation() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ControleurRegularisation controleur = new ControleurRegularisation(this);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -64,28 +76,28 @@ public class VueRegularisation extends JFrame {
 		lblIndexEau.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelChamps.add(lblIndexEau);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelChamps.add(textField);
-		textField.setColumns(10);
+		champEau = new JTextField();
+		champEau.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelChamps.add(champEau);
+		champEau.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nouvel index électricité");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelChamps.add(lblNewLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelChamps.add(textField_1);
-		textField_1.setColumns(10);
+		champElec = new JTextField();
+		champElec.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelChamps.add(champElec);
+		champElec.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Montant ordures ménagères");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelChamps.add(lblNewLabel_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelChamps.add(textField_2);
-		textField_2.setColumns(10);
+		champOrdure = new JTextField();
+		champOrdure.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelChamps.add(champOrdure);
+		champOrdure.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panelChamps.add(panel_1);
@@ -97,6 +109,7 @@ public class VueRegularisation extends JFrame {
 		JButton btnNewButton = new JButton("Valider");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel.add(btnNewButton, BorderLayout.EAST);
+		btnNewButton.addActionListener(controleur);
 		
 		JPanel panelTotaux = new JPanel();
 		contentPane.add(panelTotaux, BorderLayout.CENTER);
@@ -106,57 +119,96 @@ public class VueRegularisation extends JFrame {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_9 = new JLabel("€");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_9);
+		this.lblEau = new JLabel("€");
+		lblEau.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblEau);
 		
 		JLabel lblNewLabel_3 = new JLabel("Consommation d'électricité : ");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_10 = new JLabel("€");
-		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_10);
+		this.lblElec = new JLabel("€");
+		lblElec.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblElec);
 		
 		JLabel lblNewLabel_4 = new JLabel("Montant entretien parties communes :");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_11 = new JLabel("€");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_11);
+		this.lblEntretien = new JLabel("€");
+		lblEntretien.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblEntretien);
 		
 		JLabel lblNewLabel_5 = new JLabel("Montant ordures ménagères :");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_12 = new JLabel("€");
-		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_12);
+		this.lblOrdures = new JLabel("€");
+		lblOrdures.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblOrdures);
 		
 		JLabel lblNewLabel_6 = new JLabel("Total : ");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_13 = new JLabel("€");
-		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_13);
+		this.lblTotal = new JLabel("€");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblTotal);
 		
 		JLabel lblNewLabel_7 = new JLabel("Provision sur charges");
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_14 = new JLabel("€");
-		lblNewLabel_14.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_14);
+		this.lblProvision = new JLabel("€");
+		lblProvision.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblProvision);
 		
 		JLabel lblNewLabel_8 = new JLabel("Reste à charge :");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblNewLabel_8);
 		
-		JLabel lblNewLabel_15 = new JLabel("€");
-		lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelTotaux.add(lblNewLabel_15);
+		this.lblReste = new JLabel("€");
+		lblReste.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTotaux.add(lblReste);
 	}
 
+	public String getChampEau() {
+		return champEau.getText();
+	}
+	
+	public String getChampElec() {
+		return champElec.getText();
+	}
+	
+	public String getChampOrdure() {
+		return champOrdure.getText();
+	}
+	
+	public void afficherMontantEau(float montant) {
+		this.lblEau.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherMontantElec(float montant) {
+		this.lblElec.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherEntretien(float montant) {
+		this.lblEntretien.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherMontantOrdure(float montant) {
+		this.lblOrdures.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherTotal(float montant) {
+		this.lblTotal.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherProvision(float montant) {
+		this.lblProvision.setText(String.valueOf(montant)+" €");
+	}
+	
+	public void afficherReste(float montant) {
+		this.lblReste.setText(String.valueOf(montant)+" €");
+	}
 }
