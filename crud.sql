@@ -63,7 +63,6 @@ CREATE TABLE Location(
     date_derniere_reg DATE,
     montant_reel_paye decimal(15,2),
     annee date NOT NULL,
-    loyer_paye TINYINT(1),
     trimestre smallint NOT NULL,
     constraint pk_location PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
@@ -137,14 +136,14 @@ VALUES
 -- Insert sample data into Location
 INSERT INTO Location (
     id_bien, date_debut, nb_mois,colocation , provision_charges_ttc, loyer_ttc, 
-    caution_ttc, date_derniere_reg, montant_reel_paye, annee, loyer_paye, trimestre
+    caution_ttc, date_derniere_reg, montant_reel_paye, annee, trimestre
 )
 VALUES
-(1, '2023-01-01', 12, 1, 150.00, 750.00, 1500.00, '2023-12-01', 9000.00, '2023-01-01', 0, 1),
-(2, '2023-04-01', 6, 0, 100.00, 500.00, 1000.00, '2023-10-01', 3000.00, '2023-04-01', 1,  2),
-(3, '2023-07-01', 9, 1, 200.00, 1000.00, 2000.00, '2023-10-01', 7000.00, '2023-07-01', 1, 3),
-(4, '2023-10-01', 24, 0, 250.00, 1200.00, 2400.00, '2024-10-01', 12000.00, '2023-10-01', 0, 4),
-(5, '2024-01-01', 18, 1, 300.00, 1500.00, 3000.00, '2024-06-01', 18000.00, '2024-01-01', 1, 1);
+(1, '2023-01-01', 12, 1, 150.00, 750.00, 1500.00, '2023-12-01', 9000.00, '2023-01-01', 1),
+(2, '2023-04-01', 6, 0, 100.00, 500.00, 1000.00, '2023-10-01', 3000.00, '2023-04-01', 2),
+(3, '2023-07-01', 9, 1, 200.00, 1000.00, 2000.00, '2023-10-01', 7000.00, '2023-07-01',  3),
+(4, '2023-10-01', 24, 0, 250.00, 1200.00, 2400.00, '2024-10-01', 12000.00, '2023-10-01', 4),
+(5, '2024-01-01', 18, 1, 300.00, 1500.00, 3000.00, '2024-06-01', 18000.00, '2024-01-01', 1);
 
 
 INSERT INTO Louer (id_bien, date_debut, id_locataire)

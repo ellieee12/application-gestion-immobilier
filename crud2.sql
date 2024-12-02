@@ -6,6 +6,14 @@ DROP PROCEDURE IF EXISTS insertGarage$$
 DROP PROCEDURE IF EXISTS insertLogement$$
 DROP PROCEDURE IF EXISTS deleteBien$$
 DROP PROCEDURE IF EXISTS getBienById$$
+DROP PROCEDURE IF EXISTS getAllImmeubles$$
+DROP PROCEDURE IF EXISTS getImmeubleById$$
+DROP PROCEDURE IF EXISTS deleteImmeuble$$
+DROP PROCEDURE IF EXISTS addImmeuble$$
+DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
+DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
+DROP PROCEDURE IF EXISTS insertCompte$$
+DROP PROCEDURE IF EXISTS getMdpByUsername$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -59,5 +67,80 @@ BEGIN
     DELETE FROM bien WHERE id_bien = v_id_bien;
 END$$
 
+CREATE PROCEDURE getAllImmeubles ()
+BEGIN
+    select * from immeuble;
+END$$
+
+CREATE PROCEDURE getImmeubleById (v_id_immeuble varchar(20))
+
+BEGIN
+    select adresse, code_postale, ville, periode_construction, type_immeuble
+    from immeuble
+    where id_immeuble=v_id_immeuble;
+END$$
+
+CREATE PROCEDURE deleteImmeuble(v_id_immeuble varchar(20))
+
+BEGIN
+    delete from louer where id_bien in (
+        select id_bien 
+        from location 
+        where id_bien in (
+            select id_bien 
+            from bien
+            where id_immeuble = v_id_immeuble
+        )
+    );
+    delete from location where id_bien in (
+        select id_bien 
+        from bien
+        where id_immeuble = v_id_immeuble
+    );
+    delete from bien where id_immeuble = v_id_immeuble;
+    delete from immeuble where id_immeuble = v_id_immeuble;
+END$$
+
+CREATE PROCEDURE addImmeuble (
+    v_id_immeuble varchar(20),
+    v_adresse VARCHAR(50),
+    v_code_postale CHAR(5),
+    v_ville VARCHAR(50),
+    v_periode_construction VARCHAR(50),
+    v_type_immeuble char(1))
+BEGIN
+    insert into immeuble (id_immeuble, adresse, code_postale,ville,periode_construction,type_immeuble)
+    values (v_id_immeuble,v_adresse,v_code_postale,v_ville,v_periode_construction,v_type_immeuble);
+END$$
     
+CREATE PROCEDURE getImmeublesDisponibles ()
+
+BEGIN
+    select * from immeuble where id_immeuble not in (
+        select b.id_immeuble from bien b, immeuble i
+        where b.id_immeuble=i.id_immeuble
+        and i.type_immeuble='M'
+    );
+END$$
+
+CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50))
+
+BEGIN
+    SELECT * from signup where username = v_username;
+END$$
+
+CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
+
+BEGIN 
+    INSERT INTO signup(username,mdp)
+    VALUES (v_username, v_mdp);
+END$$
+
+CREATE PROCEDURE getMdpByUsername (v_username VARCHAR(50))
+
+BEGIN 
+    SELECT mdp from signup where username = v_username;
+END$$
+
+
 DELIMITER ;

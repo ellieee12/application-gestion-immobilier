@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 import ihm.VueLogin;
 import ihm.VueMenu;
 import ihm.VueSignUp;
-import modele.ModeleLoginSignUp;
+import modeleDAO.BienDAO;
+import modeleDAO.LogInSignUpDAO;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
 	
 	private static ControleurLogInSignUp controleur;
@@ -20,7 +21,7 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 	}
 	private VueLogin vueLogin;
 	private VueSignUp vueSignUp;
-	private ModeleLoginSignUp modele;
+	private LogInSignUpDAO dao;
 	private Etat etat;
 
 	//VueLogin vueLogin,VueSignUp vueSignUp
@@ -28,7 +29,7 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 	
 	public void initialiserControleur() {
 		this.etat=Etat.LOGIN;
-		this.modele=new ModeleLoginSignUp();
+		this.dao = new LogInSignUpDAO();
 	}
 	
 	@Override
@@ -39,7 +40,7 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 			if (s.equals("Sign In")) {
 				String username = this.vueLogin.getUsername().getText();
 				String mdp = String.valueOf(this.vueLogin.getMDP().getPassword());
-					if (this.modele.mdpCorrecte(username, mdp)||!this.modele.compteExiste(username)){
+					if (this.dao.mdpCorrect(username, mdp) && this.dao.compteExiste(username)){
 						vueLogin.setVisible(false);
 						VueMenu frame = new VueMenu();
 						frame.setVisible(true);
@@ -55,19 +56,23 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 				String username = this.vueSignUp.getNouveauUsername();
 				String mdp1=this.vueSignUp.getNouveauMDP();
 				String mdp2=this.vueSignUp.getNouveauMDPConfirmation();
-				if (this.modele.compteExiste(username)) {
-					JOptionPane.showMessageDialog(vueSignUp, "Compte déjà existant","Erreur",JOptionPane.WARNING_MESSAGE);
-				}else {
-					if (!mdp1.equals(mdp2)) {
-						JOptionPane.showMessageDialog(vueSignUp, "Les mots de passe saisis ne sont pas identiques.","Erreur",JOptionPane.WARNING_MESSAGE);
+				if (!username.equals("") && !mdp1.equals("") && !mdp2.equals("")) {
+					if (this.dao.compteExiste(username)) {
+						JOptionPane.showMessageDialog(vueSignUp, "Compte déjà existant","Erreur",JOptionPane.WARNING_MESSAGE);
 					}else {
-						this.modele.addCompte(username,mdp1);
-						JOptionPane.showMessageDialog(vueLogin, "Compte enregistré","Information",JOptionPane.INFORMATION_MESSAGE);
-						vueLogin.setVisible(true);
-						vueSignUp.setVisible(false);
-						this.etat=Etat.LOGIN;
+						if (!mdp1.equals(mdp2)) {
+							JOptionPane.showMessageDialog(vueSignUp, "Les mots de passe saisis ne sont pas identiques.","Erreur",JOptionPane.WARNING_MESSAGE);
+						}else {
+							this.dao.addCompte(username,mdp1);
+							JOptionPane.showMessageDialog(vueLogin, "Compte enregistré","Information",JOptionPane.INFORMATION_MESSAGE);
+							vueLogin.setVisible(true);
+							vueSignUp.setVisible(false);
+							this.etat=Etat.LOGIN;
+						}
 					}
-				}	
+				} else {
+					JOptionPane.showMessageDialog(vueSignUp, "Veuillez remplir tout les champs","Erreur",JOptionPane.WARNING_MESSAGE);
+				}
 			}
 			break;
 		}	

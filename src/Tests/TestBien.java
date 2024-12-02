@@ -1,7 +1,7 @@
 package Tests;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
+import java.sql.Date;
 import org.junit.Before;
 import org.junit.Test;
 

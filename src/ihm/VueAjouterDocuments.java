@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +22,14 @@ public class VueAjouterDocuments extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel etatDesLieux;
+	public JLabel getEtatDesLieux() {
+		return etatDesLieux;
+	}
+
+	public void setEtatDesLieux(JLabel etatDesLieux) {
+		this.etatDesLieux = etatDesLieux;
+	}
+
 	private JLabel caution;
 	private JLabel electricite;
 	private JLabel eau;
@@ -29,6 +38,7 @@ public class VueAjouterDocuments extends JFrame {
 	private JButton bElectricite;
 	private JButton bEau;
 	private Location loc;
+	private Date dateDebut;
 	private String idBien;
 	private String idLocataire;
 	private ControleurAjouterDocuments controleur;
@@ -37,11 +47,12 @@ public class VueAjouterDocuments extends JFrame {
 	 * Create the frame.
 	 */
 	public VueAjouterDocuments(Location loc, String idBien, String idLocataire) {
-		this.loc=loc;
+		this.loc= loc;
+		this.dateDebut=loc.getDate_debut();
 		this.idBien=idBien;
 		this.idLocataire=idLocataire;
 		
-		this.controleur = new ControleurAjouterDocuments(this);
+		this.controleur = new ControleurAjouterDocuments(this,dateDebut,idBien,idLocataire);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -90,6 +101,10 @@ public class VueAjouterDocuments extends JFrame {
 		JPanel panelBoutons = new JPanel();
 		contentPane.add(panelBoutons, BorderLayout.SOUTH);
 		panelBoutons.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnEnregistrer = new JButton("Enregistrer");
+		btnEnregistrer.addActionListener(controleur);
+		panelBoutons.add(btnEnregistrer, BorderLayout.EAST);
 		
 		JPanel panelChamps = new JPanel();
 		panelChamps.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -158,6 +173,19 @@ public class VueAjouterDocuments extends JFrame {
 		bElectricite.addActionListener(controleur);
 	}
 	
+	public JLabel getElectricite() {
+		return electricite;
+	}
+
+
+	public JLabel getEau() {
+		return eau;
+	}
+	
+	public JLabel getCaution() {
+		return this.caution;
+	}
+
 	public ControleurAjouterDocuments getControleur() {
 		return controleur;
 	}

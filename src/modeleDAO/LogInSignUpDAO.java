@@ -1,10 +1,13 @@
 package modeleDAO;
 
+import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import classes.Garage;
 
 public class LogInSignUpDAO {
 	
@@ -14,12 +17,11 @@ public class LogInSignUpDAO {
 		this.mySQLCon = MySQLCon.getInstance();
 	}
 	
-	public boolean compteExiste(String username, String mdp){
+	public boolean compteExiste(String username){
 		try {
-			String req = "Select * from signup where username = ? and mdp = ? ";
-			PreparedStatement stmt =  this.mySQLCon.getConnection().prepareStatement(req);
+			String req = "{CALL getCompteByUsernameMdp(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, username);
-			stmt.setString(2, mdp);
 			ResultSet rs = stmt.executeQuery();
 			return rs.next();
 		} catch (Exception e) {
@@ -28,6 +30,34 @@ public class LogInSignUpDAO {
 		return false;
 	}
 	
-	public 
-
+	public void addCompte(String username, String mdp) {
+		try {
+			
+			String hashedPassword = HashUtil.hashMD5(mdp);
+			String req = "{CALL insertCompte(?,?)}"; 
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req); 
+			stmt.setString(1, username);
+			stmt.setString(2, hashedPassword);
+			int i = stmt.executeUpdate();
+			stmt.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public boolean mdpCorrect(String username, String mdp) {
+		try {
+			String req = "{CALL getMdpByUsername(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String hashedPassword = rs.getString(1);
+				 return HashUtil.hashMD5(mdp).equals(hashedPassword);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 }

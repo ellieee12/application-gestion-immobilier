@@ -121,9 +121,9 @@ public class VueMesLocations extends JFrame {
 		this.t.setRowCount(0);
 		for (Location l : controleur.getLocation()) {
 			t.addRow(new Object[]{
-				    l.getIdBien(), l.getDate_debut(), l.getColocation(), l.getNb_mois(),
+				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    l.getDate_derniere_reg(), l.isLoyer_paye(), l.getMontant_reel_paye()
+				    l.getDate_derniere_reg(), null , l.getMontant_reel_paye()
 				});
 		}
 	}
