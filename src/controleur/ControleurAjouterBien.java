@@ -60,32 +60,30 @@ public class ControleurAjouterBien implements ActionListener {
 					if (verificationBienExiste()) {
 						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampIDBien()) {
-						JOptionPane.showMessageDialog(this.vue, "Veillez saisir l'identifiant du bien","Attention", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampsDateAcquisition()) {
 						try {
-							throw new ParseException("Format du date d'acquisition invalide",0);
+							throw new ParseException("Veuillez remplir tout les champs",0);
 						}catch(ParseException pEx) {
-							JOptionPane.showMessageDialog(this.vue, "Le format du date d'acquisition est incorrecte","Attention", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
 						}
 					}else if (isLogement()) {
 						if (champsLogementNonRemplis()){
-							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
 						}else{
 							 ajouterLogement();
 							
 						}
 					}else {
 						ajouterGarage();
+						this.vueBiens.getControleurMesBiens().Update();
+						this.vue.dispose();
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
 				} catch (DAOException e1) {
 					e1.printStackTrace();
-				}
-				
-				this.vueBiens.getControleurMesBiens().Update();
-				this.vue.dispose();
-				
+				}				
 			}
 				
 		} else {

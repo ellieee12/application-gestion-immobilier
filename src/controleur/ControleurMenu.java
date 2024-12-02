@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import ihm.VueAjouterLocation;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;
+import ihm.VueMesLocations;
 import ihm.VueSaisieLocataire;
 
 public class ControleurMenu implements ActionListener {
@@ -45,7 +46,7 @@ public class ControleurMenu implements ActionListener {
 			}
 		}else {
 			try {
-				VueAjouterLocation frame = new VueAjouterLocation();
+				VueMesLocations frame = new VueMesLocations();
 				frame.setVisible(true);
 			} catch (Exception e1) {
 				e1.printStackTrace();

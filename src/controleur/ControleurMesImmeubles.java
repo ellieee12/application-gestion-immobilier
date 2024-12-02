@@ -35,7 +35,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			ImmeubleDAO immeubleDAO = new ImmeubleDAO();
 			ResultSet rs = immeubleDAO.getAllImmeubles();
 			while(rs.next()) {
-                if (rs.getString(2).equals("M")) {
+                if (rs.getString(6).equals("M")) {
                     this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
                 } else {
                     this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
@@ -65,7 +65,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
             ImmeubleDAO immeuble = new ImmeubleDAO();
             ResultSet rs = immeuble.getAllImmeubles();
             while(rs.next()) {
-                if (rs.getString(2).equals("M")) {
+                if (rs.getString(6).equals("M")) {
                     this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
                 } else {
                     this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));

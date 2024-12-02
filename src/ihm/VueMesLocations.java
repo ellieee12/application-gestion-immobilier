@@ -90,19 +90,19 @@ public class VueMesLocations extends JFrame {
 				},
 				new String[] {
 					"Id Bien", "Date début location", "Colocation", "Nombre de mois", "Loyer TTC", "Provisions chargement TTC",
-						"Caution TTC", "Date de la dernière régularisation", "Loyer payé", "Montant réel payé"
+						"Caution TTC", "Date de la dernière régularisation", "Loyer payé"
 					
 				}
 			) {
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
-					Float.class, Date.class, Integer.class, Float.class
+					Float.class, Date.class, Integer.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
 				boolean[] columnEditables = new boolean[] {
-						false, false, false, false, false, false, false, false, false, false
+						false, false, false, false, false, false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -123,7 +123,7 @@ public class VueMesLocations extends JFrame {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    l.getDate_derniere_reg(), null , l.getMontant_reel_paye()
+				    l.getDate_derniere_reg(), null
 				});
 		}
 	}
