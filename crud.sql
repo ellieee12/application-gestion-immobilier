@@ -2,6 +2,9 @@ use saes3;
 set autocommit=0;
 start transaction;
 
+DROP TABLE IF EXISTS facture;
+DROP TABLE IF EXISTS releve;
+DROP TABLE IF EXISTS compteur;
 drop table if exists louer;
 drop table if exists Document_Location;
 DROP TABLE IF EXISTS location; 
@@ -10,6 +13,7 @@ DROP TABLE IF EXISTS locataire;
 DROP TABLE IF EXISTS icc;
 DROP TABLE IF EXISTS immeuble;
 DROP TABLE IF EXISTS SignUp;
+
 
 create table Immeuble (
     id_immeuble varchar(20) not null,
@@ -96,6 +100,36 @@ CREATE TABLE SignUp(
     constraint pk_SignUp PRIMARY KEY(username, mdp)
 );
 
+CREATE TABLE facture (
+    numero_facture VARCHAR(50) not null,
+    date_paiement DECIMAL(15,2),
+    date_emission DECIMAL(15,2),
+    numero_devis VARCHAR(50),
+    designation VARCHAR(50),
+    montant_reel_paye DECIMAL(15,2),
+    montant DECIMAL(15,2),
+    imputable_locataire DECIMAL(15,2),
+    id_bien VARCHAR(20) NOT NULL,
+    constraint pk_facture primary key(numero_facture),
+    constraint fk_facture_id_bien foreign key(id_bien) references Bien(id_bien)
+);
+
+CREATE TABLE compteur (
+    id_compteur VARCHAR(50) not null,
+    type_compteur VARCHAR(50),
+    prix_abonnement DECIMAL(15,2),
+    id_bien VARCHAR(20) NOT NULL,
+    constraint pk_compteur primary key (id_compteur),
+    constraint fk_compteur_id_bien foreign key(id_bien) references Bien(id_bien)
+);
+
+CREATE TABLE releve ( 
+    annee VARCHAR(50) not null,
+    index_comp VARCHAR(50),
+    id_compteur VARCHAR(50) NOT NULL,
+    constraint pk_releve primary key(annee,id_compteur),
+    constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
+);
 
 
 -- Insert sample data into Immeuble
@@ -154,10 +188,32 @@ VALUES
 (4, '2023-10-01', 4),
 (5, '2024-01-01', 5);
 
-
-INSERT INTO SignUp (username, mdp)
+-- Insert sample data into Compteur
+INSERT INTO compteur (
+    id_compteur, type_compteur, prix_abonnement, id_bien
+)
 VALUES
-('admin', 'admin'),
-('user', '1234'),
-('test', 'test');
-commit;
+('CPT001', 'ELECTRICITE', 25.00, 1),
+('CPT002', 'EAU', 15.00, 2);
+
+-- Insert sample data into Releve
+INSERT INTO releve (
+    annee, index_comp, id_compteur
+)
+VALUES
+('2023', '1000', 'CPT001'),
+('2023', '1200', 'CPT002'),
+('2024', '1500', 'CPT001'),
+('2024', '900', 'CPT002');
+
+-- Insert sample data into Facture
+INSERT INTO facture (
+    numero_facture, date_paiement, date_emission, numero_devis, designation, 
+    montant_reel_paye, montant, imputable_locataire, id_bien
+)
+VALUES
+('FAC001', 20231201, 20231130, 'DEV001', 'Travaux de Renovation', 100.00, 120.00, 100.00, 1),
+('FAC002', 20231205, 20231201, 'DEV002', 'Travaux de Modernisation', 50.00, 60.00, 50.00, 2),
+('FAC003', 20231210, 20231209, 'DEV003', 'Travaux entretien courant', 30.00, 35.00, 30.00, 3),
+('FAC004', 20231215, 20231212, 'DEV004', 'Travaux de transformation', 200.00, 250.00, 200.00, 4),
+('FAC005', 20240101, 20231231, 'DEV005', 'Travaux decoration', 1500.00, 1500.00, 1500.00, 5);
