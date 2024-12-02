@@ -10,7 +10,11 @@ import javax.swing.JOptionPane;
 import ihm.VueLogin;
 import ihm.VueMenu;
 import ihm.VueSignUp;
+<<<<<<< Updated upstream
 import modele.ModeleLoginSignUp;
+=======
+import modeleDAO.LogInSignUpDAO;
+>>>>>>> Stashed changes
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
 	
 	private static ControleurLogInSignUp controleur;
