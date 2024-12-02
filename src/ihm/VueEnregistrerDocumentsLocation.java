@@ -1,28 +1,19 @@
 package ihm;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.sql.Date;
 
-import javax.swing.JFileChooser;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controleur.ControleurAjouterDocuments;
 import controleur.ControleurEnregistrerDocument;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.io.File;
-
-import javax.swing.JMenuBar;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextArea;
-import java.awt.ComponentOrientation;
 
 public class VueEnregistrerDocumentsLocation extends JFrame {
 
@@ -32,28 +23,10 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 	private JTextArea textAreaDescription;
 	private ControleurEnregistrerDocument controleur;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueEnregistrerDocumentsLocation frame = new VueEnregistrerDocumentsLocation();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public VueEnregistrerDocumentsLocation() {
-		this.controleur = new ControleurEnregistrerDocument(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VueEnregistrerDocumentsLocation(Date dateDebut, String idBien, String idLocataire,VueAjouterDocuments vueAjouterDocuments,
+			 ControleurAjouterDocuments controleurAjouterDocument) {
+		this.controleur = new ControleurEnregistrerDocument(this,vueAjouterDocuments, controleurAjouterDocument);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -115,14 +88,12 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 		panel_3.add(btnChoisirFichier);
 		
 		this.lblNomFichier = new JLabel("");
-		this.lblNomFichier.setVisible(false);
 		panel_3.add(this.lblNomFichier);
 		
 	}
 	
 	public void afficherNomFichier(String nomFichier) {
 		this.lblNomFichier.setText(nomFichier);
-		this.lblNomFichier.setVisible(true);
 	}
 	
 	public String getDescription() {

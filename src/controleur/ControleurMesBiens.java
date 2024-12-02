@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import modeleDAO.BienDAO;
+import modeleDAO.DAOException;
 import modeleDAO.ImmeubleDAO;
 
 public class ControleurMesBiens implements ActionListener {
@@ -57,8 +58,14 @@ public class ControleurMesBiens implements ActionListener {
             
             BienDAO bien = new BienDAO();
             ImmeubleDAO immeuble = new ImmeubleDAO();
+            System.out.println(this.vue.getIdImmeuble());
             ResultSet rs = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
 			ResultSet rs2 = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
+			while(rs2.next()) {
+				this.adresse = rs2.getString(1);
+				this.cp = rs2.getString(2);
+				this.ville = rs2.getString(3);
+			}
             while(rs.next()) {
                 if (rs.getString(2).equals("L")) {
                     this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4)));
@@ -92,7 +99,11 @@ public class ControleurMesBiens implements ActionListener {
 					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
 			if (resultat==JOptionPane.YES_OPTION) {
 				BienDAO bien = new BienDAO();
-				bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+				try {
+					bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
 				this.Update();
 			}
 		}

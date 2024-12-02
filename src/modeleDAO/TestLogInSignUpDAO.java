@@ -8,14 +8,14 @@ public class TestLogInSignUpDAO {
 		LogInSignUpDAO logIn = new LogInSignUpDAO();
 		
 		//Test vérification compte existe
-		if (logIn.compteExiste("admin")) {
+		if (logIn.compteExiste("admin", "admin")) {
 		    System.out.println("Le compte existe");
 		} else {
 		    System.out.println("Le compte n'existe pas");
 		}
 		
 		//Test vérification compte existe pas
-		if (logIn.compteExiste("ad")) {
+		if (logIn.compteExiste("ad", "admin")) {
 		    System.out.println("Le compte existe");
 		} else {
 		    System.out.println("Le compte n'existe pas");
