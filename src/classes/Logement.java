@@ -1,5 +1,5 @@
 package classes;
-import java.sql.Date;
+import java.util.Date;
 
 public class Logement extends Bien {
 	

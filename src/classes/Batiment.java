@@ -1,4 +1,5 @@
 package classes;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.OptionalInt;
@@ -7,7 +8,7 @@ public class Batiment extends Immeuble {
 	
     private Map<String,Bien> biens;
 
-	public Batiment(String id_immeuble, String adresse, String cp, String ville, String periode_construction) {
+	public Batiment(String adresse, String cp, String ville, String id_immeuble, String periode_construction) {
 		super(adresse, cp, ville, id_immeuble, periode_construction);
 		this.biens = new HashMap<String, Bien>();
 	}

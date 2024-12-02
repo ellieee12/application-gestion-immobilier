@@ -1,7 +1,11 @@
 package ihm;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
@@ -9,20 +13,19 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurAjouterLocation;
-import modeleDAO.DAOException;
+
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 
 public class VueAjouterLocation extends JFrame {
 
@@ -37,6 +40,7 @@ public class VueAjouterLocation extends JFrame {
 	private JComboBox<String> comboBoxLocataire;
 	private JComboBox<String> comboBoxBiens;
 	private JCheckBox chckbxColocation;
+	private JCheckBox chckbxLoyerPaye;
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
 	private JFormattedTextField formattedDateDerniereRegularisation;
@@ -58,28 +62,27 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public boolean isComplet() {
-		return true;/*!this.getSelectedBien().isEmpty() && this.getDateDebutLocation()!=null
+		return !this.getSelectedBien().isEmpty() && !this.getDateDebutLocation().toString().isEmpty()
 				&& !this.getNbMoisPrevus().toString().isEmpty() 
-				&& this.getDateDerniereRegularisation()!=null;*/
+				&& !this.getDateDerniereRegularisation().toString().isEmpty();
 	}
 
 	/**
 	 * Create the application.
 	 * @throws SQLException 
-	 * @throws DAOException 
 	 */
-	public VueAjouterLocation() throws SQLException, DAOException {
+	public VueAjouterLocation() throws SQLException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws SQLException 
-	 * @throws DAOException 
 	 */
-	private void initialize() throws DAOException, SQLException {
+	@SuppressWarnings("unchecked")
+	private void initialize() throws SQLException {
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
-		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
+		NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
 		contentPane = new JPanel();
@@ -110,12 +113,26 @@ public class VueAjouterLocation extends JFrame {
 		JLabel lbl_Bien = new JLabel("Bien :");
 		panel_l_bien.add(lbl_Bien, BorderLayout.NORTH);
 		
+		JPanel panel_1 = new JPanel();
+		panelLibellé.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_1 = new JLabel("Etat des Lieux : ");
+		panel_1.add(lblNewLabel_1, BorderLayout.NORTH);
+		
 		JPanel panel_2 = new JPanel();
 		panelLibellé.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_2 = new JLabel("Colocation : ");
 		panel_2.add(lblNewLabel_2, BorderLayout.NORTH);
+		
+		JPanel panel_3 = new JPanel();
+		panelLibellé.add(panel_3);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_3 = new JLabel("Loyer Payé : ");
+		panel_3.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		panelLibellé.add(panel_5);
@@ -177,12 +194,27 @@ public class VueAjouterLocation extends JFrame {
 		initialiserComboBoxBiens(controleur);
 		panel.add(comboBoxBiens, BorderLayout.NORTH);
 		
+		JPanel panel_c_edl = new JPanel();
+		panelChamps.add(panel_c_edl);
+		panel_c_edl.setLayout(new BoxLayout(panel_c_edl, BoxLayout.X_AXIS));
+		
+		JButton btnNewButton = new JButton("Ajouter");
+		panel_c_edl.add(btnNewButton);
+		btnNewButton.addActionListener(controleur);
+		
 		JPanel panel_c_colocation = new JPanel();
 		panelChamps.add(panel_c_colocation);
 		panel_c_colocation.setLayout(new BorderLayout(0, 0));
 		
 		chckbxColocation = new JCheckBox("");
 		panel_c_colocation.add(chckbxColocation, BorderLayout.WEST);
+		
+		JPanel panel_c_loyer_paye = new JPanel();
+		panelChamps.add(panel_c_loyer_paye);
+		panel_c_loyer_paye.setLayout(new BorderLayout(0, 0));
+		
+		chckbxLoyerPaye = new JCheckBox("");
+		panel_c_loyer_paye.add(chckbxLoyerPaye, BorderLayout.WEST);
 		
 		JPanel panel_c_date_debut_location = new JPanel();
 		panelChamps.add(panel_c_date_debut_location);
@@ -209,7 +241,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_loyer);
 		panel_c_loyer.setLayout(new BorderLayout(0, 0));
 		
-		textFieldLoyerLocataire = new JFormattedTextField();
+		textFieldLoyerLocataire = new JFormattedTextField(currencyFormatter);
 		textFieldLoyerLocataire.setValue(0.0);
 		textFieldLoyerLocataire.setColumns(10);
 		
@@ -219,7 +251,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_provisions);
 		panel_c_provisions.setLayout(new BorderLayout(0, 0));
 		
-		formattedProvisionCharges = new JFormattedTextField();
+		formattedProvisionCharges = new JFormattedTextField(currencyFormatter);
 		formattedProvisionCharges.setValue(0.0);
 		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
@@ -227,7 +259,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel__c_caution);
 		panel__c_caution.setLayout(new BorderLayout(0, 0));
 		
-		formattedCaution = new JFormattedTextField();
+		formattedCaution = new JFormattedTextField(currencyFormatter);
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
@@ -248,7 +280,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_montant_reel);
 		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
 		
-		formattedMontantReelPaye = new JFormattedTextField();
+		formattedMontantReelPaye = new JFormattedTextField(currencyFormatter);
 		formattedMontantReelPaye.setValue(0.0);
 		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
 		
@@ -280,6 +312,16 @@ public class VueAjouterLocation extends JFrame {
 			comboBoxLocataire.addItem(s);
 		}
 	}
+
+	private NumberFormatter generateCurrencyFormatter() {
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		decimalFormat.setDecimalSeparatorAlwaysShown(true);
+		NumberFormatter numberFormatter= new NumberFormatter(decimalFormat);
+		numberFormatter.setValueClass(Double.class);
+		numberFormatter.setAllowsInvalid(false);
+		numberFormatter.setMinimum(0.0);
+		return numberFormatter;
+	}
 	
 	public String getSelectedBien() {
 		return this.comboBoxBiens.getSelectedItem().toString();
@@ -291,6 +333,10 @@ public class VueAjouterLocation extends JFrame {
 	
 	public boolean isColocation() {
 		return this.chckbxColocation.isSelected();
+	}
+	
+	public boolean isPaye() {
+		return this.chckbxLoyerPaye.isSelected();
 	}
 
 	public Date getDateDebutLocation() {
