@@ -56,7 +56,7 @@ public class VueAjouterBien extends JFrame {
 		
 		JPanel PanelLibellé = new JPanel();
 		contentPane.add(PanelLibellé, BorderLayout.WEST);
-		PanelLibellé.setLayout(new GridLayout(0, 1, 0, 0));
+		PanelLibellé.setLayout(new GridLayout(0, 1, 0, 3));
 		
 		JPanel panel_9 = new JPanel();
 		PanelLibellé.add(panel_9);
