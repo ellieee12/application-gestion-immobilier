@@ -158,8 +158,8 @@ END$$
 
 CREATE PROCEDURE insertFacture (
     v_numero_facture VARCHAR(50),
-    v_date_paiement DECIMAL(15,2),
-    v_date_emission DECIMAL(15,2),
+    v_date_paiement DATE,
+    v_date_emission DATE,
     v_numero_devis VARCHAR(50),
     v_designation VARCHAR(50),
     v_montant_reel_paye DECIMAL(15,2),

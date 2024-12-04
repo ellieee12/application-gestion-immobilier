@@ -101,8 +101,8 @@ CREATE TABLE SignUp(
 
 CREATE TABLE facture (
     numero_facture VARCHAR(50) not null,
-    date_paiement DECIMAL(15,2),
-    date_emission DECIMAL(15,2),
+    date_paiement DATE,
+    date_emission DATE,
     numero_devis VARCHAR(50),
     designation VARCHAR(50),
     montant_reel_paye DECIMAL(15,2),
@@ -123,7 +123,7 @@ CREATE TABLE compteur (
 );
 
 CREATE TABLE releve ( 
-    annee VARCHAR(50) not null,
+    annee INT not null,
     index_comp VARCHAR(50),
     id_compteur INT NOT NULL,
     primary key(annee,id_compteur),
