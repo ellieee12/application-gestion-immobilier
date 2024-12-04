@@ -60,7 +60,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		} else if (b.getText() == "Ajouter") {
 			if (allVerif()) {
 				this.dao.ajouterLocataire(this.vue.getId(), this.vue.getNom(),
-						this.vue.getPrenom(),this.vue.getTel(),this.vue.getMail(),this.vue.getDateDeNaissance());
+						this.vue.getPrenom(),this.vue.getMail(),this.vue.getTel(),this.vue.getDateDeNaissance());
 				//ferme cette page et ouvre le Menu
 				this.vue.dispose();
 				// FAIRE LE MENU !!!
