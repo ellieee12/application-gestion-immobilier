@@ -40,7 +40,6 @@ public class VueAjouterLocation extends JFrame {
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
 	private JFormattedTextField formattedDateDerniereRegularisation;
-	private JFormattedTextField formattedMontantReelPaye;
 
 	/**
 	 * Launch the application.
@@ -143,7 +142,7 @@ public class VueAjouterLocation extends JFrame {
 		panelLibellé.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_8 = new JLabel("Provisions sur charges : ");
+		JLabel lblNewLabel_8 = new JLabel("Provision sur charges : ");
 		panel_8.add(lblNewLabel_8, BorderLayout.NORTH);
 		
 		JPanel panel_9 = new JPanel();
@@ -159,13 +158,6 @@ public class VueAjouterLocation extends JFrame {
 		
 		JLabel lblNewLabel_10 = new JLabel("Date dernière régularisation : ");
 		panel_10.add(lblNewLabel_10, BorderLayout.NORTH);
-		
-		JPanel panel_11 = new JPanel();
-		panelLibellé.add(panel_11);
-		panel_11.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_11 = new JLabel("Montant réel payé : ");
-		panel_11.add(lblNewLabel_11, BorderLayout.NORTH);
 		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
@@ -251,14 +243,6 @@ public class VueAjouterLocation extends JFrame {
 		}
 		panel_c_date_derniere_reg.add(formattedDateDerniereRegularisation, BorderLayout.NORTH);
 		
-		JPanel panel_c_montant_reel = new JPanel();
-		panelChamps.add(panel_c_montant_reel);
-		panel_c_montant_reel.setLayout(new BorderLayout(0, 0));
-		
-		formattedMontantReelPaye = new JFormattedTextField();
-		formattedMontantReelPaye.setValue(0.0);
-		panel_c_montant_reel.add(formattedMontantReelPaye, BorderLayout.NORTH);
-		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
 		
@@ -324,10 +308,6 @@ public class VueAjouterLocation extends JFrame {
 	
 	public Float getCaution() {
 		return Float.valueOf(this.formattedCaution.getText());
-	}
-	
-	public Float getMontantReelPaye() {
-		return Float.valueOf(this.formattedMontantReelPaye.getText());
 	}
 	
 	public Date getDateDerniereRegularisation() {

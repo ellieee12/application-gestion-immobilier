@@ -61,8 +61,8 @@ private MySQLCon mySQLCon;
 		Location location) throws SQLException {
 		try {
 			String reqInsertLocation = "insert into location (id_bien,date_debut,nb_mois,provision_charges_ttc,loyer_ttc,caution_ttc,"
-					+ "date_derniere_reg,montant_reel_paye,annee,trimestre) "
-					+ "values (?,?,?,?,?,?,?,?,?,?)";
+					+ "date_derniere_reg,annee,trimestre) "
+					+ "values (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
@@ -71,9 +71,8 @@ private MySQLCon mySQLCon;
 			stmtInsertLocation.setFloat(5, location.getLoyer_TTC());
 			stmtInsertLocation.setFloat(6, location.getCaution_TTC());
 			stmtInsertLocation.setDate(7, location.getDate_derniere_reg());
-			stmtInsertLocation.setFloat(8, location.getMontant_reel_paye());
-			stmtInsertLocation.setString(9,"2024-01-01");
-			stmtInsertLocation.setInt(10, 1);
+			stmtInsertLocation.setString(8,"2024-01-01");
+			stmtInsertLocation.setInt(9, 1);
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			
