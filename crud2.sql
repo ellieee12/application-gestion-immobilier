@@ -14,6 +14,8 @@ DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
 DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
+DROP PROCEDURE IF EXISTS getAllFacture$$
+DROP PROCEDURE IF EXISTS deleteFacture$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -142,5 +144,34 @@ BEGIN
     SELECT mdp from signup where username = v_username;
 END$$
 
+CREATE PROCEDURE getAllFacture()
+
+BEGIN
+    select * from facture;
+END$$
+
+CREATE PROCEDURE deleteFacture(v_numero_facture varchar(50))
+
+BEGIN
+    delete from facture where numero_facture=v_numero_facture;
+END$$
+
+CREATE PROCEDURE insertFacture (
+    v_numero_facture VARCHAR(50),
+    v_date_paiement DATE,
+    v_date_emission DATE,
+    v_numero_devis VARCHAR(50),
+    v_designation VARCHAR(50),
+    v_montant_reel_paye DECIMAL(15,2),
+    v_montant DECIMAL(15,2),
+    v_imputable_locataire DECIMAL(15,2),
+    v_id_bien VARCHAR(20)
+)
+BEGIN
+    insert into facture (numero_facture,date_paiement,date_emission,numero_devis,designation,montant_reel_paye,montant,imputable_locataire,id_bien)
+    values (v_numero_facture,v_date_paiement,v_date_emission,v_numero_devis,v_designation,v_montant_reel_paye,v_montant,v_imputable_locataire,v_id_bien);
+END$$
+-- verifier from compteur if bien is a maison or what
+-- insert compteur and releve
 
 DELIMITER ;

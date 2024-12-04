@@ -22,7 +22,7 @@ create table Immeuble (
     ville VARCHAR(50) not null,
     periode_construction VARCHAR(50),
     type_immeuble char(1) not null,
-    constraint pk_immeuble primary key(id_immeuble),
+    primary key(id_immeuble),
     constraint ck_immeuble_type check(type_immeuble in ('B','M'))
 );
 
@@ -34,7 +34,7 @@ create table bien(
     date_acquisition date,
     type_bien char(1),
     id_immeuble varchar(20) not null,
-    constraint pk_bien primary key(id_bien),
+    primary key(id_bien),
     constraint ck_bien_type check(type_bien in ('G','L')),
     constraint fk_bien_immeuble foreign key(id_immeuble) references immeuble(id_immeuble)
 );
@@ -46,14 +46,14 @@ create table Locataire (
     telephone CHAR(15) not null,
     mail VARCHAR(50) ,
     date_naissance DATE,
-    constraint pk_locataire primary key(id_locataire)
+    primary key(id_locataire)
 );
 
 create table icc (
     annee date not null,
     trimestre smallint not null,
     indice int not null,
-    constraint pk_icc primary key(annee, trimestre)
+    primary key(annee, trimestre)
 );
 
 CREATE TABLE Location(
@@ -67,7 +67,7 @@ CREATE TABLE Location(
     date_derniere_reg DATE,
     annee date NOT NULL,
     trimestre smallint NOT NULL,
-    constraint pk_location PRIMARY KEY(id_bien, date_debut),
+    PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
 );
@@ -80,7 +80,7 @@ CREATE TABLE Document_Location(
     id_bien VARCHAR(20) NOT NULL,
     id_locataire VARCHAR(20) NOT NULL,
     date_debut DATE NOT NULL,
-    CONSTRAINT pk_document_location PRIMARY KEY(id_document),
+    PRIMARY KEY(id_document),
     CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut)
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE Louer(
    id_bien VARCHAR(20),
    date_debut DATE,
    id_locataire VARCHAR(20),
-   constraint pk_louer PRIMARY KEY(id_bien, date_debut),
+   PRIMARY KEY(id_bien, date_debut),
    constraint fk_louer_location FOREIGN KEY(id_bien, date_debut)REFERENCES Location(id_bien, date_debut),
    constraint fk_louer_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
 );
@@ -96,37 +96,37 @@ CREATE TABLE Louer(
 CREATE TABLE SignUp(
     username VARCHAR(50),
     mdp VARCHAR(50),
-    constraint pk_SignUp PRIMARY KEY(username, mdp)
+    PRIMARY KEY(username, mdp)
 );
 
 CREATE TABLE facture (
     numero_facture VARCHAR(50) not null,
-    date_paiement DECIMAL(15,2),
-    date_emission DECIMAL(15,2),
+    date_paiement DATE,
+    date_emission DATE,
     numero_devis VARCHAR(50),
     designation VARCHAR(50),
     montant_reel_paye DECIMAL(15,2),
     montant DECIMAL(15,2),
     imputable_locataire DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,
-    constraint pk_facture primary key(numero_facture),
+    primary key(numero_facture),
     constraint fk_facture_id_bien foreign key(id_bien) references Bien(id_bien)
 );
 
 CREATE TABLE compteur (
-    id_compteur VARCHAR(50) not null,
+    id_compteur INT not null auto_increment,
     type_compteur VARCHAR(50),
     prix_abonnement DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,
-    constraint pk_compteur primary key (id_compteur),
+    primary key (id_compteur),
     constraint fk_compteur_id_bien foreign key(id_bien) references Bien(id_bien)
 );
 
 CREATE TABLE releve ( 
-    annee VARCHAR(50) not null,
+    annee INT not null,
     index_comp VARCHAR(50),
-    id_compteur VARCHAR(50) NOT NULL,
-    constraint pk_releve primary key(annee,id_compteur),
+    id_compteur INT NOT NULL,
+    primary key(annee,id_compteur),
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
 );
 
@@ -192,18 +192,18 @@ INSERT INTO compteur (
     id_compteur, type_compteur, prix_abonnement, id_bien
 )
 VALUES
-('CPT001', 'ELECTRICITE', 25.00, 1),
-('CPT002', 'EAU', 15.00, 2);
+(1, 'ELECTRICITE', 25.00, 1),
+(2, 'EAU', 15.00, 2);
 
 -- Insert sample data into Releve
 INSERT INTO releve (
     annee, index_comp, id_compteur
 )
 VALUES
-('2023', '1000', 'CPT001'),
-('2023', '1200', 'CPT002'),
-('2024', '1500', 'CPT001'),
-('2024', '900', 'CPT002');
+('2023', '1000', 1),
+('2023', '1200', 2),
+('2024', '1500', 1),
+('2024', '900', 2);
 
 -- Insert sample data into Facture
 INSERT INTO facture (
