@@ -114,7 +114,7 @@ CREATE TABLE facture (
 );
 
 CREATE TABLE compteur (
-    id_compteur VARCHAR(50) not null,
+    id_compteur INT not null auto_increment,
     type_compteur VARCHAR(50),
     prix_abonnement DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE compteur (
 CREATE TABLE releve ( 
     annee VARCHAR(50) not null,
     index_comp VARCHAR(50),
-    id_compteur VARCHAR(50) NOT NULL,
+    id_compteur INT NOT NULL,
     constraint pk_releve primary key(annee,id_compteur),
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
 );
@@ -192,18 +192,18 @@ INSERT INTO compteur (
     id_compteur, type_compteur, prix_abonnement, id_bien
 )
 VALUES
-('CPT001', 'ELECTRICITE', 25.00, 1),
-('CPT002', 'EAU', 15.00, 2);
+(1, 'ELECTRICITE', 25.00, 1),
+(2, 'EAU', 15.00, 2);
 
 -- Insert sample data into Releve
 INSERT INTO releve (
     annee, index_comp, id_compteur
 )
 VALUES
-('2023', '1000', 'CPT001'),
-('2023', '1200', 'CPT002'),
-('2024', '1500', 'CPT001'),
-('2024', '900', 'CPT002');
+('2023', '1000', 1),
+('2023', '1200', 2),
+('2024', '1500', 1),
+('2024', '900', 2);
 
 -- Insert sample data into Facture
 INSERT INTO facture (

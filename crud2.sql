@@ -15,6 +15,15 @@ DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
 
+create procedure getBienByCompteur(v_id_compteur)
+BEGIN
+    select type_bien from bien where id_bien = (
+        select c.id_bien 
+        from compteur c 
+        where v_id_compteur=id_compteur
+    );
+END$$
+
 CREATE PROCEDURE getAllBiens()
 BEGIN
     SELECT * FROM bien;
@@ -142,5 +151,8 @@ BEGIN
     SELECT mdp from signup where username = v_username;
 END$$
 
+
+-- verifier from compteur if bien is a maison or what
+-- insert compteur and releve
 
 DELIMITER ;
