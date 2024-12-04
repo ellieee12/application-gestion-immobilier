@@ -2,6 +2,9 @@ use saes3;
 set autocommit=0;
 start transaction;
 
+DROP TABLE IF EXISTS facture;
+DROP TABLE IF EXISTS releve;
+DROP TABLE IF EXISTS compteur;
 drop table if exists louer;
 drop table if exists Document_Location;
 DROP TABLE IF EXISTS location; 
@@ -10,6 +13,7 @@ DROP TABLE IF EXISTS locataire;
 DROP TABLE IF EXISTS icc;
 DROP TABLE IF EXISTS immeuble;
 DROP TABLE IF EXISTS SignUp;
+
 
 create table Immeuble (
     id_immeuble varchar(20) not null,
@@ -61,7 +65,6 @@ CREATE TABLE Location(
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
     date_derniere_reg DATE,
-    montant_reel_paye decimal(15,2),
     annee date NOT NULL,
     trimestre smallint NOT NULL,
     constraint pk_location PRIMARY KEY(id_bien, date_debut),
@@ -96,6 +99,36 @@ CREATE TABLE SignUp(
     constraint pk_SignUp PRIMARY KEY(username, mdp)
 );
 
+CREATE TABLE facture (
+    numero_facture VARCHAR(50) not null,
+    date_paiement DECIMAL(15,2),
+    date_emission DECIMAL(15,2),
+    numero_devis VARCHAR(50),
+    designation VARCHAR(50),
+    montant_reel_paye DECIMAL(15,2),
+    montant DECIMAL(15,2),
+    imputable_locataire DECIMAL(15,2),
+    id_bien VARCHAR(20) NOT NULL,
+    constraint pk_facture primary key(numero_facture),
+    constraint fk_facture_id_bien foreign key(id_bien) references Bien(id_bien)
+);
+
+CREATE TABLE compteur (
+    id_compteur VARCHAR(50) not null,
+    type_compteur VARCHAR(50),
+    prix_abonnement DECIMAL(15,2),
+    id_bien VARCHAR(20) NOT NULL,
+    constraint pk_compteur primary key (id_compteur),
+    constraint fk_compteur_id_bien foreign key(id_bien) references Bien(id_bien)
+);
+
+CREATE TABLE releve ( 
+    annee VARCHAR(50) not null,
+    index_comp VARCHAR(50),
+    id_compteur VARCHAR(50) NOT NULL,
+    constraint pk_releve primary key(annee,id_compteur),
+    constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
+);
 
 
 -- Insert sample data into Immeuble
@@ -136,14 +169,14 @@ VALUES
 -- Insert sample data into Location
 INSERT INTO Location (
     id_bien, date_debut, nb_mois,colocation , provision_charges_ttc, loyer_ttc, 
-    caution_ttc, date_derniere_reg, montant_reel_paye, annee, trimestre
+    caution_ttc, date_derniere_reg, annee, trimestre
 )
 VALUES
-(1, '2023-01-01', 12, 1, 150.00, 750.00, 1500.00, '2023-12-01', 9000.00, '2023-01-01', 1),
-(2, '2023-04-01', 6, 0, 100.00, 500.00, 1000.00, '2023-10-01', 3000.00, '2023-04-01', 2),
-(3, '2023-07-01', 9, 1, 200.00, 1000.00, 2000.00, '2023-10-01', 7000.00, '2023-07-01',  3),
-(4, '2023-10-01', 24, 0, 250.00, 1200.00, 2400.00, '2024-10-01', 12000.00, '2023-10-01', 4),
-(5, '2024-01-01', 18, 1, 300.00, 1500.00, 3000.00, '2024-06-01', 18000.00, '2024-01-01', 1);
+(1, '2023-01-01', 12, 1, 150.00, 750.00, 1500.00, '2023-12-01', '2023-01-01', 1),
+(2, '2023-04-01', 6, 0, 100.00, 500.00, 1000.00, '2023-10-01', '2023-04-01', 2),
+(3, '2023-07-01', 9, 1, 200.00, 1000.00, 2000.00, '2023-10-01','2023-07-01',  3),
+(4, '2023-10-01', 24, 0, 250.00, 1200.00, 2400.00, '2024-10-01','2023-10-01', 4),
+(5, '2024-01-01', 18, 1, 300.00, 1500.00, 3000.00, '2024-06-01', '2024-01-01', 1);
 
 
 INSERT INTO Louer (id_bien, date_debut, id_locataire)
@@ -154,10 +187,32 @@ VALUES
 (4, '2023-10-01', 4),
 (5, '2024-01-01', 5);
 
-
-INSERT INTO SignUp (username, mdp)
+-- Insert sample data into Compteur
+INSERT INTO compteur (
+    id_compteur, type_compteur, prix_abonnement, id_bien
+)
 VALUES
-('admin', 'admin'),
-('user', '1234'),
-('test', 'test');
-commit;
+('CPT001', 'ELECTRICITE', 25.00, 1),
+('CPT002', 'EAU', 15.00, 2);
+
+-- Insert sample data into Releve
+INSERT INTO releve (
+    annee, index_comp, id_compteur
+)
+VALUES
+('2023', '1000', 'CPT001'),
+('2023', '1200', 'CPT002'),
+('2024', '1500', 'CPT001'),
+('2024', '900', 'CPT002');
+
+-- Insert sample data into Facture
+INSERT INTO facture (
+    numero_facture, date_paiement, date_emission, numero_devis, designation, 
+    montant_reel_paye, montant, imputable_locataire, id_bien
+)
+VALUES
+('FAC001', 20231201, 20231130, 'DEV001', 'Travaux de Renovation', 100.00, 120.00, 100.00, 1),
+('FAC002', 20231205, 20231201, 'DEV002', 'Travaux de Modernisation', 50.00, 60.00, 50.00, 2),
+('FAC003', 20231210, 20231209, 'DEV003', 'Travaux entretien courant', 30.00, 35.00, 30.00, 3),
+('FAC004', 20231215, 20231212, 'DEV004', 'Travaux de transformation', 200.00, 250.00, 200.00, 4),
+('FAC005', 20240101, 20231231, 'DEV005', 'Travaux decoration', 1500.00, 1500.00, 1500.00, 5);

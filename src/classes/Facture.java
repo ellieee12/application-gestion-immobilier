@@ -42,5 +42,42 @@ public class Facture {
     	this.montant_reel_paye = montant_reel_paye;
     	this.imputable_locataire = imputable_locataire;
     }
+
+    public Date getDate_emission() {
+		return date_emission;
+	}
+
+	public Date getDate_paiement() {
+		return date_paiement;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public float getMontant() {
+		return montant;
+	}
+
+	public String getMode_paiement() {
+		return mode_paiement;
+	}
+
+	public String getNumero_devis() {
+		return numero_devis;
+	}
+
+	public float getMontant_reel_paye() {
+		return montant_reel_paye;
+	}
+
+	public boolean isImputable_locataire() {
+		return imputable_locataire;
+	}
+
     
 }
