@@ -15,6 +15,7 @@ DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
 DROP PROCEDURE IF EXISTS getCompteurByBienAndType$$
+DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -147,6 +148,12 @@ CREATE PROCEDURE getCompteurByBienAndType (v_id_bien VARCHAR(50),v_type_compteur
 
 BEGIN 
     SELECT id_compteur from compteur where id_bien = v_id_bien and type_compteur = v_type_compteur;
+END$$
+
+CREATE PROCEDURE getTypeImmeubleFromIdBien (v_id_bien VARCHAR(50))
+
+BEGIN 
+    SELECT type_immeuble from immeuble,bien where bien.id_bien = v_id_bien and bien.id_immeuble = immeuble.id_immeuble;
 END$$
 
 DELIMITER ;
