@@ -123,8 +123,8 @@ CREATE TABLE compteur (
 );
 
 CREATE TABLE releve ( 
-    annee VARCHAR(50) not null,
-    index_comp VARCHAR(50),
+    annee INT not null,
+    index_comp INT,
     id_compteur VARCHAR(50) NOT NULL,
     constraint pk_releve primary key(annee,id_compteur),
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
