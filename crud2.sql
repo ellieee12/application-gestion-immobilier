@@ -1,3 +1,4 @@
+use saes3;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS getAllBiens$$
@@ -14,8 +15,12 @@ DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
 DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
-DROP PROCEDURE IF EXISTS getAllFacture$$
+DROP PROCEDURE IF EXISTS getAllFactures$$
 DROP PROCEDURE IF EXISTS deleteFacture$$
+DROP PROCEDURE IF EXISTS insertFacture$$
+DROP PROCEDURE IF EXISTS getAllLocataires$$
+DROP PROCEDURE IF EXISTS getLocataireById$$
+DROP PROCEDURE IF EXISTS insertLocataire$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -144,7 +149,7 @@ BEGIN
     SELECT mdp from signup where username = v_username;
 END$$
 
-CREATE PROCEDURE getAllFacture()
+CREATE PROCEDURE getAllFactures()
 
 BEGIN
     select * from facture;
@@ -171,6 +176,30 @@ BEGIN
     insert into facture (numero_facture,date_paiement,date_emission,numero_devis,designation,montant_reel_paye,montant,imputable_locataire,id_bien)
     values (v_numero_facture,v_date_paiement,v_date_emission,v_numero_devis,v_designation,v_montant_reel_paye,v_montant,v_imputable_locataire,v_id_bien);
 END$$
+
+CREATE PROCEDURE getAllLocataires()
+BEGIN
+    select * from locataire;
+END$$
+
+CREATE PROCEDURE insertLocataire(
+    v_id_locataire varchar(20),
+    v_nom VARCHAR(30),
+    v_prenom VARCHAR(30),
+    v_telephone CHAR(15),
+    v_mail VARCHAR(50),
+    v_date_naissance DATE
+)
+BEGIN
+    insert into locataire(id_locataire, nom, prenom, mail, telephone, date_naissance) 
+    values (v_id_locataire,v_nom,v_prenom,v_mail,v_telephone,v_date_naissance);
+END$$ 
+
+CREATE PROCEDURE getLocataireById(v_id_locataire varchar(20))
+BEGIN
+    select * from locataire where id_locataire=v_id_locataire;
+END$$
+
 -- verifier from compteur if bien is a maison or what
 -- insert compteur and releve
 

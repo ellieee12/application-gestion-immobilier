@@ -1,5 +1,5 @@
 package classes;
-import java.util.Date;
+import java.sql.Date;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("e3931666-7fc9-4eeb-858f-75a78d0c6911")

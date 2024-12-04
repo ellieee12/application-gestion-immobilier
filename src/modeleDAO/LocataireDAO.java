@@ -1,55 +1,74 @@
 package modeleDAO;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import classes.Locataire;
 
 public class LocataireDAO {
 	private MySQLCon mySQLCon;
+	private static final Logger logger = Logger.getLogger(LocataireDAO.class.getName());
 	
 	public LocataireDAO() {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
-	public ResultSet getAllLocataires() throws SQLException {
-		String req = "select * from locataire";
-		Statement stmt = this.mySQLCon.getConnection().createStatement();
-		return stmt.executeQuery(req);
+	public ResultSet getAllLocataires() throws DAOException {
+		try {
+			String req = "{CALL getAllLocataires}";
+			Statement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			ResultSet rs = stmt.executeQuery(req);
+			return rs;
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locataires",e);
+			throw new DAOException("Erreurs lors de la récupération de la liste des locataires",e);
+		}
 	}
 	
-	public int ajouterLocataire(String id_locataire, String nom, String prenom, String mail, String telephone, Date date_naissance ) {
+	public int ajouterLocataire(Locataire loc) throws DAOException {
 		try {
-			String req = "insert into locataire(id_locataire, nom, prenom, mail, telephone, date_naissance) values (?,?,?,?,?,?)";
-			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
-			stmt.setString(1, id_locataire);
-			stmt.setString(2, nom);
-			stmt.setString(3,prenom);
-			stmt.setString(4,mail);
-			stmt.setString(5,telephone);
-			stmt.setDate(6,date_naissance);
-			
+			String req = "{CALL insertLocataire(?,?,?,?,?,?)}";
+			PreparedStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, loc.getId_locataire());
+			stmt.setString(2, loc.getNom());
+			stmt.setString(3,loc.getPrenom());
+			stmt.setString(4, loc.getMail());
+			stmt.setString(5,loc.getTelephone());
+			stmt.setDate(6,loc.getDate_naissance());
 			int i = stmt.executeUpdate();
 			stmt.close();
 			return i;
-		}catch(Exception e){
-			System.out.println(e);
+		}catch(SQLException e){
+			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'un locataire",e);
+			throw new DAOException("Erreurs lors de l'ajout d'un locataire",e);
 		}
-		return 0;
 	}
 	
-	public boolean locataireExists(String id_locataire) {
+	
+	public ResultSet getLocataireById(String id_locataire) throws DAOException {
 		try {
-			String req = "select * from locataire where id_locataire=?";
-			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+			String req = "{CALL getLocataireById(?)}";
+			PreparedStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, id_locataire);
 			ResultSet rs = stmt.executeQuery();
-			return rs.next();
-		}catch(Exception e) {
-			System.out.println(e);
+			return rs;
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération d'un locataire par son identifiant",e);
+			throw new DAOException("Erreurs lors de la récupération d'un locataire par son identifiant",e);
 		}
-		return true;
+	}
+	
+	public boolean locataireExists(String id_locataire) throws DAOException {
+		try {
+			return getLocataireById(id_locataire)!=null;
+		} catch (DAOException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existance d'un locataire",e);
+			throw new DAOException("Erreurs lors de la vérification de l'existance d'un locataire",e);
+		}
 	}
 	
 }

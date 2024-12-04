@@ -20,18 +20,28 @@ public class ImmeubleDAO {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
-	public ResultSet getAllImmeubles() throws SQLException {
-		String req = "{CALL getAllImmeubles()}";
-		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-		return stmt.executeQuery(req);
+	public ResultSet getAllImmeubles() throws DAOException {
+		try {
+			String req = "{CALL getAllImmeubles()}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			return stmt.executeQuery(req);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des immeubles",e);
+			throw new DAOException("Erreurs lors de la récupération de la liste des immeubles",e);
+		}
 	}
 	
-	public ResultSet getInfoImmeuble(String idImmeuble) throws SQLException {
-		String req = "{CALL getImmeubleById(?)}";
-		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-		stmt.setString(1, idImmeuble);
-		ResultSet rs = stmt.executeQuery();
-		return rs;
+	public ResultSet getInfoImmeuble(String idImmeuble) throws DAOException{
+		try {
+			String req = "{CALL getImmeubleById(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, idImmeuble);
+			ResultSet rs = stmt.executeQuery();
+			return rs;
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération d'un immeuble à partir de son identifiant",e);
+			throw new DAOException("Erreurs lors de la récupération d'un immeuble à partir de son identifiant",e);
+		}
 	}
 	
 	public void supprimerImmeuble(String idImmeuble) throws DAOException {
@@ -43,8 +53,8 @@ public class ImmeubleDAO {
 			System.out.println(i+" lignes supprimées");
 			stmt.close();
 		}catch(SQLException e){
-			logger.log(Level.SEVERE,"Erreurs lors de la suppression d'un bien",e);
-			throw new DAOException("Erreurs lors de la suppression d'un bien",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la suppression d'un immeuble",e);
+			throw new DAOException("Erreurs lors de la suppression d'un immeuble",e);
 		}
 	}
 	
@@ -66,19 +76,29 @@ public class ImmeubleDAO {
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		}catch (SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
-			throw new DAOException("Erreurs lors de la création d'un bien",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la création d'un immeuble",e);
+			throw new DAOException("Erreurs lors de la création d'un immeuble",e);
 		}
 	}
 	
-	public boolean immeubleExiste(String id_immeuble) throws SQLException {
-		return this.getInfoImmeuble(id_immeuble).next();
+	public boolean immeubleExiste(String id_immeuble) throws DAOException {
+		try {
+			return this.getInfoImmeuble(id_immeuble).next();
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existance d'un immeuble",e);
+			throw new DAOException("Erreurs lors de la vérification de l'existance d'un immeuble",e);
+		}
 	}
 	
-	public ResultSet getImmeublesPourAjouterBien() throws SQLException {
-		String req = "{CALL getImmeublesDisponibles()}";
-		Statement stmt = this.mySQLCon.getConnection().prepareCall(req);
-		ResultSet rs = stmt.executeQuery(req);
-		return rs;
+	public ResultSet getImmeublesPourAjouterBien() throws DAOException {
+		try {
+			String req = "{CALL getImmeublesDisponibles()}";
+			Statement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			ResultSet rs = stmt.executeQuery(req);
+			return rs;
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des immeubles disponibles",e);
+			throw new DAOException("Erreurs lors de la récupération des immeubles disponibles",e);
+		}
 	}
 }

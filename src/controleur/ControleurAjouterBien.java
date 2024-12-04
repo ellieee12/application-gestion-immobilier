@@ -30,7 +30,7 @@ public class ControleurAjouterBien implements ActionListener {
 	private List<String> Immeubles;
 	
 	//Constructeur du controleur
-	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) {
+	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) throws DAOException {
 		try {
 			this.vue = vue;
 			this.vueBiens=vueBiens;

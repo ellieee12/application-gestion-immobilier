@@ -27,7 +27,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	private VueMesImmeubles vue;
 	private List<Immeuble> immeuble;
 	
-	public ControleurMesImmeubles(VueMesImmeubles vue) {
+	public ControleurMesImmeubles(VueMesImmeubles vue) throws DAOException {
 		try {
 			this.vue = vue;
 			this.immeuble = new LinkedList<Immeuble>();
@@ -58,7 +58,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 		return immeuble;
 	}
 
-	public void Update() {
+	public void Update() throws DAOException {
         try {
             this.immeuble = new LinkedList<>();
             
@@ -100,11 +100,11 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 				ImmeubleDAO immeuble = new ImmeubleDAO();
 				try {
 					immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
+					this.Update();
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 			}
-			this.Update();
 		}
 	}
 	
