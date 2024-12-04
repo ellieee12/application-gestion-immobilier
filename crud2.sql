@@ -16,6 +16,7 @@ DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
 DROP PROCEDURE IF EXISTS getCompteurByBienAndType$$
 DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
+DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -154,6 +155,12 @@ CREATE PROCEDURE getTypeImmeubleFromIdBien (v_id_bien VARCHAR(50))
 
 BEGIN 
     SELECT type_immeuble from immeuble,bien where bien.id_bien = v_id_bien and bien.id_immeuble = immeuble.id_immeuble;
+END$$
+
+CREATE PROCEDURE getReleveFromIdCompteur (v_id_compteur VARCHAR(50))
+
+BEGIN 
+    SELECT annee,index_comp from releve where id_compteur = v_id_compteur;
 END$$
 
 DELIMITER ;
