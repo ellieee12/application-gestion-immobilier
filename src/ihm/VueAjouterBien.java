@@ -252,8 +252,7 @@ public class VueAjouterBien extends JFrame {
 		}else {
 			return "G";
 		}
-
 	}
-	}
+}
 
 

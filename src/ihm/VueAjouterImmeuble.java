@@ -59,7 +59,7 @@ public class VueAjouterImmeuble extends JFrame {
 	
 	public boolean isComplet() {
 		return !this.getAdresse().isEmpty() && !this.getTypeImmeuble().isEmpty()
-				&& !this.getCP().isEmpty() && !this.getVille().isEmpty() && !this.getId().isEmpty();
+				&& !this.getCP().equals("     ") && !this.getVille().isEmpty() && !this.getId().isEmpty();
 	}
 
 	/**

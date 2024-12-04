@@ -72,6 +72,8 @@ public class ControleurAjouterBien implements ActionListener {
 							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
 						}else{
 							 ajouterLogement();
+							 this.vueBiens.getControleurMesBiens().Update();
+							 this.vue.dispose();
 							
 						}
 					}else {

@@ -79,7 +79,7 @@ public class VueSaisieLocataire extends JFrame {
 	
 	public boolean isComplet() {
 		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty() && !this.getTel().isEmpty()
-				&& !this.getMail().isEmpty() && !this.getId().isEmpty();
+				&& !this.getMail().isEmpty() && !this.getId().isEmpty() && this.getDateDeNaissance() == null;
 	}
 
 	/**

@@ -58,9 +58,8 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public boolean isComplet() {
-		return true;/*!this.getSelectedBien().isEmpty() && this.getDateDebutLocation()!=null
-				&& !this.getNbMoisPrevus().toString().isEmpty() 
-				&& this.getDateDerniereRegularisation()!=null;*/
+		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() == null
+				&& !this.getNbMoisPrevus().toString().isEmpty() && (this.getDateDerniereRegularisation() == null);
 	}
 
 	/**
