@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
 
 public class VueRegularisation extends JFrame {
 
@@ -29,6 +31,7 @@ public class VueRegularisation extends JFrame {
 	private JLabel lblTotal;
 	private JLabel lblProvision;
 	private JLabel lblReste;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -37,7 +40,7 @@ public class VueRegularisation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VueRegularisation frame = new VueRegularisation();
+					VueRegularisation frame = new VueRegularisation("1111");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,9 +52,10 @@ public class VueRegularisation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueRegularisation() {
+	public VueRegularisation(String id_bien) {
 		
-		ControleurRegularisation controleur = new ControleurRegularisation(this);
+		
+		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();
@@ -170,6 +174,30 @@ public class VueRegularisation extends JFrame {
 		this.lblReste = new JLabel("€");
 		lblReste.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelTotaux.add(lblReste);
+		
+		JPanel panelNouvelleProvision = new JPanel();
+		contentPane.add(panelNouvelleProvision, BorderLayout.SOUTH);
+		panelNouvelleProvision.setLayout(new GridLayout(2, 2, 0, 0));
+		
+		JLabel lblNewLabel_9 = new JLabel("Nouvelle provision sur charges (laisser vide si inchangé) :");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelNouvelleProvision.add(lblNewLabel_9);
+		
+		textField = new JTextField();
+		panelNouvelleProvision.add(textField);
+		textField.setColumns(10);
+		
+		JPanel panel_2 = new JPanel();
+		panelNouvelleProvision.add(panel_2);
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		panelNouvelleProvision.add(panel_3);
+		
+		JButton btnNewButton_1 = new JButton("Valider");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_3.add(btnNewButton_1);
 	}
 
 	public String getChampEau() {
