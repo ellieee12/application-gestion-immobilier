@@ -14,6 +14,7 @@ DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
 DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
 DROP PROCEDURE IF EXISTS insertCompte$$
 DROP PROCEDURE IF EXISTS getMdpByUsername$$
+DROP PROCEDURE IF EXISTS getAllCompteurs$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -142,5 +143,9 @@ BEGIN
     SELECT mdp from signup where username = v_username;
 END$$
 
+CREATE PROCEDURE getAllCompteurs()
+BEGIN
+    SELECT * FROM compteur;
+END$$
 
 DELIMITER ;
