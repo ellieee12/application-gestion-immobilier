@@ -40,7 +40,7 @@ public class VueRegularisation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VueRegularisation frame = new VueRegularisation("1111");
+					VueRegularisation frame = new VueRegularisation("1111",5F);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,10 +52,10 @@ public class VueRegularisation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueRegularisation(String id_bien) {
+	public VueRegularisation(String id_bien, float provision) {
 		
 		
-		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien);
+		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien, provision);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();
@@ -177,13 +177,15 @@ public class VueRegularisation extends JFrame {
 		
 		JPanel panelNouvelleProvision = new JPanel();
 		contentPane.add(panelNouvelleProvision, BorderLayout.SOUTH);
-		panelNouvelleProvision.setLayout(new GridLayout(2, 2, 0, 0));
+		panelNouvelleProvision.setLayout(new GridLayout(2, 2, 10, 10));
 		
-		JLabel lblNewLabel_9 = new JLabel("Nouvelle provision sur charges (laisser vide si inchangé) :");
+		JLabel lblNewLabel_9 = new JLabel("Nouvelle provision sur charges :");
+		lblNewLabel_9.setToolTipText("laisser vide si inchangé");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelNouvelleProvision.add(lblNewLabel_9);
 		
 		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelNouvelleProvision.add(textField);
 		textField.setColumns(10);
 		
@@ -195,7 +197,7 @@ public class VueRegularisation extends JFrame {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNouvelleProvision.add(panel_3);
 		
-		JButton btnNewButton_1 = new JButton("Valider");
+		JButton btnNewButton_1 = new JButton("Confirmer");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_3.add(btnNewButton_1);
 	}

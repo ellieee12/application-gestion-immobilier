@@ -2,12 +2,13 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Random;
+import java.util.List;
 
 import javax.swing.JButton;
 
-import com.mysql.jdbc.ResultSet;
+
 
 import classes.Compteur;
 import classes.Compteur.typeCompteur;
@@ -32,10 +33,13 @@ public class ControleurRegularisation implements ActionListener {
 	private Integer newIndexEau;
 	private Integer newIndexElec;
 	private float montantOrdures;
+	private float provisionSurCharges;
 	
-	public ControleurRegularisation(VueRegularisation vue, String id_bien) {
+	public ControleurRegularisation(VueRegularisation vue, String id_bien, float provisionSurCharges) {
 		this.vue = vue;
 		this.id_bien = id_bien;
+		this.provisionSurCharges = provisionSurCharges;
+		this.dao = new CompteurDAO();
 	}
 
 	@Override
@@ -45,59 +49,73 @@ public class ControleurRegularisation implements ActionListener {
 			if (b.getText() == "Valider") {
 				
 				// eau
+				//récupérer l'id du compteur
 				try {
-					ResultSet rs = (ResultSet) this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-					this.idcompteur = rs.getString(1);
+					this.idcompteur = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+
+				//créer le compteur
 				this.compteurEau = new Compteur(this.idcompteur, typeCompteur.EAU, this.PRIX_EAU);
+				//récupérer l'année et l'index du relevé
 				try {
-					ResultSet rs = (ResultSet) this.dao.getReleveFromIdCompteur(this.idcompteur);
-					this.annee = rs.getInt(1);
-					this.index = rs.getInt(2);
+					List<Integer> l = this.dao.getReleveFromIdCompteur(this.idcompteur);
+					this.annee = l.get(0);
+					this.index = l.get(1);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				//créer le relevé
 				this.releveEau = new Relevé(this.annee, this.index);
 				
 				//electricite
+				//récupérer l'id du compteur
 				try {
-					ResultSet rs = (ResultSet) this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
-					this.idcompteur = rs.getString(1);
+					this.idcompteur = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				//créer le compteur
 				this.compteurElec = new Compteur(this.idcompteur, typeCompteur.ELECTRICITE, this.PRIX_ELEC);
-				
+				//récupérer l'année et l'index du relevé
 				try {
-					ResultSet rs = (ResultSet) this.dao.getReleveFromIdCompteur(this.idcompteur);
-					this.annee = rs.getInt(1);
-					this.index = rs.getInt(2);
+					List<Integer> l = this.dao.getReleveFromIdCompteur(this.idcompteur);
+					this.annee = l.get(0);
+					this.index = l.get(1);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				//créer le relevé
 				this.releveElec = new Relevé(this.annee, this.index);
-				
+				//récuperer les valeurs des champs
 				this.newIndexEau = Integer.valueOf(this.vue.getChampEau());
 				this.newIndexElec = Integer.valueOf(this.vue.getChampElec());
-				this.montantOrdures = Float.valueOf(this.vue.getChampEau());
+				this.montantOrdures = Float.valueOf(this.vue.getChampOrdure());
 				int ConsoEau=0;
 				int ConsoElec=0;
+				//calcul des consommations
 				ConsoEau = newIndexEau-releveEau.getIndexcomp();
 				ConsoElec = newIndexElec-releveElec.getIndexcomp();
+				//calcul des montants
 				float montantEau = this.montantEau(ConsoEau);
 				float montantElec = this.montantElec(ConsoElec);
-				//float montantEntretien = this.bien.getEntretien;
-				float montantTotal = montantEau+montantElec+montantOrdures/*montantEntretien*/;
-				//float montantProvision = this.location.getProvision;
-				float montantReste = montantTotal/*-montantProvision*/;
+				float montantEntretien = 0F;
+				try {
+					ResultSet rs = this.dao.getEntretienFromIdBien(id_bien);
+					montantEntretien = rs.getFloat(1);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				float montantTotal = montantEau+montantElec+montantOrdures+montantEntretien;
+				float montantProvision = this.provisionSurCharges*12;
+				float montantReste = montantTotal-montantProvision;
 				this.vue.afficherMontantEau(montantEau);
 				this.vue.afficherMontantElec(montantElec);
-				this.vue.afficherEntretien(0/*montantEntretien*/);
+				this.vue.afficherEntretien(montantEntretien);
 				this.vue.afficherMontantOrdure(montantOrdures);
 				this.vue.afficherTotal(montantTotal);
-				this.vue.afficherProvision(0/*montantProvision*/);
+				this.vue.afficherProvision(montantProvision);
 				this.vue.afficherReste(montantReste);
 			}
 		}
@@ -108,25 +126,26 @@ public class ControleurRegularisation implements ActionListener {
 				&& !this.vue.getChampOrdure().isEmpty();
 	}
 	
+	//calcul le montant d'eau à partir de la consommation
 	public float montantEau(int conso) {
 		String typeImmeuble="";
 		try {
-			ResultSet rs = (ResultSet) this.dao.getTypeImmeubleFromIdBien(id_bien);
+			ResultSet rs = this.dao.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
 			typeImmeuble = rs.getString(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (typeImmeuble.equals("")) {
 			System.out.println("Erreur");
 			return 0F;
 		} else if (typeImmeuble.equals("Maison")) {
-			return (float) (conso*this.compteurEau.getPrix_abonnement() + 176.16);
+			return (float) (conso*this.compteurEau.getPrix_abonnement() + 176.16);	//le prix est différent si c'est une maison ou un batiment
 		} else {
 			return (float) (conso*this.compteurEau.getPrix_abonnement() + 11.02);
 		}
 	}
 	
+	//calcul le montant d'électricité à partir de la consommation
 	public float montantElec (int conso) {
 		return (float) (conso*this.compteurElec.getPrix_abonnement());
 	}
