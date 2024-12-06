@@ -123,13 +123,17 @@ public class VueMesLocations extends JFrame {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    l.getDate_derniere_reg(), null
+				    l.getDate_derniere_reg(), "1er janvier 2024", 1 
 				});
 		}
 	}
 	
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
+	}
+	
+	public ControleurMesLocations getControleurMesLocations() {
+		return this.controleurMesLocations;
 	}
 	
 
