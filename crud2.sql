@@ -17,6 +17,7 @@ DROP PROCEDURE IF EXISTS getMdpByUsername$$
 DROP PROCEDURE IF EXISTS getCompteurByBienAndType$$
 DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
 DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
+DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -161,6 +162,11 @@ CREATE PROCEDURE getReleveFromIdCompteur (v_id_compteur VARCHAR(50))
 
 BEGIN 
     SELECT annee,index_comp from releve where id_compteur = v_id_compteur;
+END$$
+
+CREATE PROCEDURE getEntretienFromIdBien(v_id_bien varchar(20))
+BEGIN
+    select entretien_parties_communes from bien where id_bien = v_id_bien;
 END$$
 
 DELIMITER ;
