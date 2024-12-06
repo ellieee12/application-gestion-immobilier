@@ -26,9 +26,9 @@ public class Facture {
     private float montant_reel_paye;
 
     @objid ("4d80e5bb-456e-45e4-a2a8-44de6b0443c2")
-    private boolean imputable_locataire;
+    private float imputable_locataire;
     
-    public Facture(Date date_emission, Date date_paiement, String numero, String designation, float montant, String numero_devis, float montant_reel_paye, boolean imputable_locataire) {
+    public Facture(String numero, Date date_paiement, Date date_emission, String numero_devis, String designation, float montant_reel_paye, float montant, float imputable_locataire) {
     	this.date_emission = date_emission;
     	this.date_paiement = date_paiement;
     	this.numero = numero;
@@ -67,7 +67,7 @@ public class Facture {
 		return montant_reel_paye;
 	}
 
-	public boolean isImputable_locataire() {
+	public float getImputable_locataire() {
 		return imputable_locataire;
 	}
 

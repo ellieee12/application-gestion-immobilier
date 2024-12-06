@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controleur.ControleurAjouterFacture;
+import controleur.ControleurAjouterLocation;
+import modeleDAO.DAOException;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -13,8 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 
 public class VueAjouterFacture extends JFrame {
 
@@ -27,6 +35,9 @@ public class VueAjouterFacture extends JFrame {
 	private JTextField textFieldMontant;
 	private JTextField textFieldNumeroDevis;
 	private JTextField textFieldMontantReelPaye;
+	private JComboBox<String> comboBoxBiens;
+	private JButton annuler;
+	private JButton valider;
 	private JTextField textFieldImputableLocataire;
 
 	/**
@@ -36,7 +47,7 @@ public class VueAjouterFacture extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VueAjouterFacture frame = new VueAjouterFacture();
+					VueAjouterFacture frame = new VueAjouterFacture(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,8 +58,11 @@ public class VueAjouterFacture extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
+	 * @throws DAOException 
 	 */
-	public VueAjouterFacture() {
+	public VueAjouterFacture(VueListFactures VueListFactures) throws DAOException, SQLException {
+		ControleurAjouterFacture controleur = new ControleurAjouterFacture(this, VueListFactures);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -64,6 +78,13 @@ public class VueAjouterFacture extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.WEST);
 		panel.setLayout(new GridLayout(0, 1, 0, 3));
+		
+		JPanel panel_12 = new JPanel();
+		panel.add(panel_12);
+		panel_12.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_6 = new JLabel("Id bien");
+		panel_12.add(lblNewLabel_6, BorderLayout.NORTH);
 		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);
@@ -124,6 +145,14 @@ public class VueAjouterFacture extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 3));
+		
+		JPanel panel_17 = new JPanel();
+		panel_1.add(panel_17);
+		panel_17.setLayout(new BorderLayout(0, 0));
+		
+		comboBoxBiens = new JComboBox();
+		this.initialiserComboBoxBiens(controleur);
+		panel_17.add(comboBoxBiens, BorderLayout.NORTH);
 		
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7);
@@ -192,18 +221,27 @@ public class VueAjouterFacture extends JFrame {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("Annuler");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_2.add(btnNewButton);
+		annuler = new JButton("Annuler");
+		panel_2.add(annuler);
+		this.annuler.addActionListener(controleur);
 		
-		JButton btnNewButton_1 = new JButton("Valider");
-		panel_2.add(btnNewButton_1);
+		valider = new JButton("Valider");
+		panel_2.add(valider);
+		this.valider.addActionListener(controleur);
 	}
 	
-	public Date getDateEmission () {
+	private void initialiserComboBoxBiens(ControleurAjouterFacture controleur) {
+		comboBoxBiens = new JComboBox<String>();
+		for (String s : controleur.getBiens()) {
+			comboBoxBiens.addItem(s);
+		}
+	}
+	
+	public String getSelectedBien() {
+		return comboBoxBiens.getSelectedItem().toString();
+	}
+	
+	public Date getChampsDateEmission() {
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
@@ -214,7 +252,7 @@ public class VueAjouterFacture extends JFrame {
 	    }
 	}
 	
-	public Date getChampsDateAcquisition () {
+	public Date getChampsDateAcquisition() {
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
@@ -225,46 +263,46 @@ public class VueAjouterFacture extends JFrame {
 	    }
 	}
 	
-	public String getChampsNumero () {
+	public String getChampsNumero() {
 		if(textFieldNumero.getText().equals("")) {
 			return null;
 		}
 		return String.valueOf(textFieldNumero.getText());
 	}
 	
-	public String getChampsDesignation () {
+	public String getChampsDesignation() {
 		if(textFieldDesignation.getText().equals("")) {
 			return null;
 		}
 		return String.valueOf(textFieldDesignation.getText());
 	}
 	
-	public Float getChampsMontant () {
+	public Float getChampsMontant() {
 		if(textFieldMontant.getText().equals("")) {
 			return null;
 		}
 		return Float.valueOf(textFieldMontant.getText());
 	}
 	
-	public String getChampsNumeroDevis () {
+	public String getChampsNumeroDevis() {
 		if(textFieldNumeroDevis.getText().equals("")) {
 			return null;
 		}
 		return String.valueOf(textFieldNumeroDevis.getText());
 	}
 	
-	public Float getChampsMontantReelPaye () {
+	public Float getChampsMontantReelPaye() {
 		if(textFieldMontantReelPaye.getText().equals("")) {
 			return null;
 		}
 		return Float.valueOf(textFieldMontantReelPaye.getText());
 	}
 	
-	public String getChampsImputableLocataire () {
+	public Float getChampsImputableLocataire() {
 		if(textFieldImputableLocataire.getText().equals("")) {
 			return null;
 		}
-		return String.valueOf(textFieldImputableLocataire.getText());
+		return Float.valueOf(textFieldImputableLocataire.getText());
 	}
 
 }

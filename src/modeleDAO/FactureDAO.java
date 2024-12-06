@@ -36,8 +36,8 @@ public class FactureDAO {
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			return stmt.executeQuery(req);
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération de tous les bien.",e);
-			throw new DAOException("Erreurs lors de la récupération de tous les bien.",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de toutes les factures.",e);
+			throw new DAOException("Erreurs lors de la récupération de toutes les factures.",e);
 		}
 	}
 	
@@ -50,35 +50,36 @@ public class FactureDAO {
 			System.out.println(i+" lignes supprimées");
 			stmt.close();
 		}catch(SQLException e){
-			logger.log(Level.SEVERE,"Erreurs lors de la suppression d'un bien",e);
-			throw new DAOException("Erreurs lors de la suppression d'un bien",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la suppression d'une facture",e);
+			throw new DAOException("Erreurs lors de la suppression d'une facture",e);
 		}
 	}
 	
-	public void ajouterFacture(Facture f, String numero_factures) throws DAOException {
+	public void ajouterFacture(Facture f, String id_bien) throws DAOException {
 		try {
 			CallableStatement stmt ;
-			String req = "{CALL insertFacture(?,?,?)}";
+			String req = "{CALL insertFacture(?,?,?,?,?,?,?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setDate(1, f.getDate_emission());
-			stmt.setDate(1, f.getDate_paiement());
 			stmt.setString(1, f.getNumero());
-			stmt.setString(1, f.getDesignation());
-			stmt.setFloat(1, f.getMontant());
-			stmt.setString(1, f.getNumero_devis());
-			stmt.setFloat(1, f.getMontant_reel_paye());
-			stmt.setBoolean(1, f.isImputable_locataire());
+			stmt.setDate(2, f.getDate_emission());
+			stmt.setDate(3, f.getDate_paiement());
+			stmt.setString(4, f.getNumero_devis());
+			stmt.setString(5, f.getDesignation());
+			stmt.setFloat(6, f.getMontant_reel_paye());
+			stmt.setFloat(7, f.getMontant());
+			stmt.setFloat(8, f.getImputable_locataire());
+			stmt.setString(9, id_bien);
 			int i = stmt.executeUpdate();
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
-			throw new DAOException("Erreurs lors de la création d'un bien",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la création d'une facture",e);
+			throw new DAOException("Erreurs lors de la création d'une facture",e);
 		}
 	}
 	
 	public boolean FactureExiste(String numero_factures) throws DAOException {
-		return this.getBienById(numero_factures)!=null;
+		return false;
 	}
 	
 }

@@ -2,15 +2,19 @@ package controleur;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import classes.Facture;
+import classes.Garage;
 import ihm.VueAjouterBien;
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
@@ -20,67 +24,65 @@ import modeleDAO.DAOException;
 import modeleDAO.FactureDAO;
 import modeleDAO.ImmeubleDAO;
 
-public class ControleurAjouterFacture {
+public class ControleurAjouterFacture implements ActionListener {
 	
-	private VueListFactures VueListFactures;
+	private VueListFactures vueListFactures;
 	private VueAjouterFacture vue;
-	private FactureDAO dao;
+	private FactureDAO factureDao;
+	private BienDAO bienDAO;
+	private List<String> biens;
 	
-	public ControleurAjouterFacture (VueAjouterFacture vue, VueListFactures VueListFactures) {
+	public ControleurAjouterFacture (VueAjouterFacture vue, VueListFactures vueListFactures) throws DAOException, SQLException {
 		this.vue = vue;
-		this.VueListFactures = VueListFactures;
-		this.dao = new FactureDAO();
+		this.biens = new LinkedList<>();
+		this.vueListFactures = vueListFactures;
+		this.factureDao = new FactureDAO();
+		this.bienDAO = new BienDAO();
+		ResultSet biensRS = this.bienDAO.getAllBiens();
+		while (biensRS.next()) {
+			this.biens.add(biensRS.getString(1));
+		}
 	}
 	
 	public void actionPerformed (ActionEvent e) {
-		
-		if (e.getSource() instanceof JButton) {
-			String s = ((JButton) e.getSource()).getText();
+		JButton b = (JButton) e.getSource();
 
-			if (s == "Annuler") {
-				this.vue.dispose();
-			} else if (s == "Valider") {
-				//vérifier si l'identifiant existe dans la base de données
-				try {
-					if (verificationBienExiste()) {
-						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
-					}else if(!verificationChampIDBien()) {
-						JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
-					}else if(!verificationChampsDateAcquisition()) {
-						try {
-							throw new ParseException("Veuillez remplir tout les champs",0);
-						}catch(ParseException pEx) {
-							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
-						}
-					}else if (isLogement()) {
-						if (champsLogementNonRemplis()){
-							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
-						}else{
-							 ajouterLogement();
-							 this.vueBiens.getControleurMesBiens().Update();
-							 this.vue.dispose();
-							
-						}
-					}else {
-						ajouterGarage();
-						this.vueBiens.getControleurMesBiens().Update();
-						this.vue.dispose();
-					}
-				} catch (HeadlessException e1) {
-					e1.printStackTrace();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				}				
-			}
-				
-		} else {
-			JComboBox ComboBoxselected = (JComboBox) e.getSource();
-			String optionSelected = (String) ComboBoxselected.getSelectedItem();
-			if (optionSelected == "Garage") {
-				this.vue.desactiverChamps();
-			}else {
-				this.vue.activerChamps();
-			}
+		if (b.getText() == "Annuler") {
+			this.vue.dispose();
+		} else if (b.getText() == "Valider") {
+			//vérifier si l'identifiant existe dans la base de données
+			try {
+				if (verificationFactureExiste()) {
+					JOptionPane.showMessageDialog(this.vue, "Cette facture existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+				}else if(!verificationChamps()) {
+					JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+				}else {
+					this.ajouterFacture();
+					this.vueListFactures.getControleurMesBiens().Update();
+					this.vue.dispose();
+				}
+			} catch (HeadlessException e1) {
+				e1.printStackTrace();
+			} catch (DAOException e1) {
+				e1.printStackTrace();
+			}				
 		}
+	}
+	
+	private boolean verificationFactureExiste() throws DAOException {
+		return this.factureDao.FactureExiste(this.vue.getChampsNumero());
+	}
+
+	private boolean verificationChamps() {
+		return this.vue.getChampsDateEmission() != null && this.vue.getChampsDateAcquisition() != null && this.vue.getChampsNumero() != null && this.vue.getChampsDesignation() != null && this.vue.getChampsMontant() != null && this.vue.getChampsNumeroDevis() != null && this.vue.getChampsMontantReelPaye() != null;
+	}
+	
+	private void ajouterFacture() throws DAOException {
+		Facture f = new Facture (this.vue.getChampsNumero(), this.vue.getChampsDateEmission(), this.vue.getChampsDateAcquisition(), this.vue.getChampsNumeroDevis(), this.vue.getChampsDesignation(), this.vue.getChampsMontantReelPaye(), this.vue.getChampsMontant(), this.vue.getChampsImputableLocataire());
+		this.factureDao.ajouterFacture(f, this.vue.getSelectedBien());
+	}
+	
+	public List<String> getBiens(){
+		return this.biens;
 	}
 }

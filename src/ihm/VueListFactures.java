@@ -18,6 +18,7 @@ import classes.Bien;
 import classes.Facture;
 import classes.Logement;
 import controleur.ControleurListFactures;
+import controleur.ControleurMesBiens;
 
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -73,17 +74,17 @@ public class VueListFactures extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Id", "Montant", "Commentaire"
+					"Numero", "Date d'emission", "Date de paiement", "Numero de devis", "Designation", "Montant réel payé", "Montant", "Imputable locataire"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-					String.class, Float.class, String.class
+					String.class, Date.class, Date.class, String.class, String.class, Float.class, Float.class, Float.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
 				boolean[] columnEditables = new boolean[] {
-					false, false, false
+					false, false, false, false, false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -119,8 +120,12 @@ public class VueListFactures extends JFrame {
 	public void buildTable(ControleurListFactures controleur) {
 		this.t.setRowCount(0);
 		for (Facture f : controleur.getFactures()) {
-			this.t.addRow(new Object[] {f.getDate_emission(), f.getDate_paiement(), f.getNumero(), f.getDesignation(), f.getMontant(), f.getNumero_devis(), f.getMontant_reel_paye(), f.isImputable_locataire()} );
+			this.t.addRow(new Object[] {f.getNumero(), f.getDate_emission(), f.getDate_paiement(), f.getNumero_devis(), f.getDesignation(), f.getMontant_reel_paye(), f.getMontant(), f.getImputable_locataire()} );
 		}
+	}
+	
+	public ControleurListFactures getControleurMesBiens() {
+		return this.controleur;
 	}
 	
 	public int getLigneChoisi() {
