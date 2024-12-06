@@ -31,6 +31,7 @@ create table bien(
     nb_pieces int,
     numero_etage int,
     surface_habitable decimal(5,2),
+    entretien_parties_communes decimal(15,2),
     date_acquisition date,
     type_bien char(1),
     id_immeuble varchar(20) not null,
