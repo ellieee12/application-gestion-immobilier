@@ -27,9 +27,10 @@ public class Location {
 
     @objid ("0722a716-ccae-4173-bd3d-0cca8f62598d")
     private Date date_derniere_reg;
+    
  
 	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, Date date_derniere_reg) {
+			float caution_TTC, Date date_derniere_reg, String idBien) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -37,6 +38,7 @@ public class Location {
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
 		this.date_derniere_reg = date_derniere_reg;
+		this.idBien = idBien;
 	}
 	
 	public String getIdBien () {

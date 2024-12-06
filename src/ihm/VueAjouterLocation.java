@@ -40,22 +40,22 @@ public class VueAjouterLocation extends JFrame {
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
 	private JFormattedTextField formattedDateDerniereRegularisation;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueAjouterLocation frame = new VueAjouterLocation();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VueAjouterLocation frame = new VueAjouterLocation();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 	
 	public boolean isComplet() {
 		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null
@@ -67,17 +67,8 @@ public class VueAjouterLocation extends JFrame {
 	 * @throws SQLException 
 	 * @throws DAOException 
 	 */
-	public VueAjouterLocation() throws SQLException, DAOException {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 * @throws SQLException 
-	 * @throws DAOException 
-	 */
-	private void initialize() throws DAOException, SQLException {
-		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
+	public VueAjouterLocation(VueMesLocations vueMesLocations) throws SQLException, DAOException {
+		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this, vueMesLocations);
 		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
