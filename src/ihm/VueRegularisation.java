@@ -1,21 +1,20 @@
 package ihm;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.sql.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurRegularisation;
-
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
 
 public class VueRegularisation extends JFrame {
 
@@ -31,7 +30,7 @@ public class VueRegularisation extends JFrame {
 	private JLabel lblTotal;
 	private JLabel lblProvision;
 	private JLabel lblReste;
-	private JTextField textField;
+	private JTextField champNouvelleProvision;
 
 	/**
 	 * Launch the application.
@@ -40,7 +39,8 @@ public class VueRegularisation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VueRegularisation frame = new VueRegularisation("1111",5F);
+					Date date = new Date(ABORT);
+					VueRegularisation frame = new VueRegularisation("1111",date);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,10 +52,10 @@ public class VueRegularisation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueRegularisation(String id_bien, float provision) {
+	public VueRegularisation(String id_bien, Date date_debut) {
 		
 		
-		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien, provision);
+		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();
@@ -184,10 +184,10 @@ public class VueRegularisation extends JFrame {
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelNouvelleProvision.add(lblNewLabel_9);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelNouvelleProvision.add(textField);
-		textField.setColumns(10);
+		champNouvelleProvision = new JTextField();
+		champNouvelleProvision.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelNouvelleProvision.add(champNouvelleProvision);
+		champNouvelleProvision.setColumns(10);
 		
 		JPanel panel_2 = new JPanel();
 		panelNouvelleProvision.add(panel_2);
@@ -204,6 +204,10 @@ public class VueRegularisation extends JFrame {
 
 	public String getChampEau() {
 		return champEau.getText();
+	}
+	
+	public Float getChampNouvelleProvision() {
+		return Float.valueOf(champNouvelleProvision.getText());
 	}
 	
 	public String getChampElec() {

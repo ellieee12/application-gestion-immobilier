@@ -1,6 +1,7 @@
 package modeleDAO;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class CompteurDAO{
 	}
 
 	/**
-	 * Récupère le compteur associés à un bien donné selon son type
+	 * Récupère le compteur associé à un bien donné selon son type
 	 * @param identifiant d'un immeuble donné
 	 * @return Un ResultSet de tous les objets Bien associés à un immeuble donné
 	 * @throws SQLException
@@ -76,5 +77,26 @@ public class CompteurDAO{
 			return rs;
 		}
 		return null;
+	}
+	
+	public Float getProvisionFromLocation(String id_bien, Date date_debut) throws SQLException {
+		String req = "{CALL getProvisionFromLocation(?,?)}";
+		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+		stmt.setString(1, id_bien);
+		stmt.setDate(2, date_debut);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return rs.getFloat(1);
+		}
+		return null;
+	}
+	
+	public void setNouvelleProvision(String id_bien, Date date_debut, Float provision) throws SQLException {
+		String req = "{CALL setNouvelleProvision(?,?,?)}";
+		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+		stmt.setString(1, id_bien);
+		stmt.setDate(2, date_debut);
+		stmt.setFloat(3, provision);
+		stmt.executeQuery();
 	}
 }

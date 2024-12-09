@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ControleurRegularisation implements ActionListener {
 	private Compteur compteurElec;
 	private String idcompteur;
 	private String id_bien;
+	private Date date_debut;
 	private int annee;
 	private int index;
 	private Relevé releveEau;
@@ -35,10 +37,15 @@ public class ControleurRegularisation implements ActionListener {
 	private float montantOrdures;
 	private float provisionSurCharges;
 	
-	public ControleurRegularisation(VueRegularisation vue, String id_bien, float provisionSurCharges) {
+	public ControleurRegularisation(VueRegularisation vue, String id_bien, Date date_debut) {
 		this.vue = vue;
 		this.id_bien = id_bien;
-		this.provisionSurCharges = provisionSurCharges;
+		this.date_debut = date_debut;
+		try {
+			this.provisionSurCharges = dao.getProvisionFromLocation(id_bien, date_debut);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		this.dao = new CompteurDAO();
 	}
 
@@ -118,6 +125,13 @@ public class ControleurRegularisation implements ActionListener {
 				this.vue.afficherProvision(montantProvision);
 				this.vue.afficherReste(montantReste);
 			}
+		} else if (b.getText()=="Confirmer") {
+			try {
+				this.dao.setNouvelleProvision(id_bien, date_debut, this.vue.getChampNouvelleProvision());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			this.vue.dispose();
 		}
 	}
 	
