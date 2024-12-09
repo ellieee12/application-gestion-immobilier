@@ -45,6 +45,11 @@ public class ControleurAjouterLocation implements ActionListener{
 		return true;
 	}
 	
+	private void valider() {
+		this.vueMesLocations.getControleurMesLocations();
+		this.vue.dispose();
+	}
+	
 	private boolean verifLocationExiste() {
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
@@ -94,7 +99,7 @@ public class ControleurAjouterLocation implements ActionListener{
 							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
 					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
 							this.vue.getSelectedLocataire(), this.vueMesLocations);
-					this.vue.dispose();
+					valider();
 					frame.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
