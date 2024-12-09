@@ -200,6 +200,7 @@ public class VueRegularisation extends JFrame {
 		JButton btnNewButton_1 = new JButton("Confirmer");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_3.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(controleur);
 	}
 
 	public String getChampEau() {
