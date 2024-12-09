@@ -78,8 +78,24 @@ public class FactureDAO {
 		}
 	}
 	
+	public Facture getFactureByNumero(String numero_factures) throws DAOException {
+		try {
+			String req = "{CALL getFactureByNumero(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, numero_factures);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				return new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8), rs.getString(9));
+			}
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la facture par son numéro.",e);
+			throw new DAOException("Erreurs lors de la récupération de la facture par son numéro.",e);
+		}
+		return null;
+	}
+	
 	public boolean FactureExiste(String numero_factures) throws DAOException {
-		return false;
+		return this.getFactureByNumero(numero_factures) != null;
 	}
 	
 }
