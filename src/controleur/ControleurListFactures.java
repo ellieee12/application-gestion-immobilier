@@ -39,7 +39,7 @@ public class ControleurListFactures implements ActionListener{
 			FactureDAO factureDAO = new FactureDAO();
 			ResultSet rs = factureDAO.getAllFactures();
 			while(rs.next()) {
-                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8)));
+                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8), rs.getString(9)));
             }
 		} catch (DAOException | SQLException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class ControleurListFactures implements ActionListener{
 			FactureDAO factureDAO = new FactureDAO();
 			ResultSet rs = factureDAO.getAllFactures();
 			while(rs.next()) {
-                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8)));
+                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8), rs.getString(9)));
             }
 		} catch (SQLException e) {
 			e.printStackTrace();

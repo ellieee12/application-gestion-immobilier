@@ -55,7 +55,7 @@ public class VueListFactures extends JFrame {
 	 */
 	public VueListFactures() {
 		this.controleur = new ControleurListFactures(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,17 +74,17 @@ public class VueListFactures extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Numero", "Date d'emission", "Date de paiement", "Numero de devis", "Designation", "Montant réel payé", "Montant", "Imputable locataire"
+					"Numero", "Date d'emission", "Date de paiement", "Numero de devis", "Designation", "Montant réel payé", "Montant", "Imputable locataire", "Id bien"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-					String.class, Date.class, Date.class, String.class, String.class, Float.class, Float.class, Float.class
+					String.class, Date.class, Date.class, String.class, String.class, Float.class, Float.class, Float.class, String.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
 				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false, false, false
+					false, false, false, false, false, false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -120,7 +120,7 @@ public class VueListFactures extends JFrame {
 	public void buildTable(ControleurListFactures controleur) {
 		this.t.setRowCount(0);
 		for (Facture f : controleur.getFactures()) {
-			this.t.addRow(new Object[] {f.getNumero(), f.getDate_emission(), f.getDate_paiement(), f.getNumero_devis(), f.getDesignation(), f.getMontant_reel_paye(), f.getMontant(), f.getImputable_locataire()} );
+			this.t.addRow(new Object[] {f.getNumero(), f.getDate_emission(), f.getDate_paiement(), f.getNumero_devis(), f.getDesignation(), f.getMontant_reel_paye(), f.getMontant(), f.getImputable_locataire(), f.getId_bien()} );
 		}
 	}
 	

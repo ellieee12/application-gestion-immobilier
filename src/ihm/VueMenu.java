@@ -67,6 +67,9 @@ public class VueMenu extends JFrame {
 		JButton boutonMesImmeubles = new JButton("Mes Immeubles");
 		panelBoutonsPages.add(boutonMesImmeubles);
 		
+		JButton boutonMesFactures = new JButton("Mes Factures");
+		panelBoutonsPages.add(boutonMesFactures);
+		
 		JButton boutonMesLocation = new JButton("Mes Locations");
 		panelBoutonsPages.add(boutonMesLocation);
 		
@@ -74,6 +77,7 @@ public class VueMenu extends JFrame {
 		panelBoutonsPages.add(boutonAjouterLocataire);
 		
 		boutonMesImmeubles.addActionListener(controleur);
+		boutonMesFactures.addActionListener(controleur);
 		boutonAjouterLocataire.addActionListener(controleur);
 		boutonMesLocation.addActionListener(controleur);
 	}
