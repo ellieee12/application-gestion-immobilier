@@ -34,6 +34,7 @@ public class VueAjouterBien extends JFrame {
 	private JFormattedTextField formattedTextField;
 	private JComboBox<String> comboBox;
 	private JComboBox<String> comboBox_Immeuble;
+	private JTextField textFieldEntretien;
 
 	/**
 	 * Create the frame.
@@ -72,6 +73,13 @@ public class VueAjouterBien extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("Identifiant du Bien");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_5.add(lblNewLabel_3, BorderLayout.NORTH);
+		
+		JPanel panel_12_1 = new JPanel();
+		PanelLibellé.add(panel_12_1);
+		panel_12_1.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblEntretien = new JLabel("Entretien Partie Commune");
+		panel_12_1.add(lblEntretien, BorderLayout.NORTH);
 		
 		JPanel panel_4 = new JPanel();
 		PanelLibellé.add(panel_4);
@@ -128,6 +136,14 @@ public class VueAjouterBien extends JFrame {
 		textFieldIdBien.setColumns(10);
 		panel_2.add(textFieldIdBien, BorderLayout.NORTH);
 		
+		JPanel panel_13_1 = new JPanel();
+		PanelChamps.add(panel_13_1);
+		panel_13_1.setLayout(new BorderLayout(0, 0));
+		
+		textFieldEntretien = new JTextField();
+		textFieldEntretien.setColumns(10);
+		panel_13_1.add(textFieldEntretien, BorderLayout.NORTH);
+		
 		JPanel panel_1 = new JPanel();
 		PanelChamps.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -176,6 +192,7 @@ public class VueAjouterBien extends JFrame {
 		}
 		
 		panel_13.add(comboBox_Immeuble, BorderLayout.NORTH);
+		
 		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
@@ -254,6 +271,9 @@ public class VueAjouterBien extends JFrame {
 		}
 
 	}
+	public Float getEntretienPartieCommune() {
+		return Float.valueOf(this.textFieldEntretien.getText());
 	}
+}
 
 

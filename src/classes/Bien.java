@@ -15,8 +15,10 @@ public class Bien {
 
     @objid ("d56b34c5-f27c-46b4-8270-24c7eebb90e5")
     private String id_bien;
+    
+    private Float entretienPartieCommune;
 
-	public Bien(Integer num_etage, Date date_acquisition, String id_bien) {
+	public Bien(Integer num_etage, Date date_acquisition, String id_bien, Float entretienPartieCommune) {
 		if (num_etage == null) {
 			this.num_etage = OptionalInt.empty();
 		} else {
@@ -24,6 +26,7 @@ public class Bien {
 		}
 		this.date_acquisition = date_acquisition;
 		this.id_bien = id_bien;
+		this.entretienPartieCommune=entretienPartieCommune; 
 	}
 
 	public String getId_bien() {
@@ -46,5 +49,7 @@ public class Bien {
 		this.num_etage = num_etage;
 	}
     
-
+	public Float getEntretienPartieCommune() {
+		return this.entretienPartieCommune;
+	}
 }

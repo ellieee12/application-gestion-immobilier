@@ -39,15 +39,20 @@ BEGIN
         numero_etage, 
         surface_habitable, 
         nb_pieces, 
-        date_acquisition 
+        date_acquisition,
+        entretien_partie_commune
     FROM bien 
     WHERE id_immeuble = v_id_immeuble;
 END$$
 
-CREATE PROCEDURE insertGarage(IN v_id_bien varchar(20), in v_date_acquisition date,v_id_immeuble varchar(20))
+CREATE PROCEDURE insertGarage(
+    IN v_id_bien varchar(20), 
+    in v_date_acquisition date,
+    in v_id_immeuble varchar(20),
+    in v_entretien_partie_commune decimal(15,2))
 BEGIN
-    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble)
-    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble);
+    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_partie_commune)
+    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_partie_commune);
 END$$
 
 create procedure insertLogement(
@@ -56,13 +61,14 @@ create procedure insertLogement(
     in v_numero_etage int,
     in v_surface_habitable decimal(5,2),
     in v_date_acquisition date,
-    in v_id_immeuble varchar(20)
+    in v_id_immeuble varchar(20),
+    in v_entretien_partie_commune decimal(15,2)
     )
 BEGIN
     INSERT INTO bien (id_bien, nb_pieces, numero_etage, 
-        surface_habitable, date_acquisition, type_bien, id_immeuble) 
+        surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_partie_commune) 
     VALUES (v_id_bien, v_nb_pieces, v_numero_etage, v_surface_habitable, 
-        v_date_acquisition, 'L', v_id_immeuble);
+        v_date_acquisition, 'L', v_id_immeuble,v_entretien_partie_commune);
 END$$
 
 CREATE PROCEDURE deleteBien (v_id_bien varchar(20))

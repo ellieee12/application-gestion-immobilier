@@ -98,12 +98,12 @@ public class ControleurAjouterBien implements ActionListener {
 	}
 
 	private void ajouterGarage() throws DAOException {
-		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien());
+		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getEntretienPartieCommune());
 		this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
 	}
 
 	private void ajouterLogement() throws DAOException {
-		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable());
+		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable(),this.vue.getEntretienPartieCommune());
 		this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
 	}
 

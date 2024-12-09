@@ -85,13 +85,14 @@ public class BienDAO{
 		try {
 			CallableStatement stmt ;
 			if (b instanceof Garage) {
-				String req = "{CALL insertGarage(?,?,?)}";
+				String req = "{CALL insertGarage(?,?,?,?)}";
 				stmt = this.mySQLCon.getConnection().prepareCall(req);
 				stmt.setString(1, b.getId_bien());
 				stmt.setDate(2, b.getDate_acquisition());
 				stmt.setString(3, id_immeuble);
+				stmt.setFloat(4, b.getEntretienPartieCommune());
 			}else {
-				String req = "{CALL insertLogement(?,?,?,?,?,?)}";
+				String req = "{CALL insertLogement(?,?,?,?,?,?,?)}";
 				stmt = this.mySQLCon.getConnection().prepareCall(req);
 				Logement l = (Logement) b;
 				stmt.setString(1, l.getId_bien());
@@ -100,6 +101,7 @@ public class BienDAO{
 				stmt.setFloat(4, l.getSurface_habitable());
 				stmt.setDate(5, l.getDate_acquisition());
 				stmt.setString(6, id_immeuble);
+				stmt.setFloat(4, b.getEntretienPartieCommune());
 			}
 			int i = stmt.executeUpdate();
 			stmt.close();
@@ -124,9 +126,9 @@ public class BienDAO{
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				if (rs.getString(6).equals("G")) {
-					return new Garage(rs.getDate(5),rs.getString(1));
+					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(7));
 				}else {
-					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4));
+					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(7));
 				}
 			}
 		}catch(SQLException e) {
