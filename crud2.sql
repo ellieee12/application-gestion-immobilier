@@ -19,6 +19,7 @@ DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
 DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
 DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
 DROP PROCEDURE IF EXISTS getProvisionFromLocation$$
+DROP PROCEDURE IF EXISTS setNouvelleProvision$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -174,5 +175,11 @@ CREATE PROCEDURE getProvisionFromLocation(v_id_bien varchar(20), v_date_debut da
 BEGIN
     select provision_charges_ttc from location where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
+
+CREATE PROCEDURE setNouvelleProvision(v_id_bien varchar(20), v_date_debut date, v_provision decimal(15,2))
+BEGIN
+    update location set provision_charges_ttc = v_provision where id_bien = v_id_bien and date_debut = v_date_debut;
+END$$
+
 
 DELIMITER ;
