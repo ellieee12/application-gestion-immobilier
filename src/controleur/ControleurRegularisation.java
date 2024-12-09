@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -41,20 +42,21 @@ public class ControleurRegularisation implements ActionListener {
 		this.vue = vue;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
+		this.dao = new CompteurDAO();
 		try {
 			this.provisionSurCharges = dao.getProvisionFromLocation(id_bien, date_debut);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.dao = new CompteurDAO();
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
-		if(this.isComplet()) {
-			if (b.getText() == "Valider") {
-				
+		if (b.getText() == "Valider") {
+			if(this.isComplet()) {
+
 				// eau
 				//récupérer l'id du compteur
 				try {
@@ -75,7 +77,7 @@ public class ControleurRegularisation implements ActionListener {
 				}
 				//créer le relevé
 				this.releveEau = new Relevé(this.annee, this.index);
-				
+
 				//electricite
 				//récupérer l'id du compteur
 				try {
@@ -124,6 +126,8 @@ public class ControleurRegularisation implements ActionListener {
 				this.vue.afficherTotal(montantTotal);
 				this.vue.afficherProvision(montantProvision);
 				this.vue.afficherReste(montantReste);
+				// créer nouveau releve dans la bd à faire + fonction dao
+				Date date_releve = new Date(Calendar.getInstance().getTime().getTime());
 			}
 		} else if (b.getText()=="Confirmer") {
 			try {
@@ -134,12 +138,12 @@ public class ControleurRegularisation implements ActionListener {
 			this.vue.dispose();
 		}
 	}
-	
+
 	public boolean isComplet() {
 		return !this.vue.getChampEau().isEmpty() && !this.vue.getChampElec().isEmpty() 
 				&& !this.vue.getChampOrdure().isEmpty();
 	}
-	
+
 	//calcul le montant d'eau à partir de la consommation
 	public float montantEau(int conso) {
 		String typeImmeuble="";
