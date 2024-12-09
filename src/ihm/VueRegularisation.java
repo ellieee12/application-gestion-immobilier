@@ -39,7 +39,7 @@ public class VueRegularisation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Date date = new Date(ABORT);
+					Date date = Date.valueOf("2024-12-01");
 					VueRegularisation frame = new VueRegularisation("1111",date);
 					frame.setVisible(true);
 				} catch (Exception e) {
