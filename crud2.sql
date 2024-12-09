@@ -18,6 +18,7 @@ DROP PROCEDURE IF EXISTS getCompteurByBienAndType$$
 DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
 DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
 DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
+DROP PROCEDURE IF EXISTS getProvisionFromLocation$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -167,6 +168,11 @@ END$$
 CREATE PROCEDURE getEntretienFromIdBien(v_id_bien varchar(20))
 BEGIN
     select entretien_parties_communes from bien where id_bien = v_id_bien;
+END$$
+
+CREATE PROCEDURE getProvisionFromLocation(v_id_bien varchar(20), v_date_debut date)
+BEGIN
+    select provision_charges_ttc from location where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
 
 DELIMITER ;
