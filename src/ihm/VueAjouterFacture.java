@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import org.jdesktop.swingx.JXFormattedTextField;
+import org.jdesktop.swingx.painter.GlossPainter;
+import org.jdesktop.swingx.prompt.BuddySupport;
 
 import controleur.ControleurAjouterFacture;
 import controleur.ControleurAjouterLocation;
@@ -19,26 +24,29 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class VueAjouterFacture extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldDateEmission;
-	private JTextField textFieldDatePaiement;
+	private JFormattedTextField textFieldDateEmission;
+	private JFormattedTextField textFieldDatePaiement;
 	private JTextField textFieldNumero;
 	private JTextField textFieldDesignation;
-	private JTextField textFieldMontant;
+	private JFormattedTextField textFieldMontant;
 	private JTextField textFieldNumeroDevis;
-	private JTextField textFieldMontantReelPaye;
+	private JFormattedTextField textFieldMontantReelPaye;
+	private JFormattedTextField textFieldImputableLocataire;
 	private JComboBox<String> comboBoxBiens;
 	private JButton annuler;
 	private JButton valider;
-	private JTextField textFieldImputableLocataire;
 
 	/**
 	 * Launch the application.
@@ -64,7 +72,7 @@ public class VueAjouterFacture extends JFrame {
 	public VueAjouterFacture(VueListFactures VueListFactures) throws DAOException, SQLException {
 		ControleurAjouterFacture controleur = new ControleurAjouterFacture(this, VueListFactures);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -158,7 +166,12 @@ public class VueAjouterFacture extends JFrame {
 		panel_1.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		textFieldDateEmission = new JTextField();
+		textFieldDateEmission = new JFormattedTextField();
+		try {
+			textFieldDateEmission = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		panel_7.add(textFieldDateEmission, BorderLayout.NORTH);
 		textFieldDateEmission.setColumns(10);
 		
@@ -166,7 +179,12 @@ public class VueAjouterFacture extends JFrame {
 		panel_1.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		textFieldDatePaiement = new JTextField();
+		textFieldDatePaiement = new JFormattedTextField();
+		try {
+			textFieldDatePaiement = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		panel_8.add(textFieldDatePaiement, BorderLayout.NORTH);
 		textFieldDatePaiement.setColumns(10);
 		
@@ -190,7 +208,9 @@ public class VueAjouterFacture extends JFrame {
 		panel_1.add(panel_16);
 		panel_16.setLayout(new BorderLayout(0, 0));
 		
-		textFieldMontant = new JTextField();
+		textFieldMontant = new JFormattedTextField();
+		textFieldMontant.setValue(0.0);
+		BuddySupport.addRight(new JLabel("€"), textFieldMontant);
 		panel_16.add(textFieldMontant, BorderLayout.NORTH);
 		textFieldMontant.setColumns(10);
 		
@@ -206,7 +226,9 @@ public class VueAjouterFacture extends JFrame {
 		panel_1.add(panel_19);
 		panel_19.setLayout(new BorderLayout(0, 0));
 		
-		textFieldMontantReelPaye = new JTextField();
+		textFieldMontantReelPaye = new JFormattedTextField();
+		textFieldMontantReelPaye.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), textFieldMontantReelPaye);
 		panel_19.add(textFieldMontantReelPaye, BorderLayout.NORTH);
 		textFieldMontantReelPaye.setColumns(10);
 		
@@ -214,7 +236,9 @@ public class VueAjouterFacture extends JFrame {
 		panel_1.add(panel_20);
 		panel_20.setLayout(new BorderLayout(0, 0));
 		
-		textFieldImputableLocataire = new JTextField();
+		textFieldImputableLocataire = new JFormattedTextField();
+		textFieldImputableLocataire.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), textFieldImputableLocataire);
 		panel_20.add(textFieldImputableLocataire, BorderLayout.NORTH);
 		textFieldImputableLocataire.setColumns(10);
 		
@@ -278,7 +302,7 @@ public class VueAjouterFacture extends JFrame {
 	}
 	
 	public Float getChampsMontant() {
-		if(textFieldMontant.getText().equals("")) {
+		if(textFieldMontant.getText().equals("0")) {
 			return null;
 		}
 		return Float.valueOf(textFieldMontant.getText());
@@ -292,14 +316,14 @@ public class VueAjouterFacture extends JFrame {
 	}
 	
 	public Float getChampsMontantReelPaye() {
-		if(textFieldMontantReelPaye.getText().equals("")) {
+		if(textFieldMontantReelPaye.getText().equals("0")) {
 			return null;
 		}
 		return Float.valueOf(textFieldMontantReelPaye.getText());
 	}
 	
 	public Float getChampsImputableLocataire() {
-		if(textFieldImputableLocataire.getText().equals("")) {
+		if(textFieldImputableLocataire.getText().equals("0")) {
 			return null;
 		}
 		return Float.valueOf(textFieldImputableLocataire.getText());
