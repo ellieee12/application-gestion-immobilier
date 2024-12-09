@@ -23,6 +23,9 @@ import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurAjouterLocation;
 import modeleDAO.DAOException;
+import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
 
 public class VueAjouterLocation extends JFrame {
 
@@ -152,12 +155,12 @@ public class VueAjouterLocation extends JFrame {
 		JLabel lblNewLabel_9 = new JLabel("Caution : ");
 		panel_9.add(lblNewLabel_9, BorderLayout.NORTH);
 		
-		JPanel panel_10 = new JPanel();
-		panelLibellé.add(panel_10);
-		panel_10.setLayout(new BorderLayout(0, 0));
+		JPanel panel_9_1 = new JPanel();
+		panelLibellé.add(panel_9_1);
+		panel_9_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_10 = new JLabel("Date dernière régularisation : ");
-		panel_10.add(lblNewLabel_10, BorderLayout.NORTH);
+		JLabel lblNewLabel_9_1 = new JLabel("Date dernière régularisation :");
+		panel_9_1.add(lblNewLabel_9_1, BorderLayout.NORTH);
 		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
@@ -320,6 +323,5 @@ public class VueAjouterLocation extends JFrame {
 	        return null; 
 	    }
 	}
-	
 	
 }

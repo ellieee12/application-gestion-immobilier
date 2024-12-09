@@ -31,12 +31,8 @@ public class VueAjouterDocuments extends JFrame {
 	}
 
 	private JLabel caution;
-	private JLabel electricite;
-	private JLabel eau;
 	private JButton bEtatDesLieux;
 	private JButton bCaution;
-	private JButton bElectricite;
-	private JButton bEau;
 	private Location loc;
 	private Date dateDebut;
 	private String idBien;
@@ -84,20 +80,6 @@ public class VueAjouterDocuments extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Acte de caution");
 		panel_1.add(lblNewLabel_1, BorderLayout.CENTER);
 		
-		JPanel panel_2 = new JPanel();
-		panelLibellé.add(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_2 = new JLabel("Index eau");
-		panel_2.add(lblNewLabel_2, BorderLayout.CENTER);
-		
-		JPanel panel_3 = new JPanel();
-		panelLibellé.add(panel_3);
-		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_4 = new JLabel("Index électricité");
-		panel_3.add(lblNewLabel_4, BorderLayout.CENTER);
-		
 		JPanel panelBoutons = new JPanel();
 		contentPane.add(panelBoutons, BorderLayout.SOUTH);
 		panelBoutons.setLayout(new BorderLayout(0, 0));
@@ -141,45 +123,6 @@ public class VueAjouterDocuments extends JFrame {
 		this.bCaution = new JButton("Choisir");
 		panel_9.add(this.bCaution);
 		bCaution.addActionListener(controleur);
-		
-		JPanel panel_6 = new JPanel();
-		panelChamps.add(panel_6);
-		panel_6.setLayout(new BorderLayout(0, 0));
-		
-		this.eau = new JLabel("");
-		panel_6.add(this.eau, BorderLayout.CENTER);
-		
-		JPanel panel_10 = new JPanel();
-		panel_6.add(panel_10, BorderLayout.EAST);
-		panel_10.setLayout(new BoxLayout(panel_10, BoxLayout.X_AXIS));
-		
-		this.bEau = new JButton("Choisir");
-		panel_10.add(this.bEau);
-		bEau.addActionListener(controleur);
-		
-		JPanel panel_7 = new JPanel();
-		panelChamps.add(panel_7);
-		panel_7.setLayout(new BorderLayout(0, 0));
-		
-		this.electricite = new JLabel("");
-		panel_7.add(this.electricite, BorderLayout.CENTER);
-		
-		JPanel panel_11 = new JPanel();
-		panel_7.add(panel_11, BorderLayout.EAST);
-		panel_11.setLayout(new BoxLayout(panel_11, BoxLayout.X_AXIS));
-		
-		this.bElectricite = new JButton("Choisir");
-		panel_11.add(this.bElectricite);
-		bElectricite.addActionListener(controleur);
-	}
-	
-	public JLabel getElectricite() {
-		return electricite;
-	}
-
-
-	public JLabel getEau() {
-		return eau;
 	}
 	
 	public JLabel getCaution() {
@@ -196,14 +139,6 @@ public class VueAjouterDocuments extends JFrame {
 
 	public JButton getbCaution() {
 		return bCaution;
-	}
-
-	public JButton getbElectricite() {
-		return bElectricite;
-	}
-
-	public JButton getbEau() {
-		return bEau;
 	}
 
 	public Location getLoc() {

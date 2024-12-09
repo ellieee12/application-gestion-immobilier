@@ -41,12 +41,13 @@ public class ControleurRegularisation implements ActionListener {
 		this.vue = vue;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
+		this.dao = new CompteurDAO();
 		try {
 			this.provisionSurCharges = dao.getProvisionFromLocation(id_bien, date_debut);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.dao = new CompteurDAO();
+		
 	}
 
 	@Override

@@ -61,12 +61,6 @@ public class ControleurEnregistrerDocument implements ActionListener{
 			this.controleurAjouterDocuments.setDocEtat(doc);
 
 			break;
-		case "EAU":
-			this.controleurAjouterDocuments.setDocEau(doc);
-			break;
-		case "ELEC" : 
-			this.controleurAjouterDocuments.setDocElec(doc);
-			break;
 		case "CAUTION" : 
 			this.controleurAjouterDocuments.setDocCaution(doc);
 			break;

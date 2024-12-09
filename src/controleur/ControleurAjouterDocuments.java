@@ -14,7 +14,7 @@ import modeleDAO.DocumentLocationDAO;
 public class ControleurAjouterDocuments implements ActionListener {
 	
 	private enum DocumentEnCours {
-		CAUTION("CAUTION"),EAU("EAU"),ELEC("ELEC"),ETAT_LIEU("ETAT_LIEU");
+		CAUTION("CAUTION"),ETAT_LIEU("ETAT_LIEU");
 		
 		private final String description;
 		
@@ -50,12 +50,6 @@ public class ControleurAjouterDocuments implements ActionListener {
 				 initialiserFenetreEnregistrerUnDocument();
 			}else if (b.equals(vue.getbCaution())) {
 				this.documentEnCours=DocumentEnCours.CAUTION;
-				initialiserFenetreEnregistrerUnDocument();
-			}else if(b.equals(vue.getbEau())) {
-				this.documentEnCours=DocumentEnCours.EAU;
-				initialiserFenetreEnregistrerUnDocument();
-			}else if (b.equals(vue.getbElectricite())) {
-				this.documentEnCours=DocumentEnCours.ELEC;
 				initialiserFenetreEnregistrerUnDocument();
 			}
 		}catch (Exception e1) {
@@ -93,16 +87,6 @@ public class ControleurAjouterDocuments implements ActionListener {
 	public void setDocCaution(DocumentLocation docCaution) {
 		this.docCaution = docCaution;
 		this.vue.afficherNomFichier(this.docCaution.getFileName(), this.vue.getCaution());
-	}
-
-	public void setDocEau(DocumentLocation docEau) {
-		this.docEau = docEau;
-		this.vue.afficherNomFichier(this.docEau.getFileName(), this.vue.getEau());
-	}
-
-	public void setDocElec(DocumentLocation docElec) {
-		this.docElec = docElec;
-		this.vue.afficherNomFichier(this.docElec.getFileName(), this.vue.getElectricite());
 	}
 	
 	public String getDocumentEnCours() {
