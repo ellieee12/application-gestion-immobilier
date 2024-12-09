@@ -55,7 +55,7 @@ public class FactureDAO {
 		}
 	}
 	
-	public void ajouterFacture(Facture f, String id_bien) throws DAOException {
+	public void ajouterFacture(Facture f) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			String req = "{CALL insertFacture(?,?,?,?,?,?,?,?,?)}";
@@ -68,7 +68,7 @@ public class FactureDAO {
 			stmt.setFloat(6, f.getMontant_reel_paye());
 			stmt.setFloat(7, f.getMontant());
 			stmt.setFloat(8, f.getImputable_locataire());
-			stmt.setString(9, id_bien);
+			stmt.setString(9, f.getId_bien());
 			int i = stmt.executeUpdate();
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");

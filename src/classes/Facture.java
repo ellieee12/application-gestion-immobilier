@@ -28,7 +28,9 @@ public class Facture {
     @objid ("4d80e5bb-456e-45e4-a2a8-44de6b0443c2")
     private float imputable_locataire;
     
-    public Facture(String numero, Date date_paiement, Date date_emission, String numero_devis, String designation, float montant_reel_paye, float montant, float imputable_locataire) {
+    private String id_bien;
+    
+    public Facture(String numero, Date date_paiement, Date date_emission, String numero_devis, String designation, float montant_reel_paye, float montant, float imputable_locataire, String id_bien) {
     	this.date_emission = date_emission;
     	this.date_paiement = date_paiement;
     	this.numero = numero;
@@ -37,6 +39,7 @@ public class Facture {
     	this.numero_devis = numero_devis;
     	this.montant_reel_paye = montant_reel_paye;
     	this.imputable_locataire = imputable_locataire;
+    	this.id_bien = id_bien;
     }
 
     public Date getDate_emission() {
@@ -69,6 +72,10 @@ public class Facture {
 
 	public float getImputable_locataire() {
 		return imputable_locataire;
+	}
+
+	public String getId_bien() {
+		return id_bien;
 	}
 
     

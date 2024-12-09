@@ -78,8 +78,8 @@ public class ControleurAjouterFacture implements ActionListener {
 	}
 	
 	private void ajouterFacture() throws DAOException {
-		Facture f = new Facture (this.vue.getChampsNumero(), this.vue.getChampsDateEmission(), this.vue.getChampsDateAcquisition(), this.vue.getChampsNumeroDevis(), this.vue.getChampsDesignation(), this.vue.getChampsMontantReelPaye(), this.vue.getChampsMontant(), this.vue.getChampsImputableLocataire());
-		this.factureDao.ajouterFacture(f, this.vue.getSelectedBien());
+		Facture f = new Facture (this.vue.getChampsNumero(), this.vue.getChampsDateEmission(), this.vue.getChampsDateAcquisition(), this.vue.getChampsNumeroDevis(), this.vue.getChampsDesignation(), this.vue.getChampsMontantReelPaye(), this.vue.getChampsMontant(), this.vue.getChampsImputableLocataire(), this.vue.getSelectedBien());
+		this.factureDao.ajouterFacture(f);
 	}
 	
 	public List<String> getBiens(){
