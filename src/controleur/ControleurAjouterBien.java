@@ -58,7 +58,7 @@ public class ControleurAjouterBien implements ActionListener {
 				//vérifier si l'identifiant existe dans la base de données
 				try {
 					if (verificationBienExiste()) {
-						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà et/ou l'identifiant a déjà été utilisé","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampIDBien()) {
 						JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampsDateAcquisition()) {

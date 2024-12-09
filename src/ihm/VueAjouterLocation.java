@@ -58,8 +58,9 @@ public class VueAjouterLocation extends JFrame {
 //	}
 	
 	public boolean isComplet() {
-		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null
-				&& !this.getNbMoisPrevus().toString().isEmpty() && (this.getDateDerniereRegularisation() != null);
+		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null &&
+				 this.getNbMoisPrevus() != null && this.getLoyer() != null && this.getProvisionsCharges() != null &&
+				 this.getCaution() != null && (this.getDateDerniereRegularisation() != null);
 	}
 
 	/**
@@ -284,19 +285,32 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public Integer getNbMoisPrevus() {
-		return (Integer.valueOf(this.textFieldNombreMoisPrevus.getText()));
+		if(textFieldNombreMoisPrevus.getText().equals("")) {
+			return null;
+		}
+		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText());
+
 	}
 	
 	public Float getLoyer() {
-		
+		System.out.println(textFieldNombreMoisPrevus.getText());
+		if(textFieldLoyerLocataire.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
 	
 	public Float getProvisionsCharges() {
+		if(formattedProvisionCharges.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.formattedProvisionCharges.getText());
 	}
 	
 	public Float getCaution() {
+		if(formattedCaution.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.formattedCaution.getText());
 	}
 	
