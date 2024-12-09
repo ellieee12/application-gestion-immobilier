@@ -21,6 +21,7 @@ DROP PROCEDURE IF EXISTS insertFacture$$
 DROP PROCEDURE IF EXISTS getAllLocataires$$
 DROP PROCEDURE IF EXISTS getLocataireById$$
 DROP PROCEDURE IF EXISTS insertLocataire$$
+DROP PROCEDURE IF EXISTS deleteLocation$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -177,6 +178,11 @@ BEGIN
     values (v_numero_facture,v_date_paiement,v_date_emission,v_numero_devis,v_designation,v_montant_reel_paye,v_montant,v_imputable_locataire,v_id_bien);
 END$$
 
+CREATE PROCEDURE getFactureByNumero(v_numero_facture varchar(50))
+BEGIN
+    select * from facture where numero_facture = v_numero_facture;
+END$$
+
 CREATE PROCEDURE getAllLocataires()
 BEGIN
     select * from locataire;
@@ -200,7 +206,36 @@ BEGIN
     select * from locataire where id_locataire=v_id_locataire;
 END$$
 
--- verifier from compteur if bien is a maison or what
--- insert compteur and releve
+CREATE PROCEDURE deleteLocation(
+    v_id_bien varchar(20),
+    v_date_debut date
+)
+BEGIN
+    delete from louer where id_bien = v_id_bien and date_debut = v_date_debut;
+    delete from Document_Location where id_bien = v_id_bien and date_debut = v_date_debut;
+    delete from location where id_bien = v_id_bien and date_debut = v_date_debut;
+END$$
+
+CREATE PROCEDURE insertLocation (
+    v_id_locataire varchar(20),
+    v_id_bien VARCHAR(20),
+    v_date_debut DATE,
+    v_nb_mois INT,
+    v_colocation TINYINT(1),
+    v_provision_charges_ttc decimal(15,2),
+    v_loyer_ttc decimal(15,2),
+    v_caution_ttc decimal(15,2),
+    v_date_derniere_reg DATE,
+    v_annee date,
+    v_trimestre smallint
+)
+BEGIN
+    insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
+    loyer_ttc,caution_ttc,date_derniere_reg,annee,trimestre)
+    values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,)
+END$$
+
+
 
 DELIMITER ;

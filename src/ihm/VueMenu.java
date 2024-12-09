@@ -4,12 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurMenu;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 
@@ -38,6 +41,12 @@ public class VueMenu extends JFrame {
 	 * Create the frame.
 	 */
 	public VueMenu() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception ex) {
+			Logger.getLogger(VueMenu.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		JFrame.setDefaultLookAndFeelDecorated(true);
 		ControleurMenu controleur = ControleurMenu.getControleur(this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
