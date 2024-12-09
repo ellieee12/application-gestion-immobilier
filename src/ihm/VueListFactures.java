@@ -60,7 +60,7 @@ public class VueListFactures extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
+		setContentPane(contentPane); 
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Factures");
