@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import classes.Bien;
 import classes.Logement;
 import controleur.ControleurMesBiens;
+import modeleDAO.DAOException;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -36,12 +37,13 @@ public class VueMesBiens extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws DAOException 
 	 */
-	public VueMesBiens(String idImmeuble) {
+	public VueMesBiens(String idImmeuble) throws DAOException {
 		this.idImmeuble=idImmeuble;
 		controleurMesBiens = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

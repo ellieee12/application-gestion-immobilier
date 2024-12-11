@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import ihm.VueAjouterLocation;
+import ihm.VueListFactures;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;
 import ihm.VueMesLocations;
@@ -44,7 +45,14 @@ public class ControleurMenu implements ActionListener {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		}else {
+		} else if (b.getText() == "Mes Factures") {
+			try {
+				VueListFactures frame = new VueListFactures();
+				frame.setVisible(true);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		} else {
 			try {
 				VueMesLocations frame = new VueMesLocations();
 				frame.setVisible(true);

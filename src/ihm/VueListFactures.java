@@ -14,11 +14,25 @@ import javax.swing.JTable;
 import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 
+import classes.Bien;
+import classes.Facture;
+import classes.Logement;
+import controleur.ControleurListFactures;
+import controleur.ControleurMesBiens;
+
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+
 public class VueListFactures extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private DefaultTableModel t;
 	private JTable table;
+	private JButton ajouter;
+	private JButton supprimer;
+	private ControleurListFactures controleur;
 
 	/**
 	 * Launch the application.
@@ -40,36 +54,46 @@ public class VueListFactures extends JFrame {
 	 * Create the frame.
 	 */
 	public VueListFactures() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		this.controleur = new ControleurListFactures(this);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel = new JLabel("Travaux");
+		JLabel lblNewLabel = new JLabel("Factures");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id", "Montant", "Commentaire"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Float.class, String.class
+		this.t = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Numero", "Date d'emission", "Date de paiement", "Numero de devis", "Designation", "Montant réel payé", "Montant", "Imputable locataire", "Id bien"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					String.class, Date.class, Date.class, String.class, String.class, Float.class, Float.class, Float.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				};
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+			
+		buildTable(this.controleur);
+		this.table = new JTable(this.t);
+		this.table.setModel(this.t);
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
@@ -80,15 +104,32 @@ public class VueListFactures extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton = new JButton("New button");
-		panel_1.add(btnNewButton, BorderLayout.SOUTH);
+		this.ajouter = new JButton("Ajouter");
+		panel_1.add(this.ajouter, BorderLayout.SOUTH);
+		this.ajouter.addActionListener(controleur);
 		
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_2.add(btnNewButton_1, BorderLayout.NORTH);
+		this.supprimer = new JButton("Supprimer");
+		panel_2.add(this.supprimer, BorderLayout.NORTH);
+		this.supprimer.addActionListener(controleur);
+	}
+	
+	public void buildTable(ControleurListFactures controleur) {
+		this.t.setRowCount(0);
+		for (Facture f : controleur.getFactures()) {
+			this.t.addRow(new Object[] {f.getNumero(), f.getDate_emission(), f.getDate_paiement(), f.getNumero_devis(), f.getDesignation(), f.getMontant_reel_paye(), f.getMontant(), f.getImputable_locataire(), f.getId_bien()} );
+		}
+	}
+	
+	public ControleurListFactures getControleurMesBiens() {
+		return this.controleur;
+	}
+	
+	public int getLigneChoisi() {
+		return this.table.getSelectedRow();
 	}
 
 }

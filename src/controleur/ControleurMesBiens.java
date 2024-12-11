@@ -26,7 +26,7 @@ public class ControleurMesBiens implements ActionListener {
 	private List<Bien> bien;
 	private String adresse, cp, ville;
 	
-	public ControleurMesBiens(VueMesBiens vue) {
+	public ControleurMesBiens(VueMesBiens vue) throws DAOException {
 		try {
 			this.vue = vue;
 			this.bien = new LinkedList<>();
@@ -52,7 +52,7 @@ public class ControleurMesBiens implements ActionListener {
 		}
 	}
 	
-	public void Update() {
+	public void Update() throws DAOException {
         try {
             this.bien = new LinkedList<>();
             
@@ -101,10 +101,10 @@ public class ControleurMesBiens implements ActionListener {
 				BienDAO bien = new BienDAO();
 				try {
 					bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+					this.Update();
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
-				this.Update();
 			}
 		}
 		

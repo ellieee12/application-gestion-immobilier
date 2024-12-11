@@ -24,32 +24,13 @@ private MySQLCon mySQLCon;
 	
 	public void supprimerLocation(String id, Date date_debut) {
 		try {
-			// Supprimer dans la table Louer
-	        String reqDeleteLouer = "DELETE FROM louer WHERE id_bien = ? AND date_debut = ?";
-	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareStatement(reqDeleteLouer);
+	        String reqDeleteLouer = "{CALL deleteLocation (?,?)}";
+	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareCall(reqDeleteLouer);
 	        stmtDeleteLouer.setString(1, id);
 	        stmtDeleteLouer.setDate(2, date_debut);
-	        stmtDeleteLouer.executeUpdate();
+	        int i = stmtDeleteLouer.executeUpdate();
+	        System.out.println(i +"lignes supprimées");
 	        stmtDeleteLouer.close();
-	        
-	        //Supprimer dans la table Documents location
-	        String reqdeleteDocumentLocation  = "DELETE FROM Document_Location WHERE id_bien = ? AND date_debut = ?";
-	        PreparedStatement stmtDeleteDocumentLocation = this.mySQLCon.getConnection().prepareStatement(reqdeleteDocumentLocation);
-	        stmtDeleteDocumentLocation.setString(1, id);
-	        stmtDeleteDocumentLocation.setDate(2, date_debut);
-	        stmtDeleteDocumentLocation.executeUpdate();
-	        stmtDeleteDocumentLocation.close();
-	        
-			
-	        //Supprimer dans la table Location
-			String reqDeleteLocation = "delete from Location where id_bien = ? and date_debut = ?";
-			PreparedStatement stmtDeleteLocation = this.mySQLCon.getConnection().prepareStatement(reqDeleteLocation);
-			stmtDeleteLocation.setString(1, id);
-			stmtDeleteLocation.setDate(2, date_debut);
-			int nbLignesSupprimeesLocation = stmtDeleteLocation.executeUpdate();
-			stmtDeleteLocation.close();
-			System.out.println(nbLignesSupprimeesLocation+" lignes supprimées dans le table (Louer)");	
-	
 		}catch(Exception e){
 			System.out.println(e);
 		}

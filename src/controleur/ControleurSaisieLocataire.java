@@ -1,12 +1,15 @@
 package controleur;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import classes.Locataire;
 import ihm.VueSaisieLocataire;
+import modeleDAO.DAOException;
 import modeleDAO.LocataireDAO;
 
 public class ControleurSaisieLocataire implements ActionListener {
@@ -31,10 +34,14 @@ public class ControleurSaisieLocataire implements ActionListener {
 	}
 	
 	private boolean verificationLocataireExiste() {
-		if (this.dao.locataireExists(this.vue.getId())) {
-			JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà",
-					"Attention", JOptionPane.WARNING_MESSAGE);
-			return true;
+		try {
+			if (this.dao.locataireExists(this.vue.getId())) {
+				JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà",
+						"Attention", JOptionPane.WARNING_MESSAGE);
+				return true;
+			}
+		} catch (HeadlessException | DAOException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -63,7 +70,6 @@ public class ControleurSaisieLocataire implements ActionListener {
 						this.vue.getPrenom(),this.vue.getMail(),this.vue.getTel(),this.vue.getDateDeNaissance());
 				//ferme cette page et ouvre le Menu
 				this.vue.dispose();
-				// FAIRE LE MENU !!!
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public class ControleurAjouterBien implements ActionListener {
 	private Map<String, String> NameImmeubles;
 	
 	//Constructeur du controleur
-	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) {
+	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) throws DAOException {
 		try {
 			this.vue = vue;
 			this.vueBiens=vueBiens;

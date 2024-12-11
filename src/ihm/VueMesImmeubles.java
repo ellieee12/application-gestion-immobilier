@@ -24,6 +24,7 @@ import classes.Immeuble;
 import classes.Logement;
 import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
+import modeleDAO.DAOException;
 
 public class VueMesImmeubles extends JFrame {
 
@@ -52,12 +53,13 @@ public class VueMesImmeubles extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws DAOException 
 	 */
-	public VueMesImmeubles() {
+	public VueMesImmeubles() throws DAOException {
 		controleurMesImmeubles = new ControleurMesImmeubles(this);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
