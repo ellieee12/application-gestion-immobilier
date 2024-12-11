@@ -39,8 +39,8 @@ public class VueRegularisation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Date date = Date.valueOf("2024-12-01");
-					VueRegularisation frame = new VueRegularisation("1111",date);
+					Date date = Date.valueOf("2021-12-17");
+					VueRegularisation frame = new VueRegularisation("11",date);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -207,8 +207,8 @@ public class VueRegularisation extends JFrame {
 		return champEau.getText();
 	}
 	
-	public Float getChampNouvelleProvision() {
-		return Float.valueOf(champNouvelleProvision.getText());
+	public String getChampNouvelleProvision() {
+		return champNouvelleProvision.getText();
 	}
 	
 	public String getChampElec() {

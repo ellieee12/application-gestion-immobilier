@@ -6,11 +6,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.swing.JButton;
-
-
 
 import classes.Compteur;
 import classes.Compteur.typeCompteur;
@@ -26,7 +23,8 @@ public class ControleurRegularisation implements ActionListener {
 	private VueRegularisation vue;
 	private Compteur compteurEau;
 	private Compteur compteurElec;
-	private String idcompteur;
+	private String idcompteurEau;
+	private String idcompteurElec;
 	private String id_bien;
 	private Date date_debut;
 	private int annee;
@@ -48,7 +46,8 @@ public class ControleurRegularisation implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		this.annee = Integer.valueOf(new Date(Calendar.getInstance().getTime().getTime()).toString().substring(0, 4));
+
 	}
 
 	@Override
@@ -60,18 +59,16 @@ public class ControleurRegularisation implements ActionListener {
 				// eau
 				//récupérer l'id du compteur
 				try {
-					this.idcompteur = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
+					this.idcompteurEau = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 
 				//créer le compteur
-				this.compteurEau = new Compteur(this.idcompteur, typeCompteur.EAU, this.PRIX_EAU);
-				//récupérer l'année et l'index du relevé
+				this.compteurEau = new Compteur(this.idcompteurEau, typeCompteur.EAU, this.PRIX_EAU);
+				//récupérer l'index du relevé
 				try {
-					List<Integer> l = this.dao.getReleveFromIdCompteur(this.idcompteur);
-					this.annee = l.get(0);
-					this.index = l.get(1);
+					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -81,17 +78,15 @@ public class ControleurRegularisation implements ActionListener {
 				//electricite
 				//récupérer l'id du compteur
 				try {
-					this.idcompteur = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
+					this.idcompteurElec = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 				//créer le compteur
-				this.compteurElec = new Compteur(this.idcompteur, typeCompteur.ELECTRICITE, this.PRIX_ELEC);
-				//récupérer l'année et l'index du relevé
+				this.compteurElec = new Compteur(this.idcompteurElec, typeCompteur.ELECTRICITE, this.PRIX_ELEC);
+				//récupérer l'index du relevé
 				try {
-					List<Integer> l = this.dao.getReleveFromIdCompteur(this.idcompteur);
-					this.annee = l.get(0);
-					this.index = l.get(1);
+					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -126,12 +121,19 @@ public class ControleurRegularisation implements ActionListener {
 				this.vue.afficherTotal(montantTotal);
 				this.vue.afficherProvision(montantProvision);
 				this.vue.afficherReste(montantReste);
-				// créer nouveau releve dans la bd à faire + fonction dao
-				Date date_releve = new Date(Calendar.getInstance().getTime().getTime());
 			}
 		} else if (b.getText()=="Confirmer") {
+			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
+				try {
+					this.dao.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			// créer nouveau releve dans la bd
 			try {
-				this.dao.setNouvelleProvision(id_bien, date_debut, this.vue.getChampNouvelleProvision());
+				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
+				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

@@ -84,6 +84,7 @@ public class BienDAO{
 	public void ajouterBien(Bien b, String id_immeuble) throws DAOException {
 		try {
 			CallableStatement stmt ;
+			int i = 0;
 			if (b instanceof Garage) {
 				String req = "{CALL insertGarage(?,?,?,?)}";
 				stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -91,6 +92,7 @@ public class BienDAO{
 				stmt.setDate(2, b.getDate_acquisition());
 				stmt.setString(3, id_immeuble);
 				stmt.setFloat(4, b.getEntretienPartieCommune());
+				i = stmt.executeUpdate();
 			}else {
 				String req = "{CALL insertLogement(?,?,?,?,?,?,?)}";
 				stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -101,14 +103,15 @@ public class BienDAO{
 				stmt.setFloat(4, l.getSurface_habitable());
 				stmt.setDate(5, l.getDate_acquisition());
 				stmt.setString(6, id_immeuble);
-				stmt.setFloat(4, b.getEntretienPartieCommune());
+				stmt.setFloat(7, b.getEntretienPartieCommune());
+				i = stmt.executeUpdate();
 			}
-			int i = stmt.executeUpdate();
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
-			throw new DAOException("Erreurs lors de la création d'un bien",e);
+			System.out.println(b.getEntretienPartieCommune());
+//			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
+//			throw new DAOException("Erreurs lors de la création d'un bien",e);
 		}
 	}
 	

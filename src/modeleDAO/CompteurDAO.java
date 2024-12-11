@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import classes.Garage;
 import classes.Compteur.typeCompteur;
 
 /**
@@ -54,18 +55,16 @@ public class CompteurDAO{
 		return null;
 	}
 	
-	public List<Integer> getReleveFromIdCompteur(String id_compteur) throws SQLException {
-		String req = "{CALL getReleveFromIdCompteur(?)}";
+	public int getReleveFromIdCompteur(String id_compteur, int annee) throws SQLException {
+		String req = "{CALL getReleveFromIdCompteur(?,?)}";
 		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 		stmt.setString(1, id_compteur);
+		stmt.setInt(2,annee);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
-			List<Integer> l = new LinkedList<Integer>();
-			l.add((Integer) rs.getInt(1));
-			l.add((Integer) rs.getInt(2));
-			return l;
+			return rs.getInt(1);
 		}
-		return null;
+		return 0;
 	}
 	
 	public ResultSet getEntretienFromIdBien(String id_bien) throws SQLException {
@@ -92,11 +91,24 @@ public class CompteurDAO{
 	}
 	
 	public void setNouvelleProvision(String id_bien, Date date_debut, Float provision) throws SQLException {
+		if (provision == null) {
+			
+		}
 		String req = "{CALL setNouvelleProvision(?,?,?)}";
 		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 		stmt.setString(1, id_bien);
 		stmt.setDate(2, date_debut);
 		stmt.setFloat(3, provision);
 		stmt.executeQuery();
+	}
+	
+	public void ajouterReleve(int annee, int index, String idCompteur) throws SQLException {
+		CallableStatement stmt ;
+		String req = "{CALL addReleve(?,?,?)}";
+		stmt = this.mySQLCon.getConnection().prepareCall(req);
+		stmt.setInt(1,annee);
+		stmt.setInt(2, index);
+		stmt.setString(3, idCompteur);
+		stmt.executeUpdate();
 	}
 }
