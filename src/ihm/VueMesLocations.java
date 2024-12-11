@@ -90,13 +90,13 @@ public class VueMesLocations extends JFrame {
 				},
 				new String[] {
 					"Id Bien", "Date début location", "Colocation", "Nombre de mois", "Loyer TTC", "Provisions chargement TTC",
-						"Caution TTC", "Date de la dernière régularisation", "Loyer payé"
+						"Caution TTC", "Loyer payé"
 					
 				}
 			) {
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
-					Float.class, Date.class, Integer.class
+					Float.class, Integer.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
@@ -123,7 +123,7 @@ public class VueMesLocations extends JFrame {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    l.getDate_derniere_reg(), "1er janvier 2024", 1 
+				    "1er janvier 2024", 1 
 				});
 		}
 	}

@@ -94,7 +94,7 @@ public class ControleurAjouterLocation implements ActionListener{
 				try {
 					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
 							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-							this.vue.getCaution(), this.vue.getDateDerniereRegularisation(), this.vue.getSelectedBien());
+							this.vue.getCaution(), this.vue.getSelectedBien());
 					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
 							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
 					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),

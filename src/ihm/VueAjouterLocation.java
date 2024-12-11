@@ -39,7 +39,6 @@ public class VueAjouterLocation extends JFrame {
 	private JCheckBox chckbxColocation;
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
-	private JFormattedTextField formattedDateDerniereRegularisation;
 //
 //	/**
 //	 * Launch the application.
@@ -60,7 +59,7 @@ public class VueAjouterLocation extends JFrame {
 	public boolean isComplet() {
 		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null &&
 				 this.getNbMoisPrevus() != null && this.getLoyer() != null && this.getProvisionsCharges() != null &&
-				 this.getCaution() != null && (this.getDateDerniereRegularisation() != null);
+				 this.getCaution() != null;
 	}
 
 	/**
@@ -143,13 +142,6 @@ public class VueAjouterLocation extends JFrame {
 		JLabel lblNewLabel_9 = new JLabel("Caution : ");
 		panel_9.add(lblNewLabel_9, BorderLayout.NORTH);
 		
-		JPanel panel_10 = new JPanel();
-		panelLibellé.add(panel_10);
-		panel_10.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_10 = new JLabel("Date dernière régularisation : ");
-		panel_10.add(lblNewLabel_10, BorderLayout.NORTH);
-		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
 		panelChamps.setLayout(new GridLayout(0, 1, 0, 0));
@@ -221,18 +213,6 @@ public class VueAjouterLocation extends JFrame {
 		formattedCaution = new JFormattedTextField();
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
-		
-		JPanel panel_c_date_derniere_reg = new JPanel();
-		panelChamps.add(panel_c_date_derniere_reg);
-		panel_c_date_derniere_reg.setLayout(new BorderLayout(0, 0));
-		
-		formattedDateDerniereRegularisation = new JFormattedTextField();
-		try {
-			formattedDateDerniereRegularisation = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		panel_c_date_derniere_reg.add(formattedDateDerniereRegularisation, BorderLayout.NORTH);
 		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
@@ -312,18 +292,5 @@ public class VueAjouterLocation extends JFrame {
 			return null;
 		}
 		return Float.valueOf(this.formattedCaution.getText());
-	}
-	
-	public Date getDateDerniereRegularisation() {
-		try {
-	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	        sdf.setLenient(false);
-	        java.util.Date parsedDate = sdf.parse(this.formattedDateDerniereRegularisation.getText());
-	        return new Date(parsedDate.getTime());
-	    } catch (Exception e) {
-	        return null; 
-	    }
-	}
-	
-	
+	}	
 }

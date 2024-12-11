@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +34,15 @@ public class VueAjouterBien extends JFrame {
 	private JTextField textFieldSurfaceHabitable;
 	private JFormattedTextField formattedTextField;
 	private JComboBox<String> comboBox;
+	public JComboBox<String> getComboBox() {
+		return comboBox;
+	}
+
+	public JComboBox<String> getComboBox_Immeuble() {
+		return comboBox_Immeuble;
+	}
+
+
 	private JComboBox<String> comboBox_Immeuble;
 
 	/**
@@ -116,9 +126,6 @@ public class VueAjouterBien extends JFrame {
 		PanelChamps.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		comboBox = new JComboBox<>();
-		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Logement", "Garage"}));
-		panel.add(comboBox, BorderLayout.NORTH);
 		
 		JPanel panel_2 = new JPanel();
 		PanelChamps.add(panel_2);
@@ -131,7 +138,6 @@ public class VueAjouterBien extends JFrame {
 		JPanel panel_1 = new JPanel();
 		PanelChamps.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
-		
 		formattedTextField = new JFormattedTextField();
 		try {
 			formattedTextField = new JFormattedTextField(new MaskFormatter("##/##/####"));
@@ -171,11 +177,30 @@ public class VueAjouterBien extends JFrame {
 		
 		//comboBox Immeuble
 		comboBox_Immeuble = new JComboBox();
-		for (String s: controleur.getImmeubles()) {
-			comboBox_Immeuble.addItem(s);
+		for (Map.Entry<String, String> s : controleur.getNameImmeubles().entrySet()) {
+			comboBox_Immeuble.addItem(s.getKey());
 		}
 		
 		panel_13.add(comboBox_Immeuble, BorderLayout.NORTH);
+		
+		comboBox = new JComboBox<>();
+		//for (String s : getSelectedImmeuble())
+		comboBox = new JComboBox();
+//		for (Map.Entry<String, String> s: controleur.getNameImmeubles().entrySet()) {
+//			if (s.getValue().equals("M")) {
+//				initialiserComboBoxMaison();
+//				break;
+//			} else {
+//				initialiserComboBoxBatiment();
+//			}
+//		}
+		String type = controleur.getNameImmeubles().get(comboBox_Immeuble.getSelectedItem());
+		if (type.equals("M")) {
+			initialiserComboBoxMaison();
+		} else {
+			initialiserComboBoxBatiment();
+		}
+		panel.add(comboBox, BorderLayout.NORTH);
 		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
@@ -188,8 +213,17 @@ public class VueAjouterBien extends JFrame {
 		
 		//action du controleur
 		comboBox.addActionListener(controleur);
+		comboBox_Immeuble.addActionListener(controleur);
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
+	}
+
+	public void initialiserComboBoxBatiment() {
+		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Logement", "Garage"}));
+	}
+
+	public void initialiserComboBoxMaison() {
+		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Logement"}));
 	}
 
 	public String getSelectedImmeuble() {

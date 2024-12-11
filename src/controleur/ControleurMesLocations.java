@@ -43,7 +43,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			
 			while(rs.next()) {
 				location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
-						rs.getFloat(7), rs.getDate(8), rs.getString(1)));
+						rs.getFloat(7), rs.getString(1)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,7 +63,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
             ResultSet rs = location.getAllLocations();
             while(rs.next()) {
 				this.location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
-						rs.getFloat(7), rs.getDate(8), rs.getString(1)));
+						rs.getFloat(7), rs.getString(1)));
 			}
         } catch (SQLException e) {
             e.printStackTrace();
