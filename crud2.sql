@@ -20,6 +20,7 @@ DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
 DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
 DROP PROCEDURE IF EXISTS getProvisionFromLocation$$
 DROP PROCEDURE IF EXISTS setNouvelleProvision$$
+DROP PROCEDURE IF EXISTS addReleve$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -187,5 +188,10 @@ BEGIN
     update location set provision_charges_ttc = v_provision where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
 
+CREATE PROCEDURE addReleve (v_annee int,v_index int,v_id_compteur varchar(50))
+BEGIN
+    insert into releve (id_immeuble, adresse, code_postale)
+    values (v_id_immeuble,v_adresse,v_code_postale,v_ville,v_periode_construction,v_type_immeuble);
+END$$
 
 DELIMITER ;
