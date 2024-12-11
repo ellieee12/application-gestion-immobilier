@@ -190,8 +190,8 @@ END$$
 
 CREATE PROCEDURE addReleve (v_annee int,v_index int,v_id_compteur varchar(50))
 BEGIN
-    insert into releve (id_immeuble, adresse, code_postale)
-    values (v_id_immeuble,v_adresse,v_code_postale,v_ville,v_periode_construction,v_type_immeuble);
+    insert into releve (annee,index_comp,id_compteur)
+    values (v_annee,v_index,v_id_compteur);
 END$$
 
 DELIMITER ;
