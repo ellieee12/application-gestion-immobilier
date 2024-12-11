@@ -167,10 +167,10 @@ BEGIN
     SELECT type_immeuble from immeuble,bien where bien.id_bien = v_id_bien and bien.id_immeuble = immeuble.id_immeuble;
 END$$
 
-CREATE PROCEDURE getReleveFromIdCompteur (v_id_compteur VARCHAR(50))
+CREATE PROCEDURE getReleveFromIdCompteur (v_id_compteur VARCHAR(50),v_annee int)
 
 BEGIN 
-    SELECT annee,index_comp from releve where id_compteur = v_id_compteur;
+    SELECT index_comp from releve where id_compteur = v_id_compteur and annee = v_annee;
 END$$
 
 CREATE PROCEDURE getEntretienFromIdBien(v_id_bien varchar(20))
