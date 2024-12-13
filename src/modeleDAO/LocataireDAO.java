@@ -36,8 +36,8 @@ public class LocataireDAO {
 			stmt.setString(1, loc.getId_locataire());
 			stmt.setString(2, loc.getNom());
 			stmt.setString(3,loc.getPrenom());
-			stmt.setString(4, loc.getMail());
-			stmt.setString(5,loc.getTelephone());
+			stmt.setString(4,loc.getTelephone());
+			stmt.setString(5, loc.getMail());
 			stmt.setDate(6,loc.getDate_naissance());
 			int i = stmt.executeUpdate();
 			stmt.close();
@@ -62,9 +62,13 @@ public class LocataireDAO {
 		}
 	}
 	
-	public boolean locataireExists(String id_locataire) throws DAOException {
+	public boolean locataireExists(String id_locataire) throws DAOException, SQLException {
 		try {
-			return getLocataireById(id_locataire)!=null;
+			ResultSet rs = getLocataireById(id_locataire);
+			if(rs.next()) {
+				return true;
+			}
+			return false;
 		} catch (DAOException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existance d'un locataire",e);
 			throw new DAOException("Erreurs lors de la vérification de l'existance d'un locataire",e);

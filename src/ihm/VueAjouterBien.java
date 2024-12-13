@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurAjouterBien;
+import modeleDAO.DAOException;
 
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -47,8 +48,9 @@ public class VueAjouterBien extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws DAOException 
 	 */
-	public VueAjouterBien(VueMesBiens vueBiens) {
+	public VueAjouterBien(VueMesBiens vueBiens) throws DAOException {
 		//mise en place du controleur
 		ControleurAjouterBien controleur = new ControleurAjouterBien(this,vueBiens);
 		
