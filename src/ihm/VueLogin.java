@@ -12,11 +12,16 @@ import java.awt.Cursor;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import java.awt.Color;
@@ -45,6 +50,11 @@ public class VueLogin extends JFrame {
 	}
 	
 	public VueLogin() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception ex) {
+			Logger.getLogger(VueMenu.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		@SuppressWarnings("unused")
 		VueSignUp vueSignUp=new VueSignUp();
 		ControleurLogInSignUp controleur = ControleurLogInSignUp.getControleur();
