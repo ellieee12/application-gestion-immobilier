@@ -34,7 +34,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 
-public class VueLogin extends JFrame {
+public class VueLogin extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -57,31 +57,6 @@ public class VueLogin extends JFrame {
 				}
 			}
 		});
-	}
-	
-	public static List<Component> getAllComponents(final Container c) {
-	    Component[] comps = c.getComponents();
-	    List<Component> compList = new ArrayList<Component>();
-	    for (Component comp : comps) {
-	        compList.add(comp);
-	        if (comp instanceof Container)
-	            compList.addAll(getAllComponents((Container) comp));
-	    }
-	    return compList;
-	}
-	
-	public static void setSizeMulti(List<Component> comps, int i) {
-	    for (Component c : comps) {
-	        if (c.getFont() != null) {
-	        	c.setFont(c.getFont().deriveFont((float) (c.getFont().getSize() + i)));
-	        }
-	        if (c instanceof JButton) {
-	        	c.setPreferredSize(new Dimension((int) c.getPreferredSize().getWidth() + i*2, (int) c.getPreferredSize().getHeight() + i*2));
-	        }
-	        if (c instanceof Container) {
-	        	c.setBounds(new Rectangle(100,100,(int)c.getBounds().getWidth() + i*500,(int) c.getBounds().getHeight() + i*500));
-	        }
-	    }
 	}
 	
 	public VueLogin() {
@@ -173,7 +148,8 @@ public class VueLogin extends JFrame {
 		lblCreerCompte_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		panel.add(lblCreerCompte_2);
 		
-		setSizeMulti(getAllComponents(this), 10);
+		
+		this.setSizeMulti(5);
 	}
 	
 	public JTextField getUsername() {
