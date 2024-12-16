@@ -19,10 +19,10 @@ import ihm.VueListFactures;
 import ihm.VueMesBiens;
 import modele.Facture;
 import modele.Garage;
-import modeleDAO.BienDAO;
-import modeleDAO.DAOException;
-import modeleDAO.FactureDAO;
-import modeleDAO.ImmeubleDAO;
+import modele.BienDAO;
+import modele.DAOException;
+import modele.FactureDAO;
+import modele.ImmeubleDAO;
 
 public class ControleurAjouterFacture implements ActionListener {
 	

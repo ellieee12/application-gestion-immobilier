@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import ihm.VueLogin;
 import ihm.VueMenu;
 import ihm.VueSignUp;
-import modeleDAO.BienDAO;
-import modeleDAO.LogInSignUpDAO;
+import modele.BienDAO;
+import modele.LogInSignUpDAO;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
 	
 	private static ControleurLogInSignUp controleur;

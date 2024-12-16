@@ -22,7 +22,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurAjouterLocation;
-import modeleDAO.DAOException;
+import modele.DAOException;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;

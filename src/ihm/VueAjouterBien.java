@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurAjouterBien;
-import modeleDAO.DAOException;
+import modele.DAOException;
 
 import javax.swing.JLabel;
 import java.awt.BorderLayout;

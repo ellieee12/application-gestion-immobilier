@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import controleur.ControleurMesBiens;
 import modele.Bien;
 import modele.Logement;
-import modeleDAO.DAOException;
+import modele.DAOException;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;

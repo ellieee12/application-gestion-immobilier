@@ -1,7 +1,7 @@
 package controleur;
 
-import modeleDAO.DAOException;
-import modeleDAO.ImmeubleDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
 
 import java.awt.EventQueue;
 import java.awt.HeadlessException;

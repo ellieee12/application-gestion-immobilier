@@ -10,21 +10,13 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Date;
-
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
-import modele.Bien;
 import modele.Immeuble;
-import modele.Logement;
-import modeleDAO.DAOException;
+import modele.DAOException;
 
 public class VueMesImmeubles extends JFrame {
 

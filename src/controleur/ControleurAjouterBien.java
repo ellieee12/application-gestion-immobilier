@@ -1,8 +1,8 @@
 package controleur;
 
-import modeleDAO.BienDAO;
-import modeleDAO.DAOException;
-import modeleDAO.ImmeubleDAO;
+import modele.BienDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;

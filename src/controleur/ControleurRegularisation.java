@@ -13,7 +13,7 @@ import ihm.VueRegularisation;
 import modele.Compteur;
 import modele.Relevé;
 import modele.Compteur.typeCompteur;
-import modeleDAO.CompteurDAO;
+import modele.CompteurDAO;
 
 public class ControleurRegularisation implements ActionListener {
 

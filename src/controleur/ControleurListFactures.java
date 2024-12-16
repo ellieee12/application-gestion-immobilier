@@ -21,10 +21,10 @@ import modele.Garage;
 import modele.Immeuble;
 import modele.Logement;
 import modele.Maison;
-import modeleDAO.BienDAO;
-import modeleDAO.DAOException;
-import modeleDAO.FactureDAO;
-import modeleDAO.ImmeubleDAO;
+import modele.BienDAO;
+import modele.DAOException;
+import modele.FactureDAO;
+import modele.ImmeubleDAO;
 
 public class ControleurListFactures implements ActionListener{
 	

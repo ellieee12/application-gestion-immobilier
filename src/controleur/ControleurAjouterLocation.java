@@ -14,10 +14,10 @@ import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
 import modele.Location;
-import modeleDAO.BienDAO;
-import modeleDAO.DAOException;
-import modeleDAO.LocataireDAO;
-import modeleDAO.LocationDAO;
+import modele.BienDAO;
+import modele.DAOException;
+import modele.LocataireDAO;
+import modele.LocationDAO;
 
 public class ControleurAjouterLocation implements ActionListener{
 	

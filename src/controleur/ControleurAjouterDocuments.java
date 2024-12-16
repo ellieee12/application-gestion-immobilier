@@ -10,7 +10,7 @@ import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
 import ihm.VueMesLocations;
 import modele.DocumentLocation;
-import modeleDAO.DocumentLocationDAO;
+import modele.DocumentLocationDAO;
 
 public class ControleurAjouterDocuments implements ActionListener {
 	

@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 
 import ihm.VueSaisieLocataire;
 import modele.Locataire;
-import modeleDAO.DAOException;
-import modeleDAO.LocataireDAO;
+import modele.DAOException;
+import modele.LocataireDAO;
 
 public class ControleurSaisieLocataire implements ActionListener {
 	

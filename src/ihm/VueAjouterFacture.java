@@ -13,7 +13,7 @@ import org.jdesktop.swingx.prompt.BuddySupport;
 
 import controleur.ControleurAjouterFacture;
 import controleur.ControleurAjouterLocation;
-import modeleDAO.DAOException;
+import modele.DAOException;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;

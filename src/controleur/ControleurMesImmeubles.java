@@ -19,8 +19,8 @@ import modele.Batiment;
 import modele.Immeuble;
 import modele.Maison;
 import ihm.VueMesBiens;
-import modeleDAO.DAOException;
-import modeleDAO.ImmeubleDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
 
 public class ControleurMesImmeubles extends MouseAdapter implements ActionListener {
 	

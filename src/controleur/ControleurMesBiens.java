@@ -16,9 +16,9 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import modeleDAO.BienDAO;
-import modeleDAO.DAOException;
-import modeleDAO.ImmeubleDAO;
+import modele.BienDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
 
 public class ControleurMesBiens implements ActionListener {
 
