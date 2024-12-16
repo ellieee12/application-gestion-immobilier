@@ -30,6 +30,7 @@ DROP PROCEDURE IF EXISTS getLocataireById$$
 DROP PROCEDURE IF EXISTS insertLocataire$$
 DROP PROCEDURE IF EXISTS deleteLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
+DROP PROCEDURE IF EXISTS insertCompteur$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -286,6 +287,16 @@ BEGIN
     loyer_ttc,caution_ttc,date_derniere_reg,annee,trimestre)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
     v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,)
+END$$
+
+CREATE PROCEDURE insertCompteur (
+    v_id_bien varchar(20),
+    v_prix decimal(15,2),
+    v_type_compteur varchar(20)
+)
+BEGIN
+    insert into compteur (type_compteur,prix_abonnement,id_bien)
+    values (v_type_compteur,v_prix,v_id_bien)
 END$$
 
 

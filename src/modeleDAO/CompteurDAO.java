@@ -4,11 +4,8 @@ import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Logger;
 
-import classes.Garage;
 import classes.Compteur.typeCompteur;
 
 /**
@@ -27,9 +24,7 @@ public class CompteurDAO{
 	}
 
 	/**
-	 * Récupère le compteur associé à un bien donné selon son type
-	 * @param identifiant d'un immeuble donné
-	 * @return Un ResultSet de tous les objets Bien associés à un immeuble donné
+	 * Récupère l'id compteur associé à un bien donné selon son type
 	 * @throws SQLException
 	 */
 	public String getCompteurFromOneBienSelonType(String idBien, typeCompteur type) throws SQLException {

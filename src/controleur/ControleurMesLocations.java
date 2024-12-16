@@ -1,32 +1,21 @@
 package controleur;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
-import classes.Batiment;
-import classes.Immeuble;
 import classes.Location;
-import classes.Maison;
-import ihm.VueAjouterImmeuble;
 import ihm.VueAjouterLocation;
-import ihm.VueMesImmeubles;
 import ihm.VueMesLocations;
-import ihm.VueMesBiens;
-import modeleDAO.ImmeubleDAO;
+import ihm.VueRegularisation;
 import modeleDAO.LocationDAO;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 
 public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionListener {
 
@@ -96,6 +85,16 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 				location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
 			}
 			this.Update();
+		} else if (b.equals(this.vue.getBoutonRegu())) {
+			System.out.println("allo c'est quoi");
+			try {
+				String id_bien = this.location.get(this.vue.getLigneChoisi()).getIdBien();
+				Date date_debut = this.location.get(this.vue.getLigneChoisi()).getDate_debut();
+				VueRegularisation frame = new VueRegularisation(id_bien,date_debut);
+				frame.setVisible(true);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}

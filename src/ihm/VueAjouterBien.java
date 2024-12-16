@@ -1,16 +1,5 @@
 package ihm;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
-
-import controleur.ControleurAjouterBien;
-import modeleDAO.DAOException;
-
-import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -19,11 +8,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import controleur.ControleurAjouterBien;
+import modeleDAO.DAOException;
 
 public class VueAjouterBien extends JFrame {
 
@@ -46,6 +43,8 @@ public class VueAjouterBien extends JFrame {
 
 	private JComboBox<String> comboBox_Immeuble;
 	private JTextField textFieldEntretien;
+	private JTextField textFieldEau;
+	private JTextField textFieldElectricite;
 
 	/**
 	 * Create the frame.
@@ -127,6 +126,20 @@ public class VueAjouterBien extends JFrame {
 		
 		JLabel lblNewLabel_7 = new JLabel("Immeuble");
 		panel_12.add(lblNewLabel_7, BorderLayout.NORTH);
+		
+		JPanel panel_15 = new JPanel();
+		PanelLibellé.add(panel_15);
+		panel_15.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_9 = new JLabel("Index Eau");
+		panel_15.add(lblNewLabel_9, BorderLayout.NORTH);
+		
+		JPanel panel_14 = new JPanel();
+		PanelLibellé.add(panel_14);
+		panel_14.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_8 = new JLabel("Index Électricité");
+		panel_14.add(lblNewLabel_8, BorderLayout.NORTH);
 		
 		JPanel PanelChamps = new JPanel();
 		contentPane.add(PanelChamps, BorderLayout.CENTER);
@@ -220,6 +233,22 @@ public class VueAjouterBien extends JFrame {
 		}
 		panel.add(comboBox, BorderLayout.NORTH);
 		
+		JPanel panel_16 = new JPanel();
+		PanelChamps.add(panel_16);
+		panel_16.setLayout(new BorderLayout(0, 0));
+		
+		textFieldEau = new JTextField();
+		panel_16.add(textFieldEau, BorderLayout.NORTH);
+		textFieldEau.setColumns(10);
+		
+		JPanel panel_17 = new JPanel();
+		PanelChamps.add(panel_17);
+		panel_17.setLayout(new BorderLayout(0, 0));
+		
+		textFieldElectricite = new JTextField();
+		panel_17.add(textFieldElectricite, BorderLayout.NORTH);
+		textFieldElectricite.setColumns(10);
+		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
 		
@@ -306,8 +335,23 @@ public class VueAjouterBien extends JFrame {
 		}
 
 	}
+	
 	public Float getEntretienPartieCommune() {
 		return Float.valueOf(this.textFieldEntretien.getText());
+	}
+	
+	public Integer getChampsEau() {
+		if(textFieldEau.getText().equals("")) {
+			return null;
+		}
+		return Integer.valueOf(textFieldEau.getText());
+	}
+	
+	public Integer getChampsElectricite() {
+		if(textFieldElectricite.getText().equals("")) {
+			return null;
+		}
+		return Integer.valueOf(textFieldElectricite.getText());
 	}
 }
 
