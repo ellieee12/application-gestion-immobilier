@@ -26,7 +26,7 @@ import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import java.awt.Color;
 
-public class VueLogin extends JFrame {
+public class VueLogin extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -143,7 +143,7 @@ public class VueLogin extends JFrame {
 		lblCreerCompte_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		panel.add(lblCreerCompte_2);
 		
-		
+		this.setSizeMulti(5);
 	}
 	
 	public JTextField getUsername() {

@@ -25,7 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-public class VueAjouterBien extends JFrame {
+public class VueAjouterBien extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -218,6 +218,8 @@ public class VueAjouterBien extends JFrame {
 		comboBox_Immeuble.addActionListener(controleur);
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 
 	public void initialiserComboBoxBatiment() {

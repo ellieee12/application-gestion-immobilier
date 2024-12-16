@@ -17,7 +17,7 @@ import javax.swing.border.EtchedBorder;
 import classes.Location;
 import controleur.ControleurAjouterDocuments;
 
-public class VueAjouterDocuments extends JFrame {
+public class VueAjouterDocuments extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -171,6 +171,8 @@ public class VueAjouterDocuments extends JFrame {
 		this.bElectricite = new JButton("Choisir");
 		panel_11.add(this.bElectricite);
 		bElectricite.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 	
 	public JLabel getElectricite() {

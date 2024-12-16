@@ -23,7 +23,7 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import java.awt.Cursor;
 
-public class VueSignUp extends JFrame {
+public class VueSignUp extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -153,6 +153,8 @@ public class VueSignUp extends JFrame {
 		lblConnection.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblConnection.setForeground(new Color(0, 0, 160));
 		panel_4.add(lblConnection);
+		
+		this.setSizeMulti(5);
 	}
 
 	public String getNouveauMDP() {

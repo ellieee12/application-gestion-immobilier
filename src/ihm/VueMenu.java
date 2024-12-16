@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 
-public class VueMenu extends JFrame {
+public class VueMenu extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -80,6 +80,8 @@ public class VueMenu extends JFrame {
 		boutonMesFactures.addActionListener(controleur);
 		boutonAjouterLocataire.addActionListener(controleur);
 		boutonMesLocation.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 
 }

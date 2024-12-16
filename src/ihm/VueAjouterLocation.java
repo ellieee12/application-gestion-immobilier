@@ -24,7 +24,7 @@ import javax.swing.text.NumberFormatter;
 import controleur.ControleurAjouterLocation;
 import modeleDAO.DAOException;
 
-public class VueAjouterLocation extends JFrame {
+public class VueAjouterLocation extends JFramePlus {
 
 	/**
 	 * 
@@ -225,6 +225,8 @@ public class VueAjouterLocation extends JFrame {
 		
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 
 	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {

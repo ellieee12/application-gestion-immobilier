@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import controleur.ControleurAjouterDocuments;
 import controleur.ControleurEnregistrerDocument;
 
-public class VueEnregistrerDocumentsLocation extends JFrame {
+public class VueEnregistrerDocumentsLocation extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -90,6 +90,7 @@ public class VueEnregistrerDocumentsLocation extends JFrame {
 		this.lblNomFichier = new JLabel("");
 		panel_3.add(this.lblNomFichier);
 		
+		this.setSizeMulti(5);
 	}
 	
 	public void afficherNomFichier(String nomFichier) {
