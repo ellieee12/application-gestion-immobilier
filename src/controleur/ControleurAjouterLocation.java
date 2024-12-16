@@ -14,6 +14,7 @@ import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
 import modele.Location;
+import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
 import modele.LocataireDAO;
@@ -78,9 +79,9 @@ public class ControleurAjouterLocation implements ActionListener{
 			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
 			this.id_locataires.add(locatairesRS.getString(1));
 		}
-		ResultSet biensRS = this.bienDAO.getAllBiens();
-		while (biensRS.next()) {
-			this.biens.add(biensRS.getString(1));
+		List<Bien> biensliste= this.bienDAO.getAllBiens();
+		for(Bien b : biensliste) {
+			this.biens.add(b.getId_bien());
 		}
 	}
 

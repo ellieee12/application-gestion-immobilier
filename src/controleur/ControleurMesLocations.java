@@ -1,32 +1,16 @@
 package controleur;
-
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-
-import ihm.VueAjouterImmeuble;
 import ihm.VueAjouterLocation;
-import ihm.VueMesImmeubles;
 import ihm.VueMesLocations;
-import modele.Batiment;
-import modele.Immeuble;
 import modele.Location;
-import modele.Maison;
-import ihm.VueMesBiens;
-import modeleDAO.ImmeubleDAO;
-import modeleDAO.LocationDAO;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import modele.LocationDAO;
 
 public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionListener {
 

@@ -48,7 +48,7 @@ public class TestBienDAO {
 	}
 	
 	@After
-	public void tearDown() throws SQLException, DAOException {
+	public void tearDown() throws DAOException {
 		if (bDAO.bienExiste(idBienGarage)) {
 			this.bDAO.supprimerBien(idBienGarage);
 		}
@@ -73,22 +73,9 @@ public class TestBienDAO {
 	}
 	
 	@Test
-	public void testGetAllBien() throws SQLException, DAOException {
-		ResultSet s = this.bDAO.getAllBiens();
-		int size = 0;
-		List<Bien> liste = new LinkedList<>();
-		while (s.next()) {
-			if (s.getString(6).equals("G")) {
-				Garage g = new Garage(s.getDate(5),s.getString(1),s.getFloat(8));
-				liste.add(g);
-			}else {
-				Logement l = new Logement(s.getDate(5),s.getString(1),s.getInt(3),s.getInt(2),s.getFloat(4),s.getFloat(8));
-				liste.add(l);
-			}
-			
-			size++;
-		}
-		assertEquals(2,size);
+	public void testGetAllBien() throws DAOException {
+		List<Bien> liste = this.bDAO.getAllBiens();
+		assertEquals(2,liste.size());
 		assertEquals(this.b,liste.get(0));
 		assertEquals(this.l,liste.get(1));
 	}
@@ -109,20 +96,24 @@ public class TestBienDAO {
 	}
 	
 	@Test
-	public void testGetBienByIdImmeuble() throws SQLException {
+	public void testGetBienByIdImmeuble() throws DAOException{
 		ResultSet s = this.bDAO.getBiensFromOneImmeuble(idBat);
 		int size = 0;
 		List<Bien> liste = new LinkedList<>();
-		while (s.next()) {
-			if (s.getString(2).equals("G")) {
-				Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
-				liste.add(g);
-			}else {
-				Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
-				liste.add(l);
+		try {
+			while (s.next()) {
+				if (s.getString(2).equals("G")) {
+					Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
+					liste.add(g);
+				}else {
+					Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
+					liste.add(l);
+				}
+				
+				size++;
 			}
-			
-			size++;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		assertEquals(2,size);
 		assertEquals(this.b,liste.get(0));
