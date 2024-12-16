@@ -1,4 +1,5 @@
 package ihm;
+
 import controleur.ControleurLogInSignUp;
 import java.awt.EventQueue;
 
@@ -13,11 +14,8 @@ import java.awt.Cursor;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -60,6 +58,11 @@ public class VueLogin extends JFramePlus {
 	}
 	
 	public VueLogin() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception ex) {
+			Logger.getLogger(VueMenu.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		@SuppressWarnings("unused")
 		VueSignUp vueSignUp=new VueSignUp();
 		ControleurLogInSignUp controleur = ControleurLogInSignUp.getControleur();

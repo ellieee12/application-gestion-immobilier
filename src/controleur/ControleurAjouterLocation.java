@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import classes.Location;
 import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
+import ihm.VueMesLocations;
 import modeleDAO.BienDAO;
 import modeleDAO.DAOException;
 import modeleDAO.LocataireDAO;
@@ -21,6 +22,7 @@ import modeleDAO.LocationDAO;
 public class ControleurAjouterLocation implements ActionListener{
 	
 	private VueAjouterLocation vue;
+	private VueMesLocations vueMesLocations;
 	private BienDAO bienDAO;
 	private LocationDAO locationDAO;
 	private LocataireDAO locataireDAO;
@@ -43,6 +45,11 @@ public class ControleurAjouterLocation implements ActionListener{
 		return true;
 	}
 	
+	private void valider() {
+		this.vueMesLocations.getControleurMesLocations();
+		this.vue.dispose();
+	}
+	
 	private boolean verifLocationExiste() {
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
@@ -57,8 +64,9 @@ public class ControleurAjouterLocation implements ActionListener{
 		return verifComplet() && !verifLocationExiste();
 	}
 	
-	public ControleurAjouterLocation(VueAjouterLocation vue) throws SQLException, DAOException {
+	public ControleurAjouterLocation(VueAjouterLocation vue, VueMesLocations vueMesLocations) throws SQLException, DAOException {
 		this.vue=vue;
+		this.vueMesLocations = vueMesLocations;
 		this.bienDAO=new BienDAO();
 		this.locationDAO=new LocationDAO();
 		this.locataireDAO=new LocataireDAO();
@@ -86,11 +94,12 @@ public class ControleurAjouterLocation implements ActionListener{
 				try {
 					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
 							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-							this.vue.getCaution(), this.vue.getDateDerniereRegularisation());
+							this.vue.getCaution(), this.vue.getSelectedBien());
 					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
 							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
 					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
-							this.vue.getSelectedLocataire());
+							this.vue.getSelectedLocataire(), this.vueMesLocations);
+					valider();
 					frame.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();

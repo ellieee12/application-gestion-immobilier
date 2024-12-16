@@ -79,7 +79,7 @@ public class ControleurListFactures implements ActionListener{
 		} else if (b.getText() == "Supprimer") {
 			FactureDAO facture = new FactureDAO();
 			try {
-				facture.supprimerFacture(this.factures.get(this.vue.getLigneChoisi()).getNumero_devis());
+				facture.supprimerFacture(this.factures.get(this.vue.getLigneChoisi()).getNumero());
 			} catch (DAOException e1) {
 				e1.printStackTrace();
 			}

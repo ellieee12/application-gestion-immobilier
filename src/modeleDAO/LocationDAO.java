@@ -42,23 +42,17 @@ private MySQLCon mySQLCon;
 		Location location) throws SQLException {
 		try {
 			String reqInsertLocation = "insert into location (id_bien,date_debut,nb_mois,provision_charges_ttc,loyer_ttc,caution_ttc,"
-					+ "date_derniere_reg,annee,trimestre) "
-					+ "values (?,?,?,?,?,?,?,?,?)";
+					+ "annee,trimestre) "
+					+ "values (?,?,?,?,?,?,?,?)";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
 			stmtInsertLocation.setInt(3, location.getNb_mois());
-			if (location.isColocation()) {
-				stmtInsertLocation.setInt(4, 1);
-			}else {
-				stmtInsertLocation.setInt(4, 0);
-			}
-			stmtInsertLocation.setFloat(5, location.getProvision_chargement_TTC());
-			stmtInsertLocation.setFloat(6, location.getLoyer_TTC());
-			stmtInsertLocation.setFloat(7, location.getCaution_TTC());
-			stmtInsertLocation.setDate(8, location.getDate_derniere_reg());
-			stmtInsertLocation.setString(9,"2024-01-01");
-			stmtInsertLocation.setInt(10, 1);
+			stmtInsertLocation.setFloat(4, location.getProvision_chargement_TTC());
+			stmtInsertLocation.setFloat(5, location.getLoyer_TTC());
+			stmtInsertLocation.setFloat(6, location.getCaution_TTC());
+			stmtInsertLocation.setString(7,"2024-01-01");
+			stmtInsertLocation.setInt(8, 1);
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			

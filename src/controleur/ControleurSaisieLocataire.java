@@ -3,6 +3,7 @@ package controleur;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		return controleur;
 	}
 	
-	private boolean verificationLocataireExiste() {
+	private boolean verificationLocataireExiste() throws SQLException {
 		try {
 			if (this.dao.locataireExists(this.vue.getId())) {
 				JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà",
@@ -55,7 +56,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		return true;
 	}
 	
-	private boolean allVerif() {
+	private boolean allVerif() throws SQLException {
 		return verificationComplet() && !verificationLocataireExiste();
 	}
 
@@ -65,14 +66,21 @@ public class ControleurSaisieLocataire implements ActionListener {
 		if (b.getText() == "Annuler") {
 			this.vue.dispose();
 		} else if (b.getText() == "Ajouter") {
-			if (allVerif()) {
-				try {
-					this.dao.ajouterLocataire(new Locataire(this.vue.getId(), this.vue.getNom(),
-							this.vue.getPrenom(),this.vue.getTel(),this.vue.getMail(),this.vue.getDateDeNaissance()));
-				} catch (DAOException e1) {
-					e1.printStackTrace();
+			try {
+				if (allVerif()) {
+					Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
+					try {
+						this.dao.ajouterLocataire(loc);
+					} catch (DAOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//ferme cette page et ouvre le Menu
+					this.vue.dispose();
 				}
-				this.vue.dispose();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

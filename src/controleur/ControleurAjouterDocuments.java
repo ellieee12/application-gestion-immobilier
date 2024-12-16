@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import classes.DocumentLocation;
 import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
+import ihm.VueMesLocations;
 import modeleDAO.DocumentLocationDAO;
 
 public class ControleurAjouterDocuments implements ActionListener {
@@ -27,6 +28,7 @@ public class ControleurAjouterDocuments implements ActionListener {
 		}
 		
 	}
+	private VueMesLocations vueMesLocations;
 	private DocumentEnCours documentEnCours;
 	private VueAjouterDocuments vue;
 	private DocumentLocation docEtat, docCaution, docEau, docElec;
@@ -34,8 +36,9 @@ public class ControleurAjouterDocuments implements ActionListener {
 	private String idBien;
 	private String idLocataire;
 	
-	public ControleurAjouterDocuments(VueAjouterDocuments vue,Date dateDebut, String idBien, String idLocataire) {
+	public ControleurAjouterDocuments(VueAjouterDocuments vue,Date dateDebut, String idBien, String idLocataire, VueMesLocations vueMesLocations) {
 		this.vue=vue;
+		this.vueMesLocations = vueMesLocations;
 		this.idBien=idBien;
 		this.idLocataire=idLocataire;
 		this.dateDebut=dateDebut;
@@ -67,8 +70,14 @@ public class ControleurAjouterDocuments implements ActionListener {
 			this.ajouterDocumentDAO(docEau);
 			this.ajouterDocumentDAO(docElec);
 			this.ajouterDocumentDAO(docEtat);
+			valider();
 			this.vue.dispose();
 		}
+	}
+	
+	private void valider() {
+		this.vueMesLocations.getControleurMesLocations().Update();
+		this.vue.dispose();
 	}
 
 	private void ajouterDocumentDAO(DocumentLocation document) {
