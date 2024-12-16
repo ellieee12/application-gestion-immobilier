@@ -23,11 +23,11 @@ import modele.Logement;
 import modele.Maison;
 
 public class TestImmeubleDAO {
-	ImmeubleDAO imDAO;
-	Batiment bat;
-	Maison maison;
-	String idBat;
-	String idMaison;
+	private ImmeubleDAO imDAO;
+	private Batiment bat;
+	private Maison maison;
+	private String idBat;
+	private String idMaison;
 
 	@Before
 	public void setUp() throws DAOException {

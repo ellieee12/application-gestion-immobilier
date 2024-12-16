@@ -1,10 +1,31 @@
 package modele;
 import java.sql.Date;
+import java.util.Objects;
+
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("e3931666-7fc9-4eeb-858f-75a78d0c6911")
 public class Locataire {
-    @objid ("49dee57f-e834-4592-a53e-050a8f321a2a")
+    @Override
+	public int hashCode() {
+		return Objects.hash(Nom, Prenom, Telephone, date_naissance, id_locataire, mail);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Locataire other = (Locataire) obj;
+		return Objects.equals(Nom, other.Nom) && Objects.equals(Prenom, other.Prenom)
+				&& Objects.equals(Telephone, other.Telephone) && Objects.equals(date_naissance, other.date_naissance)
+				&& Objects.equals(id_locataire, other.id_locataire) && Objects.equals(mail, other.mail);
+	}
+
+	@objid ("49dee57f-e834-4592-a53e-050a8f321a2a")
     private String Nom;
 
     @objid ("e92c581a-8e59-4e79-9d8b-2a64380abfec")

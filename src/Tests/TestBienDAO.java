@@ -20,14 +20,14 @@ import modele.ImmeubleDAO;
 import modele.Logement;
 
 public class TestBienDAO {
-	BienDAO bDAO;
-	ImmeubleDAO imDAO;
-	Batiment bat;
-	Garage b;
-	Logement l;
-	String idBat;
-	String idBienGarage;
-	String idBienLogement;
+	private BienDAO bDAO;
+	private ImmeubleDAO imDAO;
+	private Batiment bat;
+	private Garage b;
+	private Logement l;
+	private String idBat;
+	private String idBienGarage;
+	private String idBienLogement;
 
 	@Before
 	public void setUp() throws DAOException {

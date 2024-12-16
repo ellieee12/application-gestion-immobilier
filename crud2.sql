@@ -29,7 +29,9 @@ DROP PROCEDURE IF EXISTS getAllLocataires$$
 DROP PROCEDURE IF EXISTS getLocataireById$$
 DROP PROCEDURE IF EXISTS insertLocataire$$
 DROP PROCEDURE IF EXISTS deleteLocation$$
+DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
+DROP PROCEDURE IF EXISTS deleteLocataire$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -258,6 +260,12 @@ BEGIN
     select * from locataire where id_locataire=v_id_locataire;
 END$$
 
+CREATE PROCEDURE deleteLocataire(v_id_locataire varchar(20))
+BEGIN
+    delete from louer where id_locataire=v_id_locataire;
+    delete from locataire where id_locataire=v_id_locataire;
+end$$
+
 CREATE PROCEDURE deleteLocation(
     v_id_bien varchar(20),
     v_date_debut date
@@ -285,7 +293,7 @@ BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
     loyer_ttc,caution_ttc,date_derniere_reg,annee,trimestre)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,)
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,v_annee, v_trimestre);
 END$$
 
 
