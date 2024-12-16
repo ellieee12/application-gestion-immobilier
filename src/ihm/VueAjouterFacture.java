@@ -32,7 +32,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-public class VueAjouterFacture extends JFrame {
+public class VueAjouterFacture extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -252,6 +252,8 @@ public class VueAjouterFacture extends JFrame {
 		valider = new JButton("Valider");
 		panel_2.add(valider);
 		this.valider.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 	
 	private void initialiserComboBoxBiens(ControleurAjouterFacture controleur) {

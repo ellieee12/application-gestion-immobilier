@@ -5,10 +5,18 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
+
+import org.jdesktop.swingx.JXLabel;
 
 public class JFramePlus extends JFrame {
 	
@@ -28,12 +36,21 @@ public class JFramePlus extends JFrame {
 	    for (Component c : comps) {
 	        if (c.getFont() != null) {
 	        	c.setFont(c.getFont().deriveFont((float) (c.getFont().getSize() + i)));
+	        	if (c instanceof JLabel) {
+	        		if (((JLabel) c).getText().toLowerCase().startsWith("<html>")) {
+	        			((JLabel) c).setText(((JLabel) c).getText().replace("3",String.valueOf((float)3+i/2)));
+	        		}
+	        	}
 	        }
 	        if (c instanceof JButton) {
 	        	c.setPreferredSize(new Dimension((int) c.getPreferredSize().getWidth() + i*2, (int) c.getPreferredSize().getHeight() + i*2));
 	        }
-	        if (c instanceof JFramePlus) {
-	        	c.setBounds(new Rectangle(100,100,(int)c.getBounds().getWidth() + i*500,(int) c.getBounds().getHeight() + i*500));
+	        if (c instanceof JTable) {
+	        	((JTable) c).setRowHeight(((JTable) c).getRowHeight() + i);
+	        	((JTable) c).getTableHeader().setFont(c.getFont().deriveFont((float) (c.getFont().getSize() + i/2)));
+	        }
+	        if (c instanceof Container) {
+	        	this.setBounds(new Rectangle(100,100,(int)this.getBounds().getWidth() + i,(int) this.getBounds().getHeight() + i));
 	        }
 	    }
 	}

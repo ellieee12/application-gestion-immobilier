@@ -20,7 +20,7 @@ import controleur.ControleurMesLocations;
 import modele.Immeuble;
 import modele.Location;
 
-public class VueMesLocations extends JFrame {
+public class VueMesLocations extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -115,6 +115,8 @@ public class VueMesLocations extends JFrame {
 			scrollPane.setViewportView(table);
 			
 			//this.table.addMouseListener(controleurMesLocations);
+			
+			this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurMesLocations controleur) {

@@ -19,7 +19,7 @@ import javax.swing.text.MaskFormatter;
 import controleur.ControleurSaisieLocataire;
 import java.awt.FlowLayout;
 
-public class VueSaisieLocataire extends JFrame {
+public class VueSaisieLocataire extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -229,6 +229,8 @@ public class VueSaisieLocataire extends JFrame {
 		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
 		btnNewButton.addActionListener(controleur);
 		panelBoutons.add(btnNewButton);
+		
+		this.setSizeMulti(5);
 	}
 
 }

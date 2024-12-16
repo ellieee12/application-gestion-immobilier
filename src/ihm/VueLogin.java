@@ -151,7 +151,6 @@ public class VueLogin extends JFramePlus {
 		lblCreerCompte_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		panel.add(lblCreerCompte_2);
 		
-		
 		this.setSizeMulti(5);
 	}
 	

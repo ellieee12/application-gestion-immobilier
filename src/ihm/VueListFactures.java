@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class VueListFactures extends JFrame {
+public class VueListFactures extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -115,6 +115,8 @@ public class VueListFactures extends JFrame {
 		this.supprimer = new JButton("Supprimer");
 		panel_2.add(this.supprimer, BorderLayout.NORTH);
 		this.supprimer.addActionListener(controleur);
+		
+		this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurListFactures controleur) {

@@ -24,7 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class VueMesBiens extends JFrame {
+public class VueMesBiens extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -137,6 +137,8 @@ public class VueMesBiens extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(this.table);
+		
+		this.setSizeMulti(5);
 	}
 
 	public void buildTable(ControleurMesBiens controleur) {

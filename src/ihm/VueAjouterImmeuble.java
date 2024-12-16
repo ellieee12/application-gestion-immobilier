@@ -21,7 +21,7 @@ import controleur.ControleurAjouterImmeuble;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 
-public class VueAjouterImmeuble extends JFrame {
+public class VueAjouterImmeuble extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -198,6 +198,8 @@ public class VueAjouterImmeuble extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Periode Construction</font>");
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
+		
+		this.setSizeMulti(5);
 	}
 	
 }

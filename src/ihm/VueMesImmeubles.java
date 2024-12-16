@@ -18,7 +18,7 @@ import controleur.ControleurMesImmeubles;
 import modele.Immeuble;
 import modele.DAOException;
 
-public class VueMesImmeubles extends JFrame {
+public class VueMesImmeubles extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -51,7 +51,7 @@ public class VueMesImmeubles extends JFrame {
 		controleurMesImmeubles = new ControleurMesImmeubles(this);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 650, 300);
+		setBounds(100, 100, 750, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -112,6 +112,8 @@ public class VueMesImmeubles extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		this.table.addMouseListener(controleurMesImmeubles);
+		
+		this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurMesImmeubles controleur) {

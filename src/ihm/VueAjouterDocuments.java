@@ -17,7 +17,7 @@ import javax.swing.border.EtchedBorder;
 import controleur.ControleurAjouterDocuments;
 import modele.Location;
 
-public class VueAjouterDocuments extends JFrame {
+public class VueAjouterDocuments extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
