@@ -75,15 +75,15 @@ public class VueAjouterBien extends JFrame {
 		PanelLibellé.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_6 = new JLabel("Type Bien");
+		JLabel lblNewLabel_6 = new JLabel("<html><font size='3' color=black>Type Bien</font>");
 		panel_9.add(lblNewLabel_6, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		PanelLibellé.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Identifiant du Bien");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		JLabel lblNewLabel_3 = new JLabel("<html><font size='3' color=black>Identifiant du Bien</font>");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_5.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_12_1 = new JPanel();
@@ -97,35 +97,35 @@ public class VueAjouterBien extends JFrame {
 		PanelLibellé.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Date Acquisition");
+		JLabel lblNewLabel_2 = new JLabel("<html><font size='3' color=black>Date Acquisition</font>");
 		panel_4.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		JPanel panel_3 = new JPanel();
 		PanelLibellé.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Numéro Etage");
+		JLabel lblNewLabel_1 = new JLabel("<html><font size='3' color=black>Numéro Etage</font>");
 		panel_3.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panel_6 = new JPanel();
 		PanelLibellé.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_4 = new JLabel("Nombre de pièces");
+		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Nombre de pièces</font>");
 		panel_6.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		JPanel panel_10 = new JPanel();
 		PanelLibellé.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_5 = new JLabel("Surface habitable");
+		JLabel lblNewLabel_5 = new JLabel("<html><font size='3' color=black>Surface habitable</font>");
 		panel_10.add(lblNewLabel_5, BorderLayout.NORTH);
 		
 		JPanel panel_12 = new JPanel();
 		PanelLibellé.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_7 = new JLabel("Immeuble");
+		JLabel lblNewLabel_7 = new JLabel("<html><font size='3' color=black>Immeuble</font>");
 		panel_12.add(lblNewLabel_7, BorderLayout.NORTH);
 		
 		JPanel PanelChamps = new JPanel();

@@ -74,7 +74,7 @@ public class VueAjouterImmeuble extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 20));
+		contentPane.setLayout(new BorderLayout(3, 20));
 		
 		JLabel lblNewLabel = new JLabel("Ajout d'un immeuble");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -155,7 +155,7 @@ public class VueAjouterImmeuble extends JFrame {
 		
 		JPanel PanelLibellé = new JPanel();
 		contentPane.add(PanelLibellé, BorderLayout.WEST);
-		PanelLibellé.setLayout(new GridLayout(0, 1, 2, 0));
+		PanelLibellé.setLayout(new GridLayout(0, 1, 2, 5));
 		
 		JPanel panel_7 = new JPanel();
 		PanelLibellé.add(panel_7);
@@ -196,7 +196,7 @@ public class VueAjouterImmeuble extends JFrame {
 		PanelLibellé.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_4 = new JLabel("Periode Construction");
+		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Periode Construction</font>");
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
 	}
 	
