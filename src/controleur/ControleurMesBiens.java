@@ -1,10 +1,10 @@
 package controleur;
 
-import classes.Bien;
-import classes.Garage;
-import classes.Logement;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
+import modele.Bien;
+import modele.Garage;
+import modele.Logement;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

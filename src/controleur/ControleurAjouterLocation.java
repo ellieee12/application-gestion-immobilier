@@ -10,10 +10,10 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import classes.Location;
 import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
+import modele.Location;
 import modeleDAO.BienDAO;
 import modeleDAO.DAOException;
 import modeleDAO.LocataireDAO;

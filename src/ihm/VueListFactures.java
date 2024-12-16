@@ -14,11 +14,11 @@ import javax.swing.JTable;
 import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Bien;
-import classes.Facture;
-import classes.Logement;
 import controleur.ControleurListFactures;
 import controleur.ControleurMesBiens;
+import modele.Bien;
+import modele.Facture;
+import modele.Logement;
 
 import java.awt.event.ActionListener;
 import java.util.Date;

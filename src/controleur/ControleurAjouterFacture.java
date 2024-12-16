@@ -13,12 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import classes.Facture;
-import classes.Garage;
 import ihm.VueAjouterBien;
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
 import ihm.VueMesBiens;
+import modele.Facture;
+import modele.Garage;
 import modeleDAO.BienDAO;
 import modeleDAO.DAOException;
 import modeleDAO.FactureDAO;

@@ -1,32 +1,47 @@
-package Tests;
-
-import static org.junit.Assert.*;
+	package Tests;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import modeleDAO.BienDAO;
+import modele.Bien;
 
 public class TestBienDAO {
-	BienDAO bDAO;
-
+	private BienDAO bienDAO;
+	private ImmeubleDAO immeubleDAO;
+//	public static void main(String[] args) throws SQLException {
+//		BienDAO bien = new BienDAO();
+//		ResultSet rs = bien.getBiensFromOneImmeuble("1");
+//		while(rs.next())  
+//			System.out.println(rs.getString(1)+"  "+rs.getString(2)+"  "+rs.getString(3)
+//			+"  "+rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getString(6)); 
+//		bien.supprimerBien("999");
+//		bien.ajouterBien(99, null, "999", 99, 99.9f, "1", "G");
+//	}
+	
 	@Before
-	public void setUp() {
-		this.bDAO= new BienDAO();
-		
+	public void setUp() throws SQLException {
+		this.bienDAO=new BienDAO();
+		this.immeubleDAO=new ImmeubleDAO();
+		this.bienDAO.setAutoCommit(false);
 	}
 	
+	@After
 	public void tearDown() {
-		this.bDAO=null;	
-	
+		this.bienDAO = null;
+		this.immeubleDAO=null;
 	}
 	
 	@Test
-	public void testGetBiens() {
-		this.bDAO.ajouterBien(3, Date.valueOf("12/01/2004"), "testBien001", 4, 42.3f, "1", "L");
+	public void testGetBiensByIdImmeuble() throws SQLException {
 		
+		this.immeubleDAO.ajouterImmeuble("testImmeuble", "testAdresse", "12345", "Toulouse","", "B");
+		this.bienDAO.ajouterBien(1, Date.valueOf("01/01/20040"), "Bien1", 99, 99f, "testImmeuble", "L");
+		
+		this.bienDAO.rollback();
 	}
-
 }

@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import classes.Locataire;
 import ihm.VueSaisieLocataire;
+import modele.Locataire;
 import modeleDAO.DAOException;
 import modeleDAO.LocataireDAO;
 

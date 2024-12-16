@@ -15,9 +15,9 @@ import java.util.Date;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Bien;
-import classes.Logement;
 import controleur.ControleurMesBiens;
+import modele.Bien;
+import modele.Logement;
 import modeleDAO.DAOException;
 
 import javax.swing.JButton;

@@ -5,9 +5,9 @@ import java.sql.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import classes.Bien;
-import classes.Garage;
-import classes.Logement;
+import modele.Bien;
+import modele.Garage;
+import modele.Logement;
 
 import static org.junit.Assert.assertNotNull;
 

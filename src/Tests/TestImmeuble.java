@@ -1,13 +1,14 @@
 package Tests;
 import static org.junit.Assert.assertTrue;
 
-import classes.Batiment;
-import classes.Bien;
-import classes.Maison;
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import modele.Batiment;
+import modele.Bien;
+import modele.Maison;
 
 public class TestImmeuble {
 	

@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import classes.Batiment;
-import classes.Immeuble;
-import classes.Maison;
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
+import modele.Batiment;
+import modele.Immeuble;
+import modele.Maison;
 import ihm.VueMesBiens;
 import modeleDAO.DAOException;
 import modeleDAO.ImmeubleDAO;

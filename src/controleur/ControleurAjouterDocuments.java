@@ -6,10 +6,10 @@ import java.sql.Date;
 
 import javax.swing.JButton;
 
-import classes.DocumentLocation;
 import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
 import ihm.VueMesLocations;
+import modele.DocumentLocation;
 import modeleDAO.DocumentLocationDAO;
 
 public class ControleurAjouterDocuments implements ActionListener {

@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import classes.Batiment;
-import classes.Maison;
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
+import modele.Batiment;
+import modele.Maison;
 
 public class ControleurAjouterImmeuble implements ActionListener {
 	

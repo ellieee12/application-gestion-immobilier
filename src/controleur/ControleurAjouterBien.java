@@ -19,11 +19,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import classes.Garage;
-import classes.Immeuble;
-import classes.Logement;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
+import modele.Garage;
+import modele.Immeuble;
+import modele.Logement;
 
 public class ControleurAjouterBien implements ActionListener {
 	

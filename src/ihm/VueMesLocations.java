@@ -15,10 +15,10 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Immeuble;
-import classes.Location;
 import controleur.ControleurMesImmeubles;
 import controleur.ControleurMesLocations;
+import modele.Immeuble;
+import modele.Location;
 
 public class VueMesLocations extends JFrame {
 

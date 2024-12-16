@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import classes.Location;
 import controleur.ControleurAjouterDocuments;
+import modele.Location;
 
 public class VueAjouterDocuments extends JFrame {
 

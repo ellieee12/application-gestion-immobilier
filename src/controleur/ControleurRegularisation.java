@@ -9,10 +9,10 @@ import java.util.Calendar;
 
 import javax.swing.JButton;
 
-import classes.Compteur;
-import classes.Compteur.typeCompteur;
-import classes.Relevé;
 import ihm.VueRegularisation;
+import modele.Compteur;
+import modele.Relevé;
+import modele.Compteur.typeCompteur;
 import modeleDAO.CompteurDAO;
 
 public class ControleurRegularisation implements ActionListener {

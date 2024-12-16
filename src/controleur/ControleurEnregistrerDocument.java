@@ -10,9 +10,9 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import classes.DocumentLocation;
 import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
+import modele.DocumentLocation;
 
 public class ControleurEnregistrerDocument implements ActionListener{
 	

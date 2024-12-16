@@ -19,11 +19,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Bien;
-import classes.Immeuble;
-import classes.Logement;
 import controleur.ControleurMesBiens;
 import controleur.ControleurMesImmeubles;
+import modele.Bien;
+import modele.Immeuble;
+import modele.Logement;
 import modeleDAO.DAOException;
 
 public class VueMesImmeubles extends JFrame {
