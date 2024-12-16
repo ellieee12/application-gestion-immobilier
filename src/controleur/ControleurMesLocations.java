@@ -1,32 +1,17 @@
 package controleur;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-
-import ihm.VueAjouterImmeuble;
 import ihm.VueAjouterLocation;
-import ihm.VueMesImmeubles;
 import ihm.VueMesLocations;
-import modele.Batiment;
-import modele.Immeuble;
 import modele.Location;
-import modele.Maison;
-import ihm.VueMesBiens;
-import modele.ImmeubleDAO;
 import modele.LocationDAO;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 
 public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionListener {
 
@@ -42,7 +27,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			ResultSet rs = locationDAO.getAllLocations();
 			
 			while(rs.next()) {
-				location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
+				location.add(new Location(rs.getDate(2), Location.isColocationByString(rs.getString(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
 						rs.getFloat(7), rs.getString(1)));
 			}
 		} catch (SQLException e) {
@@ -62,7 +47,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
             LocationDAO location = new LocationDAO();
             ResultSet rs = location.getAllLocations();
             while(rs.next()) {
-				this.location.add(new Location(rs.getDate(2), Location.isColocationByInt(rs.getInt(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
+				this.location.add(new Location(rs.getDate(2), Location.isColocationByString(rs.getString(4)), rs.getInt(3), rs.getFloat(6), rs.getFloat(5),
 						rs.getFloat(7), rs.getString(1)));
 			}
         } catch (SQLException e) {

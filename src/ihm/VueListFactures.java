@@ -93,6 +93,7 @@ public class VueListFactures extends JFrame {
 			
 		buildTable(this.controleur);
 		this.table = new JTable(this.t);
+		table.getTableHeader().setReorderingAllowed(false);
 		this.table.setModel(this.t);
 		scrollPane.setViewportView(table);
 		

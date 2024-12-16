@@ -1,4 +1,4 @@
-package modele;
+	package modele;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -41,13 +41,14 @@ private MySQLCon mySQLCon;
 		String id_locataire,
 		Location location) throws SQLException {
 		try {
-			String reqInsertLocation = "insert into location (id_bien,date_debut,nb_mois,provision_charges_ttc,loyer_ttc,caution_ttc,"
+			String reqInsertLocation = "insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,loyer_ttc,caution_ttc,"
 					+ "annee,trimestre) "
-					+ "values (?,?,?,?,?,?,?,?)";
+					+ "values (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
 			stmtInsertLocation.setInt(3, location.getNb_mois());
+			stmtInsertLocation.setString(4, location.isColocation());
 			stmtInsertLocation.setFloat(4, location.getProvision_chargement_TTC());
 			stmtInsertLocation.setFloat(5, location.getLoyer_TTC());
 			stmtInsertLocation.setFloat(6, location.getCaution_TTC());
@@ -84,6 +85,19 @@ private MySQLCon mySQLCon;
 			System.out.println(e);
 		}
 		return true;
+	}
+	
+	public String isSelectBienColoc(String id_bien) {
+		try {
+			String req = "{call getColocationByIdBien(?)}";
+			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
+			stmt.setString(1, id_bien);
+			ResultSet rs = stmt.executeQuery();
+			return rs.getString(1);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 }

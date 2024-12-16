@@ -70,8 +70,8 @@ public class LocataireDAO {
 			}
 			return false;
 		} catch (DAOException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existance d'un locataire",e);
-			throw new DAOException("Erreurs lors de la vérification de l'existance d'un locataire",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existence d'un locataire",e);
+			throw new DAOException("Erreurs lors de la vérification de l'existence d'un locataire",e);
 		}
 	}
 	

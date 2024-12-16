@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -80,6 +81,8 @@ public class VueAjouterLocation extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 20));
+		
+		NumberFormatter formatter = createNumberformatter();	
 		
 		JLabel LabelAjouterLocation = new JLabel("Ajouter une Location");
 		LabelAjouterLocation.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -187,7 +190,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_nb_mois);
 		panel_c_nb_mois.setLayout(new BorderLayout(0, 0));
 		
-		textFieldNombreMoisPrevus = new JFormattedTextField();
+		textFieldNombreMoisPrevus = new JFormattedTextField(formatter);
 		panel_c_nb_mois.add(textFieldNombreMoisPrevus, BorderLayout.NORTH);
 		textFieldNombreMoisPrevus.setColumns(10);
 		
@@ -195,7 +198,7 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_loyer);
 		panel_c_loyer.setLayout(new BorderLayout(0, 0));
 		
-		textFieldLoyerLocataire = new JFormattedTextField();
+		textFieldLoyerLocataire = new JFormattedTextField(formatter);
 		textFieldLoyerLocataire.setValue(0.0);
 		textFieldLoyerLocataire.setColumns(10);
 		
@@ -205,15 +208,15 @@ public class VueAjouterLocation extends JFrame {
 		panelChamps.add(panel_c_provisions);
 		panel_c_provisions.setLayout(new BorderLayout(0, 0));
 		
-		formattedProvisionCharges = new JFormattedTextField();
+		formattedProvisionCharges = new JFormattedTextField(formatter);
 		formattedProvisionCharges.setValue(0.0);
 		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
 		JPanel panel__c_caution = new JPanel();
 		panelChamps.add(panel__c_caution);
 		panel__c_caution.setLayout(new BorderLayout(0, 0));
-		
-		formattedCaution = new JFormattedTextField();
+
+		formattedCaution = new JFormattedTextField(formatter);
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
@@ -228,6 +231,16 @@ public class VueAjouterLocation extends JFrame {
 		
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
+	}
+
+	private NumberFormatter createNumberformatter() {
+		NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+		return formatter;
 	}
 
 	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {
@@ -252,8 +265,11 @@ public class VueAjouterLocation extends JFrame {
 		return this.comboBoxLocataire.getSelectedItem().toString();
 	}
 	
-	public boolean isColocation() {
-		return this.chckbxColocation.isSelected();
+	public String isColocation() {
+		if (this.chckbxColocation.isSelected()) {
+			return "Colocation";
+		}
+		return "Location";
 	}
 
 	public Date getDateDebutLocation() {

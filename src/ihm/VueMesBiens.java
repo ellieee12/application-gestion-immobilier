@@ -132,6 +132,7 @@ public class VueMesBiens extends JFrame {
 
 		buildTable(controleurMesBiens);
 		this.table = new JTable(t);
+		table.getTableHeader().setReorderingAllowed(false);
 		this.table.setModel(this.t);
 		
 		JScrollPane scrollPane = new JScrollPane();

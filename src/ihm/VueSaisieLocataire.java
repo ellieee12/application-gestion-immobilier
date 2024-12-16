@@ -55,7 +55,12 @@ public class VueSaisieLocataire extends JFrame {
 	}
 	
 	public String getTel() {
-		return textFieldTel.getText();
+		if (textFieldTel.getText().equals("  -  -  -  -  ")) {
+	        return null; // Retourne null en cas d'erreur
+	    } else {
+			return textFieldTel.getText();
+	    }
+		
 	}
 	
 	public String getMail() {
@@ -78,8 +83,9 @@ public class VueSaisieLocataire extends JFrame {
 	}
 	
 	public boolean isComplet() {
-		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty() && !this.getTel().isEmpty()
-				&& !this.getMail().isEmpty() && !this.getId().isEmpty() && this.getDateDeNaissance() != null;
+		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty()
+				&& this.getTel() != null && !this.getMail().isEmpty() 
+				&& !this.getId().isEmpty() && this.getDateDeNaissance() != null;
 	}
 
 	/**

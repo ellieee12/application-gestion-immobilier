@@ -15,9 +15,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controleur.ControleurMesImmeubles;
 import controleur.ControleurMesLocations;
-import modele.Immeuble;
 import modele.Location;
 
 public class VueMesLocations extends JFrame {
@@ -107,9 +105,12 @@ public class VueMesLocations extends JFrame {
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
 				}
+				
 			};
+			
 			this.buildTable(controleurMesLocations);
 			this.table = new JTable(this.t);
+			table.getTableHeader().setReorderingAllowed(false);
 			this.table.setModel(this.t);
 			
 			scrollPane.setViewportView(table);
