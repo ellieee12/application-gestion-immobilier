@@ -22,8 +22,8 @@ import modele.Immeuble;
 import modele.Location;
 import modele.Maison;
 import ihm.VueMesBiens;
-import modeleDAO.ImmeubleDAO;
-import modeleDAO.LocationDAO;
+import modele.ImmeubleDAO;
+import modele.LocationDAO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
