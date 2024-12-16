@@ -165,7 +165,7 @@ public class VueAjouterLocation extends JFrame {
 		panel_c_colocation.setLayout(new BorderLayout(0, 0));
 		
 		chckbxColocation = new JCheckBox("");
-		panel_c_colocation.add(chckbxColocation, BorderLayout.WEST);
+		panel_c_colocation.add(chckbxColocation, BorderLayout.NORTH);
 		
 		JPanel panel_c_date_debut_location = new JPanel();
 		panelChamps.add(panel_c_date_debut_location);
