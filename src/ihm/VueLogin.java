@@ -1,26 +1,38 @@
 package ihm;
+
 import controleur.ControleurLogInSignUp;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.FontUIResource;
+
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 
-public class VueLogin extends JFrame {
+public class VueLogin extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,6 +43,8 @@ public class VueLogin extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,6 +58,11 @@ public class VueLogin extends JFrame {
 	}
 	
 	public VueLogin() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception ex) {
+			Logger.getLogger(VueMenu.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		@SuppressWarnings("unused")
 		VueSignUp vueSignUp=new VueSignUp();
 		ControleurLogInSignUp controleur = ControleurLogInSignUp.getControleur();
@@ -133,6 +152,7 @@ public class VueLogin extends JFrame {
 		panel.add(lblCreerCompte_2);
 		
 		
+		this.setSizeMulti(5);
 	}
 	
 	public JTextField getUsername() {

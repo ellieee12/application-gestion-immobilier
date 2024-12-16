@@ -42,28 +42,27 @@ public class VueAjouterLocation extends JFrame {
 	private JCheckBox chckbxColocation;
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
-	private JFormattedTextField formattedDateDerniereRegularisation;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueAjouterLocation frame = new VueAjouterLocation();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VueAjouterLocation frame = new VueAjouterLocation();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 	
 	public boolean isComplet() {
-		return true;/*!this.getSelectedBien().isEmpty() && this.getDateDebutLocation()!=null
-				&& !this.getNbMoisPrevus().toString().isEmpty() 
-				&& this.getDateDerniereRegularisation()!=null;*/
+		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null &&
+				 this.getNbMoisPrevus() != null && this.getLoyer() != null && this.getProvisionsCharges() != null &&
+				 this.getCaution() != null;
 	}
 
 	/**
@@ -71,17 +70,8 @@ public class VueAjouterLocation extends JFrame {
 	 * @throws SQLException 
 	 * @throws DAOException 
 	 */
-	public VueAjouterLocation() throws SQLException, DAOException {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 * @throws SQLException 
-	 * @throws DAOException 
-	 */
-	private void initialize() throws DAOException, SQLException {
-		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this);
+	public VueAjouterLocation(VueMesLocations vueMesLocations) throws SQLException, DAOException {
+		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this, vueMesLocations);
 		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 481, 539);
@@ -155,13 +145,6 @@ public class VueAjouterLocation extends JFrame {
 		JLabel lblNewLabel_9 = new JLabel("Caution : ");
 		panel_9.add(lblNewLabel_9, BorderLayout.NORTH);
 		
-		JPanel panel_9_1 = new JPanel();
-		panelLibellé.add(panel_9_1);
-		panel_9_1.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_9_1 = new JLabel("Date dernière régularisation :");
-		panel_9_1.add(lblNewLabel_9_1, BorderLayout.NORTH);
-		
 		JPanel panelChamps = new JPanel();
 		contentPane.add(panelChamps, BorderLayout.CENTER);
 		panelChamps.setLayout(new GridLayout(0, 1, 0, 0));
@@ -234,18 +217,6 @@ public class VueAjouterLocation extends JFrame {
 		formattedCaution.setValue(0.0);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
-		JPanel panel_c_date_derniere_reg = new JPanel();
-		panelChamps.add(panel_c_date_derniere_reg);
-		panel_c_date_derniere_reg.setLayout(new BorderLayout(0, 0));
-		
-		formattedDateDerniereRegularisation = new JFormattedTextField();
-		try {
-			formattedDateDerniereRegularisation = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		panel_c_date_derniere_reg.add(formattedDateDerniereRegularisation, BorderLayout.NORTH);
-		
 		JPanel PanelBoutons = new JPanel();
 		contentPane.add(PanelBoutons, BorderLayout.SOUTH);
 		
@@ -297,31 +268,32 @@ public class VueAjouterLocation extends JFrame {
 	}
 	
 	public Integer getNbMoisPrevus() {
-		return (Integer.valueOf(this.textFieldNombreMoisPrevus.getText()));
+		if(textFieldNombreMoisPrevus.getText().equals("")) {
+			return null;
+		}
+		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText());
+
 	}
 	
 	public Float getLoyer() {
-		
+		System.out.println(textFieldNombreMoisPrevus.getText());
+		if(textFieldLoyerLocataire.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
 	
 	public Float getProvisionsCharges() {
+		if(formattedProvisionCharges.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.formattedProvisionCharges.getText());
 	}
 	
 	public Float getCaution() {
+		if(formattedCaution.getText().equals("0")) {
+			return null;
+		}
 		return Float.valueOf(this.formattedCaution.getText());
-	}
-	
-	public Date getDateDerniereRegularisation() {
-		try {
-	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	        sdf.setLenient(false);
-	        java.util.Date parsedDate = sdf.parse(this.formattedDateDerniereRegularisation.getText());
-	        return new Date(parsedDate.getTime());
-	    } catch (Exception e) {
-	        return null; 
-	    }
-	}
-	
+	}	
 }

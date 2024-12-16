@@ -24,32 +24,13 @@ private MySQLCon mySQLCon;
 	
 	public void supprimerLocation(String id, Date date_debut) {
 		try {
-			// Supprimer dans la table Louer
-	        String reqDeleteLouer = "DELETE FROM louer WHERE id_bien = ? AND date_debut = ?";
-	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareStatement(reqDeleteLouer);
+	        String reqDeleteLouer = "{CALL deleteLocation (?,?)}";
+	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareCall(reqDeleteLouer);
 	        stmtDeleteLouer.setString(1, id);
 	        stmtDeleteLouer.setDate(2, date_debut);
-	        stmtDeleteLouer.executeUpdate();
+	        int i = stmtDeleteLouer.executeUpdate();
+	        System.out.println(i +"lignes supprimées");
 	        stmtDeleteLouer.close();
-	        
-	        //Supprimer dans la table Documents location
-	        String reqdeleteDocumentLocation  = "DELETE FROM Document_Location WHERE id_bien = ? AND date_debut = ?";
-	        PreparedStatement stmtDeleteDocumentLocation = this.mySQLCon.getConnection().prepareStatement(reqdeleteDocumentLocation);
-	        stmtDeleteDocumentLocation.setString(1, id);
-	        stmtDeleteDocumentLocation.setDate(2, date_debut);
-	        stmtDeleteDocumentLocation.executeUpdate();
-	        stmtDeleteDocumentLocation.close();
-	        
-			
-	        //Supprimer dans la table Location
-			String reqDeleteLocation = "delete from Location where id_bien = ? and date_debut = ?";
-			PreparedStatement stmtDeleteLocation = this.mySQLCon.getConnection().prepareStatement(reqDeleteLocation);
-			stmtDeleteLocation.setString(1, id);
-			stmtDeleteLocation.setDate(2, date_debut);
-			int nbLignesSupprimeesLocation = stmtDeleteLocation.executeUpdate();
-			stmtDeleteLocation.close();
-			System.out.println(nbLignesSupprimeesLocation+" lignes supprimées dans le table (Louer)");	
-	
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -61,8 +42,8 @@ private MySQLCon mySQLCon;
 		Location location) throws SQLException {
 		try {
 			String reqInsertLocation = "insert into location (id_bien,date_debut,nb_mois,provision_charges_ttc,loyer_ttc,caution_ttc,"
-					+ "date_derniere_reg,annee,trimestre) "
-					+ "values (?,?,?,?,?,?,?,?,?)";
+					+ "annee,trimestre) "
+					+ "values (?,?,?,?,?,?,?,?)";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
@@ -70,9 +51,8 @@ private MySQLCon mySQLCon;
 			stmtInsertLocation.setFloat(4, location.getProvision_chargement_TTC());
 			stmtInsertLocation.setFloat(5, location.getLoyer_TTC());
 			stmtInsertLocation.setFloat(6, location.getCaution_TTC());
-			stmtInsertLocation.setDate(7, location.getDate_derniere_reg());
-			stmtInsertLocation.setString(8,"2024-01-01");
-			stmtInsertLocation.setInt(9, 1);
+			stmtInsertLocation.setString(7,"2024-01-01");
+			stmtInsertLocation.setInt(8, 1);
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			

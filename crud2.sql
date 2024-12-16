@@ -1,3 +1,4 @@
+use saes3;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS getAllBiens$$
@@ -21,6 +22,14 @@ DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
 DROP PROCEDURE IF EXISTS getProvisionFromLocation$$
 DROP PROCEDURE IF EXISTS setNouvelleProvision$$
 DROP PROCEDURE IF EXISTS addReleve$$
+DROP PROCEDURE IF EXISTS getAllFactures$$
+DROP PROCEDURE IF EXISTS deleteFacture$$
+DROP PROCEDURE IF EXISTS insertFacture$$
+DROP PROCEDURE IF EXISTS getAllLocataires$$
+DROP PROCEDURE IF EXISTS getLocataireById$$
+DROP PROCEDURE IF EXISTS insertLocataire$$
+DROP PROCEDURE IF EXISTS deleteLocation$$
+DROP PROCEDURE IF EXISTS getFactureByNumero$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -193,5 +202,92 @@ BEGIN
     insert into releve (annee,index_comp,id_compteur)
     values (v_annee,v_index,v_id_compteur);
 END$$
+CREATE PROCEDURE getAllFactures()
+
+BEGIN
+    select * from facture;
+END$$
+
+CREATE PROCEDURE deleteFacture(v_numero_facture varchar(50))
+
+BEGIN
+    delete from facture where numero_facture=v_numero_facture;
+END$$
+
+CREATE PROCEDURE insertFacture (
+    v_numero_facture VARCHAR(50),
+    v_date_paiement DATE,
+    v_date_emission DATE,
+    v_numero_devis VARCHAR(50),
+    v_designation VARCHAR(50),
+    v_montant_reel_paye DECIMAL(15,2),
+    v_montant DECIMAL(15,2),
+    v_imputable_locataire DECIMAL(15,2),
+    v_id_bien VARCHAR(20)
+)
+BEGIN
+    insert into facture (numero_facture,date_paiement,date_emission,numero_devis,designation,montant_reel_paye,montant,imputable_locataire,id_bien)
+    values (v_numero_facture,v_date_paiement,v_date_emission,v_numero_devis,v_designation,v_montant_reel_paye,v_montant,v_imputable_locataire,v_id_bien);
+END$$
+
+CREATE PROCEDURE getFactureByNumero(v_numero_facture varchar(50))
+BEGIN
+    select * from facture where numero_facture = v_numero_facture;
+END$$
+
+CREATE PROCEDURE getAllLocataires()
+BEGIN
+    select * from locataire;
+END$$
+
+CREATE PROCEDURE insertLocataire(
+    v_id_locataire varchar(20),
+    v_nom VARCHAR(30),
+    v_prenom VARCHAR(30),
+    v_telephone CHAR(15),
+    v_mail VARCHAR(50),
+    v_date_naissance DATE
+)
+BEGIN
+    insert into locataire(id_locataire, nom, prenom, mail, telephone, date_naissance) 
+    values (v_id_locataire,v_nom,v_prenom,v_mail,v_telephone,v_date_naissance);
+END$$ 
+
+CREATE PROCEDURE getLocataireById(v_id_locataire varchar(20))
+BEGIN
+    select * from locataire where id_locataire=v_id_locataire;
+END$$
+
+CREATE PROCEDURE deleteLocation(
+    v_id_bien varchar(20),
+    v_date_debut date
+)
+BEGIN
+    delete from louer where id_bien = v_id_bien and date_debut = v_date_debut;
+    delete from Document_Location where id_bien = v_id_bien and date_debut = v_date_debut;
+    delete from location where id_bien = v_id_bien and date_debut = v_date_debut;
+END$$
+
+CREATE PROCEDURE insertLocation (
+    v_id_locataire varchar(20),
+    v_id_bien VARCHAR(20),
+    v_date_debut DATE,
+    v_nb_mois INT,
+    v_colocation TINYINT(1),
+    v_provision_charges_ttc decimal(15,2),
+    v_loyer_ttc decimal(15,2),
+    v_caution_ttc decimal(15,2),
+    v_date_derniere_reg DATE,
+    v_annee date,
+    v_trimestre smallint
+)
+BEGIN
+    insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
+    loyer_ttc,caution_ttc,date_derniere_reg,annee,trimestre)
+    values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,)
+END$$
+
+
 
 DELIMITER ;

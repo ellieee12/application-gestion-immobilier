@@ -25,7 +25,7 @@ public class VueSaisieLocataire extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrenom;
-	private JTextField textFieldTel;
+	private JFormattedTextField textFieldTel;
 	private JTextField textFieldMail;
 	private JTextField textFieldDateDeNaissance;
 	private JTextField textFieldId;
@@ -79,12 +79,12 @@ public class VueSaisieLocataire extends JFrame {
 	
 	public boolean isComplet() {
 		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty() && !this.getTel().isEmpty()
-				&& !this.getMail().isEmpty() && !this.getId().isEmpty();
+				&& !this.getMail().isEmpty() && !this.getId().isEmpty() && this.getDateDeNaissance() != null;
 	}
 
 	/**
 	 * Create the frame.
-	 */
+	 */ 	
 	public VueSaisieLocataire() {
 		
 		ControleurSaisieLocataire controleur = ControleurSaisieLocataire.getControleur();
@@ -178,7 +178,12 @@ public class VueSaisieLocataire extends JFrame {
 		panelChamps.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		textFieldTel = new JTextField();
+		try {
+			textFieldTel = new JFormattedTextField(new MaskFormatter("##-##-##-##-##"));
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		panel_7.add(textFieldTel, BorderLayout.NORTH);
 		textFieldTel.setColumns(10);
 		

@@ -32,7 +32,7 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		this.dao = new ImmeubleDAO();
 	}
 	
-	private boolean verifImmeubleExiste() throws HeadlessException, SQLException {
+	private boolean verifImmeubleExiste() throws HeadlessException, DAOException {
 		if (this.dao.immeubleExiste(this.vue.getId())) {
 			JOptionPane.showMessageDialog(this.vue, 
 					"Cet immeuble existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
@@ -50,12 +50,12 @@ public class ControleurAjouterImmeuble implements ActionListener {
 		return true;
 	}
 	
-	private boolean allVerifs() throws HeadlessException, SQLException {
+	private boolean allVerifs() throws HeadlessException, DAOException {
 		return verifComplet() && !verifImmeubleExiste();
 	}
 	
 	// ouvre mes immeubles et ferme cette page
-	private void valider() {
+	private void valider() throws DAOException {
 		this.vueImmeubles.getControleurMesImmeubles().Update();
 		this.vue.dispose();
 	}
@@ -80,17 +80,11 @@ public class ControleurAjouterImmeuble implements ActionListener {
 					}
 					valider();
 				}
-			} catch (HeadlessException | SQLException | DAOException e1) {
+			} catch (HeadlessException |  DAOException e1) {
 				e1.printStackTrace();
 			}
 		}
 	}
-	
-//	public static synchronized ControleurAjouterImmeuble getControleur() {
-//		if (controleur == null) {
-//			controleur = new ControleurAjouterImmeuble();
-//		}
-//		return controleur;
-//	}
+
 
 }
