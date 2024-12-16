@@ -132,4 +132,4 @@ CREATE TABLE releve (
 );
 
 
-
+COMMIT;
