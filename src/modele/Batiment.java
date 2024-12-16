@@ -1,11 +1,32 @@
 package modele;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.OptionalInt;
 
 public class Batiment extends Immeuble {
 	
-    private Map<String,Bien> biens;
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(biens);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Batiment other = (Batiment) obj;
+		return Objects.equals(biens, other.biens);
+	}
+
+	private Map<String,Bien> biens;
 
 	public Batiment(String id_immeuble, String adresse, String cp, String ville, String periode_construction) {
 		super(adresse, cp, ville, id_immeuble, periode_construction);

@@ -2,6 +2,8 @@ package Tests;
 
 import java.sql.*;
 
+import modele.LogInSignUpDAO;
+
 public class TestLogInSignUpDAO {
 
 	public static void main(String[] args) throws SQLException {

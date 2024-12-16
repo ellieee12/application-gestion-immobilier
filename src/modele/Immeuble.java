@@ -1,11 +1,31 @@
 package modele;
-import java.util.Date;
+import java.util.Objects;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("53320ca9-96f2-4360-8985-3549ba7ec855")
 public class Immeuble {
-    @objid ("6c2d8138-7645-4d73-b8b3-976fa038dcfb")
+    @Override
+	public int hashCode() {
+		return Objects.hash(adresse, cp, id_immeuble, periode_construction, ville);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Immeuble other = (Immeuble) obj;
+		return Objects.equals(adresse, other.adresse) && Objects.equals(cp, other.cp)
+				&& Objects.equals(id_immeuble, other.id_immeuble)
+				&& Objects.equals(periode_construction, other.periode_construction)
+				&& Objects.equals(ville, other.ville);
+	}
+
+	@objid ("6c2d8138-7645-4d73-b8b3-976fa038dcfb")
     private String adresse;
 
     @objid ("eac8a24f-2847-4105-965a-0b8b59b17bff")

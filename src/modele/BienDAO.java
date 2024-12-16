@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import modele.Bien;
-import modele.Garage;
-import modele.Logement;
 /**
  * DAO pour la gestion des opérations CRUD sur les objets Bien.
  */
@@ -129,9 +126,9 @@ public class BienDAO{
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				if (rs.getString(6).equals("G")) {
-					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(7));
+					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(8));
 				}else {
-					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(7));
+					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(8));
 				}
 			}
 		}catch(SQLException e) {
@@ -150,12 +147,5 @@ public class BienDAO{
 	public boolean bienExiste(String id_bien) throws DAOException {
 		return this.getBienById(id_bien)!=null;
 	}
-	
-	public void setAutoCommit(boolean b) throws SQLException {
-		this.mySQLCon.getConnection().setAutoCommit(b);
-	}
-	
-	public void rollback() throws SQLException {
-		this.mySQLCon.getConnection().rollback();
-	}
+
 }

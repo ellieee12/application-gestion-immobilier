@@ -8,10 +8,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import modele.Batiment;
-import modele.Immeuble;
-
-
 public class ImmeubleDAO {
 	private MySQLCon mySQLCon;
 	private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName());
