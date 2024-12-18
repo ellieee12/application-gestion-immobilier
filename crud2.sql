@@ -51,7 +51,7 @@ BEGIN
         surface_habitable, 
         nb_pieces,
         entretien_parties_communes,
-        date_acquisition,
+        date_acquisition
     FROM bien 
     WHERE id_immeuble = v_id_immeuble;
 END$$
