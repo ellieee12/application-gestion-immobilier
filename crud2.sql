@@ -60,10 +60,10 @@ CREATE PROCEDURE insertGarage(
     IN v_id_bien varchar(20), 
     in v_date_acquisition date,
     in v_id_immeuble varchar(20),
-    in v_entretien_partie_commune decimal(15,2))
+    in v_entretien_parties_communes decimal(15,2))
 BEGIN
-    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_partie_commune)
-    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_partie_commune);
+    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_parties_communes)
+    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_parties_communes);
 END$$
 
 create procedure insertLogement(
@@ -73,13 +73,13 @@ create procedure insertLogement(
     in v_surface_habitable decimal(5,2),
     in v_date_acquisition date,
     in v_id_immeuble varchar(20),
-    in v_entretien_partie_commune decimal(15,2)
+    in v_entretien_parties_communes decimal(15,2)
     )
 BEGIN
     INSERT INTO bien (id_bien, nb_pieces, numero_etage, 
-        surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_partie_commune) 
+        surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_parties_communes) 
     VALUES (v_id_bien, v_nb_pieces, v_numero_etage, v_surface_habitable, 
-        v_date_acquisition, 'L', v_id_immeuble,v_entretien_partie_commune);
+        v_date_acquisition, 'L', v_id_immeuble,v_entretien_parties_communes);
 END$$
 
 CREATE PROCEDURE deleteBien (v_id_bien varchar(20))
