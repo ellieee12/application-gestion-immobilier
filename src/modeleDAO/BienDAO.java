@@ -1,14 +1,18 @@
 package modeleDAO;
 
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import classes.Bien;
+import classes.Compteur;
 import classes.Garage;
 import classes.Logement;
+import classes.Compteur.typeCompteur;
 /**
  * DAO pour la gestion des opérations CRUD sur les objets Bien.
  */
@@ -125,9 +129,9 @@ public class BienDAO{
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
-			System.out.println(b.getEntretienPartieCommune());
-//			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
-//			throw new DAOException("Erreurs lors de la création d'un bien",e);
+//			System.out.println(b.getEntretienPartieCommune());
+			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
+			throw new DAOException("Erreurs lors de la création d'un bien",e);
 		}
 	}
 	
@@ -157,6 +161,41 @@ public class BienDAO{
 		return null;
 	}
 
+	public void ajouterBienEtCompteurs(Bien b, String id_immeuble, List<Compteur> compteurs) throws DAOException {
+	    try {
+	        // Désactiver l'auto-commit
+	        this.mySQLCon.getConnection().setAutoCommit(false);
+
+	        // Ajouter le bien
+	        ajouterBien(b, id_immeuble);
+
+	        // Ajouter les compteurs
+	        for (Compteur compteur : compteurs) {
+	            ajouterCompteur(b.getId_bien(), compteur.getPrix_abonnement(), compteur.getTypecomp().getDénomination());
+	        }
+	        
+	        // Valider la transaction
+	        this.mySQLCon.getConnection().commit();
+	    } catch (SQLException e) {
+	        try {
+	            // Rollback en cas d'erreur
+	            this.mySQLCon.getConnection().rollback();
+	        } catch (SQLException rollbackEx) {
+	            logger.log(Level.SEVERE, "Erreur lors du rollback", rollbackEx);
+	        }
+	        logger.log(Level.SEVERE, "Erreur lors de l'ajout du bien et des compteurs", e);
+	        throw new DAOException("Erreur lors de l'ajout du bien et des compteurs", e);
+	    } finally {
+	        try {
+	            // Réactiver l'auto-commit
+	            this.mySQLCon.getConnection().setAutoCommit(true);
+	        } catch (SQLException autoCommitEx) {
+	            logger.log(Level.SEVERE, "Erreur lors de la réactivation de l'auto-commit", autoCommitEx);
+	        }
+	    }
+	}
+
+	
 	/**
 	 * 
 	 * @param id_bien

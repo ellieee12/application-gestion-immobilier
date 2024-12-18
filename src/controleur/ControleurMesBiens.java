@@ -42,9 +42,9 @@ public class ControleurMesBiens implements ActionListener {
 			}
 			while(rs.next()) {
 				if (rs.getString(2).equals("L")) {
-					this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(7)));
+					this.bien.add(new Logement(rs.getDate(7), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(6)));
 				} else {
-					this.bien.add(new Garage(rs.getDate(6), rs.getString(1),rs.getFloat(7)));
+					this.bien.add(new Garage(rs.getDate(7), rs.getString(1),rs.getFloat(6)));
 				}
 			}
 		} catch (SQLException e) {
@@ -68,9 +68,9 @@ public class ControleurMesBiens implements ActionListener {
 			}
             while(rs.next()) {
                 if (rs.getString(2).equals("L")) {
-                    this.bien.add(new Logement(rs.getDate(6), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(7)));
+                    this.bien.add(new Logement(rs.getDate(7), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(6)));
                 } else {
-                    this.bien.add(new Garage(rs.getDate(6), rs.getString(1),rs.getFloat(7)));
+                    this.bien.add(new Garage(rs.getDate(7), rs.getString(1),rs.getFloat(6)));
                 }
             }
         } catch (SQLException e) {

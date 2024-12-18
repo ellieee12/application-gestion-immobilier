@@ -113,17 +113,17 @@ public class VueMesBiens extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Date d'acquisition"
+					"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Entretien parties communes","Date d'acquisition"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-					String.class, String.class, Integer.class, Float.class, Integer.class, Date.class
+					String.class, String.class, Integer.class, Float.class, Integer.class, Float.class, Date.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
 				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false
+					false, false, false, false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -142,7 +142,13 @@ public class VueMesBiens extends JFrame {
 	public void buildTable(ControleurMesBiens controleur) {
 		this.t.setRowCount(0);
 		for (Bien b : controleur.getBien()) {
-			this.t.addRow(new Object[] {b.getId_bien(), b.getClass().getSimpleName(),b.getNum_etage().isPresent()?b.getNum_etage().getAsInt():null, b.isLogement()?((Logement) b).getNb_pieces():null, b.isLogement()?((Logement) b).getSurface_habitable():null, b.getDate_acquisition()} );
+			this.t.addRow(new Object[] {b.getId_bien(),
+					b.getClass().getSimpleName(),
+					b.getNum_etage().isPresent()?b.getNum_etage().getAsInt():null,
+					b.isLogement()?((Logement) b).getSurface_habitable():null,
+					b.isLogement()?((Logement) b).getNb_pieces():null,
+					b.getEntretienPartieCommune(),
+					b.getDate_acquisition()} );
 		}
 	}
 

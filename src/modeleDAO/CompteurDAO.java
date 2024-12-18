@@ -28,7 +28,7 @@ public class CompteurDAO{
 	 * @throws SQLException
 	 */
 	public String getCompteurFromOneBienSelonType(String idBien, typeCompteur type) throws SQLException {
-		String req = "{CALL getCompteurByBienAndType(?,?)};";
+		String req = "{CALL getCompteurByBienAndType(?,?)}";
 		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 		stmt.setString(1, idBien);
 		stmt.setString(2, type.getDénomination());
