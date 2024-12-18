@@ -18,10 +18,9 @@ import javax.swing.table.DefaultTableModel;
 import controleur.ControleurMesLocations;
 import modele.Location;
 
-public class VueMesLocations extends JFramePlus {
+public class VueMesLocations extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesLocations controleurMesLocations;
@@ -48,20 +47,17 @@ public class VueMesLocations extends JFramePlus {
 	public VueMesLocations() {
 		controleurMesLocations = new ControleurMesLocations(this);
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 662, 359);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		this.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Mes Locations  ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		this.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel PanelBouton = new JPanel();
-		contentPane.add(PanelBouton, BorderLayout.EAST);
+		this.add(PanelBouton, BorderLayout.EAST);
 		PanelBouton.setLayout(new GridLayout(2, 1, 0, 10));
 		
 		JPanel PanelBoutonNouveau = new JPanel();
@@ -81,7 +77,7 @@ public class VueMesLocations extends JFramePlus {
 		SupprimerLocation.addActionListener(controleurMesLocations);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 		this.t = new DefaultTableModel(
 				new Object[][] {
@@ -116,8 +112,6 @@ public class VueMesLocations extends JFramePlus {
 			scrollPane.setViewportView(table);
 			
 			//this.table.addMouseListener(controleurMesLocations);
-			
-			this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurMesLocations controleur) {

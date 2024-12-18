@@ -18,30 +18,12 @@ import controleur.ControleurMesImmeubles;
 import modele.Immeuble;
 import modele.DAOException;
 
-public class VueMesImmeubles extends JFramePlus {
+public class VueMesImmeubles extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesImmeubles controleurMesImmeubles;
-
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesImmeubles frame = new VueMesImmeubles();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -50,20 +32,17 @@ public class VueMesImmeubles extends JFramePlus {
 	public VueMesImmeubles() throws DAOException {
 		controleurMesImmeubles = new ControleurMesImmeubles(this);
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 750, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Mes Immeubles ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		this.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel PanelBouton = new JPanel();
-		contentPane.add(PanelBouton, BorderLayout.EAST);
+		this.add(PanelBouton, BorderLayout.EAST);
 		PanelBouton.setLayout(new GridLayout(2, 1, 0, 10));
 		
 		JPanel PanelBoutonNouveau = new JPanel();
@@ -83,7 +62,7 @@ public class VueMesImmeubles extends JFramePlus {
 		SupprimerImeuble.addActionListener(controleurMesImmeubles);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 		this.t = new DefaultTableModel(
 				new Object[][] {
@@ -113,8 +92,6 @@ public class VueMesImmeubles extends JFramePlus {
 		scrollPane.setViewportView(table);
 		
 		this.table.addMouseListener(controleurMesImmeubles);
-		
-		this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurMesImmeubles controleur) {

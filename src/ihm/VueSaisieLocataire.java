@@ -19,32 +19,15 @@ import javax.swing.text.MaskFormatter;
 import controleur.ControleurSaisieLocataire;
 import java.awt.FlowLayout;
 
-public class VueSaisieLocataire extends JFramePlus {
+public class VueSaisieLocataire extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrenom;
 	private JFormattedTextField textFieldTel;
 	private JTextField textFieldMail;
 	private JTextField textFieldDateDeNaissance;
 	private JTextField textFieldId;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueSaisieLocataire frame = new VueSaisieLocataire();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public String getNom() {
 		return textFieldNom.getText();
@@ -96,20 +79,17 @@ public class VueSaisieLocataire extends JFramePlus {
 		ControleurSaisieLocataire controleur = ControleurSaisieLocataire.getControleur();
 		controleur.initialiserControleur(this);
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(5, 10));
+		this.setLayout(new BorderLayout(5, 10));
 		
 		JLabel lblNewLabel = new JLabel("Locataire");
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 30));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		this.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel panelLibellés = new JPanel();
-		contentPane.add(panelLibellés, BorderLayout.WEST);
+		this.add(panelLibellés, BorderLayout.WEST);
 		panelLibellés.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -161,7 +141,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panel_12.add(lblNewLabel_6, BorderLayout.NORTH);
 		
 		JPanel panelChamps = new JPanel();
-		contentPane.add(panelChamps, BorderLayout.CENTER);
+		this.add(panelChamps, BorderLayout.CENTER);
 		panelChamps.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_4 = new JPanel();
@@ -223,7 +203,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		textFieldId.setColumns(10);
 		
 		JPanel panelBoutons = new JPanel();
-		contentPane.add(panelBoutons, BorderLayout.SOUTH);
+		this.add(panelBoutons, BorderLayout.SOUTH);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
@@ -235,8 +215,6 @@ public class VueSaisieLocataire extends JFramePlus {
 		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
 		btnNewButton.addActionListener(controleur);
 		panelBoutons.add(btnNewButton);
-		
-		this.setSizeMulti(5);
 	}
 
 }

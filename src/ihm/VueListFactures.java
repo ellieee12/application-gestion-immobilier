@@ -24,10 +24,9 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class VueListFactures extends JFramePlus {
+public class VueListFactures extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private DefaultTableModel t;
 	private JTable table;
 	private JButton ajouter;
@@ -35,40 +34,21 @@ public class VueListFactures extends JFramePlus {
 	private ControleurListFactures controleur;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueListFactures frame = new VueListFactures();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public VueListFactures() {
 		this.controleur = new ControleurListFactures(this);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Factures");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		this.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 		this.t = new DefaultTableModel(
 				new Object[][] {
@@ -98,7 +78,7 @@ public class VueListFactures extends JFramePlus {
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.EAST);
+		this.add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(2, 1, 0, 10));
 		
 		JPanel panel_1 = new JPanel();
@@ -116,8 +96,6 @@ public class VueListFactures extends JFramePlus {
 		this.supprimer = new JButton("Supprimer");
 		panel_2.add(this.supprimer, BorderLayout.NORTH);
 		this.supprimer.addActionListener(controleur);
-		
-		this.setSizeMulti(5);
 	}
 	
 	public void buildTable(ControleurListFactures controleur) {

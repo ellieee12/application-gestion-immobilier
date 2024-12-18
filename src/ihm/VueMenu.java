@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurMenu;
+import modele.DAOException;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
+import javax.swing.JTabbedPane;
 
 public class VueMenu extends JFramePlus {
 
@@ -57,29 +59,18 @@ public class VueMenu extends JFramePlus {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabelTitre = new JLabel("Accueil");
-		lblNewLabelTitre.setFont(new Font("Tahoma", Font.BOLD, 18));
-		contentPane.add(lblNewLabelTitre, BorderLayout.NORTH);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
-		JPanel panelBoutonsPages = new JPanel();
-		contentPane.add(panelBoutonsPages, BorderLayout.CENTER);
-		
-		JButton boutonMesImmeubles = new JButton("Mes Immeubles");
-		panelBoutonsPages.add(boutonMesImmeubles);
-		
-		JButton boutonMesFactures = new JButton("Mes Factures");
-		panelBoutonsPages.add(boutonMesFactures);
-		
-		JButton boutonMesLocation = new JButton("Mes Locations");
-		panelBoutonsPages.add(boutonMesLocation);
-		
-		JButton boutonAjouterLocataire = new JButton("Ajouter un Locataire");
-		panelBoutonsPages.add(boutonAjouterLocataire);
-		
-		boutonMesImmeubles.addActionListener(controleur);
-		boutonMesFactures.addActionListener(controleur);
-		boutonAjouterLocataire.addActionListener(controleur);
-		boutonMesLocation.addActionListener(controleur);
+		try {
+			tabbedPane.addTab("Mes Immeubles", null, new VueMesImmeubles(), null);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tabbedPane.addTab("Mes Factures", null, new VueListFactures(), null);
+		tabbedPane.addTab("Mes Locations", null, new VueMesLocations(), null);
+		tabbedPane.addTab("Ajouter un Locataire", null, new VueSaisieLocataire(), null);
 		
 		this.setSizeMulti(5);
 	}
