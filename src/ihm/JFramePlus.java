@@ -20,6 +20,8 @@ import org.jdesktop.swingx.JXLabel;
 
 public class JFramePlus extends JFrame {
 	
+	static final int i = 4;
+	
 	private static List<Component> getAllComponents(final Container c) {
 	    Component[] comps = c.getComponents();
 	    List<Component> compList = new ArrayList<Component>();
@@ -31,7 +33,7 @@ public class JFramePlus extends JFrame {
 	    return compList;
 	}
 	
-	public void setSizeMulti(int i) {
+	public void setSizeMulti() {
 		List<Component> comps = getAllComponents(this);
 	    for (Component c : comps) {
 	        if (c.getFont() != null) {

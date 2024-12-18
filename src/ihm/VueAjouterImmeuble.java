@@ -199,7 +199,7 @@ public class VueAjouterImmeuble extends JFramePlus {
 		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Periode Construction</font>");
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
 		
-		this.setSizeMulti(5);
+		this.setSizeMulti();
 	}
 	
 }

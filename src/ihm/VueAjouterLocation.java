@@ -232,7 +232,7 @@ public class VueAjouterLocation extends JFramePlus {
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
 		
-		this.setSizeMulti(5);
+		this.setSizeMulti();
 	}
 
 	private NumberFormatter createNumberformatter() {

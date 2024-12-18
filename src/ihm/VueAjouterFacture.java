@@ -253,7 +253,7 @@ public class VueAjouterFacture extends JFramePlus {
 		panel_2.add(valider);
 		this.valider.addActionListener(controleur);
 		
-		this.setSizeMulti(5);
+		this.setSizeMulti();
 	}
 	
 	private void initialiserComboBoxBiens(ControleurAjouterFacture controleur) {

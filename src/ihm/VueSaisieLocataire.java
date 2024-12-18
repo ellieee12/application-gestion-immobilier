@@ -1,6 +1,5 @@
 package ihm;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
@@ -9,7 +8,6 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -19,7 +17,7 @@ import javax.swing.text.MaskFormatter;
 import controleur.ControleurSaisieLocataire;
 import java.awt.FlowLayout;
 
-public class VueSaisieLocataire extends JPanel {
+public class VueSaisieLocataire extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNom;
@@ -28,6 +26,7 @@ public class VueSaisieLocataire extends JPanel {
 	private JTextField textFieldMail;
 	private JTextField textFieldDateDeNaissance;
 	private JTextField textFieldId;
+	private JPanel contentPane;
 	
 	public String getNom() {
 		return textFieldNom.getText();
@@ -74,22 +73,24 @@ public class VueSaisieLocataire extends JPanel {
 	/**
 	 * Create the frame.
 	 */ 	
-	public VueSaisieLocataire() {
+	public VueSaisieLocataire(VueMesLocataires vue) {
 		
 		ControleurSaisieLocataire controleur = ControleurSaisieLocataire.getControleur();
-		controleur.initialiserControleur(this);
+		controleur.initialiserControleur(this, vue);
 		
 		setBounds(100, 100, 450, 300);
-		this.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		this.setLayout(new BorderLayout(5, 10));
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(5, 10));
 		
 		JLabel lblNewLabel = new JLabel("Locataire");
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 30));
-		this.add(lblNewLabel, BorderLayout.NORTH);
+		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel panelLibellés = new JPanel();
-		this.add(panelLibellés, BorderLayout.WEST);
+		contentPane.add(panelLibellés, BorderLayout.WEST);
 		panelLibellés.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -203,7 +204,7 @@ public class VueSaisieLocataire extends JPanel {
 		textFieldId.setColumns(10);
 		
 		JPanel panelBoutons = new JPanel();
-		this.add(panelBoutons, BorderLayout.SOUTH);
+		contentPane.add(panelBoutons, BorderLayout.SOUTH);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
@@ -215,6 +216,8 @@ public class VueSaisieLocataire extends JPanel {
 		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 11));
 		btnNewButton.addActionListener(controleur);
 		panelBoutons.add(btnNewButton);
+		
+		this.setSizeMulti();
 	}
 
 }

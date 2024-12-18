@@ -7,15 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import controleur.ControleurMenu;
 import modele.DAOException;
 
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 
 public class VueMenu extends JFramePlus {
@@ -49,7 +45,6 @@ public class VueMenu extends JFramePlus {
 			Logger.getLogger(VueMenu.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		ControleurMenu controleur = ControleurMenu.getControleur(this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -70,9 +65,9 @@ public class VueMenu extends JFramePlus {
 		}
 		tabbedPane.addTab("Mes Factures", null, new VueListFactures(), null);
 		tabbedPane.addTab("Mes Locations", null, new VueMesLocations(), null);
-		tabbedPane.addTab("Ajouter un Locataire", null, new VueSaisieLocataire(), null);
+		tabbedPane.addTab("Mes Locataires", null, new VueMesLocataires(), null);
 		
-		this.setSizeMulti(5);
+		this.setSizeMulti();
 	}
 
 }
