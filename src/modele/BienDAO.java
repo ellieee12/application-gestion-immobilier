@@ -5,10 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import modele.Bien;
-import modele.Garage;
-import modele.Logement;
 /**
  * DAO pour la gestion des opérations CRUD sur les objets Bien.
  */

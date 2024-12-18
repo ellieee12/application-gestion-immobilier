@@ -11,7 +11,7 @@ public class Location {
     private Date date_debut;
     
     @objid ("bb01d782-39bb-4323-bd19-fe9bb4151d45")
-    private boolean colocation;
+    private String colocation;
 
     @objid ("00988291-cf19-449a-beb2-d44abfff94ab")
     private int nb_mois;
@@ -25,7 +25,7 @@ public class Location {
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;   
  
-	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
 			float caution_TTC, String idBien) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
@@ -53,12 +53,15 @@ public class Location {
 		return loyer_TTC;
 	}
 	
-	public boolean isColocation() {
-		return this.colocation;
+	public static String isColocationByString(String i) {
+		if (i.equals("Oui")) {
+			return "Oui";
+		}
+		return "Non";
 	}
 	
-	public static boolean isColocationByInt(Integer i) {
-		return i.equals(1);
+	public String isColocation() {
+		return this.colocation;
 	}
 
 	public float getProvision_chargement_TTC() {

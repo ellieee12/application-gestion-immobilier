@@ -107,6 +107,7 @@ public class VueMesImmeubles extends JFramePlus {
 			};
 		this.buildTable(controleurMesImmeubles);
 		this.table = new JTable(this.t);
+		table.getTableHeader().setReorderingAllowed(false);
 		this.table.setModel(this.t);
 		
 		scrollPane.setViewportView(table);

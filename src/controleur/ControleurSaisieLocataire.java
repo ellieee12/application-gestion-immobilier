@@ -37,7 +37,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 	private boolean verificationLocataireExiste() throws SQLException {
 		try {
 			if (this.dao.locataireExists(this.vue.getId())) {
-				JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà",
+				JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà ou cet identifiant à déjà été utilisé",
 						"Attention", JOptionPane.WARNING_MESSAGE);
 				return true;
 			}
@@ -49,7 +49,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 	
 	private boolean verificationComplet() {
 		if (!this.vue.isComplet()) {
-			JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis",
+			JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date de naissance invalide",
 					"Attention", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
