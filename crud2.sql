@@ -49,9 +49,9 @@ BEGIN
         type_bien, 
         numero_etage, 
         surface_habitable, 
-        nb_pieces, 
+        nb_pieces,
+        entretien_parties_communes,
         date_acquisition,
-        entretien_partie_commune
     FROM bien 
     WHERE id_immeuble = v_id_immeuble;
 END$$
