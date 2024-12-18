@@ -270,7 +270,6 @@ BEGIN
 END$$
 
 CREATE PROCEDURE insertLocation (
-    v_id_locataire varchar(20),
     v_id_bien VARCHAR(20),
     v_date_debut DATE,
     v_nb_mois INT,
