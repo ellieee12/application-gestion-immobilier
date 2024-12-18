@@ -272,13 +272,13 @@ END$$
 CREATE PROCEDURE insertLocation (
     v_id_bien VARCHAR(20),
     v_date_debut DATE,
-    v_nb_mois INT,
+    v_nb_mois INT(11),
     v_colocation TINYINT(1),
     v_provision_charges_ttc decimal(15,2),
     v_loyer_ttc decimal(15,2),
     v_caution_ttc decimal(15,2),
     v_annee date,
-    v_trimestre smallint
+    v_trimestre smallint(6)
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
