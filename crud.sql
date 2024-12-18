@@ -65,7 +65,6 @@ CREATE TABLE Location(
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
-    date_derniere_reg DATE,
     annee date NOT NULL,
     trimestre smallint NOT NULL,
     PRIMARY KEY(id_bien, date_debut),
