@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
+import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
 import modele.Facture;

@@ -31,7 +31,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt = this.mySQLCon.getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery(req);
 			while(rs.next()) {
-				liste.add(new Location(rs.getDate(2), rs.getInt(4)==1 ? true : false, rs.getInt(3), 
+				liste.add(new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), 
 						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1)));
 			}
 		} catch (SQLException e) {
@@ -68,11 +68,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmtInsertLocation.setString(2, id_bien);
 			stmtInsertLocation.setDate(3, location.getDate_debut());
 			stmtInsertLocation.setInt(4,location.getNb_mois());
-			if (location.isColocation()) {
-				stmtInsertLocation.setInt(5, 1);
-			}else {
-				stmtInsertLocation.setInt(5, 0);
-			}
+			stmtInsertLocation.setString(5, location.isColocation());
 			stmtInsertLocation.setFloat(6, location.getProvision_chargement_TTC());
 			stmtInsertLocation.setFloat(7, location.getLoyer_TTC());
 			stmtInsertLocation.setFloat(8, location.getCaution_TTC());

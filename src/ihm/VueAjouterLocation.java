@@ -248,7 +248,7 @@ public class VueAjouterLocation extends JFramePlus {
 	}
 
 	private NumberFormatter createNumberformatter() {
-		NumberFormat format = NumberFormat.getCompactNumberInstance();
+		NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
