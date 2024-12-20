@@ -1,5 +1,6 @@
 package modele;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.OptionalInt;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
@@ -52,4 +53,25 @@ public class Bien {
 	public Float getEntretienPartieCommune() {
 		return this.entretienPartieCommune;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(date_acquisition, entretienPartieCommune, id_bien, num_etage);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bien other = (Bien) obj;
+		return Objects.equals(date_acquisition, other.date_acquisition)
+				&& Objects.equals(entretienPartieCommune, other.entretienPartieCommune)
+				&& Objects.equals(id_bien, other.id_bien) && Objects.equals(num_etage, other.num_etage);
+	}
+
+	
 }

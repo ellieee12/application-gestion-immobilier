@@ -24,8 +24,29 @@ public class Location {
 
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;   
- 
-	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+    
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(caution_TTC, colocation, date_debut, idBien, loyer_TTC, nb_mois, provision_chargement_TTC);
+//	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		return caution_TTC == other.caution_TTC
+				&& colocation == other.colocation && date_debut.equals(other.date_debut)
+				&& idBien.equals(other.idBien)
+				&& loyer_TTC == other.loyer_TTC && nb_mois == other.nb_mois
+				&& provision_chargement_TTC == other.provision_chargement_TTC;
+	}
+
+	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
 			float caution_TTC, String idBien) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;

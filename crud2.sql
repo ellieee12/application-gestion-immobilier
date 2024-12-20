@@ -33,6 +33,7 @@ DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
+DROP PROCEDURE IF EXISTS deleteLocataire$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -260,6 +261,12 @@ CREATE PROCEDURE getLocataireById(v_id_locataire varchar(20))
 BEGIN
     select * from locataire where id_locataire=v_id_locataire;
 END$$
+
+CREATE PROCEDURE deleteLocataire(v_id_locataire varchar(20))
+BEGIN
+    delete from louer where id_locataire=v_id_locataire;
+    delete from locataire where id_locataire=v_id_locataire;
+end$$
 
 CREATE PROCEDURE deleteLocation(
     v_id_bien varchar(20),

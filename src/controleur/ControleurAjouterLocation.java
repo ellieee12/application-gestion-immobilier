@@ -1,5 +1,6 @@
 package controleur;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import ihm.VueAjouterDocuments;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
 import modele.Location;
+import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
 import modele.LocataireDAO;
@@ -59,7 +61,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		this.vue.dispose();
 	}
 	
-	private boolean verifLocationExiste() {
+	private boolean verifLocationExiste() throws HeadlessException, DAOException {
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
 			JOptionPane.showMessageDialog(this.vue, 
@@ -80,7 +82,7 @@ public class ControleurAjouterLocation implements ActionListener{
 	}
 	
 	
-	private boolean allVerifs() {
+	private boolean allVerifs() throws HeadlessException, DAOException {
 		return verifComplet() && !verifLocationExiste() && verifColocationChecked();
 	}
 	
@@ -99,12 +101,9 @@ public class ControleurAjouterLocation implements ActionListener{
 			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
 			this.id_locataires.add(locatairesRS.getString(1));
 		}
-		
-		ResultSet biensRS = this.bienDAO.getAllBiens();
-		while (biensRS.next()) {
-			if (this.locationDAO.getLocationById_Bien(biensRS.getString(1)).isColocation().equals("Oui")) {
-				this.biens.add(biensRS.getString(1));
-			}
+		List<Bien> biensliste= this.bienDAO.getAllBiens();
+		for(Bien b : biensliste) {
+			this.biens.add(b.getId_bien());
 		}
 	}
 
@@ -114,20 +113,25 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
 		} else if (bouton.getText().equals("Valider")) {
-			if (allVerifs()) {
-				try {
-					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
-							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-							this.vue.getCaution(), this.vue.getSelectedBien());
-					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
-							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
-					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
-							this.vue.getSelectedLocataire(), this.vueMesLocations);
-					valider();
-					frame.setVisible(true);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+			try {
+				if (allVerifs()) {
+					try {
+						Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
+								this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
+								this.vue.getCaution(), this.vue.getSelectedBien());
+						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
+								this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
+						VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
+								this.vue.getSelectedLocataire(), this.vueMesLocations);
+						valider();
+						frame.setVisible(true);
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
 				}
+			} catch (HeadlessException | DAOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

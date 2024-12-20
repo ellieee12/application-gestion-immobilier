@@ -4,9 +4,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * DAO pour la gestion des opérations CRUD sur les objets Bien.
  */
@@ -28,11 +30,22 @@ public class BienDAO{
 	 * @throws DAOException 
 	 * @throws SQLException
 	 */
-	public ResultSet getAllBiens() throws DAOException {
+	public List<Bien> getAllBiens() throws DAOException {
 		try {
 			String req = "{call getAllBiens()}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			return stmt.executeQuery(req);
+			ResultSet s = stmt.executeQuery(req);
+			List<Bien> liste = new LinkedList<>();
+			while(s.next()) {
+				if (s.getString(6).equals("G")) {
+					Garage g = new Garage(s.getDate(5),s.getString(1),s.getFloat(8));
+					liste.add(g);
+				}else {
+					Logement l = new Logement(s.getDate(5),s.getString(1),s.getInt(3),s.getInt(2),s.getFloat(4),s.getFloat(8));
+					liste.add(l);
+				}
+			}
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de tous les bien.",e);
 			throw new DAOException("Erreurs lors de la récupération de tous les bien.",e);
@@ -59,14 +72,30 @@ public class BienDAO{
 	 * Récupère tous les biens associés à un immeuble donné
 	 * @param identifiant d'un immeuble donné
 	 * @return Un ResultSet de tous les objets Bien associés à un immeuble donné
-	 * @throws SQLException
+	 * @throws DAOException
 	 */
-	public ResultSet getBiensFromOneImmeuble(String idImmeuble) throws SQLException {
-		String req = "{CALL getBiensByImmeuble(?)};";
-		CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-		stmt.setString(1, idImmeuble);
-		ResultSet rs = stmt.executeQuery();
-		return rs;
+	public List<Bien> getBiensFromOneImmeuble(String idImmeuble) throws DAOException {
+		try {
+			String req = "{CALL getBiensByImmeuble(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, idImmeuble);
+			ResultSet s = stmt.executeQuery();
+			List<Bien> liste = new LinkedList<>();
+			while(s.next()) {
+				if (s.getString(2).equals("G")) {
+					Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
+					liste.add(g);
+				}else {
+					Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
+					liste.add(l);
+				}
+			}
+			s.close();
+			return liste;
+		}catch(SQLException e){
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des biens à partir d'un bien",e);
+			throw new DAOException("Erreurs lors de la récupération des biens à partir d'un bien",e);
+		}
 	}
 	
 	/**
@@ -123,7 +152,6 @@ public class BienDAO{
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
-//			System.out.println(b.getEntretienPartieCommune());
 			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
 			throw new DAOException("Erreurs lors de la création d'un bien",e);
 		}
@@ -143,9 +171,9 @@ public class BienDAO{
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				if (rs.getString(6).equals("G")) {
-					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(7));
+					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(8));
 				}else {
-					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(7));
+					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(8));
 				}
 			}
 		}catch(SQLException e) {
@@ -199,12 +227,5 @@ public class BienDAO{
 	public boolean bienExiste(String id_bien) throws DAOException {
 		return this.getBienById(id_bien)!=null;
 	}
-	
-	public void setAutoCommit(boolean b) throws SQLException {
-		this.mySQLCon.getConnection().setAutoCommit(b);
-	}
-	
-	public void rollback() throws SQLException {
-		this.mySQLCon.getConnection().rollback();
-	}
+
 }

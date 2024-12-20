@@ -3,26 +3,20 @@ package controleur;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import ihm.VueAjouterBien;
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
-import ihm.VueMesBiens;
 import modele.Facture;
-import modele.Garage;
+import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
 import modele.FactureDAO;
-import modele.ImmeubleDAO;
 
 public class ControleurAjouterFacture implements ActionListener {
 	
@@ -38,9 +32,9 @@ public class ControleurAjouterFacture implements ActionListener {
 		this.vueListFactures = vueListFactures;
 		this.factureDao = new FactureDAO();
 		this.bienDAO = new BienDAO();
-		ResultSet biensRS = this.bienDAO.getAllBiens();
-		while (biensRS.next()) {
-			this.biens.add(biensRS.getString(1));
+		List<Bien> biensliste = this.bienDAO.getAllBiens();
+		for(Bien b : biensliste) {
+			this.biens.add(b.getId_bien());
 		}
 	}
 	
