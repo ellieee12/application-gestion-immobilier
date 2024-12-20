@@ -33,7 +33,6 @@ DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
-DROP PROCEDURE IF EXISTS deleteLocataire$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -262,12 +261,6 @@ BEGIN
     select * from locataire where id_locataire=v_id_locataire;
 END$$
 
-CREATE PROCEDURE deleteLocataire(v_id_locataire varchar(20))
-BEGIN
-    delete from louer where id_locataire=v_id_locataire;
-    delete from locataire where id_locataire=v_id_locataire;
-end$$
-
 CREATE PROCEDURE deleteLocation(
     v_id_bien varchar(20),
     v_date_debut date
@@ -304,6 +297,13 @@ CREATE PROCEDURE insertCompteur (
 BEGIN
     insert into compteur (type_compteur,prix_abonnement,id_bien)
     values (v_type_compteur,v_prix,v_id_bien);
+END$$
+
+CREATE PROCEDURE getColocationByIdBien (
+    v_id_bien varchar(20)
+    )
+BEGIN 
+    Select * from location where id_bien = v_id_bien;
 END$$
 
 
