@@ -1,17 +1,13 @@
 package controleur;
 
-import modele.BienDAO;
-import modele.DAOException;
-import modele.ImmeubleDAO;
-
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,18 +15,26 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import classes.Compteur;
+import classes.Compteur.typeCompteur;
+import classes.Garage;
+import classes.Logement;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
-import modele.Garage;
-import modele.Immeuble;
-import modele.Logement;
+import modele.BienDAO;
+import modele.CompteurDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
 
 public class ControleurAjouterBien implements ActionListener {
 	
 	private VueMesBiens vueBiens;
 	private VueAjouterBien vue;
 	private BienDAO dao;
+	private CompteurDAO daoC;
 	private Map<String, String> NameImmeubles;
+	private final float PRIX_EAU = 2.86F;
+	private final float PRIX_ELEC = 0.2F;
 	
 	//Constructeur du controleur
 	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) throws DAOException {
@@ -38,6 +42,7 @@ public class ControleurAjouterBien implements ActionListener {
 			this.vue = vue;
 			this.vueBiens=vueBiens;
 			this.dao = new BienDAO();
+			this.daoC = new CompteurDAO();
 			this.NameImmeubles = new HashMap<>();
 			
 			ImmeubleDAO Immeuble = new ImmeubleDAO();
@@ -90,6 +95,12 @@ public class ControleurAjouterBien implements ActionListener {
 					e1.printStackTrace();
 				} catch (DAOException e1) {
 					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}				
 			}
 				
@@ -114,20 +125,51 @@ public class ControleurAjouterBien implements ActionListener {
 			}
 		}
 	}
-
+	
 	private void ajouterGarage() throws DAOException {
 		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getEntretienPartieCommune());
 		this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
 	}
 
-	private void ajouterLogement() throws DAOException {
-		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable(),this.vue.getEntretienPartieCommune());
-		this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
+//	private void ajouterLogement() throws  SQLException, DAOException {
+//		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable(),this.vue.getEntretienPartieCommune());
+//		this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
+//		ajouterCompteursEtReleves(l);
+//	}
+	
+	private void ajouterLogement() throws SQLException, DAOException, InterruptedException {
+	    // Création du logement
+	    Logement l = new Logement(
+	        this.vue.getChampsDateAcquisition(),
+	        this.vue.getChampsIdBien(),
+	        this.vue.getChampsNumeroEtage(),
+	        this.vue.getChampsNombreDePiece(),
+	        this.vue.getChampsSurfaceHabitable(),
+	        this.vue.getEntretienPartieCommune()
+	    );
+
+	    // Création des compteurs associés
+	    List<Compteur> compteurs = new ArrayList<>();
+	    compteurs.add(new Compteur(typeCompteur.EAU,PRIX_EAU ));
+	    compteurs.add(new Compteur(typeCompteur.ELECTRICITE, PRIX_ELEC));
+
+	    // Appel à la méthode DAO
+	    this.dao.ajouterBienEtCompteurs(l, this.vue.getSelectedImmeuble(), compteurs);
+	    ajouterReleves(l);
 	}
 
+
+	private void ajouterReleves(Logement l) throws DAOException, SQLException {
+		String id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
+		this.daoC.ajouterReleve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_eau);
+		String id_elec = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.ELECTRICITE);
+		this.daoC.ajouterReleve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_elec);
+	}
+	
 	private boolean champsLogementNonRemplis() {
 		return this.vue.getChampsNombreDePiece()==null || this.vue.getChampsNumeroEtage()==null || 
-				this.vue.getChampsSurfaceHabitable()==null;
+				this.vue.getChampsSurfaceHabitable()==null || this.vue.getChampsEau() == null ||
+				this.vue.getChampsElectricite() == null;
 	}
 
 	private boolean isLogement() {

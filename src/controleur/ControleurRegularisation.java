@@ -65,7 +65,7 @@ public class ControleurRegularisation implements ActionListener {
 				}
 
 				//créer le compteur
-				this.compteurEau = new Compteur(this.idcompteurEau, typeCompteur.EAU, this.PRIX_EAU);
+				this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
 				//récupérer l'index du relevé
 				try {
 					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
@@ -83,7 +83,7 @@ public class ControleurRegularisation implements ActionListener {
 					e1.printStackTrace();
 				}
 				//créer le compteur
-				this.compteurElec = new Compteur(this.idcompteurElec, typeCompteur.ELECTRICITE, this.PRIX_ELEC);
+				this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
 				//récupérer l'index du relevé
 				try {
 					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);

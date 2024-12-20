@@ -23,8 +23,7 @@ public class Compteur {
     @objid ("f69f058c-6594-4f59-85e5-dd986e29dfb6")
     private float prix_abonnement;
 
-	public Compteur(String id_compteur, typeCompteur typecomp, float prix_abonnement) {
-		this.id_compteur = id_compteur;
+	public Compteur(typeCompteur typecomp, float prix_abonnement) {
 		this.typecomp = typecomp;
 		this.prix_abonnement = prix_abonnement;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,6 +25,7 @@ public class VueMesLocations extends JPanel {
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesLocations controleurMesLocations;
+	private JButton boutonRegu;
 	
 	/**
 	 * Launch the application.
@@ -67,6 +69,16 @@ public class VueMesLocations extends JPanel {
 		JButton AjouterLocation = new JButton("Ajouter");
 		PanelBoutonNouveau.add(AjouterLocation, BorderLayout.SOUTH);
 		AjouterLocation.addActionListener(controleurMesLocations);
+		
+		JPanel panel = new JPanel();
+		PanelBoutonNouveau.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		this.boutonRegu = new JButton("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>");
+		this.boutonRegu.setHorizontalAlignment(SwingConstants.CENTER); // Centre horizontalement
+		this.boutonRegu.setVerticalAlignment(SwingConstants.CENTER);   // Centre verticalement
+		panel.add(this.boutonRegu, BorderLayout.NORTH);
+		this.boutonRegu.addActionListener(controleurMesLocations);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -131,6 +143,10 @@ public class VueMesLocations extends JPanel {
 	
 	public ControleurMesLocations getControleurMesLocations() {
 		return this.controleurMesLocations;
+	}
+
+	public JButton getBoutonRegu() {
+		return boutonRegu;
 	}
 	
 

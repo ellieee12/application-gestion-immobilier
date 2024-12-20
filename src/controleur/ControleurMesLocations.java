@@ -2,15 +2,19 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+import modele.Location;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
-import modele.Location;
+import ihm.VueRegularisation;
 import modele.LocationDAO;
 
 public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionListener {
@@ -81,6 +85,16 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 				location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
 			}
 			this.Update();
+		} else if (b.equals(this.vue.getBoutonRegu())) {
+			System.out.println("allo c'est quoi");
+			try {
+				String id_bien = this.location.get(this.vue.getLigneChoisi()).getIdBien();
+				Date date_debut = this.location.get(this.vue.getLigneChoisi()).getDate_debut();
+				VueRegularisation frame = new VueRegularisation(id_bien,date_debut);
+				frame.setVisible(true);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}

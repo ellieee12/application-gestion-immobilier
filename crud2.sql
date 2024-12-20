@@ -31,6 +31,8 @@ DROP PROCEDURE IF EXISTS insertLocataire$$
 DROP PROCEDURE IF EXISTS deleteLocation$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
+DROP PROCEDURE IF EXISTS insertLocation$$
+DROP PROCEDURE IF EXISTS insertCompteur$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -49,9 +51,9 @@ BEGIN
         type_bien, 
         numero_etage, 
         surface_habitable, 
-        nb_pieces, 
-        date_acquisition,
-        entretien_partie_commune
+        nb_pieces,
+        entretien_parties_communes,
+        date_acquisition
     FROM bien 
     WHERE id_immeuble = v_id_immeuble;
 END$$
@@ -60,10 +62,10 @@ CREATE PROCEDURE insertGarage(
     IN v_id_bien varchar(20), 
     in v_date_acquisition date,
     in v_id_immeuble varchar(20),
-    in v_entretien_partie_commune decimal(15,2))
+    in v_entretien_parties_communes decimal(15,2))
 BEGIN
-    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_partie_commune)
-    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_partie_commune);
+    INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_parties_communes)
+    VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_parties_communes);
 END$$
 
 create procedure insertLogement(
@@ -73,13 +75,13 @@ create procedure insertLogement(
     in v_surface_habitable decimal(5,2),
     in v_date_acquisition date,
     in v_id_immeuble varchar(20),
-    in v_entretien_partie_commune decimal(15,2)
+    in v_entretien_parties_communes decimal(15,2)
     )
 BEGIN
     INSERT INTO bien (id_bien, nb_pieces, numero_etage, 
-        surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_partie_commune) 
+        surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_parties_communes) 
     VALUES (v_id_bien, v_nb_pieces, v_numero_etage, v_surface_habitable, 
-        v_date_acquisition, 'L', v_id_immeuble,v_entretien_partie_commune);
+        v_date_acquisition, 'L', v_id_immeuble,v_entretien_parties_communes);
 END$$
 
 CREATE PROCEDURE deleteBien (v_id_bien varchar(20))
@@ -270,7 +272,6 @@ BEGIN
 END$$
 
 CREATE PROCEDURE insertLocation (
-    v_id_locataire varchar(20),
     v_id_bien VARCHAR(20),
     v_date_debut DATE,
     v_nb_mois INT,
@@ -279,13 +280,23 @@ CREATE PROCEDURE insertLocation (
     v_loyer_ttc decimal(15,2),
     v_caution_ttc decimal(15,2),
     v_annee date,
-    v_trimestre smallint
+    v_trimestre smallint(6)
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
     loyer_ttc,caution_ttc,annee,trimestre)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, annee, trimestre);
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre);
+END$$
+
+CREATE PROCEDURE insertCompteur (
+    v_id_bien varchar(20),
+    v_prix decimal(15,2),
+    v_type_compteur varchar(20)
+)
+BEGIN
+    insert into compteur (type_compteur,prix_abonnement,id_bien)
+    values (v_type_compteur,v_prix,v_id_bien);
 END$$
 
 
