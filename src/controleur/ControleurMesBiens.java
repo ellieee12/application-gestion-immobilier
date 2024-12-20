@@ -3,13 +3,8 @@ package controleur;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
 import modele.Bien;
-import modele.Garage;
-import modele.Logement;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import modele.BienDAO;
 import modele.DAOException;
+import modele.Immeuble;
 import modele.ImmeubleDAO;
 
 public class ControleurMesBiens implements ActionListener {
@@ -27,55 +23,28 @@ public class ControleurMesBiens implements ActionListener {
 	private String adresse, cp, ville;
 	
 	public ControleurMesBiens(VueMesBiens vue) throws DAOException {
-		try {
-			this.vue = vue;
-			this.bien = new LinkedList<>();
-			
-			BienDAO bien = new BienDAO();
-			ImmeubleDAO immeuble = new ImmeubleDAO();
-			ResultSet rs = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
-			ResultSet rs2 = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
-			while(rs2.next()) {
-				this.adresse = rs2.getString(1);
-				this.cp = rs2.getString(2);
-				this.ville = rs2.getString(3);
-			}
-			while(rs.next()) {
-				if (rs.getString(2).equals("L")) {
-					this.bien.add(new Logement(rs.getDate(7), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(6)));
-				} else {
-					this.bien.add(new Garage(rs.getDate(7), rs.getString(1),rs.getFloat(6)));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		this.vue = vue;
+		this.bien = new LinkedList<>();
+		
+		BienDAO bien = new BienDAO();
+		ImmeubleDAO immeuble = new ImmeubleDAO();
+		this.bien = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
+		Immeuble i = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
+		this.adresse = i.getAdresse();
+		this.cp = i.getCp();
+		this.ville = i.getVille();
 	}
 	
 	public void Update() throws DAOException {
-        try {
-            this.bien = new LinkedList<>();
-            
-            BienDAO bien = new BienDAO();
-            ImmeubleDAO immeuble = new ImmeubleDAO();
-            System.out.println(this.vue.getIdImmeuble());
-            ResultSet rs = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
-			ResultSet rs2 = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
-			while(rs2.next()) {
-				this.adresse = rs2.getString(1);
-				this.cp = rs2.getString(2);
-				this.ville = rs2.getString(3);
-			}
-            while(rs.next()) {
-                if (rs.getString(2).equals("L")) {
-                    this.bien.add(new Logement(rs.getDate(7), rs.getString(1), rs.getInt(3), rs.getInt(5), rs.getFloat(4),rs.getFloat(6)));
-                } else {
-                    this.bien.add(new Garage(rs.getDate(7), rs.getString(1),rs.getFloat(6)));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.bien = new LinkedList<>();
+		BienDAO bien = new BienDAO();
+		ImmeubleDAO immeuble = new ImmeubleDAO();
+		System.out.println(this.vue.getIdImmeuble());
+		this.bien = bien.getBiensFromOneImmeuble(this.vue.getIdImmeuble());
+		Immeuble i = immeuble.getInfoImmeuble(this.vue.getIdImmeuble());
+		this.adresse = i.getAdresse();
+		this.cp = i.getCp();
+		this.ville = i.getVille();
         this.vue.buildTable(this);
     }
 	

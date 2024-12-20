@@ -61,7 +61,7 @@ CREATE TABLE Location(
     id_bien VARCHAR(20) not null,
     date_debut DATE not null,
     nb_mois INT,
-    colocation TINYINT(1),
+    colocation varchar(50),
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
@@ -114,7 +114,7 @@ CREATE TABLE facture (
 );
 
 CREATE TABLE compteur (
-    id_compteur INT not null auto_increment,
+    id_compteur int auto_increment,
     type_compteur VARCHAR(50),
     prix_abonnement DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,

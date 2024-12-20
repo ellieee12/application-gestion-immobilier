@@ -5,12 +5,10 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import modele.Batiment;
-import modele.Immeuble;
-
 
 public class ImmeubleDAO {
 	private MySQLCon mySQLCon;
@@ -20,24 +18,42 @@ public class ImmeubleDAO {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
-	public ResultSet getAllImmeubles() throws DAOException {
+	public List<Immeuble> getAllImmeubles() throws DAOException {
 		try {
 			String req = "{CALL getAllImmeubles()}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			return stmt.executeQuery(req);
+			ResultSet rs = stmt.executeQuery(req);
+			List<Immeuble> liste = new LinkedList<>();
+			while(rs.next()) {
+				if (rs.getString(6).equals("M")) {
+					liste.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+				}else {
+					liste.add(new Batiment(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+				}
+			}
+			rs.close();
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des immeubles",e);
 			throw new DAOException("Erreurs lors de la récupération de la liste des immeubles",e);
 		}
 	}
 	
-	public ResultSet getInfoImmeuble(String idImmeuble) throws DAOException{
+	public Immeuble getInfoImmeuble(String idImmeuble) throws DAOException{
 		try {
 			String req = "{CALL getImmeubleById(?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, idImmeuble);
 			ResultSet rs = stmt.executeQuery();
-			return rs;
+			while(rs.next()) {
+				if (rs.getString(5).equals("M")) {
+					return new Maison(idImmeuble,rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+				}else {
+					return new Batiment(idImmeuble,rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+				}
+			}
+			rs.close();
+			return null;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération d'un immeuble à partir de son identifiant",e);
 			throw new DAOException("Erreurs lors de la récupération d'un immeuble à partir de son identifiant",e);
@@ -82,20 +98,23 @@ public class ImmeubleDAO {
 	}
 	
 	public boolean immeubleExiste(String id_immeuble) throws DAOException {
-		try {
-			return this.getInfoImmeuble(id_immeuble).next();
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la vérification de l'existance d'un immeuble",e);
-			throw new DAOException("Erreurs lors de la vérification de l'existance d'un immeuble",e);
-		}
+		return this.getInfoImmeuble(id_immeuble)!=null;
 	}
 	
-	public ResultSet getImmeublesPourAjouterBien() throws DAOException {
+	public List<Immeuble> getImmeublesPourAjouterBien() throws DAOException {
 		try {
 			String req = "{CALL getImmeublesDisponibles()}";
 			Statement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			ResultSet rs = stmt.executeQuery(req);
-			return rs;
+			List<Immeuble> liste = new LinkedList<>();
+			while(rs.next()) {
+				if (rs.getString(6).equals("M")) {
+					liste.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+				}else {
+					liste.add(new Batiment(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+				}
+			}
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération des immeubles disponibles",e);
 			throw new DAOException("Erreurs lors de la récupération des immeubles disponibles",e);

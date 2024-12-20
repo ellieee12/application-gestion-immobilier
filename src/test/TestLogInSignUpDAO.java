@@ -1,6 +1,8 @@
-package Tests;
+package test;
 
 import java.sql.*;
+
+import modele.LogInSignUpDAO;
 
 public class TestLogInSignUpDAO {
 

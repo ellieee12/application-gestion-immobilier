@@ -2,7 +2,6 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -13,18 +12,10 @@ import javax.swing.JOptionPane;
 
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
-import ihm.VueMesImmeubles;
-import modele.Batiment;
-import modele.Bien;
 import modele.Facture;
-import modele.Garage;
-import modele.Immeuble;
-import modele.Logement;
-import modele.Maison;
-import modele.BienDAO;
 import modele.DAOException;
+import modele.Facture;
 import modele.FactureDAO;
-import modele.ImmeubleDAO;
 
 public class ControleurListFactures implements ActionListener{
 	

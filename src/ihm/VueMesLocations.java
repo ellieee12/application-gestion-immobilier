@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controleur.ControleurMesLocations;
+import modele.DAOException;
 import modele.Location;
 
 public class VueMesLocations extends JPanel {
@@ -45,8 +46,9 @@ public class VueMesLocations extends JPanel {
 
 	/**
 	 * Create the frame.
+	 * @throws DAOException 
 	 */
-	public VueMesLocations() {
+	public VueMesLocations() throws DAOException {
 		controleurMesLocations = new ControleurMesLocations(this);
 		
 		setBounds(100, 100, 662, 359);
@@ -100,10 +102,16 @@ public class VueMesLocations extends JPanel {
 					
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
 					Float.class, Integer.class
 				};
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
@@ -122,8 +130,6 @@ public class VueMesLocations extends JPanel {
 			this.table.setModel(this.t);
 			
 			scrollPane.setViewportView(table);
-			
-			//this.table.addMouseListener(controleurMesLocations);
 	}
 	
 	public void buildTable(ControleurMesLocations controleur) {
