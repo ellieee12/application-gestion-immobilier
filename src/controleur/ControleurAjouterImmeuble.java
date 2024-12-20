@@ -3,12 +3,9 @@ package controleur;
 import modele.DAOException;
 import modele.ImmeubleDAO;
 
-import java.awt.EventQueue;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -18,8 +15,6 @@ import modele.Batiment;
 import modele.Maison;
 
 public class ControleurAjouterImmeuble implements ActionListener {
-	
-	private static ControleurAjouterImmeuble controleur;
 	
 	private VueMesImmeubles vueImmeubles;
 	private VueAjouterImmeuble vue;

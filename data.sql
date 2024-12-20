@@ -76,11 +76,11 @@ INSERT INTO Facture VALUES
 
 -- Compteur
 INSERT INTO Compteur VALUES
-('C001', 'Electricity', 100.00, 'B001'),
-('C002', 'Water', 50.00, 'B002');
+(1,'Electricity', 100.00, 'B001'),
+(2,'Water', 50.00, 'B002');
 
 -- Releve
 INSERT INTO Releve VALUES
-(2023, 500, 'C001'),
-(2023, 600, 'C002');
+(2023, 500, 1),
+(2023, 600, 2);
 COMMIT;

@@ -1,5 +1,6 @@
 package controleur;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -51,7 +52,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		this.vue.dispose();
 	}
 	
-	private boolean verifLocationExiste() {
+	private boolean verifLocationExiste() throws HeadlessException, DAOException {
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
 			JOptionPane.showMessageDialog(this.vue, 
@@ -61,7 +62,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		return false;
 	}
 	
-	private boolean allVerifs() {
+	private boolean allVerifs() throws HeadlessException, DAOException {
 		return verifComplet() && !verifLocationExiste();
 	}
 	
@@ -91,20 +92,25 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (bouton.getText().equals("Annuler")) {
 			this.vue.dispose();
 		} else if (bouton.getText().equals("Valider")) {
-			if (allVerifs()) {
-				try {
-					Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
-							this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-							this.vue.getCaution(), this.vue.getSelectedBien());
-					this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
-							this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
-					VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
-							this.vue.getSelectedLocataire(), this.vueMesLocations);
-					valider();
-					frame.setVisible(true);
-				} catch (DAOException e1) {
-					e1.printStackTrace();
+			try {
+				if (allVerifs()) {
+					try {
+						Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
+								this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
+								this.vue.getCaution(), this.vue.getSelectedBien());
+						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
+								this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
+						VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
+								this.vue.getSelectedLocataire(), this.vueMesLocations);
+						valider();
+						frame.setVisible(true);
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
 				}
+			} catch (HeadlessException | DAOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

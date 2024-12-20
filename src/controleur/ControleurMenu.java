@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import ihm.VueAjouterLocation;
 import ihm.VueListFactures;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;
@@ -15,6 +14,7 @@ import ihm.VueSaisieLocataire;
 public class ControleurMenu implements ActionListener {
 	
 	private static ControleurMenu controleur;
+	@SuppressWarnings("unused")
 	private VueMenu vue;
 	
 	private ControleurMenu(VueMenu vue) {

@@ -1,6 +1,7 @@
 package Tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -33,7 +34,7 @@ public class TestLocationDAO {
 	private LocataireDAO locataireDAO;
 	
 	@Before
-	public void setUp() throws DAOException, SQLException {
+	public void setUp() throws DAOException {
 		this.locationDAO = new LocationDAO();
 		bienDAO = new BienDAO();
 		immeubleDAO = new ImmeubleDAO();
@@ -70,7 +71,7 @@ public class TestLocationDAO {
 		if(this.locationDAO.locationExists("testBien002", "mary123",Date.valueOf("2023-06-23"))){
 			this.locationDAO.supprimerLocation("testBien002", Date.valueOf("2023-06-23"));
 		}
-		if(this.locationDAO.locationExists("testBien002", "johnnyboy", Date.valueOf("2024-01-25"))) {
+		if(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25"))) {
 			this.locationDAO.supprimerLocation("testBien003", Date.valueOf("2024-01-25"));
 		}
 		if (this.bienDAO.bienExiste("testBien001")) {
@@ -102,13 +103,27 @@ public class TestLocationDAO {
 		this.bienDAO=null;
 		this.immeubleDAO=null;
 	}
+	@Test
+	public void testAddLocation() throws DAOException {
+		assertTrue(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
+		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25")));
+		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
+	}
 	
 	@Test
 	public void testGetAllLocation() throws DAOException {
 		List<Location> listeAll = this.locationDAO.getAllLocations();
-		assertEquals(location1, listeAll.get(0));
-		assertEquals(location2, listeAll.get(1));
-		assertEquals(location3, listeAll.get(2));
+		assertTrue(location1.equals(listeAll.get(0)));
+		assertTrue(location2.equals(listeAll.get(1)));;
+		assertTrue(location3.equals(listeAll.get(2)));
 	}
-
+	
+	@Test
+	public void testDeleteLocation() throws DAOException {
+		this.locationDAO.supprimerLocation("testBien002",Date.valueOf("2023-06-23"));
+		assertFalse(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
+		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25")));
+		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
+	}
+	
 }

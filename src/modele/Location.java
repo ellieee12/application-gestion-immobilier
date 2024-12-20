@@ -1,7 +1,5 @@
 package modele;
 import java.sql.Date;
-import java.util.Objects;
-
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
@@ -27,10 +25,10 @@ public class Location {
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC;   
     
-	@Override
-	public int hashCode() {
-		return Objects.hash(caution_TTC, colocation, date_debut, idBien, loyer_TTC, nb_mois, provision_chargement_TTC);
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(caution_TTC, colocation, date_debut, idBien, loyer_TTC, nb_mois, provision_chargement_TTC);
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -41,12 +39,11 @@ public class Location {
 		if (getClass() != obj.getClass())
 			return false;
 		Location other = (Location) obj;
-		return Float.floatToIntBits(caution_TTC) == Float.floatToIntBits(other.caution_TTC)
-				&& colocation == other.colocation && Objects.equals(date_debut, other.date_debut)
-				&& Objects.equals(idBien, other.idBien)
-				&& Float.floatToIntBits(loyer_TTC) == Float.floatToIntBits(other.loyer_TTC) && nb_mois == other.nb_mois
-				&& Float.floatToIntBits(provision_chargement_TTC) == Float
-						.floatToIntBits(other.provision_chargement_TTC);
+		return caution_TTC == other.caution_TTC
+				&& colocation == other.colocation && date_debut.equals(other.date_debut)
+				&& idBien.equals(other.idBien)
+				&& loyer_TTC == other.loyer_TTC && nb_mois == other.nb_mois
+				&& provision_chargement_TTC == other.provision_chargement_TTC;
 	}
 
 	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,

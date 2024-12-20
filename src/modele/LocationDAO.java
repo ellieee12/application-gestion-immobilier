@@ -31,7 +31,8 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt = this.mySQLCon.getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery(req);
 			while(rs.next()) {
-				liste.add(new Location(null, false, 0, 0, 0, 0, req));
+				liste.add(new Location(rs.getDate(2), rs.getInt(4)==1 ? true : false, rs.getInt(3), 
+						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1)));
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locations",e);
@@ -94,7 +95,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		}
 	}
 	
-	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) {
+	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) throws DAOException {
 		try {
 			String req="select * from louer where id_bien=? and id_locataire=? and date_debut=?";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
@@ -104,10 +105,10 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			System.out.println("yes");
 			ResultSet rs = stmt.executeQuery();
 			return rs.next();
-		}catch(Exception e) {
-			System.out.println(e);
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'une location",e);
+			throw new DAOException("Erreurs lors de l'ajout d'une location",e);
 		}
-		return true;
 	}
 	
 }

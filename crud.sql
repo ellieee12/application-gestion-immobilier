@@ -114,7 +114,7 @@ CREATE TABLE facture (
 );
 
 CREATE TABLE compteur (
-    id_compteur varchar(20),
+    id_compteur int auto_increment,
     type_compteur VARCHAR(50),
     prix_abonnement DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,
