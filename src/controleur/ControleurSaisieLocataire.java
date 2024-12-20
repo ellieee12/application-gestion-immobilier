@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import ihm.VueMesLocataires;
 import ihm.VueSaisieLocataire;
 import modele.Locataire;
 import modele.DAOException;
@@ -18,12 +19,14 @@ public class ControleurSaisieLocataire implements ActionListener {
 	private static ControleurSaisieLocataire controleur;
 	
 	private VueSaisieLocataire vue;
+	private VueMesLocataires vueLocataires;
 	private LocataireDAO dao;
 	
 	private ControleurSaisieLocataire() {}
 	
-	public void initialiserControleur(VueSaisieLocataire vue) {
-		this.vue=vue;
+	public void initialiserControleur(VueSaisieLocataire vue, VueMesLocataires vueLocataires) {
+		this.vue = vue;
+		this.vueLocataires = vueLocataires;
 		this.dao = new LocataireDAO();
 	}
 	
@@ -71,6 +74,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 					Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
 					try {
 						this.dao.ajouterLocataire(loc);
+						this.vueLocataires.getControleurMesLocataires().Update();
 					} catch (DAOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

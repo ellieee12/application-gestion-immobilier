@@ -227,7 +227,7 @@ public class VueAjouterBien extends JFramePlus {
 		ButtonAnnuler.addActionListener(controleur);
 		ButtonValider.addActionListener(controleur);
 		
-		this.setSizeMulti(5);
+		this.setSizeMulti();
 	}
 
 	public void initialiserComboBoxBatiment() {

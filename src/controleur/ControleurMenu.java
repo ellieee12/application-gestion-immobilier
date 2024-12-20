@@ -9,6 +9,7 @@ import ihm.VueAjouterLocation;
 import ihm.VueListFactures;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;
+import ihm.VueMesLocataires;
 import ihm.VueMesLocations;
 import ihm.VueSaisieLocataire;
 
@@ -40,7 +41,7 @@ public class ControleurMenu implements ActionListener {
 			}
 		} else if (b.getText() == "Ajouter un Locataire") {
 			try {
-				VueSaisieLocataire frame = new VueSaisieLocataire();
+				VueMesLocataires frame = new VueMesLocataires();
 				frame.setVisible(true);
 			} catch (Exception e1) {
 				e1.printStackTrace();
