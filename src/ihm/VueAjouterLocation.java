@@ -164,6 +164,18 @@ public class VueAjouterLocation extends JFramePlus {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		initialiserComboBoxBiens(controleur);
+		
+		
+		
+		
+		
+		
+//		String type = controleur.getNameImmeubles().get(comboBox_Immeuble.getSelectedItem());
+//		if (type.equals("M")) {
+//			initialiserComboBoxMaison();
+//		} else {
+//			initialiserComboBoxBatiment();
+//		}
 		panel.add(comboBoxBiens, BorderLayout.NORTH);
 		
 		JPanel panel_c_colocation = new JPanel();

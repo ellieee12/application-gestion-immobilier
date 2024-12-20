@@ -202,16 +202,8 @@ public class VueAjouterBien extends JFramePlus {
 		panel_13.add(comboBox_Immeuble, BorderLayout.NORTH);
 		
 		comboBox = new JComboBox<>();
-		//for (String s : getSelectedImmeuble())
 		comboBox = new JComboBox();
-//		for (Map.Entry<String, String> s: controleur.getNameImmeubles().entrySet()) {
-//			if (s.getValue().equals("M")) {
-//				initialiserComboBoxMaison();
-//				break;
-//			} else {
-//				initialiserComboBoxBatiment();
-//			}
-//		}
+		
 		String type = controleur.getNameImmeubles().get(comboBox_Immeuble.getSelectedItem());
 		if (type.equals("M")) {
 			initialiserComboBoxMaison();

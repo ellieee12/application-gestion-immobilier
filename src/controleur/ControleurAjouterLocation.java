@@ -45,6 +45,13 @@ public class ControleurAjouterLocation implements ActionListener{
 		return true;
 	}
 	
+	private boolean verifcheckBoxColoc() {
+		if(this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation().equals(this.vue.isColocation())) {
+			return true;
+		}
+		return false;
+	}
+	
 	private void valider() {
 		this.vueMesLocations.getControleurMesLocations();
 		this.vue.dispose();
@@ -60,8 +67,19 @@ public class ControleurAjouterLocation implements ActionListener{
 		return false;
 	}
 	
+	private boolean verifColocationChecked() {
+		if (!verifcheckBoxColoc()) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Vous ne pouvez pas ajouter une colocation à ce bien si vous ne cochez pas la case",
+					"Attention", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+	
+	
 	private boolean allVerifs() {
-		return verifComplet() && !verifLocationExiste();
+		return verifComplet() && !verifLocationExiste() && verifColocationChecked();
 	}
 	
 	public ControleurAjouterLocation(VueAjouterLocation vue, VueMesLocations vueMesLocations) throws SQLException, DAOException {
@@ -74,13 +92,17 @@ public class ControleurAjouterLocation implements ActionListener{
 		this.biens=new LinkedList<>();
 		this.id_locataires=new LinkedList<>();
 		ResultSet locatairesRS = this.locataireDAO.getAllLocataires();
+		
 		while (locatairesRS.next()) {
 			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
 			this.id_locataires.add(locatairesRS.getString(1));
 		}
+		
 		ResultSet biensRS = this.bienDAO.getAllBiens();
 		while (biensRS.next()) {
-			this.biens.add(biensRS.getString(1));
+			if (this.locationDAO.getLocationById_Bien(biensRS.getString(1)).isColocation().equals("Oui")) {
+				this.biens.add(biensRS.getString(1));
+			}
 		}
 	}
 
@@ -115,5 +137,6 @@ public class ControleurAjouterLocation implements ActionListener{
 	public List<String> getBiens(){
 		return this.biens;
 	}
-
 }
+
+

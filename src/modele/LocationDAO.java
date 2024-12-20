@@ -1,4 +1,4 @@
-	package modele;
+package modele;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -87,17 +87,18 @@ private MySQLCon mySQLCon;
 		return true;
 	}
 	
-	public String isSelectBienColoc(String id_bien) {
+	public Location getLocationById_Bien(String id_bien) {
 		try {
-			String req = "{call getColocationByIdBien(?)}";
+			String req = "{CALL getColocationByIdBien(?)}";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
 			stmt.setString(1, id_bien);
 			ResultSet rs = stmt.executeQuery();
-			return rs.getString(1);
+			if (rs.next()) {
+				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1));
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
-	}
-	
+	}	
 }
