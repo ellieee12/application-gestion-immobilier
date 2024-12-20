@@ -49,11 +49,11 @@ private MySQLCon mySQLCon;
 			stmtInsertLocation.setDate(2, location.getDate_debut());
 			stmtInsertLocation.setInt(3, location.getNb_mois());
 			stmtInsertLocation.setString(4, location.isColocation());
-			stmtInsertLocation.setFloat(4, location.getProvision_chargement_TTC());
-			stmtInsertLocation.setFloat(5, location.getLoyer_TTC());
-			stmtInsertLocation.setFloat(6, location.getCaution_TTC());
-			stmtInsertLocation.setString(7,"2024-01-01");
-			stmtInsertLocation.setInt(8, 1);
+			stmtInsertLocation.setFloat(5, location.getProvision_chargement_TTC());
+			stmtInsertLocation.setFloat(6, location.getLoyer_TTC());
+			stmtInsertLocation.setFloat(7, location.getCaution_TTC());
+			stmtInsertLocation.setString(8,"2024-01-01");
+			stmtInsertLocation.setInt(9, 1);
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			

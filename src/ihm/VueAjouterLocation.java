@@ -248,7 +248,7 @@ public class VueAjouterLocation extends JFramePlus {
 	}
 
 	private NumberFormatter createNumberformatter() {
-		NumberFormat format = NumberFormat.getInstance();
+		NumberFormat format = NumberFormat.getCompactNumberInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
@@ -281,9 +281,9 @@ public class VueAjouterLocation extends JFramePlus {
 	
 	public String isColocation() {
 		if (this.chckbxColocation.isSelected()) {
-			return "Colocation";
+			return "Oui";
 		}
-		return "Location";
+		return "Non";
 	}
 
 	public Date getDateDebutLocation() {
