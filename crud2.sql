@@ -135,7 +135,7 @@ CREATE PROCEDURE addImmeuble (
     v_type_immeuble char(1))
 BEGIN
     insert into immeuble (id_immeuble, adresse, code_postal,ville,periode_construction,type_immeuble)
-    values (v_id_immeuble,v_adresse,v_code_postale,v_ville,v_periode_construction,v_type_immeuble);
+    values (v_id_immeuble,v_adresse,v_code_postal,v_ville,v_periode_construction,v_type_immeuble);
 END$$
     
 CREATE PROCEDURE getImmeublesDisponibles ()
