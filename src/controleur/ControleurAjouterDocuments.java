@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import ihm.VueAjouterDocuments;
 import ihm.VueEnregistrerDocumentsLocation;
 import ihm.VueMesLocations;
+import modele.DAOException;
 import modele.DocumentLocation;
 import modele.DocumentLocationDAO;
 
@@ -64,12 +65,17 @@ public class ControleurAjouterDocuments implements ActionListener {
 			this.ajouterDocumentDAO(docEau);
 			this.ajouterDocumentDAO(docElec);
 			this.ajouterDocumentDAO(docEtat);
-			valider();
+			try {
+				valider();
+			} catch (DAOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			this.vue.dispose();
 		}
 	}
 	
-	private void valider() {
+	private void valider() throws DAOException {
 		this.vueMesLocations.getControleurMesLocations().Update();
 		this.vue.dispose();
 	}

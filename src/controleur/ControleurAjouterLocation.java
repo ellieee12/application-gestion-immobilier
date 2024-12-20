@@ -102,7 +102,7 @@ public class ControleurAjouterLocation implements ActionListener{
 							this.vue.getSelectedLocataire(), this.vueMesLocations);
 					valider();
 					frame.setVisible(true);
-				} catch (SQLException e1) {
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 			}

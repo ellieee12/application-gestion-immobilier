@@ -114,7 +114,7 @@ CREATE TABLE facture (
 );
 
 CREATE TABLE compteur (
-    id_compteur INT not null auto_increment,
+    id_compteur varchar(20),
     type_compteur VARCHAR(50),
     prix_abonnement DECIMAL(15,2),
     id_bien VARCHAR(20) NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE compteur (
 CREATE TABLE releve ( 
     annee INT not null,
     index_comp INT,
-    id_compteur INT NOT NULL,
+    id_compteur varchar(20) NOT NULL,
     constraint pk_releve primary key(annee,id_compteur),
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
 );

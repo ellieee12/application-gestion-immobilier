@@ -7,11 +7,8 @@ import modele.ImmeubleDAO;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +21,7 @@ import ihm.VueMesBiens;
 import modele.Garage;
 import modele.Immeuble;
 import modele.Logement;
+import modele.Maison;
 
 public class ControleurAjouterBien implements ActionListener {
 	
@@ -41,11 +39,15 @@ public class ControleurAjouterBien implements ActionListener {
 			this.NameImmeubles = new HashMap<>();
 			
 			ImmeubleDAO Immeuble = new ImmeubleDAO();
-			ResultSet rs = Immeuble.getImmeublesPourAjouterBien();
-			while(rs.next()) {
-				this.NameImmeubles.put(rs.getString(1), rs.getString(6));
+			List<Immeuble> liste = Immeuble.getImmeublesPourAjouterBien();
+			for (Immeuble i : liste) {
+				if (i instanceof Maison) {
+					this.NameImmeubles.put(i.getId_immeuble(), "M");
+				}else {
+					this.NameImmeubles.put(i.getId_immeuble(), "B");
+				}
 			}
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -94,6 +96,7 @@ public class ControleurAjouterBien implements ActionListener {
 			}
 				
 		} else {
+			@SuppressWarnings("rawtypes")
 			JComboBox ComboBoxselected = (JComboBox) e.getSource();
 			if (ComboBoxselected==this.vue.getComboBox()) {
 				String optionSelected = (String) ComboBoxselected.getSelectedItem();
@@ -145,13 +148,7 @@ public class ControleurAjouterBien implements ActionListener {
 	private boolean verificationBienExiste() throws DAOException {
 		return this.dao.bienExiste(this.vue.getChampsIdBien());
 	}
-	
-//	public static synchronized ControleurAjouterBien getControleurAjouterBien (VueAjouterBien vue) {
-//		if (controleur == null) {
-//			controleur = new ControleurAjouterBien(vue);
-//		}
-//		return controleur;
-//	}
+
 
 	public Map<String, String> getNameImmeubles() {
 		return NameImmeubles;

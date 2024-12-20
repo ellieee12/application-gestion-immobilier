@@ -1,8 +1,5 @@
 package Tests;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -97,25 +94,8 @@ public class TestBienDAO {
 	
 	@Test
 	public void testGetBienByIdImmeuble() throws DAOException{
-		ResultSet s = this.bDAO.getBiensFromOneImmeuble(idBat);
-		int size = 0;
-		List<Bien> liste = new LinkedList<>();
-		try {
-			while (s.next()) {
-				if (s.getString(2).equals("G")) {
-					Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
-					liste.add(g);
-				}else {
-					Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
-					liste.add(l);
-				}
-				
-				size++;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		assertEquals(2,size);
+		List<Bien> liste = this.bDAO.getBiensFromOneImmeuble(idBat);
+		assertEquals(2,liste.size());
 		assertEquals(this.b,liste.get(0));
 		assertEquals(this.l,liste.get(1));
 	}

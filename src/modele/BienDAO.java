@@ -57,13 +57,24 @@ public class BienDAO{
 	 * @return Un ResultSet de tous les objets Bien associés à un immeuble donné
 	 * @throws DAOException
 	 */
-	public ResultSet getBiensFromOneImmeuble(String idImmeuble) throws DAOException {
+	public List<Bien> getBiensFromOneImmeuble(String idImmeuble) throws DAOException {
 		try {
-			String req = "{CALL getBiensByImmeuble(?)};";
+			String req = "{CALL getBiensByImmeuble(?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, idImmeuble);
-			ResultSet rs = stmt.executeQuery();
-			return rs;
+			ResultSet s = stmt.executeQuery();
+			List<Bien> liste = new LinkedList<>();
+			while(s.next()) {
+				if (s.getString(2).equals("G")) {
+					Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
+					liste.add(g);
+				}else {
+					Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
+					liste.add(l);
+				}
+			}
+			s.close();
+			return liste;
 		}catch(SQLException e){
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération des biens à partir d'un bien",e);
 			throw new DAOException("Erreurs lors de la récupération des biens à partir d'un bien",e);
@@ -124,9 +135,8 @@ public class BienDAO{
 			stmt.close();
 			System.out.println(i+" lignes ajoutées");
 		} catch (SQLException e) {
-			System.out.println(b.getEntretienPartieCommune());
-//			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
-//			throw new DAOException("Erreurs lors de la création d'un bien",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la création d'un bien",e);
+			throw new DAOException("Erreurs lors de la création d'un bien",e);
 		}
 	}
 	

@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
@@ -15,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modele.Batiment;
-import modele.BienDAO;
 import modele.DAOException;
 import modele.Immeuble;
 import modele.ImmeubleDAO;
-import modele.Logement;
 import modele.Maison;
 
 public class TestImmeubleDAO {
@@ -56,22 +51,9 @@ public class TestImmeubleDAO {
 	}
 	
 	@Test
-	public void testGetAllImmeubles() throws DAOException, SQLException {
-		ResultSet rs = this.imDAO.getAllImmeubles();
-		int size = 0;
-		List<Immeuble> liste = new LinkedList<>();
-		while (rs.next()) {
-			if (rs.getString(6).equals("B")) {
-				Batiment bat = new Batiment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-				liste.add(bat);
-			}else {
-				Maison maison = new Maison(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-				liste.add(maison);
-			}
-			
-			size++;
-		}
-		assertEquals(2,size);
+	public void testGetAllImmeubles() throws DAOException {
+		List<Immeuble> liste = this.imDAO.getAllImmeubles();
+		assertEquals(2,liste.size());
 		assertEquals(this.bat,liste.get(0));
 		assertEquals(this.maison,liste.get(1));
 	}
@@ -89,54 +71,21 @@ public class TestImmeubleDAO {
 	
 	@Test
 	public void testGetImmeubleById() throws SQLException, DAOException {
-		ResultSet s = this.imDAO.getInfoImmeuble(idBat);
-		int size = 0;
-		Batiment b= null;
-		while (s.next()) {
-			b = new Batiment(idBat, s.getString(1), s.getString(2), s.getString(3), s.getString(4));
-			size++;
-		}
-		assertEquals(1,size);
+		Immeuble b = this.imDAO.getInfoImmeuble(idBat);
 		assertEquals(this.bat, b);
 	}
 	
 	@Test
 	public void testGetImmeublesPourAjouterBienMaisonRemplie() throws DAOException, SQLException {
-		Logement log = new Logement(Date.valueOf("2004-01-12"), "testBien001", 3, 5,21.0f,200.0f);
-		BienDAO bDAO = new BienDAO();
-		bDAO.ajouterBien(log, idMaison);
-		ResultSet s = this.imDAO.getImmeublesPourAjouterBien();
-		int size = 0;
-		Immeuble i= null;
-		while (s.next()) {
-			if (s.getString(6).equals("B")) {
-				i = new Batiment(s.getString(1),s.getString(2),s.getString(3),s.getString(4),s.getString(5));
-			}else {
-				i = new Maison(s.getString(1),s.getString(2),s.getString(3),s.getString(4),s.getString(5));
-			}
-			size++;
-		}
-		assertEquals(1,size);
-		assertEquals(this.bat, i);
+		List<Immeuble> liste = this.imDAO.getImmeublesPourAjouterBien();
+		assertEquals(2,liste.size());
+		assertEquals(this.bat, liste.get(0));
 	}
 	
 	@Test
 	public void testGetImmeublesPourAjouterBien() throws DAOException, SQLException {
-		ResultSet rs = this.imDAO.getImmeublesPourAjouterBien();
-		int size = 0;
-		List<Immeuble> liste = new LinkedList<>();
-		while (rs.next()) {
-			if (rs.getString(6).equals("B")) {
-				Batiment bat = new Batiment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-				liste.add(bat);
-			}else {
-				Maison maison = new Maison(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-				liste.add(maison);
-			}
-			
-			size++;
-		}
-		assertEquals(2,size);
+		List<Immeuble> liste = this.imDAO.getImmeublesPourAjouterBien();
+		assertEquals(2,liste.size());
 		assertEquals(this.bat,liste.get(0));
 		assertEquals(this.maison,liste.get(1));
 	}

@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
@@ -15,9 +13,7 @@ import javax.swing.JTable;
 
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
-import modele.Batiment;
 import modele.Immeuble;
-import modele.Maison;
 import ihm.VueMesBiens;
 import modele.DAOException;
 import modele.ImmeubleDAO;
@@ -28,52 +24,21 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	private List<Immeuble> immeuble;
 	
 	public ControleurMesImmeubles(VueMesImmeubles vue) throws DAOException {
-		try {
-			this.vue = vue;
-			this.immeuble = new LinkedList<Immeuble>();
-			
-			ImmeubleDAO immeubleDAO = new ImmeubleDAO();
-			ResultSet rs = immeubleDAO.getAllImmeubles();
-			while(rs.next()) {
-                if (rs.getString(6).equals("M")) {
-                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-                } else {
-                    this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
-                }
-            }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		this.vue = vue;
+		this.immeuble = new LinkedList<Immeuble>();
+		
+		ImmeubleDAO immeubleDAO = new ImmeubleDAO();
+		this.immeuble = immeubleDAO.getAllImmeubles();
 	}
-//	
-//	public static synchronized ControleurMesImmeubles getControleur(VueMesImmeubles vue) {
-//		if (controleur == null) {
-//			controleur = new ControleurMesImmeubles(vue);
-//		}
-//		return controleur;
-//		
-//	}
-	
+
 	public List<Immeuble> getImmeuble() {
 		return immeuble;
 	}
 
 	public void Update() throws DAOException {
-        try {
-            this.immeuble = new LinkedList<>();
-            
-            ImmeubleDAO immeuble = new ImmeubleDAO();
-            ResultSet rs = immeuble.getAllImmeubles();
-            while(rs.next()) {
-                if (rs.getString(6).equals("M")) {
-                    this.immeuble.add(new Maison(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-                } else {
-                    this.immeuble.add(new Batiment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.immeuble = new LinkedList<>();
+        ImmeubleDAO immeuble = new ImmeubleDAO();
+        this.immeuble = immeuble.getAllImmeubles();
         this.vue.buildTable(this);
     }
 

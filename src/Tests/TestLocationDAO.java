@@ -1,10 +1,10 @@
 package Tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -104,9 +104,11 @@ public class TestLocationDAO {
 	}
 	
 	@Test
-	public void testGetAllLocation() throws SQLException {
-		ResultSet rs = this.locationDAO.getAllLocations();
-		
+	public void testGetAllLocation() throws DAOException {
+		List<Location> listeAll = this.locationDAO.getAllLocations();
+		assertEquals(location1, listeAll.get(0));
+		assertEquals(location2, listeAll.get(1));
+		assertEquals(location3, listeAll.get(2));
 	}
 
 }

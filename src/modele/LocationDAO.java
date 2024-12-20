@@ -5,24 +5,43 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import modele.Location;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LocationDAO {
 private MySQLCon mySQLCon;
+private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName());
 	
 	public LocationDAO() {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
-	public ResultSet getAllLocations() throws SQLException {
-		String req = "select * from location";
-		Statement stmt = this.mySQLCon.getConnection().createStatement();
-		ResultSet rs = stmt.executeQuery(req);
-		return rs;
+	public List<Location> getAllLocations() throws DAOException {
+		String req = "select l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, "
+				+ "l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, "
+				+ "l1.trimestre, l2.id_locataire "
+				+ "from location l1, louer l2 "
+				+ "where l2.id_bien=l1.id_bien "
+				+ "and l2.date_debut=l2.date_debut";
+		Statement stmt;
+		List<Location> liste = new LinkedList<>();
+		try {
+			stmt = this.mySQLCon.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery(req);
+			while(rs.next()) {
+				liste.add(new Location(null, false, 0, 0, 0, 0, req));
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locations",e);
+			throw new DAOException("Erreurs lors de la récupération de la liste des locations",e);
+		}
+		
+		return liste;
 	}
 	
-	public void supprimerLocation(String id, Date date_debut) {
+	public void supprimerLocation(String id, Date date_debut) throws DAOException {
 		try {
 	        String reqDeleteLouer = "{CALL deleteLocation (?,?)}";
 	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareCall(reqDeleteLouer);
@@ -31,15 +50,16 @@ private MySQLCon mySQLCon;
 	        int i = stmtDeleteLouer.executeUpdate();
 	        System.out.println(i +"lignes supprimées");
 	        stmtDeleteLouer.close();
-		}catch(Exception e){
-			System.out.println(e);
+		}catch(SQLException e){
+			logger.log(Level.SEVERE,"Erreurs lors de la suppression de la liste des locations",e);
+			throw new DAOException("Erreurs lors de la suppression de la liste des locations",e);
 		}
 	}
 	
 	public int ajouterLocation(
 		String id_bien,
 		String id_locataire,
-		Location location) throws SQLException {
+		Location location) throws DAOException {
 		try {
 			String reqInsertLocation = "{CALL insertLocation(?,?,?,?,?,?,?,?,?,?)}";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
@@ -68,10 +88,10 @@ private MySQLCon mySQLCon;
 			i+=stmtInsertLouer.executeUpdate();
 			stmtInsertLouer.close();
 			return i;
-		}catch(Exception e) {
-			System.out.println(e);
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'une location",e);
+			throw new DAOException("Erreurs lors de l'ajout d'une location",e);
 		}
-		return 0;
 	}
 	
 	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) {
