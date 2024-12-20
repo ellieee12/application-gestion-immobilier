@@ -14,6 +14,7 @@ import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
 import modele.Facture;
 import modele.DAOException;
+import modele.Facture;
 import modele.FactureDAO;
 
 public class ControleurListFactures implements ActionListener{

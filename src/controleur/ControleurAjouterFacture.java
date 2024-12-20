@@ -12,10 +12,9 @@ import javax.swing.JOptionPane;
 
 import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
-import modele.Facture;
-import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
+import modele.Facture;
 import modele.FactureDAO;
 
 public class ControleurAjouterFacture implements ActionListener {
