@@ -11,7 +11,7 @@ public class trucsatester {
 		
 		CompteurDAO dao = new CompteurDAO();
 		System.out.println(dao.getCompteurFromOneBienSelonType("toto", typeCompteur.EAU));
-		
+			
 	}
 
 }

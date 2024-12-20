@@ -42,6 +42,7 @@ public class ControleurAjouterBien implements ActionListener {
 			this.vue = vue;
 			this.vueBiens=vueBiens;
 			this.dao = new BienDAO();
+			this.daoC = new CompteurDAO();
 			this.NameImmeubles = new HashMap<>();
 			
 			ImmeubleDAO Immeuble = new ImmeubleDAO();
