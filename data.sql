@@ -1,5 +1,4 @@
 USE saes3;
-SET autocommit=0;
 START TRANSACTION;
 
 -- Immeuble
@@ -77,18 +76,13 @@ INSERT INTO Facture VALUES
 
 -- Compteur
 INSERT INTO Compteur VALUES
-('C001', 'Electricity', 100.00, 'B001'),
-('C002', 'Water', 50.00, 'B002'),
-('C003', 'Gas', 70.00, 'B003'),
-('C004', 'Heating', 150.00, 'B004'),
-('C005', 'Internet', 30.00, 'B005');
+(1,'Electricity', 100.00, 'B001'),
+(2,'Water', 50.00, 'B002');
 
 -- Releve
 INSERT INTO Releve VALUES
-(2023, 500, 'C001'),
-(2023, 600, 'C002'),
-(2023, 700, 'C003'),
-(2023, 800, 'C004'),
-(2023, 900, 'C005');
+(2023, 500, 1),
+(2023, 600, 2);
+
 
 COMMIT;
