@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -248,7 +249,7 @@ public class VueAjouterLocation extends JFramePlus {
 	}
 
 	private NumberFormatter createNumberformatter() {
-		NumberFormat format = NumberFormat.getCompactNumberInstance();
+		NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);

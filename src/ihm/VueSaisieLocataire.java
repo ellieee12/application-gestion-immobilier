@@ -75,8 +75,7 @@ public class VueSaisieLocataire extends JFramePlus {
 	 */ 	
 	public VueSaisieLocataire(VueMesLocataires vue) {
 		
-		ControleurSaisieLocataire controleur = ControleurSaisieLocataire.getControleur();
-		controleur.initialiserControleur(this, vue);
+		ControleurSaisieLocataire controleur = new ControleurSaisieLocataire(this, vue);
 		
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
