@@ -5,13 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import ihm.VueAjouterLocation;
 import ihm.VueListFactures;
 import ihm.VueMenu;
 import ihm.VueMesImmeubles;
 import ihm.VueMesLocataires;
 import ihm.VueMesLocations;
-import ihm.VueSaisieLocataire;
 
 public class ControleurMenu implements ActionListener {
 	

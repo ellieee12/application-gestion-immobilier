@@ -15,16 +15,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import classes.Compteur;
-import classes.Compteur.typeCompteur;
-import classes.Garage;
-import classes.Logement;
 import ihm.VueAjouterBien;
 import ihm.VueMesBiens;
 import modele.BienDAO;
+import modele.Compteur;
+import modele.Compteur.typeCompteur;
 import modele.CompteurDAO;
 import modele.DAOException;
+import modele.Garage;
 import modele.ImmeubleDAO;
+import modele.Logement;
 
 public class ControleurAjouterBien implements ActionListener {
 	
