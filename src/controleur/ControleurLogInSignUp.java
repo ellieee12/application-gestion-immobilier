@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import ihm.VueLogin;
 import ihm.VueMenu;
 import ihm.VueSignUp;
+import modele.DAOException;
 import modele.LogInSignUpDAO;
 public class ControleurLogInSignUp extends MouseAdapter implements ActionListener{
 	
@@ -42,7 +43,13 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 				String mdp = String.valueOf(this.vueLogin.getMDP().getPassword());
 					if (this.dao.mdpCorrect(username, mdp) && this.dao.compteExiste(username)){
 						vueLogin.setVisible(false);
-						VueMenu frame = new VueMenu();
+						VueMenu frame = null;
+						try {
+							frame = new VueMenu();
+						} catch (DAOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						frame.setVisible(true);
 					}else {
 						JOptionPane.showMessageDialog(vueSignUp, "Login ou mot de passe incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
