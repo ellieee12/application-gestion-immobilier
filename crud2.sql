@@ -29,6 +29,7 @@ DROP PROCEDURE IF EXISTS getAllLocataires$$
 DROP PROCEDURE IF EXISTS getLocataireById$$
 DROP PROCEDURE IF EXISTS insertLocataire$$
 DROP PROCEDURE IF EXISTS deleteLocation$$
+DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
 
 CREATE PROCEDURE getAllBiens()
@@ -97,7 +98,7 @@ END$$
 CREATE PROCEDURE getImmeubleById (v_id_immeuble varchar(20))
 
 BEGIN
-    select adresse, code_postale, ville, periode_construction, type_immeuble
+    select adresse, code_postal, ville, periode_construction, type_immeuble
     from immeuble
     where id_immeuble=v_id_immeuble;
 END$$
@@ -126,12 +127,12 @@ END$$
 CREATE PROCEDURE addImmeuble (
     v_id_immeuble varchar(20),
     v_adresse VARCHAR(50),
-    v_code_postale CHAR(5),
+    v_code_postal CHAR(5),
     v_ville VARCHAR(50),
     v_periode_construction VARCHAR(50),
     v_type_immeuble char(1))
 BEGIN
-    insert into immeuble (id_immeuble, adresse, code_postale,ville,periode_construction,type_immeuble)
+    insert into immeuble (id_immeuble, adresse, code_postal,ville,periode_construction,type_immeuble)
     values (v_id_immeuble,v_adresse,v_code_postale,v_ville,v_periode_construction,v_type_immeuble);
 END$$
     
@@ -273,19 +274,18 @@ CREATE PROCEDURE insertLocation (
     v_id_bien VARCHAR(20),
     v_date_debut DATE,
     v_nb_mois INT,
-    v_colocation TINYINT(1),
+    v_colocation VARCHAR(50),
     v_provision_charges_ttc decimal(15,2),
     v_loyer_ttc decimal(15,2),
     v_caution_ttc decimal(15,2),
-    v_date_derniere_reg DATE,
     v_annee date,
     v_trimestre smallint
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
-    loyer_ttc,caution_ttc,date_derniere_reg,annee,trimestre)
+    loyer_ttc,caution_ttc,annee,trimestre)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc,v_date_derniere_reg,)
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, annee, trimestre);
 END$$
 
 
