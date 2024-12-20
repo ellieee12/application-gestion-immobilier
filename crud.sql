@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS SignUp;
 create table Immeuble (
     id_immeuble varchar(20) not null,
     adresse VARCHAR(50) not null,
-    code_postale CHAR(5) not null,
+    code_postal CHAR(5) not null,
     ville VARCHAR(50) not null,
     periode_construction VARCHAR(50),
     type_immeuble char(1) not null,
@@ -65,7 +65,6 @@ CREATE TABLE Location(
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
-    date_derniere_reg DATE,
     annee date NOT NULL,
     trimestre smallint NOT NULL,
     PRIMARY KEY(id_bien, date_debut),
