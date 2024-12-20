@@ -46,7 +46,7 @@ public class Location {
 				&& provision_chargement_TTC == other.provision_chargement_TTC;
 	}
 
-	public Location(Date date_debut, boolean colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
+	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
 			float caution_TTC, String idBien) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
