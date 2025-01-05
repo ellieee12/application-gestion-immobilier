@@ -47,9 +47,9 @@ public class TestLocationDAO {
 		Logement log = new Logement(Date.valueOf("2004-01-12"), "testBien001", 3, 5,21.0f,200.0f);
 		Garage garage = new Garage(Date.valueOf("2004-02-12"), "testBien002", 100.0f);
 		Logement logM = new Logement(Date.valueOf("2004-03-12"), "testBien003", 3,5,21.0f,200.0f);
-		this.location1 = new Location(Date.valueOf("2023-06-23"),false,36,400.0f,100.0f,200.0f,"testBien001");
-		this.location2 = new Location(Date.valueOf("2023-06-23"),false,36,100.0f,20.0f,50.0f,"testBien002");
-		this.location3 = new Location(Date.valueOf("2024-01-25"),false,40,500.0f,150.0f,200.0f,"testBien003");
+		this.location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001");
+		this.location2 = new Location(Date.valueOf("2023-06-23"),"Non",36,100.0f,20.0f,50.0f,"testBien002");
+		this.location3 = new Location(Date.valueOf("2024-01-25"),"Non",40,500.0f,150.0f,200.0f,"testBien003");
 		
 		immeubleDAO.ajouterImmeuble(bat);
 		immeubleDAO.ajouterImmeuble(maison);
