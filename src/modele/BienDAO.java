@@ -83,10 +83,10 @@ public class BienDAO{
 			List<Bien> liste = new LinkedList<>();
 			while(s.next()) {
 				if (s.getString(2).equals("G")) {
-					Garage g = new Garage(s.getDate(6),s.getString(1),s.getFloat(7));
+					Garage g = new Garage(s.getDate(7),s.getString(1),s.getFloat(6));
 					liste.add(g);
 				}else {
-					Logement l = new Logement(s.getDate(6),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(7));
+					Logement l = new Logement(s.getDate(7),s.getString(1),s.getInt(3),s.getInt(5),s.getFloat(4),s.getFloat(6));
 					liste.add(l);
 				}
 			}
