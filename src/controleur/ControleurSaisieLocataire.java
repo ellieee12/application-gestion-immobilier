@@ -22,19 +22,10 @@ public class ControleurSaisieLocataire implements ActionListener {
 	private VueMesLocataires vueLocataires;
 	private LocataireDAO dao;
 	
-	private ControleurSaisieLocataire() {}
-	
-	public void initialiserControleur(VueSaisieLocataire vue, VueMesLocataires vueLocataires) {
+	public ControleurSaisieLocataire(VueSaisieLocataire vue, VueMesLocataires vueLocataires) {
 		this.vue = vue;
 		this.vueLocataires = vueLocataires;
 		this.dao = new LocataireDAO();
-	}
-	
-	public static synchronized ControleurSaisieLocataire getControleur() {
-		if (controleur == null) {
-			controleur = new ControleurSaisieLocataire();
-		}
-		return controleur;
 	}
 	
 	private boolean verificationLocataireExiste() throws SQLException {

@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
