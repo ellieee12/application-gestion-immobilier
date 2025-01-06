@@ -51,7 +51,7 @@ public class ControleurAjouterLocation implements ActionListener{
 	private boolean verifcheckBoxColoc() {
 		System.out.println(this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation());
 		System.out.println(this.vue.isColocation());
-		if(this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation().equals(this.vue.isColocation())) {
+		if (this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation().equals(this.vue.isColocation())) {
 			return true;
 		}
 		return false;
