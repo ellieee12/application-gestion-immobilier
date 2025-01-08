@@ -5,7 +5,12 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestBienDAO.class, TestImmeubleDAO.class, TestLocataireDAO.class, TestLocationDAO.class, TestDocumentLocationDAO.class })
+@SuiteClasses({ TestBienDAO.class, 
+	TestImmeubleDAO.class, 
+	TestLocataireDAO.class, 
+	TestLocationDAO.class, 
+	TestDocumentLocationDAO.class,
+	TestFacture.class })
 public class AllTests {
 
 }

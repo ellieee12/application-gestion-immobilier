@@ -33,7 +33,7 @@ public class FactureDAO {
 			ResultSet rs = stmt.executeQuery(req);
 			List<Facture> liste = new LinkedList<>();
 			while(rs.next()) {
-				liste.add(new Facture(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getFloat(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9)));
+				liste.add(new Facture(rs.getString("numero_facture"),rs.getDate("date_paiement"),rs.getDate("date_emission"),rs.getString(4),rs.getString(5),rs.getFloat(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9)));
 			}
 			return liste;
 		} catch (SQLException e) {
@@ -62,8 +62,8 @@ public class FactureDAO {
 			String req = "{CALL insertFacture(?,?,?,?,?,?,?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, f.getNumero());
-			stmt.setDate(2, f.getDate_emission());
-			stmt.setDate(3, f.getDate_paiement());
+			stmt.setDate(2, f.getDate_paiement());
+			stmt.setDate(3, f.getDate_emission());
 			stmt.setString(4, f.getNumero_devis());
 			stmt.setString(5, f.getDesignation());
 			stmt.setFloat(6, f.getMontant_reel_paye());

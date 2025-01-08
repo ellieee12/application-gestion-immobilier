@@ -1,5 +1,6 @@
 package modele;
 import java.sql.Date;
+import java.util.Objects;
 
 public class Facture {
     private Date date_emission;
@@ -8,7 +9,7 @@ public class Facture {
     private String designation;
     private float montant;
     private String numero_devis;
-    private float montant_reel_paye;
+	private float montant_reel_paye;
     private float imputable_locataire; 
     private String id_bien;
     
@@ -60,5 +61,28 @@ public class Facture {
 		return id_bien;
 	}
 
-    
+	@Override
+	public int hashCode() {
+		return Objects.hash(date_emission, date_paiement, designation, id_bien, imputable_locataire, montant,
+				montant_reel_paye, numero, numero_devis);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Facture other = (Facture) obj;
+		return this.date_emission.equals(other.date_emission) && this.date_paiement.equals(other.date_paiement)
+				&& this.designation.equals(other.designation) && this.id_bien.equals(other.id_bien)
+				&& imputable_locataire == other.imputable_locataire
+				&& montant == other.montant
+				&& montant_reel_paye == other.montant_reel_paye
+				&& this.numero.equals(other.numero)
+				&& this.numero_devis.equals(other.numero_devis);
+	}
+
 }
