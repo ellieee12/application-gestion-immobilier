@@ -26,6 +26,8 @@ public class Location {
     private float caution_TTC; 
     
     private String idLocataire;
+
+    private boolean active;
     
 //	@Override
 //	public int hashCode() {
@@ -49,7 +51,7 @@ public class Location {
 	}
 
 	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, String idBien, String idLocataire) {
+			float caution_TTC, String idBien, String idLocataire, boolean active) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -58,6 +60,7 @@ public class Location {
 		this.caution_TTC = caution_TTC;
 		this.idBien = idBien;
 		this.idLocataire = idLocataire;
+		this.active = active;
 	}
 	
 	public String getIdBien () {
@@ -101,5 +104,9 @@ public class Location {
 	
 	public String getIdLocataire() {
 		return this.idLocataire;
+	}
+	
+	public String getActive() {
+		return this.active?"Active":"Inactive";
 	}
 }

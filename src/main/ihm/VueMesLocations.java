@@ -27,6 +27,7 @@ public class VueMesLocations extends JPanel {
 	private DefaultTableModel t;
 	private ControleurMesLocations controleurMesLocations;
 	private JButton boutonRegu;
+	private JButton boutonSolde;
 	
 	/**
 	 * Launch the application.
@@ -73,7 +74,7 @@ public class VueMesLocations extends JPanel {
 		AjouterLocation.addActionListener(controleurMesLocations);
 		
 		JPanel panel = new JPanel();
-		PanelBoutonNouveau.add(panel, BorderLayout.CENTER);
+		PanelBoutonNouveau.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		this.boutonRegu = new JButton("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>");
@@ -81,6 +82,10 @@ public class VueMesLocations extends JPanel {
 		this.boutonRegu.setVerticalAlignment(SwingConstants.CENTER);   // Centre verticalement
 		panel.add(this.boutonRegu, BorderLayout.NORTH);
 		this.boutonRegu.addActionListener(controleurMesLocations);
+		
+		this.boutonSolde = new JButton("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>");
+		panel.add(this.boutonSolde, BorderLayout.CENTER);
+		this.boutonSolde.addActionListener(controleurMesLocations);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -98,8 +103,7 @@ public class VueMesLocations extends JPanel {
 				},
 				new String[] {
 					"Id Bien", "Date début location", "Colocation", "Nombre de mois", "Loyer TTC", "Provisions chargement TTC",
-						"Caution TTC", "Loyer payé", "Id Locataire"
-					
+						"Caution TTC", "Loyer payé", "Id Locataire", "Activité"	
 				}
 			) {
 				/**
@@ -109,7 +113,7 @@ public class VueMesLocations extends JPanel {
 				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
-					Float.class, Integer.class, String.class
+					Float.class, Integer.class, String.class, String.class
 				};
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
@@ -138,8 +142,8 @@ public class VueMesLocations extends JPanel {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    "1er janvier 2025", 1, l.getIdLocataire()
-				});
+				    "1er janvier 2025", l.getIdLocataire(), l.getActive()
+			});
 		}
 	}
 	

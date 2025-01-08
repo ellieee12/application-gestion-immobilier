@@ -133,7 +133,7 @@ public class ControleurAjouterLocation implements ActionListener{
 					try {
 						Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
 								this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-								this.vue.getCaution(), this.vue.getSelectedBien(), this.getIDLocataire(this.vue.getSelectedLocataire()));
+								this.vue.getCaution(), this.vue.getSelectedBien(), this.getIDLocataire(this.vue.getSelectedLocataire()), true);
 						
 						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), loc);
 						

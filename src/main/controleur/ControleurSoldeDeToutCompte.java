@@ -10,17 +10,18 @@ import java.util.Calendar;
 import javax.swing.JButton;
 
 import ihm.VueRegularisation;
+import ihm.VueSoldeDeToutCompte;
 import modele.Compteur;
 import modele.Relevé;
 import modele.Compteur.typeCompteur;
 import modele.CompteurDAO;
 
-public class ControleurRegularisation implements ActionListener {
+public class ControleurSoldeDeToutCompte implements ActionListener {
 
 	private final float PRIX_EAU = 2.86F;
 	private final float PRIX_ELEC = 0.2F;
 	private CompteurDAO dao;
-	private VueRegularisation vue;
+	private VueSoldeDeToutCompte vue;
 	private Compteur compteurEau;
 	private Compteur compteurElec;
 	private String idcompteurEau;
@@ -36,7 +37,7 @@ public class ControleurRegularisation implements ActionListener {
 	private float montantOrdures;
 	private float provisionSurCharges;
 	
-	public ControleurRegularisation(VueRegularisation vue, String id_bien, Date date_debut) {
+	public ControleurSoldeDeToutCompte(VueSoldeDeToutCompte vue, String id_bien, Date date_debut) {
 		this.vue = vue;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
@@ -123,20 +124,20 @@ public class ControleurRegularisation implements ActionListener {
 				this.vue.afficherReste(montantReste);
 			}
 		} else if (b.getText()=="Confirmer") {
-//			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
-//				try {
-//					this.dao.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
-//				} catch (SQLException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-//			// créer nouveau releve dans la bd
-//			try {
-//				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
-//				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
+			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
+				try {
+					this.dao.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			// créer nouveau releve dans la bd
+			try {
+				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
+				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			this.vue.dispose();
 		}
 	}

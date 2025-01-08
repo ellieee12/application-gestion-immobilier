@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ihm.VueAjouterLocation;
 import ihm.VueMesLocations;
+import ihm.VueRegularisation;
+import ihm.VueSoldeDeToutCompte;
 import modele.DAOException;
 import modele.Location;
 import modele.LocationDAO;
@@ -50,27 +52,41 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		} else if (b.getText().equals("Supprimer")){
-			String[] options = {"Supprimer", "Annuler"};
-			JOptionPane pane = new JOptionPane();
-			@SuppressWarnings("static-access")
-			int resultat=pane.showOptionDialog(this.vue, 
-					"Tout les documents associés à cette location vont êtres supprimés.",
-					"Attention", 
-					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-			try {
-				if (resultat == JOptionPane.YES_OPTION) {
-					LocationDAO location = new LocationDAO();
-					location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+		} else if (this.location.get(this.vue.getLigneChoisi()).getActive().equals("Active")){
+			if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
+				try {
+					VueRegularisation frame = new VueRegularisation(this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
-				this.Update();
-			} catch (DAOException e1) {
-				e1.printStackTrace();
+			} else if (b.getText().equals("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>")){
+				try {
+					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			} else if (b.getText().equals("Supprimer")){
+				String[] options = {"Supprimer", "Annuler"};
+				JOptionPane pane = new JOptionPane();
+				@SuppressWarnings("static-access")
+				int resultat=pane.showOptionDialog(this.vue, 
+						"Tout les documents associés à cette location vont êtres supprimés.",
+						"Attention", 
+						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+				
+				try {
+					if (resultat == JOptionPane.YES_OPTION) {
+						LocationDAO location = new LocationDAO();
+						location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+					}
+					this.Update();
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
-		
 	}
-	
-	
 
 }
