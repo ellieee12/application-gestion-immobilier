@@ -79,11 +79,11 @@ public class ControleurAjouterBien implements ActionListener {
 						try {
 							throw new ParseException("Veuillez remplir tout les champs",0);
 						}catch(ParseException pEx) {
-							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
 						}
 					}else if (isLogement()) {
 						if (champsLogementNonRemplis()){
-							JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date d'acquisition invalide","Attention", JOptionPane.WARNING_MESSAGE);
 						}else {
 							 ajouterLogement();
 							 this.vueBiens.getControleurMesBiens().Update();

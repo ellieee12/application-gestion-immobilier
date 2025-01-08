@@ -49,7 +49,7 @@ public class ControleurAjouterFacture implements ActionListener {
 				if (verificationFactureExiste()) {
 					JOptionPane.showMessageDialog(this.vue, "Cette facture existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
 				}else if(!verificationChamps()) {
-					JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou Champs Dates invalides","Attention", JOptionPane.WARNING_MESSAGE);
 				}else {
 					this.ajouterFacture();
 					this.vueListFactures.getControleurMesBiens().Update();
