@@ -3,7 +3,9 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.util.Calendar;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 
@@ -60,7 +62,7 @@ public class ControleurRegularisation implements ActionListener {
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-		this.annee = Integer.valueOf(new Date(Calendar.getInstance().getTime().getTime()).toString().substring(0, 4));
+		this.annee = LocalDate.now().getYear();
 
 	}
 

@@ -54,7 +54,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 					e1.printStackTrace();
 				}
 		} else if (b.getText() == "Supprimer") {
-			String[] options = {"Suppimer","Annuler"};
+			String[] options = {"Supprimer","Annuler"};
 			JOptionPane pane = new JOptionPane();
 			@SuppressWarnings("static-access")
 			int resultat=pane.showOptionDialog(this.vue, 
