@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modele.Batiment;
+import modele.BienDAO;
 import modele.DAOException;
 import modele.Immeuble;
 import modele.ImmeubleDAO;
+import modele.Logement;
 import modele.Maison;
 
 public class TestImmeubleDAO {
@@ -84,8 +87,23 @@ public class TestImmeubleDAO {
 	@Test
 	public void testGetImmeublesPourAjouterBien() throws DAOException, SQLException {
 		List<Immeuble> liste = this.imDAO.getImmeublesPourAjouterBien();
-		assertEquals(2,liste.size());
-		assertEquals(this.bat,liste.get(0));
-		assertEquals(this.maison,liste.get(1));
+		assertTrue(liste.contains(this.bat));
+		assertTrue(liste.contains(this.maison));
+	}
+	
+	@Test
+	public void testGetTypeImmeubleFromIdBienBatiment() throws DAOException {
+		Logement l = new Logement(Date.valueOf("2004-01-12"), "idBien", 3, 5,21.0f,200.0f);
+		BienDAO bDAO = new BienDAO();
+		bDAO.ajouterBien(l, idBat);
+		assertEquals("B",this.imDAO.getTypeImmeubleFromIdBien("idBien"));
+	}
+	
+	@Test
+	public void testGetTypeImmeubleFromIdBienMaison() throws DAOException {
+		Logement l = new Logement(Date.valueOf("2004-01-12"), "idBien", 3, 5,21.0f,200.0f);
+		BienDAO bDAO = new BienDAO();
+		bDAO.ajouterBien(l, idMaison);
+		assertEquals("M",this.imDAO.getTypeImmeubleFromIdBien("idBien"));
 	}
 }

@@ -118,10 +118,21 @@ public class ImmeubleDAO {
 		}
 	}
 	
+	/**
+	 * Vérifier qu'un immeuble existe dans la base de données à partir de son identifiant
+	 * @param id_immeuble
+	 * @return si l'immeuble existe
+	 * @throws DAOException
+	 */
 	public boolean immeubleExiste(String id_immeuble) throws DAOException {
 		return this.getInfoImmeuble(id_immeuble)!=null;
 	}
 	
+	/**
+	 * Récupérer la liste de immeubles disponibles pour ajouter un bien
+	 * @return une liste de immeubles disponibles
+	 * @throws DAOException
+	 */
 	public List<Immeuble> getImmeublesPourAjouterBien() throws DAOException {
 		try {
 			String req = "{CALL getImmeublesDisponibles()}";
