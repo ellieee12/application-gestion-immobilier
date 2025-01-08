@@ -14,7 +14,6 @@ public class Compteur {
     }
     
     private typeCompteur typecomp;
-
     private float prix_abonnement;
 
 	public Compteur(typeCompteur typecomp, float prix_abonnement) {
