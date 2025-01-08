@@ -11,10 +11,15 @@ import javax.swing.JButton;
 
 import ihm.VueRegularisation;
 import ihm.VueSoldeDeToutCompte;
+import modele.BienDAO;
 import modele.Compteur;
 import modele.Relevé;
 import modele.Compteur.typeCompteur;
 import modele.CompteurDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
+import modele.LocationDAO;
+import modele.ReleveDAO;
 
 public class ControleurSoldeDeToutCompte implements ActionListener {
 
@@ -36,15 +41,23 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	private Integer newIndexElec;
 	private float montantOrdures;
 	private float provisionSurCharges;
+	private LocationDAO daoL;
+	private ReleveDAO daoR;
+	private BienDAO daoB;
+	private ImmeubleDAO daoI;
 	
 	public ControleurSoldeDeToutCompte(VueSoldeDeToutCompte vue, String id_bien, Date date_debut) {
 		this.vue = vue;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
 		this.dao = new CompteurDAO();
+		this.daoL = new LocationDAO();
+		this.daoR = new ReleveDAO();
+		this.daoB = new BienDAO();
+		this.daoI = new ImmeubleDAO();
 		try {
-			this.provisionSurCharges = dao.getProvisionFromLocation(id_bien, date_debut);
-		} catch (SQLException e) {
+			this.provisionSurCharges = daoL.getProvisionFromLocation(id_bien, date_debut);
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		this.annee = Integer.valueOf(new Date(Calendar.getInstance().getTime().getTime()).toString().substring(0, 4));
@@ -61,7 +74,7 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				//récupérer l'id du compteur
 				try {
 					this.idcompteurEau = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-				} catch (SQLException e1) {
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 
@@ -69,8 +82,8 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
 				//récupérer l'index du relevé
 				try {
-					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
-				} catch (SQLException e1) {
+					this.index = this.daoR.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 				//créer le relevé
@@ -80,15 +93,15 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				//récupérer l'id du compteur
 				try {
 					this.idcompteurElec = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
-				} catch (SQLException e1) {
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 				//créer le compteur
 				this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
 				//récupérer l'index du relevé
 				try {
-					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
-				} catch (SQLException e1) {
+					this.index = this.daoR.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 				//créer le relevé
@@ -107,9 +120,8 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				float montantElec = this.montantElec(ConsoElec);
 				float montantEntretien = 0F;
 				try {
-					ResultSet rs = this.dao.getEntretienFromIdBien(id_bien);
-					montantEntretien = rs.getFloat(1);
-				} catch (SQLException e1) {
+					montantEntretien = this.daoB.getEntretienFromIdBien(id_bien);
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 				float montantTotal = montantEau+montantElec+montantOrdures+montantEntretien;
@@ -126,16 +138,16 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 		} else if (b.getText()=="Confirmer") {
 			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
 				try {
-					this.dao.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
-				} catch (SQLException e1) {
+					this.daoL.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 			}
 			// créer nouveau releve dans la bd
 			try {
-				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
-				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
-			} catch (SQLException e1) {
+				this.daoR.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
+				this.daoR.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
+			} catch (DAOException e1) {
 				e1.printStackTrace();
 			}
 			this.vue.dispose();
@@ -151,9 +163,8 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	public float montantEau(int conso) {
 		String typeImmeuble="";
 		try {
-			ResultSet rs = this.dao.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
-			typeImmeuble = rs.getString(1);
-		} catch (SQLException e) {
+			typeImmeuble = this.daoI.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		if (typeImmeuble.equals("")) {

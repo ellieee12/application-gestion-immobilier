@@ -26,6 +26,7 @@ import modele.ImmeubleDAO;
 import modele.Immeuble;
 import modele.Logement;
 import modele.Maison;
+import modele.ReleveDAO;
 
 public class ControleurAjouterBien implements ActionListener {
 	
@@ -33,6 +34,7 @@ public class ControleurAjouterBien implements ActionListener {
 	private VueAjouterBien vue;
 	private BienDAO dao;
 	private CompteurDAO daoC;
+	private ReleveDAO daoR;
 	private Map<String, String> NameImmeubles;
 	private final float PRIX_EAU = 2.86F;
 	private final float PRIX_ELEC = 0.2F;
@@ -44,6 +46,7 @@ public class ControleurAjouterBien implements ActionListener {
 			this.vueBiens=vueBiens;
 			this.dao = new BienDAO();
 			this.daoC = new CompteurDAO();
+			this.daoR = new ReleveDAO();
 			this.NameImmeubles = new HashMap<>();
 			
 			ImmeubleDAO Immeuble = new ImmeubleDAO();
@@ -167,9 +170,9 @@ public class ControleurAjouterBien implements ActionListener {
 
 	private void ajouterReleves(Logement l) throws DAOException, SQLException {
 		String id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
-		this.daoC.ajouterReleve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_eau);
+		this.daoR.ajouterReleve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_eau);
 		String id_elec = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.ELECTRICITE);
-		this.daoC.ajouterReleve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_elec);
+		this.daoR.ajouterReleve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_elec);
 	}
 	
 	private boolean champsLogementNonRemplis() {
