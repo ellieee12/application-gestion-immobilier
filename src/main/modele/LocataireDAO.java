@@ -29,8 +29,8 @@ public class LocataireDAO {
 			ResultSet rs = stmt.executeQuery(req);
 			List<Locataire> liste = new LinkedList<>();
 			while(rs.next()) {
-				liste.add(new Locataire(rs.getString(1),rs.getString(2),
-						rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6)));
+				liste.add(new Locataire(rs.getString(2),rs.getString(3),
+						rs.getString(4),rs.getString(5),rs.getString(1),rs.getDate(6)));
 			}
 			return liste;
 		} catch (SQLException e) {

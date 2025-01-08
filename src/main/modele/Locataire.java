@@ -17,9 +17,12 @@ public class Locataire {
 		if (getClass() != obj.getClass())
 			return false;
 		Locataire other = (Locataire) obj;
-		return Objects.equals(Nom, other.Nom) && Objects.equals(Prenom, other.Prenom)
-				&& Objects.equals(Telephone, other.Telephone) && Objects.equals(date_naissance, other.date_naissance)
-				&& Objects.equals(id_locataire, other.id_locataire) && Objects.equals(mail, other.mail);
+		return this.date_naissance.equals(other.date_naissance)
+				&& this.id_locataire.equals(other.id_locataire)
+				&& this.mail.equals(other.mail)
+				&& this.Nom.equals(other.Nom)
+				&& this.Prenom.equals(other.Prenom)
+				&& this.Telephone.equals(other.Telephone);
 	}
 
     private String Nom;

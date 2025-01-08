@@ -5,9 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
@@ -41,6 +39,9 @@ public class TestLocataireDAO {
 		if (locDAO.locataireExists(loc2.getId_locataire())) {
 			this.locDAO.supprimerLocataire(loc2.getId_locataire());
 		}
+		if (locDAO.locataireExists("jimmyboy")) {
+			this.locDAO.supprimerLocataire("jimmyboy");
+		}
 		this.locDAO=null;
 		this.loc1 = null;
 		this.loc2 = null;
@@ -48,24 +49,20 @@ public class TestLocataireDAO {
 
 	@Test
 	public void testGetAllLocataire() throws DAOException, SQLException {
-		ResultSet rs = this.locDAO.getAllLocataires();
-		List<Locataire> liste = new LinkedList<>();
-		while (rs.next()) {
-			liste.add(new Locataire(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(1),rs.getDate(6)));
-		}
+		List<Locataire> liste = this.locDAO.getAllLocataires();
 		assertTrue(liste.contains(this.loc1));
 		assertTrue(liste.contains(this.loc2));
 	}
 	
 	@Test
-	public void testDeleteLocataire() throws DAOException, SQLException {
+	public void testDeleteLocataire() throws DAOException {
 		this.locDAO.supprimerLocataire(this.loc1.getId_locataire());
 		assertTrue(this.locDAO.locataireExists(this.loc2.getId_locataire()));
 		assertFalse(this.locDAO.locataireExists(this.loc1.getId_locataire()));
 	}
 
 	@Test
-	public void testAjouterLocataire() throws DAOException, SQLException {
+	public void testAjouterLocataire() throws DAOException {
 		this.locDAO.ajouterLocataire(new Locataire("Doe", "Jim", "+33123456789", "jimmydoe@gmail.com", "jimmyboy", Date.valueOf("2000-05-12")));
 		assertTrue(this.locDAO.locataireExists("jimmyboy"));
 		this.locDAO.supprimerLocataire("jimmyboy");
