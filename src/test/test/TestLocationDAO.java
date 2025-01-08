@@ -113,6 +113,9 @@ public class TestLocationDAO {
 	@Test
 	public void testGetAllLocation() throws DAOException {
 		List<Location> listeAll = this.locationDAO.getAllLocations();
+		for (Location l : listeAll) {
+			System.out.println(l.getLoyer_TTC());
+		}
 		assertTrue(location1.equals(listeAll.get(0)));
 		assertTrue(location2.equals(listeAll.get(1)));;
 		assertTrue(location3.equals(listeAll.get(2)));

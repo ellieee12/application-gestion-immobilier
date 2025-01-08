@@ -40,7 +40,7 @@ public class Location {
 			return false;
 		Location other = (Location) obj;
 		return caution_TTC == other.caution_TTC
-				&& colocation == other.colocation && date_debut.equals(other.date_debut)
+				&& colocation.equals(other.colocation) && date_debut.equals(other.date_debut)
 				&& idBien.equals(other.idBien)
 				&& loyer_TTC == other.loyer_TTC && nb_mois == other.nb_mois
 				&& provision_chargement_TTC == other.provision_chargement_TTC;
