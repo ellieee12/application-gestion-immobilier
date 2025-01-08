@@ -34,27 +34,39 @@ public class TestCompteurDAO {
 		Logement log = new Logement(Date.valueOf("2004-01-12"), "testBien001", 3, 5,21.0f,200.0f);
 		this.immeubleDAO.ajouterImmeuble(bat);
 		this.bienDAO.ajouterBien(log, bat.getId_immeuble());
-		this.compteurDAO.ajouterCompteur(compteur1, "testBat001");
-		this.compteurDAO.ajouterCompteur(compteur2, "testBat001");
+		this.compteurDAO.ajouterCompteur(compteur1, "testBien001");
+		this.compteurDAO.ajouterCompteur(compteur2, "testBien001");
 	}
 	
 	@After
 	public void tearDown() throws DAOException {
-		if (this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001" ));
+		if (this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001" )) {
+			this.compteurDAO.supprimerCompteur(this.compteur1.getTypecomp(), "testBien001");
+		}
+		if (this.compteurDAO.compteurExists(this.compteur2.getTypecomp(), "testBien001" )) {
+			this.compteurDAO.supprimerCompteur(this.compteur2.getTypecomp(), "testBien001");
+		}
 		if (this.bienDAO.bienExiste("testBien001")) {
 			this.bienDAO.supprimerBien("testBien001");
 		}
 		if (this.immeubleDAO.immeubleExiste("testBat001")) {
 			this.immeubleDAO.supprimerImmeuble("testBat001");
 		}
+	
 		this.compteurDAO=null;
 		this.bienDAO=null;
 		this.immeubleDAO=null;
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAjouterCompteur() throws DAOException {
+		assertTrue(this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001"));
+		assertTrue(this.compteurDAO.compteurExists(this.compteur2.getTypecomp(), "testBien001"));
+	}
+	
+	@Test
+	public void testGetCompteurFromOneBienSelonType() throws DAOException {
+		System.out.println(this.compteurDAO.getCompteurFromOneBienSelonType("testBien001",this.compteur1.getTypecomp()));
 	}
 
 }

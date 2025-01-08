@@ -29,7 +29,6 @@ public class CompteurDAO{
 	 * @throws SQLException
 	 */
 	public String getCompteurFromOneBienSelonType(String idBien, typeCompteur type) throws DAOException {
-		
 		try {
 			String req = "{CALL getCompteurByBienAndType(?,?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -59,6 +58,7 @@ public class CompteurDAO{
 			st.setString(1, compteur.getTypecomp().getDénomination());
 			st.setFloat(2, compteur.getPrix_abonnement());
 			st.setString(3, id_bien);
+			st.executeUpdate();
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -78,6 +78,7 @@ public class CompteurDAO{
 			PreparedStatement st = this.mySQLCon.getConnection().prepareStatement(req);
 			st.setString(1, id_bien);
 			st.setString(2, type.getDénomination());
+			st.executeUpdate();
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
