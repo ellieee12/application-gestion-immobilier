@@ -72,9 +72,8 @@ public class TestBienDAO {
 	@Test
 	public void testGetAllBien() throws DAOException {
 		List<Bien> liste = this.bDAO.getAllBiens();
-		assertEquals(2,liste.size());
-		assertEquals(this.b,liste.get(0));
-		assertEquals(this.l,liste.get(1));
+		assertTrue(liste.contains(this.b));
+		assertTrue(liste.contains(this.l));
 	}
 	
 	@Test

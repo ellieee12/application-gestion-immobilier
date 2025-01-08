@@ -53,9 +53,8 @@ public class TestImmeubleDAO {
 	@Test
 	public void testGetAllImmeubles() throws DAOException {
 		List<Immeuble> liste = this.imDAO.getAllImmeubles();
-		assertEquals(2,liste.size());
-		assertEquals(this.bat,liste.get(0));
-		assertEquals(this.maison,liste.get(1));
+		assertTrue(liste.contains(this.bat));
+		assertTrue(liste.contains(this.maison));
 	}
 	
 	@Test

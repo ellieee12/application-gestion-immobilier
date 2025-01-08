@@ -116,6 +116,7 @@ public class ControleurAjouterLocation implements ActionListener{
 			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
 			this.id_locataires.add(locatairesRS.getString(1));
 		}
+		
 		List<Bien> biensliste= this.bienDAO.getAllBiens();
 		for(Bien b : biensliste) {
 			this.biens.add(b.getId_bien());
@@ -138,7 +139,7 @@ public class ControleurAjouterLocation implements ActionListener{
 						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), loc);
 						
 						VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
-								this.vue.getSelectedLocataire(), this.vueMesLocations);
+								this.id_locataires.get(this.locataires.indexOf(this.vue.getSelectedLocataire())), this.vueMesLocations);
 						valider();
 						frame.setVisible(true);
 					} catch (DAOException e1) {

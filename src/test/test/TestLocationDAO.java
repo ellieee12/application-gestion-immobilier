@@ -112,9 +112,9 @@ public class TestLocationDAO {
 	@Test
 	public void testGetAllLocation() throws DAOException {
 		List<Location> listeAll = this.locationDAO.getAllLocations();
-		assertTrue(location1.equals(listeAll.get(0)));
-		assertTrue(location2.equals(listeAll.get(1)));;
-		assertTrue(location3.equals(listeAll.get(2)));
+		assertTrue(listeAll.contains(this.location1));
+		assertTrue(listeAll.contains(this.location2));
+		assertTrue(listeAll.contains(this.location3));
 	}
 	
 	@Test

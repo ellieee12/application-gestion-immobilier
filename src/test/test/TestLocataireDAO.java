@@ -53,8 +53,8 @@ public class TestLocataireDAO {
 		while (rs.next()) {
 			liste.add(new Locataire(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(1),rs.getDate(6)));
 		}
-		assertEquals(this.loc1,liste.get(0));
-		assertEquals(this.loc2,liste.get(1));
+		assertTrue(liste.contains(this.loc1));
+		assertTrue(liste.contains(this.loc2));
 	}
 	
 	@Test

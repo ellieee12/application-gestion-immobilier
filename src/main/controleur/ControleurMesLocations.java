@@ -1,4 +1,5 @@
 package controleur;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -68,6 +69,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 					e1.printStackTrace();
 				}
 			} else if (b.getText().equals("Supprimer")){
+				System.out.println("yes");
 				String[] options = {"Supprimer", "Annuler"};
 				JOptionPane pane = new JOptionPane();
 				@SuppressWarnings("static-access")

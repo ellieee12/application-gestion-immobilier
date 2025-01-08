@@ -285,9 +285,9 @@ CREATE PROCEDURE insertLocation (
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
-    loyer_ttc,caution_ttc,annee,trimestre)
+    loyer_ttc,caution_ttc,annee,trimestre,active)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre);
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre,'true');
 END$$
 
 CREATE PROCEDURE insertCompteur (
