@@ -281,13 +281,14 @@ CREATE PROCEDURE insertLocation (
     v_loyer_ttc decimal(15,2),
     v_caution_ttc decimal(15,2),
     v_annee date,
-    v_trimestre smallint(6)
+    v_trimestre smallint(6),
+    v_active tinyint
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
-    loyer_ttc,caution_ttc,annee,trimestre)
+    loyer_ttc,caution_ttc,annee,trimestre,active)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre);
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre, v_active);
 END$$
 
 CREATE PROCEDURE insertCompteur (
@@ -304,7 +305,12 @@ CREATE PROCEDURE getColocationByIdBien (
     v_id_bien varchar(20)
     )
 BEGIN 
-    Select * from location where id_bien = v_id_bien;
+    select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, 
+    l1.trimestre, l2.id_locataire, l1.active 
+    from location l1, louer l2
+	where l2.id_bien=l1.id_bien
+	and l1.date_debut = l2.date_debut
+    and l1.id_bien = v_id_bien;
 END$$
 
 

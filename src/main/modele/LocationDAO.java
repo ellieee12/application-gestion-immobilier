@@ -62,7 +62,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		String id_bien,
 		Location location) throws DAOException {
 		try {
-			String reqInsertLocation = "{CALL insertLocation(?,?,?,?,?,?,?,?,?)}";
+			String reqInsertLocation = "{CALL insertLocation(?,?,?,?,?,?,?,?,?,?)}";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
@@ -73,6 +73,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmtInsertLocation.setFloat(7, location.getCaution_TTC());
 			stmtInsertLocation.setDate(8,Date.valueOf("2025-01-01"));
 			stmtInsertLocation.setInt(9,1);
+			stmtInsertLocation.setBoolean(10,true);
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			
