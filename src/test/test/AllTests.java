@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	TestLocataireDAO.class, 
 	TestLocationDAO.class, 
 	TestDocumentLocationDAO.class,
-	TestFactureDAO.class })
+	TestFactureDAO.class,
+	TestLogInSignUpDAO.class})
 public class AllTests {
 
 }

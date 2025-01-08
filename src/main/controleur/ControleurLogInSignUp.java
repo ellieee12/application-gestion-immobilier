@@ -41,20 +41,19 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 			if (s.equals("Sign In")) {
 				String username = this.vueLogin.getUsername().getText();
 				String mdp = String.valueOf(this.vueLogin.getMDP().getPassword());
+				try {
 					if (this.dao.mdpCorrect(username, mdp) && this.dao.compteExiste(username)){
 						vueLogin.setVisible(false);
 						VueMenu frame = null;
-						try {
-							frame = new VueMenu();
-						} catch (DAOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						frame = new VueMenu();
 						frame.setVisible(true);
 					}else {
 						JOptionPane.showMessageDialog(vueSignUp, "Login ou mot de passe incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
 					}
+				}catch(DAOException e1) {
+					e1.printStackTrace();
 				}
+			}
 			break;
 			
 		case SIGNUP:
@@ -64,18 +63,22 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 				String mdp1=this.vueSignUp.getNouveauMDP();
 				String mdp2=this.vueSignUp.getNouveauMDPConfirmation();
 				if (!username.equals("") && !mdp1.equals("") && !mdp2.equals("")) {
-					if (this.dao.compteExiste(username)) {
-						JOptionPane.showMessageDialog(vueSignUp, "Compte déjà existant","Erreur",JOptionPane.WARNING_MESSAGE);
-					}else {
-						if (!mdp1.equals(mdp2)) {
-							JOptionPane.showMessageDialog(vueSignUp, "Les mots de passe saisis ne sont pas identiques.","Erreur",JOptionPane.WARNING_MESSAGE);
+					try {
+						if (this.dao.compteExiste(username)) {
+							JOptionPane.showMessageDialog(vueSignUp, "Compte déjà existant","Erreur",JOptionPane.WARNING_MESSAGE);
 						}else {
-							this.dao.addCompte(username,mdp1);
-							JOptionPane.showMessageDialog(vueLogin, "Compte enregistré","Information",JOptionPane.INFORMATION_MESSAGE);
-							vueLogin.setVisible(true);
-							vueSignUp.setVisible(false);
-							this.etat=Etat.LOGIN;
+							if (!mdp1.equals(mdp2)) {
+								JOptionPane.showMessageDialog(vueSignUp, "Les mots de passe saisis ne sont pas identiques.","Erreur",JOptionPane.WARNING_MESSAGE);
+							}else {
+								this.dao.addCompte(username,mdp1);
+								JOptionPane.showMessageDialog(vueLogin, "Compte enregistré","Information",JOptionPane.INFORMATION_MESSAGE);
+								vueLogin.setVisible(true);
+								vueSignUp.setVisible(false);
+								this.etat=Etat.LOGIN;
+							}
 						}
+					} catch (DAOException e1) {
+						e1.printStackTrace();
 					}
 				} else {
 					JOptionPane.showMessageDialog(vueSignUp, "Veuillez remplir tout les champs","Erreur",JOptionPane.WARNING_MESSAGE);

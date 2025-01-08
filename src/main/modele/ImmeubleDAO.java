@@ -18,6 +18,11 @@ public class ImmeubleDAO {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
+	/**
+	 * Recupérer tous les immeubles dans la base de données
+	 * @return une liste d'immeubles
+	 * @throws DAOException
+	 */
 	public List<Immeuble> getAllImmeubles() throws DAOException {
 		try {
 			String req = "{CALL getAllImmeubles()}";
@@ -39,6 +44,12 @@ public class ImmeubleDAO {
 		}
 	}
 	
+	/**
+	 * Recupérer les informations sur un immeuble à partir de son identifiant
+	 * @param idImmeuble
+	 * @return Immeuble
+	 * @throws DAOException
+	 */
 	public Immeuble getInfoImmeuble(String idImmeuble) throws DAOException{
 		try {
 			String req = "{CALL getImmeubleById(?)}";
@@ -60,6 +71,11 @@ public class ImmeubleDAO {
 		}
 	}
 	
+	/**
+	 * Supprimer un immeuble dans la base de données à partir de son identifiant
+	 * @param idImmeuble
+	 * @throws DAOException
+	 */
 	public void supprimerImmeuble(String idImmeuble) throws DAOException {
 		try {
 			String req = "{CALL deleteImmeuble(?)}";
@@ -74,6 +90,11 @@ public class ImmeubleDAO {
 		}
 	}
 	
+	/**
+	 * Ajouter un immeuble dans la base de données
+	 * @param immeuble
+	 * @throws DAOException
+	 */
 	public void ajouterImmeuble(Immeuble immeuble) throws DAOException {
 		try {
 			String req = "{CALL addImmeuble(?,?,?,?,?,?)}";
