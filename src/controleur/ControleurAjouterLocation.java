@@ -41,7 +41,7 @@ public class ControleurAjouterLocation implements ActionListener{
 	private boolean verifComplet() {
 		if (!this.vue.isComplet()) {
 			JOptionPane.showMessageDialog(this.vue, 
-					"Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
+					"Champs obligatoires non remplis et/ou date d'acquisition invalide","Attention", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
