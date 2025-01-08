@@ -3,8 +3,6 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
@@ -12,12 +10,12 @@ import javax.swing.JButton;
 import ihm.VueRegularisation;
 import modele.BienDAO;
 import modele.Compteur;
-import modele.Relevé;
 import modele.Compteur.typeCompteur;
 import modele.CompteurDAO;
 import modele.DAOException;
 import modele.ImmeubleDAO;
 import modele.LocationDAO;
+import modele.Releve;
 import modele.ReleveDAO;
 
 public class ControleurRegularisation implements ActionListener {
@@ -40,8 +38,8 @@ public class ControleurRegularisation implements ActionListener {
 	private Date date_debut;
 	private int annee;
 	private int index;
-	private Relevé releveEau;
-	private Relevé releveElec;
+	private Releve releveEau;
+	private Releve releveElec;
 	private Integer newIndexEau;
 	private Integer newIndexElec;
 	private float montantOrdures;
@@ -80,7 +78,7 @@ public class ControleurRegularisation implements ActionListener {
 					//récupérer l'index du relevé
 					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
 					//créer le relevé
-					this.releveEau = new Relevé(this.annee, this.index);
+					this.releveEau = new Releve(this.annee, this.index);
 					//electricite
 					//récupérer l'id du compteur
 					this.idcompteurElec = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
@@ -92,7 +90,7 @@ public class ControleurRegularisation implements ActionListener {
 					e1.printStackTrace();
 				}
 				//créer le relevé
-				this.releveElec = new Relevé(this.annee, this.index);
+				this.releveElec = new Releve(this.annee, this.index);
 				//récuperer les valeurs des champs
 				this.newIndexEau = Integer.valueOf(this.vue.getChampEau());
 				this.newIndexElec = Integer.valueOf(this.vue.getChampElec());
@@ -130,8 +128,8 @@ public class ControleurRegularisation implements ActionListener {
 				try {
 					this.locationDAO.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
 					// créer nouveau releve dans la bd
-					this.releveDAO.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
-					this.releveDAO.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
+					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampEau())), idcompteurEau);
+					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampElec())), idcompteurElec);
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}

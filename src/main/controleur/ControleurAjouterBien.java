@@ -26,6 +26,7 @@ import modele.ImmeubleDAO;
 import modele.Immeuble;
 import modele.Logement;
 import modele.Maison;
+import modele.Releve;
 import modele.ReleveDAO;
 
 public class ControleurAjouterBien implements ActionListener {
@@ -170,9 +171,11 @@ public class ControleurAjouterBien implements ActionListener {
 
 	private void ajouterReleves(Logement l) throws DAOException, SQLException {
 		String id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
-		this.daoR.ajouterReleve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_eau);
+		Releve releveEau = new Releve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)));
+		this.daoR.ajouterReleve(releveEau, id_eau);
 		String id_elec = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.ELECTRICITE);
-		this.daoR.ajouterReleve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)), id_elec);
+		Releve releveElec = new Releve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)));
+		this.daoR.ajouterReleve(releveElec, id_elec);
 	}
 	
 	private boolean champsLogementNonRemplis() {

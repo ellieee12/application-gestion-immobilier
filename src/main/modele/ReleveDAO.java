@@ -1,6 +1,7 @@
 package modele;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -48,19 +49,51 @@ public class ReleveDAO {
 	 * @param idCompteur
 	 * @throws SQLException
 	 */
-	public void ajouterReleve(int annee, int index, String idCompteur) throws DAOException {
+	public void ajouterReleve(Releve releve, String idCompteur) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			String req = "{CALL addReleve(?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1,annee);
-			stmt.setInt(2, index);
+			stmt.setInt(1,releve.getDate_releve());
+			stmt.setInt(2, releve.getIndexcomp());
 			stmt.setString(3, idCompteur);
 			stmt.executeUpdate();
+			stmt.close();
 		}catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'un relevé dans la base de données",e);
 			throw new DAOException("Erreurs lors de l'ajout d'un relevé dans la base de données",e);
 		}
 		
+	}
+	
+	/**
+	 * Supprimer un relevé
+	 * @param annee
+	 * @param idCompteur
+	 * @throws DAOException 
+	 */
+	public void supprimerRelever(int annee, String idCompteur) throws DAOException {
+		try {
+			String req = "delete from releve where annee=? and id_compteur=?";
+			PreparedStatement st = this.mySQLCon.getConnection().prepareStatement(req);
+			st.setInt(1, annee);
+			st.setString(2, idCompteur);
+			st.executeUpdate();
+			st.close();
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de l'effacement d'un relevé dans la base de données",e);
+			throw new DAOException("Erreurs lors de l'effacement d'un relevé dans la base de données",e);
+		}
+	}
+	
+	/**
+	 * Vérifier si un relevé existe dans la base de données
+	 * @param id_compteur
+	 * @param annee
+	 * @return
+	 * @throws DAOException
+	 */
+	public boolean releveExists(String id_compteur, int annee) throws DAOException {
+		return this.getReleveFromIdCompteur(id_compteur, annee)!=0;
 	}
 }

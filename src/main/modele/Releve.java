@@ -2,21 +2,21 @@ package modele;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("fd88557e-8a54-4688-9b99-1462c5a16341")
-public class Relevé {
-    private int date_relevé;
+public class Releve {
+    private int date_releve;
     private int indexcomp;
 
-    public Relevé(int date_relevé, int indexcomp) {
-    	this.date_relevé = date_relevé;
+    public Releve(int date_releve, int indexcomp) {
+    	this.date_releve = date_releve;
     	this.indexcomp = indexcomp;
     }
 
-	public int getDate_relevé() {
-		return date_relevé;
+	public int getDate_releve() {
+		return date_releve;
 	}
 
-	public void setDate_relevé(int date_relevé) {
-		this.date_relevé = date_relevé;
+	public void setDate_releve(int date_releve) {
+		this.date_releve = date_releve;
 	}
 
 	public int getIndexcomp() {
