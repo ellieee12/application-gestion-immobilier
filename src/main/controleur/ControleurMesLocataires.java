@@ -2,8 +2,6 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
@@ -25,12 +23,8 @@ public class ControleurMesLocataires implements ActionListener {
 			this.locataires = new LinkedList<>();
 			
 			LocataireDAO locationDAO = new LocataireDAO();
-			ResultSet rs;
-			rs = locationDAO.getAllLocataires();
-			while(rs.next()) {
-				locataires.add(new Locataire(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(1), rs.getDate(6)));
-			}
-		} catch (SQLException|DAOException e) {
+			this.locataires= locationDAO.getAllLocataires();
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -44,12 +38,8 @@ public class ControleurMesLocataires implements ActionListener {
 		try {
             this.locataires = new LinkedList<>();
             LocataireDAO location = new LocataireDAO();
-            ResultSet rs;
-			rs = location.getAllLocataires();
-            while(rs.next()) {
-            	locataires.add(new Locataire(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(1), rs.getDate(6)));
-    		}
-        } catch (SQLException|DAOException e) {
+			this.locataires = location.getAllLocataires();
+        } catch (DAOException e) {
             e.printStackTrace();
         }
         this.vue.buildTable(this);

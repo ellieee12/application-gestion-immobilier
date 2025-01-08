@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,12 +22,17 @@ public class LocataireDAO {
 	 * @return La liste de tous les locataires dans la base de données
 	 * @throws DAOException
 	 */
-	public ResultSet getAllLocataires() throws DAOException {
+	public List<Locataire> getAllLocataires() throws DAOException {
 		try {
 			String req = "{CALL getAllLocataires}";
 			Statement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			ResultSet rs = stmt.executeQuery(req);
-			return rs;
+			List<Locataire> liste = new LinkedList<>();
+			while(rs.next()) {
+				liste.add(new Locataire(rs.getString(1),rs.getString(2),
+						rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6)));
+			}
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locataires",e);
 			throw new DAOException("Erreurs lors de la récupération de la liste des locataires",e);

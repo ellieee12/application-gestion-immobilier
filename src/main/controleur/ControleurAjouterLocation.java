@@ -3,7 +3,6 @@ package controleur;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +17,7 @@ import modele.Location;
 import modele.Bien;
 import modele.BienDAO;
 import modele.DAOException;
+import modele.Locataire;
 import modele.LocataireDAO;
 import modele.LocationDAO;
 
@@ -110,11 +110,11 @@ public class ControleurAjouterLocation implements ActionListener{
 		this.locataires=new LinkedList<>();
 		this.biens=new LinkedList<>();
 		this.id_locataires=new LinkedList<>();
-		ResultSet locatairesRS = this.locataireDAO.getAllLocataires();
+		List<Locataire> liste = this.locataireDAO.getAllLocataires();
 		
-		while (locatairesRS.next()) {
-			this.locataires.add(locatairesRS.getString(2)+ " " + locatairesRS.getString(3));
-			this.id_locataires.add(locatairesRS.getString(1));
+		for (Locataire l : liste) {
+			this.locataires.add(l.getNom()+ " " + l.getPrenom());
+			this.id_locataires.add(l.getId_locataire());
 		}
 		
 		List<Bien> biensliste= this.bienDAO.getAllBiens();
