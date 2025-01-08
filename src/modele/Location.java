@@ -23,7 +23,9 @@ public class Location {
     private float provision_chargement_TTC;
 
     @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
-    private float caution_TTC;   
+    private float caution_TTC; 
+    
+    private String idLocataire;
     
 //	@Override
 //	public int hashCode() {
@@ -47,7 +49,7 @@ public class Location {
 	}
 
 	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, String idBien) {
+			float caution_TTC, String idBien, String idLocataire) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -55,6 +57,7 @@ public class Location {
 		this.provision_chargement_TTC = provision_chargement_TTC;
 		this.caution_TTC = caution_TTC;
 		this.idBien = idBien;
+		this.idLocataire = idLocataire;
 	}
 	
 	public String getIdBien () {
@@ -82,6 +85,9 @@ public class Location {
 	}
 	
 	public String isColocation() {
+		if (this.colocation.equals(null)){
+			return null;
+		}
 		return this.colocation;
 	}
 
@@ -91,5 +97,9 @@ public class Location {
 
 	public float getCaution_TTC() {
 		return caution_TTC;
+	}
+	
+	public String getIdLocataire() {
+		return this.idLocataire;
 	}
 }
