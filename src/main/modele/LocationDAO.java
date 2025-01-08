@@ -21,9 +21,10 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	public List<Location> getAllLocations() throws DAOException {
 		String req = "select l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, "
 				+ "l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, "
-				+ "l1.trimestreq "
+				+ "l1.trimestre,l2.id_locataire "
 				+ "from location l1, louer l2 "
-				+ "where l2.id_bien=l1.id_bien ";
+				+ "where l2.id_bien=l1.id_bien "
+				+ "and l1.date_debut = l2.date_debut";
 		Statement stmt;
 		List<Location> liste = new LinkedList<>();
 		try {

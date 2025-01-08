@@ -3,14 +3,10 @@ package modele;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import modele.Bien;
-import modele.Facture;
-import modele.Garage;
-import modele.Logement;
 
 public class FactureDAO {
 
@@ -30,11 +26,16 @@ public class FactureDAO {
 	 * @throws DAOException 
 	 * @throws SQLException
 	 */
-	public ResultSet getAllFactures() throws DAOException {
+	public List<Facture> getAllFactures() throws DAOException {
 		try {
 			String req = "{call getAllFactures()}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			return stmt.executeQuery(req);
+			ResultSet rs = stmt.executeQuery(req);
+			List<Facture> liste = new LinkedList<>();
+			while(rs.next()) {
+				liste.add(new Facture(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getFloat(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9)));
+			}
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de toutes les factures.",e);
 			throw new DAOException("Erreurs lors de la récupération de toutes les factures.",e);
