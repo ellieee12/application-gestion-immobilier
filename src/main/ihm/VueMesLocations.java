@@ -138,7 +138,7 @@ public class VueMesLocations extends JPanel {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    "1er janvier 2025", 1, l.getIdLocataire()
+				    "1er janvier 2025", l.getIdLocataire()
 				});
 		}
 	}
