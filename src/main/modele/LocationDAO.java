@@ -1,5 +1,6 @@
 package modele;
 
+import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,7 +105,13 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		}
 	}
 	
-	public Location getLocationById_Bien(String id_bien) {
+	/**
+	 * Récupérer une location à partir de l'identifiant d'un bien
+	 * @param id_bien
+	 * @return
+	 * @throws DAOException 
+	 */
+	public Location getLocationById_Bien(String id_bien) throws DAOException {
 		try {
 			String req = "{CALL getColocationByIdBien(?)}";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
@@ -113,9 +120,56 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			if (rs.next()) {
 				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10));
 			}
+			return null;
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération d'une location à partir de l'identifiant d'un bien",e);
+			throw new DAOException("Erreurs lors de la récupération d'une location à partir de l'identifiant d'un bien",e);
 		}
-		return null;
+		
 	}	
+	
+	/**
+	 * Récupérer la provision d'une location
+	 * @param id_bien
+	 * @param date_debut
+	 * @return
+	 * @throws SQLException
+	 */
+	public Float getProvisionFromLocation(String id_bien, Date date_debut) throws DAOException {
+		try {
+			String req = "{CALL getProvisionFromLocation(?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getFloat(1);
+			}
+			return null;
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la récupération de la provision d'une location",e);
+		}
+	}
+	
+	/**
+	 * Mettre à jour la provision d'une location
+	 * @param id_bien
+	 * @param date_debut
+	 * @param provision
+	 * @throws SQLException
+	 */
+	public void setNouvelleProvision(String id_bien, Date date_debut, Float provision) throws DAOException {
+		try {
+			String req = "{CALL setNouvelleProvision(?,?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			stmt.setFloat(3, provision);
+			stmt.executeQuery();
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la mise à jour la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la mise à jour la provision d'une location",e);
+		}
+	}
 }

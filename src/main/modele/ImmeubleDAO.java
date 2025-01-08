@@ -141,4 +141,27 @@ public class ImmeubleDAO {
 			throw new DAOException("Erreurs lors de la récupération des immeubles disponibles",e);
 		}
 	}
+	
+	/**
+	 * Récupérer le type d'un immeuble à partir de l'identifiant d'un bien
+	 * @param id_bien
+	 * @return type de l'immeuble
+	 * @throws DAOException
+	 */
+	public String getTypeImmeubleFromIdBien(String id_bien) throws DAOException {
+		try {
+			String req = "{CALL getTypeImmeubleFromIdBien(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de l'id compteur associé à un bien donné selon son type ",e);
+			throw new DAOException("Erreurs lors de la récupération de l'id compteur associé à un bien donné selon son type",e);
+		}
+		
+	}
 }

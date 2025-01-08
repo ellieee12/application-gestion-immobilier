@@ -51,21 +51,21 @@ public class BienDAO{
 		}
 	}
 	
-	public void ajouterCompteur(String id_bien, Float prix_abonnement, String type_compteur) throws DAOException {
-		try {
-			String req = "{CALL insertCompteur(?,?,?)}";
-			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setString(1, id_bien);
-			stmt.setFloat(2, prix_abonnement);
-			stmt.setString(3, type_compteur);
-			int i = stmt.executeUpdate();
-			System.out.println(i+" lignes ajoutées");
-			stmt.close();
-		}catch(SQLException e){
-			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'un compteur",e);
-			throw new DAOException("Erreurs lors de l'ajout d'un compteur",e);
-		}
-	}	
+//	public void ajouterCompteur(String id_bien, Float prix_abonnement, String type_compteur) throws DAOException {
+//		try {
+//			String req = "{CALL insertCompteur(?,?,?)}";
+//			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+//			stmt.setString(1, id_bien);
+//			stmt.setFloat(2, prix_abonnement);
+//			stmt.setString(3, type_compteur);
+//			int i = stmt.executeUpdate();
+//			System.out.println(i+" lignes ajoutées");
+//			stmt.close();
+//		}catch(SQLException e){
+//			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'un compteur",e);
+//			throw new DAOException("Erreurs lors de l'ajout d'un compteur",e);
+//		}
+//	}	
 	
 	/**
 	 * Récupère tous les biens associés à un immeuble donné
@@ -181,20 +181,25 @@ public class BienDAO{
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Ajouter un bien et un compteur au meme temps
+	 * @param b
+	 * @param id_immeuble
+	 * @param compteurs
+	 * @throws DAOException
+	 */
 	public void ajouterBienEtCompteurs(Bien b, String id_immeuble, List<Compteur> compteurs) throws DAOException {
 	    try {
 	        // Désactiver l'auto-commit
 	        this.mySQLCon.getConnection().setAutoCommit(false);
-
 	        // Ajouter le bien
 	        ajouterBien(b, id_immeuble);
-
 	        // Ajouter les compteurs
+	        CompteurDAO compDAO = new CompteurDAO();
 	        for (Compteur compteur : compteurs) {
-	            ajouterCompteur(b.getId_bien(), compteur.getPrix_abonnement(), compteur.getTypecomp().getDénomination());
+	            compDAO.ajouterCompteur(new Compteur(compteur.getTypecomp(),compteur.getPrix_abonnement()),b.getId_bien());
 	        }
-	        
 	        // Valider la transaction
 	        this.mySQLCon.getConnection().commit();
 	    } catch (SQLException e) {
@@ -212,6 +217,7 @@ public class BienDAO{
 	            this.mySQLCon.getConnection().setAutoCommit(true);
 	        } catch (SQLException autoCommitEx) {
 	            logger.log(Level.SEVERE, "Erreur lors de la réactivation de l'auto-commit", autoCommitEx);
+	            throw new DAOException("Erreur lors de la réactivation de l'auto-commit", autoCommitEx);
 	        }
 	    }
 	}
@@ -225,6 +231,28 @@ public class BienDAO{
 	 */
 	public boolean bienExiste(String id_bien) throws DAOException {
 		return this.getBienById(id_bien)!=null;
+	}
+	
+	/**
+	 * Récupérer l'entretien des parties communes à partir de l'identifiant d'un bien
+	 * @param id_bien
+	 * @return
+	 * @throws SQLException
+	 */
+	public Float getEntretienFromIdBien(String id_bien) throws DAOException {
+		try {
+			String req = "{CALL getEntretienFromIdBien(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getFloat(1);
+			}
+			return null;
+		}catch(SQLException e){
+			 logger.log(Level.SEVERE, "Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
+		     throw new DAOException("Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
+		}
 	}
 
 }

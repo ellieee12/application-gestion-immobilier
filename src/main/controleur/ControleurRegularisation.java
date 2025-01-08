@@ -3,23 +3,32 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.swing.JButton;
 
 import ihm.VueRegularisation;
+import modele.BienDAO;
 import modele.Compteur;
 import modele.Relevé;
 import modele.Compteur.typeCompteur;
 import modele.CompteurDAO;
+import modele.DAOException;
+import modele.ImmeubleDAO;
+import modele.LocationDAO;
+import modele.ReleveDAO;
 
 public class ControleurRegularisation implements ActionListener {
 
 	private final float PRIX_EAU = 2.86F;
 	private final float PRIX_ELEC = 0.2F;
-	private CompteurDAO dao;
+	
+	private CompteurDAO compteurDAO;
+	private ImmeubleDAO immeubleDAO;
+	private ReleveDAO releveDAO;
+	private BienDAO bienDAO;
+	private LocationDAO locationDAO;
+	
 	private VueRegularisation vue;
 	private Compteur compteurEau;
 	private Compteur compteurElec;
@@ -40,10 +49,15 @@ public class ControleurRegularisation implements ActionListener {
 		this.vue = vue;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
-		this.dao = new CompteurDAO();
+		
+		this.compteurDAO = new CompteurDAO();
+		this.immeubleDAO = new ImmeubleDAO();
+		this.releveDAO = new ReleveDAO();
+		this.bienDAO = new BienDAO();
+		this.locationDAO = new LocationDAO();
 		try {
-			this.provisionSurCharges = dao.getProvisionFromLocation(id_bien, date_debut);
-		} catch (SQLException e) {
+			this.provisionSurCharges = this.locationDAO.getProvisionFromLocation(id_bien, date_debut);
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		this.annee = Integer.valueOf(new Date(Calendar.getInstance().getTime().getTime()).toString().substring(0, 4));
@@ -55,39 +69,24 @@ public class ControleurRegularisation implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Valider") {
 			if(this.isComplet()) {
-
-				// eau
-				//récupérer l'id du compteur
 				try {
-					this.idcompteurEau = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
-				//créer le compteur
-				this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
-				//récupérer l'index du relevé
-				try {
-					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				//créer le relevé
-				this.releveEau = new Relevé(this.annee, this.index);
-
-				//electricite
-				//récupérer l'id du compteur
-				try {
-					this.idcompteurElec = this.dao.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				//créer le compteur
-				this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
-				//récupérer l'index du relevé
-				try {
-					this.index = this.dao.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
-				} catch (SQLException e1) {
+					// eau
+					//récupérer l'id du compteur
+					this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
+					//créer le compteur
+					this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
+					//récupérer l'index du relevé
+					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
+					//créer le relevé
+					this.releveEau = new Relevé(this.annee, this.index);
+					//electricite
+					//récupérer l'id du compteur
+					this.idcompteurElec = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
+					//créer le compteur
+					this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
+					//récupérer l'index du relevé
+					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
 				//créer le relevé
@@ -102,13 +101,15 @@ public class ControleurRegularisation implements ActionListener {
 				ConsoEau = newIndexEau-releveEau.getIndexcomp();
 				ConsoElec = newIndexElec-releveElec.getIndexcomp();
 				//calcul des montants
-				float montantEau = this.montantEau(ConsoEau);
-				float montantElec = this.montantElec(ConsoElec);
-				float montantEntretien = 0F;
+				float montantEau = 0f;
+				float montantElec = 0f;
+				float montantEntretien = 0f;
 				try {
-					ResultSet rs = this.dao.getEntretienFromIdBien(id_bien);
-					montantEntretien = rs.getFloat(1);
-				} catch (SQLException e1) {
+					montantEau = this.montantEau(ConsoEau);
+					montantElec = this.montantElec(ConsoElec);
+					montantEntretien = this.bienDAO.getEntretienFromIdBien(id_bien);
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				float montantTotal = montantEau+montantElec+montantOrdures+montantEntretien;
@@ -125,17 +126,13 @@ public class ControleurRegularisation implements ActionListener {
 		} else if (b.getText()=="Confirmer") {
 			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
 				try {
-					this.dao.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
-				} catch (SQLException e1) {
+					this.locationDAO.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
+					// créer nouveau releve dans la bd
+					this.releveDAO.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
+					this.releveDAO.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
+				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
-			}
-			// créer nouveau releve dans la bd
-			try {
-				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampEau()), idcompteurEau);
-				this.dao.ajouterReleve(annee, Integer.valueOf(this.vue.getChampElec()), idcompteurElec);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
 			}
 			this.vue.dispose();
 		}
@@ -147,18 +144,17 @@ public class ControleurRegularisation implements ActionListener {
 	}
 
 	//calcul le montant d'eau à partir de la consommation
-	public float montantEau(int conso) {
+	public float montantEau(int conso) throws DAOException {
 		String typeImmeuble="";
-		try {
-			ResultSet rs = this.dao.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
-			typeImmeuble = rs.getString(1);
-		} catch (SQLException e) {
+		try { 
+			typeImmeuble = this.immeubleDAO.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		if (typeImmeuble.equals("")) {
 			System.out.println("Erreur");
 			return 0F;
-		} else if (typeImmeuble.equals("Maison")) {
+		} else if (typeImmeuble.equals("M")) {
 			return (float) (conso*this.compteurEau.getPrix_abonnement() + 176.16);	//le prix est différent si c'est une maison ou un batiment
 		} else {
 			return (float) (conso*this.compteurEau.getPrix_abonnement() + 11.02);

@@ -48,7 +48,7 @@ public class ControleurAjouterLocation implements ActionListener{
 	}
 	
 	
-	private int verifcheckBoxColoc() {
+	private int verifcheckBoxColoc() throws DAOException {
 		Location loc = this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien());
 		if (loc == null) {
 			return 0;
@@ -79,7 +79,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		return false;
 	}
 	
-	private boolean verifColocationChecked() {
+	private boolean verifColocationChecked() throws DAOException {
 		if (verifcheckBoxColoc() == 1) {
 			JOptionPane.showMessageDialog(this.vue, 
 					"Ce bien est déjà associé à une colocation. Vous ne pouvez ajouter qu'une autre colocation.",
