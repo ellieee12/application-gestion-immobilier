@@ -80,11 +80,11 @@ public class Location {
 		return this.colocation;
 	}
 
-	public float getProvision_chargement_TTC() {
+	public Float getProvision_chargement_TTC() {
 		return provision_chargement_TTC;
 	}
 
-	public float getCaution_TTC() {
+	public Float getCaution_TTC() {
 		return caution_TTC;
 	}
 	

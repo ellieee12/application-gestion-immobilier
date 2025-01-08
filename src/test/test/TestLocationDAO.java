@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -123,6 +124,29 @@ public class TestLocationDAO {
 		assertFalse(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
 		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25")));
 		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
+	}
+	
+	//TODO Test getLocationById_Bien????
+	
+	@Test
+	public void testGetProvision() throws DAOException {
+		assertEquals(this.location1.getProvision_chargement_TTC(),
+				this.locationDAO.getProvisionFromLocation(this.location1.getIdBien(), this.location1.getDate_debut()));
+		assertEquals(this.location2.getProvision_chargement_TTC(),
+				this.locationDAO.getProvisionFromLocation(this.location2.getIdBien(), this.location2.getDate_debut()));
+		assertEquals(this.location3.getProvision_chargement_TTC(),
+				this.locationDAO.getProvisionFromLocation(this.location3.getIdBien(), this.location3.getDate_debut()));
+	}
+	
+	@Test
+	public void testSetNouvelleProvision() throws DAOException{
+		this.locationDAO.setNouvelleProvision(this.location1.getIdBien(), 
+				this.location1.getDate_debut(), 989f);
+		assertEquals(Float.valueOf(989),this.locationDAO.getProvisionFromLocation(this.location1.getIdBien(), this.location1.getDate_debut()));
+		assertEquals(this.location2.getProvision_chargement_TTC(),
+				this.locationDAO.getProvisionFromLocation(this.location2.getIdBien(), this.location2.getDate_debut()));
+		assertEquals(this.location3.getProvision_chargement_TTC(),
+				this.locationDAO.getProvisionFromLocation(this.location3.getIdBien(), this.location3.getDate_debut()));
 	}
 	
 }
