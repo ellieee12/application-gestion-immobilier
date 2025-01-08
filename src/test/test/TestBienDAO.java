@@ -1,5 +1,6 @@
 package test;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -12,6 +13,8 @@ import modele.Batiment;
 import modele.Bien;
 import modele.Garage;
 import modele.BienDAO;
+import modele.Compteur;
+import modele.CompteurDAO;
 import modele.DAOException;
 import modele.ImmeubleDAO;
 import modele.Logement;
@@ -46,6 +49,13 @@ public class TestBienDAO {
 	
 	@After
 	public void tearDown() throws DAOException {
+		CompteurDAO cDAO = new CompteurDAO();
+		if (cDAO.compteurExists(Compteur.typeCompteur.EAU, this.idBienGarage)) {
+			cDAO.supprimerCompteur(Compteur.typeCompteur.EAU, this.idBienGarage);
+		}
+		if (cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage)) {
+			cDAO.supprimerCompteur(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage);
+		}
 		if (bDAO.bienExiste(idBienGarage)) {
 			this.bDAO.supprimerBien(idBienGarage);
 		}
@@ -99,4 +109,24 @@ public class TestBienDAO {
 		assertEquals(this.l,liste.get(1));
 	}
 
+	@Test
+	public void testGetEntretienFromIdBien() throws DAOException {
+		assertEquals(this.b.getEntretienPartieCommune(),this.bDAO.getEntretienFromIdBien(this.idBienGarage));
+		assertEquals(this.l.getEntretienPartieCommune(),this.bDAO.getEntretienFromIdBien(this.idBienLogement));
+		assertNull(this.bDAO.getEntretienFromIdBien("test"));
+	}
+	
+	@Test
+	public void testAjouterBienEtCompteurs() throws DAOException {
+		this.bDAO.supprimerBien(idBienGarage);
+		CompteurDAO cDAO = new CompteurDAO();
+		Compteur compteur1 = new Compteur(Compteur.typeCompteur.EAU, 0.99f);
+		Compteur compteur2 = new Compteur(Compteur.typeCompteur.ELECTRICITE, 0.88f);
+		List<Compteur> liste = new LinkedList<>(); 
+		liste.add(compteur1); liste.add(compteur2);
+		this.bDAO.ajouterBienEtCompteurs(b, idBat, liste);
+		assertTrue(this.bDAO.bienExiste(idBienGarage));
+		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.EAU, this.idBienGarage));
+		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage));
+	}
 }

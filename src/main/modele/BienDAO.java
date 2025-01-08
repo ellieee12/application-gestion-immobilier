@@ -49,23 +49,7 @@ public class BienDAO{
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de tous les bien.",e);
 			throw new DAOException("Erreurs lors de la récupération de tous les bien.",e);
 		}
-	}
-	
-//	public void ajouterCompteur(String id_bien, Float prix_abonnement, String type_compteur) throws DAOException {
-//		try {
-//			String req = "{CALL insertCompteur(?,?,?)}";
-//			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-//			stmt.setString(1, id_bien);
-//			stmt.setFloat(2, prix_abonnement);
-//			stmt.setString(3, type_compteur);
-//			int i = stmt.executeUpdate();
-//			System.out.println(i+" lignes ajoutées");
-//			stmt.close();
-//		}catch(SQLException e){
-//			logger.log(Level.SEVERE,"Erreurs lors de l'ajout d'un compteur",e);
-//			throw new DAOException("Erreurs lors de l'ajout d'un compteur",e);
-//		}
-//	}	
+	}	
 	
 	/**
 	 * Récupère tous les biens associés à un immeuble donné
