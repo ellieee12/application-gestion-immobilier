@@ -48,13 +48,20 @@ public class ControleurAjouterLocation implements ActionListener{
 	}
 	
 	
-	private boolean verifcheckBoxColoc() {
-		System.out.println(this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation());
-		System.out.println(this.vue.isColocation());
-		if (this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien()).isColocation().equals(this.vue.isColocation())) {
-			return true;
+	private int verifcheckBoxColoc() {
+		Location loc = this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien());
+		if (loc == null) {
+			return 0;
 		}
-		return false;
+		if (loc.isColocation().equals("Oui") &&
+				 this.vue.isColocation().equals("Non")){
+			return 1;
+		} else if (loc.isColocation().equals("Non")){
+			return 2;
+		} else {
+			return 0;
+		}
+		
 	}
 	
 	private void valider() {
@@ -73,13 +80,20 @@ public class ControleurAjouterLocation implements ActionListener{
 	}
 	
 	private boolean verifColocationChecked() {
-		if (!verifcheckBoxColoc()) {
+		if (verifcheckBoxColoc() == 1) {
 			JOptionPane.showMessageDialog(this.vue, 
-					"Vous ne pouvez pas ajouter une colocation à ce bien si vous ne cochez pas la case",
+					"Ce bien est déjà associé à une colocation. Vous ne pouvez ajouter qu'une autre colocation.",
 					"Attention", JOptionPane.WARNING_MESSAGE);
 			return false;
+		} else if (verifcheckBoxColoc() == 2) {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Vous ne pouvez pas ajouter de colocation ou de location à un bien qui possède déjà une location.",
+					"Attention", JOptionPane.WARNING_MESSAGE);
+			return false;
+		} else if (verifcheckBoxColoc() == 0){
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	
@@ -119,9 +133,10 @@ public class ControleurAjouterLocation implements ActionListener{
 					try {
 						Location loc = new Location(this.vue.getDateDebutLocation(), this.vue.isColocation(),
 								this.vue.getNbMoisPrevus(), this.vue.getLoyer(), this.vue.getProvisionsCharges(),
-								this.vue.getCaution(), this.vue.getSelectedBien());
-						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(),
-								this.getIDLocataire(this.vue.getSelectedLocataire()), loc);
+								this.vue.getCaution(), this.vue.getSelectedBien(), this.getIDLocataire(this.vue.getSelectedLocataire()));
+						
+						this.locationDAO.ajouterLocation(this.vue.getSelectedBien(), loc);
+						
 						VueAjouterDocuments frame = new VueAjouterDocuments(loc,this.vue.getSelectedBien(),
 								this.vue.getSelectedLocataire(), this.vueMesLocations);
 						valider();
