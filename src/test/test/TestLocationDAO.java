@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -47,9 +46,9 @@ public class TestLocationDAO {
 		Logement log = new Logement(Date.valueOf("2004-01-12"), "testBien001", 3, 5,21.0f,200.0f);
 		Garage garage = new Garage(Date.valueOf("2004-02-12"), "testBien002", 100.0f);
 		Logement logM = new Logement(Date.valueOf("2004-03-12"), "testBien003", 3,5,21.0f,200.0f);
-		this.location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001");
-		this.location2 = new Location(Date.valueOf("2023-06-23"),"Non",36,100.0f,20.0f,50.0f,"testBien002");
-		this.location3 = new Location(Date.valueOf("2024-01-25"),"Non",40,500.0f,150.0f,200.0f,"testBien003");
+		this.location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001","mary123");
+		this.location2 = new Location(Date.valueOf("2023-06-23"),"Non",36,100.0f,20.0f,50.0f,"testBien002","mary123");
+		this.location3 = new Location(Date.valueOf("2024-01-25"),"Non",40,500.0f,150.0f,200.0f,"testBien003","johnnyboy");
 		
 		immeubleDAO.ajouterImmeuble(bat);
 		immeubleDAO.ajouterImmeuble(maison);
@@ -58,13 +57,13 @@ public class TestLocationDAO {
 		bienDAO.ajouterBien(garage, bat.getId_immeuble());
 		bienDAO.ajouterBien(log, bat.getId_immeuble());
 		bienDAO.ajouterBien(logM, maison.getId_immeuble());
-		this.locationDAO.ajouterLocation(log.getId_bien(), locataire.getId_locataire(), location1);
-		this.locationDAO.ajouterLocation(garage.getId_bien(), locataire.getId_locataire(), location2);
-		this.locationDAO.ajouterLocation(logM.getId_bien(),locataireM.getId_locataire(),location3);
+		this.locationDAO.ajouterLocation(log.getId_bien(), location1);
+		this.locationDAO.ajouterLocation(garage.getId_bien(), location2);
+		this.locationDAO.ajouterLocation(logM.getId_bien(),location3);
 	}
 	
 	@After
-	public void tearDown() throws DAOException, SQLException {
+	public void tearDown() throws DAOException {
 		if (this.locationDAO.locationExists("testBien001", "mary123",Date.valueOf("2023-06-23"))) {
 			this.locationDAO.supprimerLocation("testBien001", Date.valueOf("2023-06-23"));
 		}
@@ -113,9 +112,6 @@ public class TestLocationDAO {
 	@Test
 	public void testGetAllLocation() throws DAOException {
 		List<Location> listeAll = this.locationDAO.getAllLocations();
-		for (Location l : listeAll) {
-			System.out.println(l.getLoyer_TTC());
-		}
 		assertTrue(location1.equals(listeAll.get(0)));
 		assertTrue(location2.equals(listeAll.get(1)));;
 		assertTrue(location3.equals(listeAll.get(2)));

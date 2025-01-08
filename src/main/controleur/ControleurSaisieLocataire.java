@@ -16,8 +16,6 @@ import modele.LocataireDAO;
 
 public class ControleurSaisieLocataire implements ActionListener {
 	
-	private static ControleurSaisieLocataire controleur;
-	
 	private VueSaisieLocataire vue;
 	private VueMesLocataires vueLocataires;
 	private LocataireDAO dao;

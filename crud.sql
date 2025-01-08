@@ -82,7 +82,8 @@ CREATE TABLE Document_Location(
     id_locataire VARCHAR(20) NOT NULL,
     date_debut DATE NOT NULL,
     PRIMARY KEY(id_document),
-    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut)
+    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut),
+    CONSTRAINT fk_document_location_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
 );
 
 CREATE TABLE Louer(

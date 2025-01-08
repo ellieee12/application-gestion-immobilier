@@ -60,12 +60,11 @@ public class ControleurAjouterDocuments implements ActionListener {
 			e1.printStackTrace();
 		}
 		if (b.getText().equals("Enregistrer")) {
-			System.out.println("entered");
-			this.ajouterDocumentDAO(docCaution);
-			this.ajouterDocumentDAO(docEau);
-			this.ajouterDocumentDAO(docElec);
-			this.ajouterDocumentDAO(docEtat);
 			try {
+				this.ajouterDocumentDAO(docCaution);
+				this.ajouterDocumentDAO(docEau);
+				this.ajouterDocumentDAO(docElec);
+				this.ajouterDocumentDAO(docEtat);
 				valider();
 			} catch (DAOException e1) {
 				// TODO Auto-generated catch block
@@ -80,7 +79,7 @@ public class ControleurAjouterDocuments implements ActionListener {
 		this.vue.dispose();
 	}
 
-	private void ajouterDocumentDAO(DocumentLocation document) {
+	private void ajouterDocumentDAO(DocumentLocation document) throws DAOException {
 		if (document!=null) {
 			DocumentLocationDAO dao = new DocumentLocationDAO();
 			dao.ajouterDocument(document,this.idBien,this.idLocataire,this.dateDebut);

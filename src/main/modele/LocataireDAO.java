@@ -83,7 +83,7 @@ public class LocataireDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public boolean locataireExists(String id_locataire) throws DAOException, SQLException {
+	public boolean locataireExists(String id_locataire) throws DAOException{
 		try {
 			Locataire loc = getLocataireById(id_locataire);
 			return loc != null;

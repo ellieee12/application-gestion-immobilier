@@ -1,38 +1,24 @@
 package modele;
 import java.sql.Date;
-import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import java.util.Objects;
 
-@objid ("48f8f55c-05cf-4051-8991-3878e7155b6a")
 public class Location {
 	
 	private String idBien;
-	
-    @objid ("31ca14d9-9889-4d81-8b50-04fb2870dbc2")
     private Date date_debut;
-    
-    @objid ("bb01d782-39bb-4323-bd19-fe9bb4151d45")
     private String colocation;
-
-    @objid ("00988291-cf19-449a-beb2-d44abfff94ab")
     private int nb_mois;
-
-    @objid ("e334a957-dc9d-4c44-ac42-cbcfa87dbff8")
     private float loyer_TTC;
-
-    @objid ("8aa55c8c-cf4c-4a5a-ad56-f9d1e27e35d0")
     private float provision_chargement_TTC;
-
-    @objid ("85039373-d4a4-48a2-9566-6400ef522a3a")
     private float caution_TTC; 
-    
     private String idLocataire;
 
     private boolean active;
     
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(caution_TTC, colocation, date_debut, idBien, loyer_TTC, nb_mois, provision_chargement_TTC);
-//	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(caution_TTC, colocation, date_debut, idBien, loyer_TTC, nb_mois, provision_chargement_TTC);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

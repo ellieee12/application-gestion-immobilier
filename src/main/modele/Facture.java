@@ -1,33 +1,16 @@
 package modele;
 import java.sql.Date;
-import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import java.util.Objects;
 
-@objid ("2d5ad251-126f-43fe-a942-0997bcc1174c")
 public class Facture {
-    @objid ("8781fc6d-f8f0-4004-9630-7bd23cb2947d")
     private Date date_emission;
-
-    @objid ("7bcf76c9-2ac7-4bed-9566-680636e622aa")
     private Date date_paiement;
-
-    @objid ("f2e64be0-ae41-4b90-98c1-d435e71421fd")
     private String numero;
-
-    @objid ("550731bc-af2b-4465-a289-e5f62769c495")
     private String designation;
-
-    @objid ("4be1b203-05af-49fe-a2ed-cbf94b0aaf3a")
     private float montant;
-
-    @objid ("04658c26-e9f5-40bb-9c8f-7b162d422cc2")
     private String numero_devis;
-
-    @objid ("11cbc849-8b81-4a91-9443-9c1adaf71cf5")
-    private float montant_reel_paye;
-
-    @objid ("4d80e5bb-456e-45e4-a2a8-44de6b0443c2")
-    private float imputable_locataire;
-    
+	private float montant_reel_paye;
+    private float imputable_locataire; 
     private String id_bien;
     
     public Facture(String numero, Date date_paiement, Date date_emission, String numero_devis, String designation, float montant_reel_paye, float montant, float imputable_locataire, String id_bien) {
@@ -78,5 +61,28 @@ public class Facture {
 		return id_bien;
 	}
 
-    
+	@Override
+	public int hashCode() {
+		return Objects.hash(date_emission, date_paiement, designation, id_bien, imputable_locataire, montant,
+				montant_reel_paye, numero, numero_devis);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Facture other = (Facture) obj;
+		return this.date_emission.equals(other.date_emission) && this.date_paiement.equals(other.date_paiement)
+				&& this.designation.equals(other.designation) && this.id_bien.equals(other.id_bien)
+				&& imputable_locataire == other.imputable_locataire
+				&& montant == other.montant
+				&& montant_reel_paye == other.montant_reel_paye
+				&& this.numero.equals(other.numero)
+				&& this.numero_devis.equals(other.numero_devis);
+	}
+
 }

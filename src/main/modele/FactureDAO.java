@@ -3,14 +3,10 @@ package modele;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import modele.Bien;
-import modele.Facture;
-import modele.Garage;
-import modele.Logement;
 
 public class FactureDAO {
 
@@ -30,17 +26,27 @@ public class FactureDAO {
 	 * @throws DAOException 
 	 * @throws SQLException
 	 */
-	public ResultSet getAllFactures() throws DAOException {
+	public List<Facture> getAllFactures() throws DAOException {
 		try {
 			String req = "{call getAllFactures()}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			return stmt.executeQuery(req);
+			ResultSet rs = stmt.executeQuery(req);
+			List<Facture> liste = new LinkedList<>();
+			while(rs.next()) {
+				liste.add(new Facture(rs.getString("numero_facture"),rs.getDate("date_paiement"),rs.getDate("date_emission"),rs.getString(4),rs.getString(5),rs.getFloat(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9)));
+			}
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de toutes les factures.",e);
 			throw new DAOException("Erreurs lors de la récupération de toutes les factures.",e);
 		}
 	}
 	
+	/**
+	 * Supprimer une facture à partir de son numéro 
+	 * @param numero_factures
+	 * @throws DAOException
+	 */
 	public void supprimerFacture(String numero_factures) throws DAOException {
 		try {
 			String req = "{CALL deleteFacture(?)}";
@@ -55,14 +61,19 @@ public class FactureDAO {
 		}
 	}
 	
+	/**
+	 * Ajouter une facture dans la base de données
+	 * @param facture
+	 * @throws DAOException
+	 */
 	public void ajouterFacture(Facture f) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			String req = "{CALL insertFacture(?,?,?,?,?,?,?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, f.getNumero());
-			stmt.setDate(2, f.getDate_emission());
-			stmt.setDate(3, f.getDate_paiement());
+			stmt.setDate(2, f.getDate_paiement());
+			stmt.setDate(3, f.getDate_emission());
 			stmt.setString(4, f.getNumero_devis());
 			stmt.setString(5, f.getDesignation());
 			stmt.setFloat(6, f.getMontant_reel_paye());
@@ -78,6 +89,12 @@ public class FactureDAO {
 		}
 	}
 	
+	/**
+	 * Récupérer une facture à partir de son numéro
+	 * @param numero_factures
+	 * @return
+	 * @throws DAOException
+	 */
 	public Facture getFactureByNumero(String numero_factures) throws DAOException {
 		try {
 			String req = "{CALL getFactureByNumero(?)}";
@@ -94,6 +111,12 @@ public class FactureDAO {
 		return null;
 	}
 	
+	/**
+	 * Vérifier si une facture existe dans la base de donnée à partir de son numéro
+	 * @param numero_factures
+	 * @return
+	 * @throws DAOException
+	 */
 	public boolean FactureExiste(String numero_factures) throws DAOException {
 		return this.getFactureByNumero(numero_factures) != null;
 	}

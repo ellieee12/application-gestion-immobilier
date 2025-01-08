@@ -2,8 +2,6 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import ihm.VueAjouterFacture;
 import ihm.VueListFactures;
 import modele.Facture;
 import modele.DAOException;
-import modele.Facture;
 import modele.FactureDAO;
 
 public class ControleurListFactures implements ActionListener{
@@ -28,11 +25,8 @@ public class ControleurListFactures implements ActionListener{
 			this.factures = new LinkedList<>();
 			
 			FactureDAO factureDAO = new FactureDAO();
-			ResultSet rs = factureDAO.getAllFactures();
-			while(rs.next()) {
-                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8), rs.getString(9)));
-            }
-		} catch (DAOException | SQLException e) {
+			 this.factures = factureDAO.getAllFactures();
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -42,11 +36,8 @@ public class ControleurListFactures implements ActionListener{
 			this.factures = new LinkedList<>();
 			
 			FactureDAO factureDAO = new FactureDAO();
-			ResultSet rs = factureDAO.getAllFactures();
-			while(rs.next()) {
-                this.factures.add(new Facture(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getFloat(6), rs.getFloat(7), rs.getFloat(8), rs.getString(9)));
-            }
-		} catch (SQLException e) {
+			this.factures = factureDAO.getAllFactures();
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		this.vue.buildTable(this);

@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 import ihm.VueAjouterImmeuble;
 import ihm.VueMesImmeubles;
 import modele.Batiment;
-import modele.DAOException;
-import modele.ImmeubleDAO;
 import modele.Maison;
 
 public class ControleurAjouterImmeuble implements ActionListener {

@@ -1,45 +1,50 @@
 package test;
 
-import java.sql.*;
+import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import modele.DAOException;
 import modele.LogInSignUpDAO;
 
 public class TestLogInSignUpDAO {
+	
+	private LogInSignUpDAO dao;
+	
+	@Before
+	public void setUp() throws DAOException {
+		this.dao = new LogInSignUpDAO();
+		this.dao.addCompte("testCompte1", "testMDP1");
+	}
 
-	public static void main(String[] args) throws SQLException {
-		LogInSignUpDAO logIn = new LogInSignUpDAO();
-		
-		//Test vérification compte existe
-		if (logIn.compteExiste("admin", "admin")) {
-		    System.out.println("Le compte existe");
-		} else {
-		    System.out.println("Le compte n'existe pas");
+	@After
+	public void tearDown() throws DAOException {
+		if (this.dao.compteExiste("testCompte1")) {
+			this.dao.supprimerCompte("testCompte1");
 		}
-		
-		//Test vérification compte existe pas
-		if (logIn.compteExiste("ad", "admin")) {
-		    System.out.println("Le compte existe");
-		} else {
-		    System.out.println("Le compte n'existe pas");
+		if (this.dao.compteExiste("testCompte2")) {
+			this.dao.supprimerCompte("testCompte2");
 		}
-		
-		// TEST POUR AJOUTER UN COMPTE (IL MARCHE DONC NE PAS EXECUTER OU ALORS SUPPRIMER ENSUITE)
-		//System.out.println("Nombre de lignes ajoutées : " + logIn.addCompte("admin", "admin"));
-		
-		
-		//test mdp correct avec une mdp correct
-		if (logIn.mdpCorrect("admin", "admin")) {
-			System.out.println("MDP CORRECT");
-		} else {
-			System.out.println("MDP INCORRECT");
-		}
-		
-		//test mdp correct avec un mdp incorrect
-		if (logIn.mdpCorrect("admin", "admni")) {
-			System.out.println("MDP CORRECT");
-		} else {
-			System.out.println("MDP INCORRECT");
-		}
+		this.dao=null;
+	}
+	
+	@Test
+	public void testCompteExists() throws DAOException {
+		assertTrue(this.dao.compteExiste("testCompte1"));
+	}
+	
+	@Test
+	public void testAddCompte() throws DAOException {
+		this.dao.addCompte("testCompte2", "testMDP2");
+		assertTrue(this.dao.compteExiste("testCompte2"));
+	}
+	
+	@Test
+	public void testSupprimercompte() throws DAOException {
+		this.dao.supprimerCompte("testCompte1");
+		assertFalse(this.dao.compteExiste("testCompte1"));
 	}
 
 }
