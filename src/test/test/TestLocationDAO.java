@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -64,7 +63,7 @@ public class TestLocationDAO {
 	}
 	
 	@After
-	public void tearDown() throws DAOException, SQLException {
+	public void tearDown() throws DAOException {
 		if (this.locationDAO.locationExists("testBien001", "mary123",Date.valueOf("2023-06-23"))) {
 			this.locationDAO.supprimerLocation("testBien001", Date.valueOf("2023-06-23"));
 		}
