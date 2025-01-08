@@ -32,7 +32,7 @@ public class LogInSignUpDAO {
             CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req); 
             stmt.setString(1, username);
             stmt.setString(2, hashedPassword);
-            int i = stmt.executeUpdate();
+            stmt.executeUpdate();
             stmt.close();
         } catch (Exception e) {
             System.out.println(e);

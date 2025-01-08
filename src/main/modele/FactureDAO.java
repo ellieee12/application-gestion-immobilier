@@ -42,6 +42,11 @@ public class FactureDAO {
 		}
 	}
 	
+	/**
+	 * Supprimer une facture à partir de son numéro 
+	 * @param numero_factures
+	 * @throws DAOException
+	 */
 	public void supprimerFacture(String numero_factures) throws DAOException {
 		try {
 			String req = "{CALL deleteFacture(?)}";
@@ -56,6 +61,11 @@ public class FactureDAO {
 		}
 	}
 	
+	/**
+	 * Ajouter une facture dans la base de données
+	 * @param facture
+	 * @throws DAOException
+	 */
 	public void ajouterFacture(Facture f) throws DAOException {
 		try {
 			CallableStatement stmt ;
@@ -79,6 +89,12 @@ public class FactureDAO {
 		}
 	}
 	
+	/**
+	 * Récupérer une facture à partir de son numéro
+	 * @param numero_factures
+	 * @return
+	 * @throws DAOException
+	 */
 	public Facture getFactureByNumero(String numero_factures) throws DAOException {
 		try {
 			String req = "{CALL getFactureByNumero(?)}";
@@ -95,6 +111,12 @@ public class FactureDAO {
 		return null;
 	}
 	
+	/**
+	 * Vérifier si une facture existe dans la base de donnée à partir de son numéro
+	 * @param numero_factures
+	 * @return
+	 * @throws DAOException
+	 */
 	public boolean FactureExiste(String numero_factures) throws DAOException {
 		return this.getFactureByNumero(numero_factures) != null;
 	}

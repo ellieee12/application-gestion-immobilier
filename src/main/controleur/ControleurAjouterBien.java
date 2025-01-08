@@ -23,7 +23,6 @@ import modele.CompteurDAO;
 import modele.DAOException;
 import modele.Garage;
 import modele.ImmeubleDAO;
-import modele.Garage;
 import modele.Immeuble;
 import modele.Logement;
 import modele.Maison;

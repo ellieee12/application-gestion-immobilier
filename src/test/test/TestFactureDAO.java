@@ -17,7 +17,7 @@ import modele.FactureDAO;
 import modele.ImmeubleDAO;
 import modele.Logement;
 
-public class TestFacture {
+public class TestFactureDAO {
 	private ImmeubleDAO immeubleDAO;
 	private BienDAO bienDAO;
 	private FactureDAO facDAO;

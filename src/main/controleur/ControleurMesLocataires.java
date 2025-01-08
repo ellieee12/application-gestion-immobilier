@@ -43,7 +43,6 @@ public class ControleurMesLocataires implements ActionListener {
 	public void Update() {
 		try {
             this.locataires = new LinkedList<>();
-            
             LocataireDAO location = new LocataireDAO();
             ResultSet rs;
 			rs = location.getAllLocataires();
@@ -100,8 +99,6 @@ public class ControleurMesLocataires implements ActionListener {
 			});
 		}
 	}
-	*/
-	
-	
+	*/	
 
 }
