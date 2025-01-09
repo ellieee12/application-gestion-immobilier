@@ -155,14 +155,14 @@ public class ControleurRegularisation implements ActionListener {
 			System.out.println("Erreur");
 			return 0F;
 		} else if (typeImmeuble.equals("M")) {
-			return (float) (conso*this.compteurEau.getPrix_abonnement() + 176.16);	//le prix est différent si c'est une maison ou un batiment
+			return this.compteurEau.calculerMontantEauMaison(conso);	//le prix est différent si c'est une maison ou un batiment
 		} else {
-			return (float) (conso*this.compteurEau.getPrix_abonnement() + 11.02);
+			return this.compteurEau.calculerMontantEauBatiment(conso);
 		}
 	}
 	
 	//calcul le montant d'électricité à partir de la consommation
 	public float montantElec (int conso) {
-		return (float) (conso*this.compteurElec.getPrix_abonnement());
+		return (float) this.compteurElec.calculerMontantElec(conso);
 	}
 }

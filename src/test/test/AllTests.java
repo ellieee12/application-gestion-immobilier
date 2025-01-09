@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	TestFactureDAO.class,
 	TestLogInSignUpDAO.class,
 	TestCompteurDAO.class,
-	TestReleveDAO.class})
+	TestReleveDAO.class,
+	TestCompteur.class})
 public class AllTests {
 
 }

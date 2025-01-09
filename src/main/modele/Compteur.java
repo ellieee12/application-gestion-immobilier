@@ -29,4 +29,25 @@ public class Compteur {
 		return typecomp;
 	}
 	
+	public float calculerMontantEauMaison(int conso) {
+		if (this.typecomp != typeCompteur.EAU) {
+	        throw new IllegalStateException("Calcul de montant eau non applicable pour un compteur de type: " + this.typecomp.getDénomination());
+	    }
+		return (float) (conso*this.getPrix_abonnement() + 176.16);
+	}
+	
+	public float calculerMontantEauBatiment(int conso) {
+		if (this.typecomp != typeCompteur.EAU) {
+	        throw new IllegalStateException("Calcul de montant eau non applicable pour un compteur de type: " + this.typecomp.getDénomination());
+	    }
+		return (float) (conso*this.getPrix_abonnement() + 11.02);
+	}
+	
+	public float calculerMontantElec(int conso) {
+		if (this.typecomp != typeCompteur.ELECTRICITE) {
+	        throw new IllegalStateException("Calcul de montant électrique non applicable pour un compteur de type: " + this.typecomp.getDénomination());
+	    }
+		return (float) (conso*this.getPrix_abonnement());
+	}
+	
 }
