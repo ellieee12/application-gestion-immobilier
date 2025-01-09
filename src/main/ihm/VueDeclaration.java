@@ -70,24 +70,24 @@ public class VueDeclaration extends JFrame {
 		lblRegime.setHorizontalAlignment(SwingConstants.CENTER);
 		panelHaut.add(lblRegime, BorderLayout.CENTER);
 		
-		JPanel panel = new JPanel();
-		panelHaut.add(panel, BorderLayout.SOUTH);
+		JPanel panelRegime = new JPanel();
+		panelHaut.add(panelRegime, BorderLayout.SOUTH);
 		
 		JButton btnRegimeReel = new JButton("Régime Réel");
 		btnRegimeReel.setToolTipText("Déduction des charges réelles");
-		panel.add(btnRegimeReel);
+		panelRegime.add(btnRegimeReel);
 		btnRegimeReel.setVisible(false);
 		
 		JButton btnMicroFoncier = new JButton("Micro-foncier");
 		btnMicroFoncier.setToolTipText("Abattement forfaitaire de 30%");
-		panel.add(btnMicroFoncier);
+		panelRegime.add(btnMicroFoncier);
 		btnMicroFoncier.setVisible(false);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.SOUTH);
+		JPanel panelImprimer = new JPanel();
+		contentPane.add(panelImprimer, BorderLayout.SOUTH);
 		
 		JButton btnImprimer = new JButton("Imprimer");
-		panel_1.add(btnImprimer);
+		panelImprimer.add(btnImprimer);
 		
 		JTextArea textAreaDeclaration = new JTextArea();
 		contentPane.add(textAreaDeclaration, BorderLayout.CENTER);
