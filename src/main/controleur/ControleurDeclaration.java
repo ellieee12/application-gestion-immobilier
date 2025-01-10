@@ -2,8 +2,13 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.Calendar;
+
+import javax.swing.JButton;
 
 import ihm.VueDeclaration;
+import modele.BienDAO;
 
 public class ControleurDeclaration implements ActionListener {
 	
@@ -11,8 +16,12 @@ public class ControleurDeclaration implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		JButton b = (JButton) e.getSource();
+		int annee = Integer.valueOf(new Date(Calendar.getInstance()		//annee en cours
+				.getTime().getTime()).toString().substring(0, 4));
+		if (b.getText() == "Calculer le revenu") {
+			BienDAO dao = new BienDAO();
+		}
 	}
 
 }
