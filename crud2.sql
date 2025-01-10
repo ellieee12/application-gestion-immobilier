@@ -34,6 +34,9 @@ DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
 DROP PROCEDURE IF EXISTS getColocationByIdBien$$
+DROP PROCEDURE IF EXISTS getSommeLoyers12Mois$$
+DROP PROCEDURE IF EXISTS getLoyersTermine$$
+DROP PROCEDURE IF EXISTS getLoyersCommence$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -307,6 +310,26 @@ BEGIN
     Select * from location where id_bien = v_id_bien;
 END$$
 
+CREATE PROCEDURE getSommeLoyers12Mois(IN v_annee int)
+BEGIN
+    select sum(loyer_ttc) from location 
+	where (date_fin is null or year(date_fin)>v_annee-1) 
+	and year(date_debut) < v_annee - 1;
+END$$
 
+CREATE PROCEDURE getLoyersTermine(IN v_annee int)
+BEGIN
+	select loyer_ttc, date_debut, month(date_fin) 
+	from location  
+	where year(date_fin) = v_annee -1
+END$$
+
+CREATE PROCEDURE getLoyersCommence(IN v_annee int)
+BEGIN
+	select loyer_ttc, month(date_debut) 
+	from location 
+	where year(date_debut) = annee en cours -1 
+	and (date_fin is null or year(date_fin)>v_annee-1)
+END$$
 
 DELIMITER ;
