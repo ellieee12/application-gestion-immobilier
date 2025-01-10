@@ -132,5 +132,13 @@ CREATE TABLE releve (
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
 );
 
+CREATE TABLE SDTC (
+    date_sdtc date not null,
+    index_comp INT,
+    id_compteur INT NOT NULL,
+    constraint pk_sdtc primary key(date_sdtc,id_compteur),
+    constraint fk_sdtc_id_compteur foreign key (id_compteur) references compteur(id_compteur)
+);
+
 
 COMMIT;
