@@ -103,7 +103,7 @@ public class VueMesLocations extends JPanel {
 				},
 				new String[] {
 					"Id Bien", "Date début location", "Colocation", "Nombre de mois", "Loyer TTC", "Provisions chargement TTC",
-						"Caution TTC", "Loyer payé", "Id Locataire", "Activité"	
+						"Caution TTC", "Loyer payé", "Id Locataire", "Date Fin Location"	
 				}
 			) {
 				/**
@@ -113,7 +113,7 @@ public class VueMesLocations extends JPanel {
 				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
-					Float.class, Integer.class, String.class, String.class
+					Float.class, Integer.class, String.class, Date.class
 				};
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
@@ -142,7 +142,7 @@ public class VueMesLocations extends JPanel {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    "1er janvier 2025", l.getIdLocataire(), l.getActive()
+				    "1er janvier 2025", l.getIdLocataire(), l.getDate_fin()
 			});
 		}
 	}

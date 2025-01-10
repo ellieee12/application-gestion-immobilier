@@ -53,7 +53,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		} else if (this.location.get(this.vue.getLigneChoisi()).getActive().equals("Active")){
+		} else if (this.location.get(this.vue.getLigneChoisi()).getDate_fin().equals(null)){
 			if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
 				try {
 					VueRegularisation frame = new VueRegularisation(this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());

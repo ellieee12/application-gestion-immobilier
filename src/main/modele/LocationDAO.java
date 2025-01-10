@@ -22,7 +22,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	public List<Location> getAllLocations() throws DAOException {
 		String req = "select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, "
 				+ "l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, "
-				+ "l1.trimestre, l2.id_locataire, l1.active "
+				+ "l1.trimestre, l2.id_locataire, l1.date_fin "
 				+ "from location l1, louer l2 "
 				+ "where l2.id_bien=l1.id_bien "
 				+ "and l1.date_debut = l2.date_debut";
@@ -33,7 +33,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			ResultSet rs = stmt.executeQuery(req);
 			while(rs.next()) {
 				liste.add(new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), 
-						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getBoolean(11)));
+						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), null));
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locations",e);
@@ -118,7 +118,8 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt.setString(1, id_bien);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getBoolean(11));
+				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6),
+						rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), null);
 			}
 			return null;
 		} catch (Exception e) {

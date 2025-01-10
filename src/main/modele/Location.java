@@ -12,8 +12,7 @@ public class Location {
     private float provision_chargement_TTC;
     private float caution_TTC; 
     private String idLocataire;
-
-    private boolean active;
+    private Date date_fin;
     
 	@Override
 	public int hashCode() {
@@ -37,7 +36,7 @@ public class Location {
 	}
 
 	public Location(Date date_debut, String colocation, int nb_mois, float loyer_TTC, float provision_chargement_TTC,
-			float caution_TTC, String idBien, String idLocataire, boolean active) {
+			float caution_TTC, String idBien, String idLocataire, Date date_fin) {
 		this.date_debut = date_debut;
 		this.colocation = colocation;
 		this.nb_mois = nb_mois;
@@ -46,7 +45,7 @@ public class Location {
 		this.caution_TTC = caution_TTC;
 		this.idBien = idBien;
 		this.idLocataire = idLocataire;
-		this.active = active;
+		this.date_fin = date_fin;
 	}
 	
 	public String getIdBien () {
@@ -92,7 +91,7 @@ public class Location {
 		return this.idLocataire;
 	}
 	
-	public String getActive() {
-		return this.active?"Active":"Inactive";
+	public Date getDate_fin() {
+		return this.date_fin;
 	}
 }
