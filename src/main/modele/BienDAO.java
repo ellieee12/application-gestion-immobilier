@@ -228,22 +228,25 @@ public class BienDAO{
 		return this.getBienById(id_bien)!=null;
 	}
 	
-	public int getSommeLoyers12Mois() {
+	
+	/**
+	 * 
+	 * @param annee
+	 * @return 
+	 * @throws DAOException 
+	 */
+	public float getSommeLoyers12Mois(int annee) throws DAOException {
 		try {
-			String req = "{CALL getBienById(?)}";
+			String req = "{CALL getSommeLoyers12Mois(?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setString(1, id_bien);
+			stmt.setInt(1, annee);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
-				if (rs.getString(6).equals("G")) {
-					return new Garage(rs.getDate(5),rs.getString(1),rs.getFloat(8));
-				}else {
-					return new Logement(rs.getDate(5),rs.getString(1),rs.getInt(3),rs.getInt(2),rs.getFloat(4),rs.getFloat(8));
-				}
+				return rs.getFloat(1);
 			}
 		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération du bien par son identifiant.",e);
-			throw new DAOException("Erreurs lors de la récupération du bien par son identifiant.",e);
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
+			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
 		}
 		return 0;
 	}
