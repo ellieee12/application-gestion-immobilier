@@ -1,9 +1,9 @@
 package modele;
 
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -248,7 +248,73 @@ public class BienDAO{
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
 			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
 		}
-		return 0;
+		return -1.0F;
+	}
+	
+	/**
+	 * 
+	 * @param annee
+	 * @return 
+	 * @throws DAOException 
+	 */
+	public List<List<Object>> getLoyersTermine(int annee) throws DAOException {
+		List<List<Object>> resultList = new ArrayList<>();
+		try {
+			String req = "{CALL getLoyersTermine(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setInt(1, annee);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				float loyer = rs.getFloat(1);
+                int anneeDebut = rs.getInt(2);
+                int moisDebut = rs.getInt(3);
+                int moisFin = rs.getInt(4); // Numéro du mois de fin
+
+                // Stocker la ligne de résultat dans une liste
+                List<Object> row = new ArrayList<>();
+                row.add(loyer);
+                row.add(anneeDebut);
+                row.add(moisDebut);
+                row.add(moisFin);
+
+                resultList.add(row);
+			}
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
+			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
+		}
+		return resultList;
+	}
+	
+	/**
+	 * 
+	 * @param annee
+	 * @return 
+	 * @throws DAOException 
+	 */
+	public List<List<Object>> getLoyersCommence(int annee) throws DAOException {
+		List<List<Object>> resultList = new ArrayList<>();
+		try {
+			String req = "{CALL getLoyersCommence(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setInt(1, annee);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				float loyer = rs.getFloat(1);
+                int moisDebut = rs.getInt(2);
+
+                // Stocker la ligne de résultat dans une liste
+                List<Object> row = new ArrayList<>();
+                row.add(loyer);
+                row.add(moisDebut);
+
+                resultList.add(row);
+			}
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
+			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
+		}
+		return resultList;
 	}
 
 }
