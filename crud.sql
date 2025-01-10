@@ -67,6 +67,7 @@ CREATE TABLE Location(
     caution_ttc decimal(15,2),
     annee date NOT NULL,
     trimestre smallint NOT NULL,
+    date_fin date ,
     PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
@@ -81,7 +82,8 @@ CREATE TABLE Document_Location(
     id_locataire VARCHAR(20) NOT NULL,
     date_debut DATE NOT NULL,
     PRIMARY KEY(id_document),
-    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut)
+    CONSTRAINT fk_document_location FOREIGN KEY(id_bien, date_debut) REFERENCES Location(id_bien, date_debut),
+    CONSTRAINT fk_document_location_locataire FOREIGN KEY(id_locataire) REFERENCES Locataire(id_locataire)
 );
 
 CREATE TABLE Louer(
