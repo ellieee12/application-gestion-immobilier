@@ -16,20 +16,26 @@ public class ControleurDeclaration implements ActionListener {
 	
 	private VueDeclaration vue;
 	private float revenus;
+	
+	public ControleurDeclaration(VueDeclaration vue) {
+		this.vue = vue;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)  {
 		JButton b = (JButton) e.getSource();
 		int annee = this.getAnneeEnCours();
 		if (b.getText() == "Calculer le revenu") {
+			/*
 			try {
 				this.revenus = this.calculSomme12mois(annee)
 						+this.calculLoyersTermine(annee)
 						+this.getLoyersCommence(annee);
 			} catch (DAOException e1) {
 				e1.printStackTrace();
-			}
-			
+			}*/
+			this.revenus = 1000F;
+			this.vue.afficherRevenus(this.revenus);
 		}
 	}
 

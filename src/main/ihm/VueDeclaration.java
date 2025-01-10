@@ -13,10 +13,13 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controleur.ControleurDeclaration;
+
 public class VueDeclaration extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JLabel lblRevenu;
 
 	/**
 	 * Launch the application.
@@ -38,6 +41,9 @@ public class VueDeclaration extends JFrame {
 	 * Create the frame.
 	 */
 	public VueDeclaration() {
+		
+		ControleurDeclaration controleur = new ControleurDeclaration(this);
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();
@@ -62,8 +68,9 @@ public class VueDeclaration extends JFrame {
 		
 		JButton btnRevenu = new JButton("Calculer le revenu");
 		panelRevenus.add(btnRevenu, BorderLayout.WEST);
+		btnRevenu.addActionListener(controleur);
 		
-		JLabel lblRevenu = new JLabel("Revenu :");
+		this.lblRevenu = new JLabel("Revenu :");
 		panelRevenus.add(lblRevenu, BorderLayout.CENTER);
 		
 		JLabel lblRegime = new JLabel("");
@@ -92,6 +99,10 @@ public class VueDeclaration extends JFrame {
 		JTextArea textAreaDeclaration = new JTextArea();
 		contentPane.add(textAreaDeclaration, BorderLayout.CENTER);
 		
+	}
+	
+	public void afficherRevenus(float montant) {
+		this.lblRevenu.setText("Revenus : "+String.valueOf(montant)+" €");
 	}
 
 }
