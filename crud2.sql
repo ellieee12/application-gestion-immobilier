@@ -319,7 +319,7 @@ END$$
 
 CREATE PROCEDURE getLoyersTermine(IN v_annee int)
 BEGIN
-	select loyer_ttc, date_debut, month(date_fin) 
+	select loyer_ttc, year(date_debut), month(date_debut), month(date_fin) 
 	from location  
 	where year(date_fin) = v_annee -1
 END$$
