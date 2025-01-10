@@ -34,6 +34,10 @@ DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
 DROP PROCEDURE IF EXISTS getColocationByIdBien$$
+DROP PROCEDURE IF EXISTS getSDTCFromIdCompteur$$
+DROP PROCEDURE IF EXISTS addSDTC$$
+DROP PROCEDURE IF EXISTS deleteSDTC$$
+DROP PROCEDURE IF EXISTS deleteReleve$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -206,6 +210,7 @@ BEGIN
     insert into releve (annee,index_comp,id_compteur)
     values (v_annee,v_index,v_id_compteur);
 END$$
+
 CREATE PROCEDURE getAllFactures()
 
 BEGIN
@@ -313,6 +318,28 @@ BEGIN
     and l1.id_bien = v_id_bien;
 END$$
 
+CREATE PROCEDURE getSDTCFromIdCompteur (v_id_compteur VARCHAR(50),v_date_sdtc date)
 
+BEGIN 
+    SELECT index_comp from sdtc where id_compteur = v_id_compteur and date_sdtc = v_date_sdtc;
+END$$
+
+CREATE PROCEDURE addSDTC (v_date_sdtc date,v_index int,v_id_compteur varchar(50))
+BEGIN
+    insert into releve (date_sdtc,index_comp,id_compteur)
+    values (v_date_sdtc,v_index,v_id_compteur);
+END$$
+
+CREATE PROCEDURE deleteSDTC (v_id_compteur VARCHAR(50),v_date_sdtc date)
+
+BEGIN 
+    delete from sdtc where id_compteur = v_id_compteur and date_sdtc = v_date_sdtc;
+END$$
+
+CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
+
+BEGIN 
+    delete from Releve where id_compteur = v_id_compteur and annee = v_annee;
+END$$
 
 DELIMITER ;
