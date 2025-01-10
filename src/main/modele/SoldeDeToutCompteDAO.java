@@ -1,36 +1,37 @@
 package modele;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReleveDAO {
+public class SoldeDeToutCompteDAO {
 	private final MySQLCon mySQLCon;
 	private static final Logger logger = Logger.getLogger(CompteurDAO.class.getName());
 	
 	/**
 	 * Constructeur prenant une connexion à la base de données
 	 */
-	public ReleveDAO() {
+	public SoldeDeToutCompteDAO() {
 		this.mySQLCon=MySQLCon.getInstance();
 	}
 	
 	/**
-	 * Récupérer un rélevé à partir de l'identifiant d'un compteur
+	 * Récupérer un sdtc à partir de l'identifiant d'un compteur
 	 * @param id_compteur
-	 * @param annee
-	 * @return un relevé
+	 * @param date_sdtc
+	 * @return un sdtc
 	 * @throws DAOException
 	 */
-	public int getReleveFromIdCompteur(String id_compteur, int annee) throws DAOException {
+	public int getSDTCFromIdCompteur(String id_compteur, Date date_sdtc) throws DAOException {
 		try {
-			String req = "{CALL getReleveFromIdCompteur(?,?)}";
+			String req = "{CALL getSDTCFromIdCompteur(?,?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setString(1, id_compteur);
-			stmt.setInt(2,annee);
+			stmt.setDate(2,date_sdtc);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt(1);
@@ -43,19 +44,19 @@ public class ReleveDAO {
 	}
 	
 	/**
-	 * Ajouter un relevé dans la base de données
-	 * @param annee
+	 * Ajouter un sdtc dans la base de données
+	 * @param date_sdtc
 	 * @param index
 	 * @param idCompteur
 	 * @throws SQLException
 	 */
-	public void ajouterReleve(Releve releve, String idCompteur) throws DAOException {
+	public void ajouterSDTC(SoldeDeToutCompte sdtc, String idCompteur) throws DAOException {
 		try {
 			CallableStatement stmt ;
-			String req = "{CALL addReleve(?,?,?)}";
+			String req = "{CALL addSDTC(?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1,releve.getDate_releve());
-			stmt.setInt(2, releve.getIndexcomp());
+			stmt.setDate(1,sdtc.getDate_SDTC());
+			stmt.setInt(2, sdtc.getIndexcomp());
 			stmt.setString(3, idCompteur);
 			stmt.executeUpdate();
 			stmt.close();
@@ -67,33 +68,33 @@ public class ReleveDAO {
 	}
 	
 	/**
-	 * Supprimer un relevé
-	 * @param annee
+	 * Supprimer un sdtc
+	 * @param date_sdtc
 	 * @param idCompteur
 	 * @throws DAOException 
 	 */
-	public void supprimerRelever(int annee, String idCompteur) throws DAOException {
+	public void supprimerSDTC(Date date_sdtc, String idCompteur) throws DAOException {
 		try {
-			String req = "{call deleteReleve(?,?)}";
+			String req = "{ call deleteSDTC(?,?)}";
 			PreparedStatement st = this.mySQLCon.getConnection().prepareStatement(req);
-			st.setInt(1, annee);
+			st.setDate(1, date_sdtc);
 			st.setString(2, idCompteur);
 			st.executeUpdate();
 			st.close();
 		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de l'effacement d'un relevé dans la base de données",e);
-			throw new DAOException("Erreurs lors de l'effacement d'un relevé dans la base de données",e);
+			logger.log(Level.SEVERE,"Erreurs lors de l'effacement d'un sdtc dans la base de données",e);
+			throw new DAOException("Erreurs lors de l'effacement d'un sdtc dans la base de données",e);
 		}
 	}
 	
 	/**
-	 * Vérifier si un relevé existe dans la base de données
+	 * Vérifier si un sdtc existe dans la base de données
 	 * @param id_compteur
-	 * @param annee
+	 * @param date_sdtc
 	 * @return
 	 * @throws DAOException
 	 */
-	public boolean releveExists(String id_compteur, int annee) throws DAOException {
-		return this.getReleveFromIdCompteur(id_compteur, annee)!=0;
+	public boolean sdtcExists(String id_compteur, Date date_sdtc) throws DAOException {
+		return this.getSDTCFromIdCompteur(id_compteur, date_sdtc)!=0;
 	}
 }
