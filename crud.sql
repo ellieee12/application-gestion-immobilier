@@ -67,7 +67,7 @@ CREATE TABLE Location(
     caution_ttc decimal(15,2),
     annee date NOT NULL,
     trimestre smallint NOT NULL,
-    active tinyint,
+    date_fin date NOT NULL,
     PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
