@@ -26,16 +26,21 @@ public class ControleurDeclaration implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		int annee = this.getAnneeEnCours();
 		if (b.getText() == "Calculer le revenu") {
-			/*
-			try {
+			/*try {
 				this.revenus = this.calculSomme12mois(annee)
 						+this.calculLoyersTermine(annee)
 						+this.getLoyersCommence(annee);
 			} catch (DAOException e1) {
 				e1.printStackTrace();
 			}*/
-			this.revenus = 1000F;
+			this.revenus = 10000F;
 			this.vue.afficherRevenus(this.revenus);
+		}
+		if (b.getText() == "Micro-foncier") {
+			this.vue.afficherTexteMicroFoncier(revenus);
+		}
+		if (b.getText() == "Imprimer") {
+			this.vue.imprimerTexte();
 		}
 	}
 
