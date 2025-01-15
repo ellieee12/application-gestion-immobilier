@@ -3,7 +3,7 @@ package modele;
 public class Compteur {
     
     public enum typeCompteur {
-    	EAU("eau"),ELECTRICITE("electricite");
+    	EAU("Water"),ELECTRICITE("Electricity");
     	private final String dénomination;
     	private typeCompteur(String dénomination) {
     		this.dénomination = dénomination;

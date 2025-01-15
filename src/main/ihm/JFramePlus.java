@@ -20,7 +20,7 @@ import org.jdesktop.swingx.JXLabel;
 
 public class JFramePlus extends JFrame {
 	
-	static final int i = 4;
+	static final int i = 3;
 	
 	private static List<Component> getAllComponents(final Container c) {
 	    Component[] comps = c.getComponents();

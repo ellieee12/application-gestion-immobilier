@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 
@@ -30,6 +31,7 @@ public class ControleurRegularisation implements ActionListener {
 	private LocationDAO locationDAO;
 	
 	private VueRegularisation vue;
+	private ControleurMesLocations controleurMesLocations;
 	private Compteur compteurEau;
 	private Compteur compteurElec;
 	private String idcompteurEau;
@@ -45,8 +47,9 @@ public class ControleurRegularisation implements ActionListener {
 	private float montantOrdures;
 	private float provisionSurCharges;
 	
-	public ControleurRegularisation(VueRegularisation vue, String id_bien, Date date_debut) {
+	public ControleurRegularisation(VueRegularisation vue, ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
 		this.vue = vue;
+		this.controleurMesLocations = controleurMesLocations;
 		this.id_bien = id_bien;
 		this.date_debut = date_debut;
 		
@@ -73,6 +76,8 @@ public class ControleurRegularisation implements ActionListener {
 					// eau
 					//récupérer l'id du compteur
 					this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
+					System.out.println(this.idcompteurEau);
+					System.out.println(this.id_bien);
 					//créer le compteur
 					this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
 					//récupérer l'index du relevé
@@ -109,7 +114,6 @@ public class ControleurRegularisation implements ActionListener {
 					montantElec = this.montantElec(ConsoElec);
 					montantEntretien = this.bienDAO.getEntretienFromIdBien(id_bien);
 				} catch (DAOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				float montantTotal = montantEau+montantElec+montantOrdures+montantEntretien;
@@ -127,12 +131,18 @@ public class ControleurRegularisation implements ActionListener {
 			if (!this.vue.getChampNouvelleProvision().isEmpty()) {
 				try {
 					this.locationDAO.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
+					this.locationDAO.setDateRegularisation(id_bien, date_debut, new Date(Calendar.getInstance().getTime().getTime()));
 					// créer nouveau releve dans la bd
 					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampEau())), idcompteurEau);
 					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampElec())), idcompteurElec);
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
+			}
+			try {
+				this.controleurMesLocations.Update();
+			} catch (DAOException e1) {
+				e1.printStackTrace();
 			}
 			this.vue.dispose();
 		}

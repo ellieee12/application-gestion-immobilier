@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controleur.ControleurMesLocations;
 import controleur.ControleurRegularisation;
 
 public class VueRegularisation extends JFrame {
@@ -40,7 +41,7 @@ public class VueRegularisation extends JFrame {
 			public void run() {
 				try {
 					Date date = Date.valueOf("2021-12-17");
-					VueRegularisation frame = new VueRegularisation("11",date);
+					VueRegularisation frame = new VueRegularisation(new ControleurMesLocations(null), "11",date);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,10 +53,10 @@ public class VueRegularisation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueRegularisation(String id_bien, Date date_debut) {
+	public VueRegularisation(ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
 		
 		
-		ControleurRegularisation controleur = new ControleurRegularisation(this,id_bien,date_debut);
+		ControleurRegularisation controleur = new ControleurRegularisation(this,controleurMesLocations,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();

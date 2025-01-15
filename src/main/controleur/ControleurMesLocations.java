@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,12 +20,13 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 
 	private VueMesLocations vue;
 	private List<Location> location;
+	private LocationDAO locationDAO;
 	
 	public ControleurMesLocations(VueMesLocations vue) throws DAOException {
 			this.vue = vue;
 			this.location = new LinkedList<Location>();
 			
-			LocationDAO locationDAO = new LocationDAO();
+			locationDAO = new LocationDAO();
 			this.location = locationDAO.getAllLocations();
 		
 	}
@@ -53,17 +55,21 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		} else if (this.location.get(this.vue.getLigneChoisi()).getDate_fin() == null){
+		} else if (this.vue.getLigneChoisi() != -1 && this.location.get(this.vue.getLigneChoisi()).getDate_fin() == null){
 			if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
 				try {
-					VueRegularisation frame = new VueRegularisation(this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
-					frame.setVisible(true);
+					Calendar c = Calendar.getInstance();
+					c.add(Calendar.YEAR, -1);
+					if (c.getTime().compareTo(this.location.get(this.vue.getLigneChoisi()).getDate_regularisation() == null?this.location.get(this.vue.getLigneChoisi()).getDate_debut():this.location.get(this.vue.getLigneChoisi()).getDate_regularisation()) > 0) {
+						VueRegularisation frame = new VueRegularisation(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+						frame.setVisible(true);
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			} else if (b.getText().equals("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>")){
 				try {
-					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
 					frame.setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();

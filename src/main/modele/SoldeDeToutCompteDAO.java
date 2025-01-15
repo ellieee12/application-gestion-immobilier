@@ -26,12 +26,12 @@ public class SoldeDeToutCompteDAO {
 	 * @return un sdtc
 	 * @throws DAOException
 	 */
-	public int getSDTCFromIdCompteur(String id_compteur, Date date_sdtc) throws DAOException {
+	public int getSDTCFromLocation(String v_id_bien, Date v_date_debut) throws DAOException {
 		try {
-			String req = "{CALL getSDTCFromIdCompteur(?,?)}";
+			String req = "{CALL getSDTCFromLocation(?,?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setString(1, id_compteur);
-			stmt.setDate(2,date_sdtc);
+			stmt.setString(1, v_id_bien);
+			stmt.setDate(2,v_date_debut);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt(1);
@@ -50,14 +50,14 @@ public class SoldeDeToutCompteDAO {
 	 * @param idCompteur
 	 * @throws SQLException
 	 */
-	public void ajouterSDTC(SoldeDeToutCompte sdtc, String idCompteur) throws DAOException {
+	public void ajouterSDTC(SoldeDeToutCompte sdtc, String v_id_bien, Date v_date_debut) throws DAOException {
 		try {
 			CallableStatement stmt ;
 			String req = "{CALL addSDTC(?,?,?)}";
 			stmt = this.mySQLCon.getConnection().prepareCall(req);
 			stmt.setDate(1,sdtc.getDate_SDTC());
-			stmt.setInt(2, sdtc.getIndexcomp());
-			stmt.setString(3, idCompteur);
+			stmt.setString(2, v_id_bien);
+			stmt.setDate(3, v_date_debut);
 			stmt.executeUpdate();
 			stmt.close();
 		}catch (SQLException e) {
@@ -73,12 +73,12 @@ public class SoldeDeToutCompteDAO {
 	 * @param idCompteur
 	 * @throws DAOException 
 	 */
-	public void supprimerSDTC(Date date_sdtc, String idCompteur) throws DAOException {
+	public void supprimerSDTC(String v_id_bien, Date v_date_debut) throws DAOException {
 		try {
-			String req = "{ call deleteSDTC(?,?)}";
+			String req = "{call deleteSDTC(?,?)}";
 			PreparedStatement st = this.mySQLCon.getConnection().prepareStatement(req);
-			st.setDate(1, date_sdtc);
-			st.setString(2, idCompteur);
+			st.setString(1, v_id_bien);
+			st.setDate(2, v_date_debut);
 			st.executeUpdate();
 			st.close();
 		}catch(SQLException e) {
@@ -95,6 +95,6 @@ public class SoldeDeToutCompteDAO {
 	 * @throws DAOException
 	 */
 	public boolean sdtcExists(String id_compteur, Date date_sdtc) throws DAOException {
-		return this.getSDTCFromIdCompteur(id_compteur, date_sdtc)!=0;
+		return this.getSDTCFromLocation(id_compteur, date_sdtc)!=0;
 	}
 }

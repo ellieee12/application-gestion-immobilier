@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controleur.ControleurMesLocations;
 import controleur.ControleurRegularisation;
 import controleur.ControleurSoldeDeToutCompte;
 
@@ -41,7 +42,7 @@ public class VueSoldeDeToutCompte extends JFrame {
 			public void run() {
 				try {
 					Date date = Date.valueOf("2021-12-17");
-					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte("11",date);
+					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(new ControleurMesLocations(null),"11",date);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,10 +54,10 @@ public class VueSoldeDeToutCompte extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VueSoldeDeToutCompte(String id_bien, Date date_debut) {
+	public VueSoldeDeToutCompte(ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
 		
 		
-		ControleurSoldeDeToutCompte controleur = new ControleurSoldeDeToutCompte(this,id_bien,date_debut);
+		ControleurSoldeDeToutCompte controleur = new ControleurSoldeDeToutCompte(this,controleurMesLocations,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
 		contentPane = new JPanel();

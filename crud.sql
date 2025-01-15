@@ -67,7 +67,8 @@ CREATE TABLE Location(
     caution_ttc decimal(15,2),
     annee date NOT NULL,
     trimestre smallint NOT NULL,
-    date_fin date ,
+    date_regularisation date,
+    date_fin date,
     PRIMARY KEY(id_bien, date_debut),
     constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
     constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
@@ -130,14 +131,6 @@ CREATE TABLE releve (
     id_compteur INT NOT NULL,
     constraint pk_releve primary key(annee,id_compteur),
     constraint fk_releve_id_compteur foreign key (id_compteur) references compteur(id_compteur)
-);
-
-CREATE TABLE SDTC (
-    date_sdtc date not null,
-    index_comp INT,
-    id_compteur INT NOT NULL,
-    constraint pk_sdtc primary key(date_sdtc,id_compteur),
-    constraint fk_sdtc_id_compteur foreign key (id_compteur) references compteur(id_compteur)
 );
 
 

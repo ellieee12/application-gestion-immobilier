@@ -22,7 +22,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	public List<Location> getAllLocations() throws DAOException {
 		String req = "select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, "
 				+ "l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, "
-				+ "l1.trimestre, l2.id_locataire, l1.date_fin "
+				+ "l1.trimestre, l2.id_locataire, l1.date_fin, l1.date_regularisation "
 				+ "from location l1, louer l2 "
 				+ "where l2.id_bien=l1.id_bien "
 				+ "and l1.date_debut = l2.date_debut";
@@ -33,7 +33,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			ResultSet rs = stmt.executeQuery(req);
 			while(rs.next()) {
 				liste.add(new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), 
-						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), null));
+						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getDate(11), rs.getDate(12)));
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locations",e);
@@ -119,7 +119,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6),
-						rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), null);
+						rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getDate(11), rs.getDate(12));
 			}
 			return null;
 		} catch (Exception e) {
@@ -171,6 +171,82 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		}catch(SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la mise à jour la provision d'une location",e);
 			throw new DAOException("Erreurs lors de la mise à jour la provision d'une location",e);
+		}
+	}
+	
+	/**
+	 * Mettre en place la date de la dernière régularisation d'une location
+	 * @param id_bien
+	 * @param date_debut
+	 * @param provision
+	 * @throws SQLException
+	 */
+	public void setDateRegularisation(String id_bien, Date date_debut, Date date_fin) throws DAOException {
+		try {
+			String req = "{CALL setDateRegularisation(?,?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			stmt.setDate(3, date_fin);
+			stmt.executeQuery();
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la mise à jour la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la mise à jour la provision d'une location",e);
+		}
+	}
+	
+	public Date getDateRegularisationFromLocation(String id_bien, Date date_debut) throws DAOException {
+		try {
+			String req = "{CALL getDateRegularisationFromLocation(?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getDate(1);
+			}
+			return null;
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la récupération de la provision d'une location",e);
+		}
+	}
+	
+	/**
+	 * Mettre en place la date de fin d'une location
+	 * @param id_bien
+	 * @param date_debut
+	 * @param provision
+	 * @throws SQLException
+	 */
+	public void setDateFin(String id_bien, Date date_debut, Date date_fin) throws DAOException {
+		try {
+			String req = "{CALL setDateFin(?,?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			stmt.setDate(3, date_fin);
+			stmt.executeQuery();
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la mise à jour la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la mise à jour la provision d'une location",e);
+		}
+	}
+	
+	public Date getDateFinFromLocation(String id_bien, Date date_debut) throws DAOException {
+		try {
+			String req = "{CALL getDateFinFromLocation(?,?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, id_bien);
+			stmt.setDate(2, date_debut);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getDate(1);
+			}
+			return null;
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la provision d'une location",e);
+			throw new DAOException("Erreurs lors de la récupération de la provision d'une location",e);
 		}
 	}
 }

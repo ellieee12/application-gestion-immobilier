@@ -34,9 +34,10 @@ DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
 DROP PROCEDURE IF EXISTS getColocationByIdBien$$
-DROP PROCEDURE IF EXISTS getSDTCFromIdCompteur$$
-DROP PROCEDURE IF EXISTS addSDTC$$
-DROP PROCEDURE IF EXISTS deleteSDTC$$
+DROP PROCEDURE IF EXISTS getDateRegularisationFromLocation$$
+DROP PROCEDURE IF EXISTS setDateRegularisation$$
+DROP PROCEDURE IF EXISTS getDateFinFromLocation$$
+DROP PROCEDURE IF EXISTS setDateFin$$
 DROP PROCEDURE IF EXISTS deleteReleve$$
 
 CREATE PROCEDURE getAllBiens()
@@ -311,29 +312,31 @@ CREATE PROCEDURE getColocationByIdBien (
     )
 BEGIN 
     select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, 
-    l1.trimestre, l2.id_locataire, l1.active 
+    l1.trimestre, l2.id_locataire, l1.date_fin, l1.date_regularisation 
     from location l1, louer l2
 	where l2.id_bien=l1.id_bien
 	and l1.date_debut = l2.date_debut
     and l1.id_bien = v_id_bien;
 END$$
 
-CREATE PROCEDURE getSDTCFromIdCompteur (v_id_compteur VARCHAR(50),v_date_sdtc date)
-
+CREATE PROCEDURE getDateRegularisationFromLocation (v_id_bien VARCHAR(20),v_date_debut date)
 BEGIN 
-    SELECT index_comp from sdtc where id_compteur = v_id_compteur and date_sdtc = v_date_sdtc;
+    SELECT date_regularisation from location where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
 
-CREATE PROCEDURE addSDTC (v_date_sdtc date,v_index int,v_id_compteur varchar(50))
+CREATE PROCEDURE setDateRegularisation (v_id_bien VARCHAR(20),v_date_debut date, v_date_regularisation date)
 BEGIN
-    insert into releve (date_sdtc,index_comp,id_compteur)
-    values (v_date_sdtc,v_index,v_id_compteur);
+    UPDATE location set date_regularisation = v_date_regularisation where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
 
-CREATE PROCEDURE deleteSDTC (v_id_compteur VARCHAR(50),v_date_sdtc date)
-
+CREATE PROCEDURE getDateFinFromLocation (v_id_bien VARCHAR(20),v_date_debut date)
 BEGIN 
-    delete from sdtc where id_compteur = v_id_compteur and date_sdtc = v_date_sdtc;
+    SELECT date_fin from location where id_bien = v_id_bien and date_debut = v_date_debut;
+END$$
+
+CREATE PROCEDURE setDateFin (v_id_bien VARCHAR(20),v_date_debut date, v_date_fin date)
+BEGIN
+    UPDATE location set date_fin = v_date_fin where id_bien = v_id_bien and date_debut = v_date_debut;
 END$$
 
 CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
