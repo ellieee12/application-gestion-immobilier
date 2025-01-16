@@ -203,18 +203,30 @@ public class VueSoldeDeToutCompte extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_3.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(controleur);
+		
+		controleur.setPreviousValue();
 	}
+	
+	
 
 	public String getChampEau() {
 		return champEau.getText();
 	}
 	
-	public String getChampNouvelleProvision() {
-		return champNouvelleProvision.getText();
-	}
-	
 	public String getChampElec() {
 		return champElec.getText();
+	}
+	
+	public void setChampEau(int valeur) {
+		champEau.setText(String.valueOf(valeur));;
+	}
+	
+	public void setChampElec(int valeur) {
+		champElec.setText(String.valueOf(valeur));
+	}
+	
+	public String getChampNouvelleProvision() {
+		return champNouvelleProvision.getText();
 	}
 	
 	public String getChampOrdure() {

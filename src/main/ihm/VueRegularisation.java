@@ -208,12 +208,20 @@ public class VueRegularisation extends JFrame {
 		return champEau.getText();
 	}
 	
-	public String getChampNouvelleProvision() {
-		return champNouvelleProvision.getText();
-	}
-	
 	public String getChampElec() {
 		return champElec.getText();
+	}
+	
+	public void setChampEau(int valeur) {
+		champEau.setText(String.valueOf(valeur));;
+	}
+	
+	public void setChampElec(int valeur) {
+		champElec.setText(String.valueOf(valeur));
+	}
+	
+	public String getChampNouvelleProvision() {
+		return champNouvelleProvision.getText();
 	}
 	
 	public String getChampOrdure() {

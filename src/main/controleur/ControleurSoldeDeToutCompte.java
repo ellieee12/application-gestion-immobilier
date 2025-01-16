@@ -36,7 +36,8 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	private String id_bien;
 	private Date date_debut;
 	private int annee;
-	private int index;
+	private int indexEau;
+	private int indexElec;
 	private Releve releveEau;
 	private Releve releveElec;
 	private Integer newIndexEau;
@@ -55,17 +56,46 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 		this.date_debut = date_debut;
 		
 		this.compteurDAO = new CompteurDAO();
-		this.locationDAO = new LocationDAO();
+		this.immeubleDAO = new ImmeubleDAO();
 		this.releveDAO = new ReleveDAO();
 		this.bienDAO = new BienDAO();
-		this.immeubleDAO = new ImmeubleDAO();
+		this.locationDAO = new LocationDAO();
 		try {
 			this.provisionSurCharges = locationDAO.getProvisionFromLocation(id_bien, date_debut);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		this.annee = LocalDate.now().getYear();
-
+		try {
+			// eau
+			//récupérer l'id du compteur
+			this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
+			//créer le compteur
+			this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
+			//récupérer l'index du relevé
+			if (this.releveDAO.releveExists(this.idcompteurEau,this.annee)) {
+				this.indexEau = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee);
+			} else {
+				this.indexEau = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
+			}
+			//créer le relevé
+			this.releveEau = new Releve(this.annee, this.indexEau);
+			//electricite
+			//récupérer l'id du compteur
+			this.idcompteurElec = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
+			//créer le compteur
+			this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
+			//récupérer l'index du relevé
+			if (this.releveDAO.releveExists(this.idcompteurElec,this.annee)) {
+				this.indexElec = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee);
+			} else {
+				this.indexElec = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
+			}
+			//créer le relevé
+			this.releveElec = new Releve(this.annee, this.indexElec);
+		} catch (DAOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
@@ -73,28 +103,6 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Valider") {
 			if(this.isComplet()) {
-				try {
-					// eau
-					//récupérer l'id du compteur
-					this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-					//créer le compteur
-					this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
-					//récupérer l'index du relevé
-					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
-					//créer le relevé
-					this.releveEau = new Releve(this.annee, this.index);
-					//electricite
-					//récupérer l'id du compteur
-					this.idcompteurElec = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
-					//créer le compteur
-					this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
-					//récupérer l'index du relevé
-					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				}
-				//créer le relevé
-				this.releveElec = new Releve(this.annee, this.index);
 				//récuperer les valeurs des champs
 				this.newIndexEau = Integer.valueOf(this.vue.getChampEau());
 				this.newIndexElec = Integer.valueOf(this.vue.getChampElec());
@@ -142,8 +150,10 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 					this.locationDAO.setNouvelleProvision(id_bien, date_debut,Float.valueOf(this.vue.getChampNouvelleProvision()));
 					this.locationDAO.setDateFin(id_bien, date_debut, new Date(Calendar.getInstance().getTime().getTime()));
 					// créer nouveau releve dans la bd
-					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampEau())), idcompteurEau);
-					this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampElec())), idcompteurElec);
+					if (!(this.releveDAO.releveExists(this.idcompteurEau,this.annee) && this.releveDAO.releveExists(this.idcompteurElec,this.annee))) {
+						this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampEau())), idcompteurEau);
+						this.releveDAO.ajouterReleve(new Releve(annee, Integer.valueOf(this.vue.getChampElec())), idcompteurElec);
+					}
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
@@ -183,5 +193,10 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	//calcul le montant d'électricité à partir de la consommation
 	public float montantElec (int conso) {
 		return (float) this.compteurElec.calculerMontantElec(conso);
+	}
+	
+	public void setPreviousValue() {
+		this.vue.setChampEau(this.indexEau);
+		this.vue.setChampElec(this.indexElec);
 	}
 }

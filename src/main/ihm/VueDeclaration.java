@@ -21,10 +21,9 @@ import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurDeclaration;
 
-public class VueDeclaration extends JFramePlus {
+public class VueDeclaration extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JLabel lblRevenu;
 	private JButton btnRegimeReel;
 	private JButton btnMicroFoncier;
@@ -54,16 +53,13 @@ public class VueDeclaration extends JFramePlus {
 		
 		ControleurDeclaration controleur = new ControleurDeclaration(this);
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelHaut = new JPanel();
-		contentPane.add(panelHaut, BorderLayout.NORTH);
+		this.add(panelHaut, BorderLayout.NORTH);
 		panelHaut.setLayout(new BorderLayout(0, 20));
 		
 		JLabel lblTitre = new JLabel("Déclaration fiscale");
@@ -103,7 +99,7 @@ public class VueDeclaration extends JFramePlus {
 		btnMicroFoncier.addActionListener(controleur);
 		
 		JPanel panelImprimer = new JPanel();
-		contentPane.add(panelImprimer, BorderLayout.SOUTH);
+		this.add(panelImprimer, BorderLayout.SOUTH);
 		
 		this.btnImprimer = new JButton("Imprimer");
 		panelImprimer.add(btnImprimer);
@@ -114,7 +110,7 @@ public class VueDeclaration extends JFramePlus {
 		textAreaDeclaration.setWrapStyleWord(true);
 		textAreaDeclaration.setLineWrap(true);
 		textAreaDeclaration.setEditable(false);
-		contentPane.add(textAreaDeclaration, BorderLayout.CENTER);
+		this.add(textAreaDeclaration, BorderLayout.CENTER);
 		
 	}
 	

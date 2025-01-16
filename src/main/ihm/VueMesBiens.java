@@ -58,6 +58,7 @@ public class VueMesBiens extends JFramePlus {
 		JPanel PanelInformationsBatiment = new JPanel();
 		PanelInformationsBatiment.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		PanelInformationsBatiment.setBorder(new TitledBorder(null, "Informations du batiment", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 12), null));
+		
 		PanelInformations.add(PanelInformationsBatiment, BorderLayout.SOUTH);
 		PanelInformationsBatiment.setLayout(new GridLayout(3, 1, 0, 3));
 		

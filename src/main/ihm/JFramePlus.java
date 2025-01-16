@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
@@ -42,6 +43,11 @@ public class JFramePlus extends JFrame {
 	        		if (((JLabel) c).getText().toLowerCase().startsWith("<html>")) {
 	        			((JLabel) c).setText(((JLabel) c).getText().replace("3",String.valueOf((float)3+i/2)));
 	        		}
+	        	}
+	        }
+	        if (c instanceof JPanel) {
+	        	if (((JPanel)c).getBorder() instanceof javax.swing.border.TitledBorder) {
+	        		((javax.swing.border.TitledBorder) ((JPanel)c).getBorder()).setTitleFont(c.getFont().deriveFont((float) (c.getFont().getSize() + i)));
 	        	}
 	        }
 	        if (c instanceof JButton) {
