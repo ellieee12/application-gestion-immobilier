@@ -38,7 +38,7 @@ public class TestDocumentLocationDAO {
 		this.locataireDAO = new LocataireDAO();
 		Locataire locataire = new Locataire("Jane", "Mary", "+33987654321", "maryjane@gmail.com", "mary123", Date.valueOf("2002-08-27"));
 		Batiment bat = new Batiment("testBat001", "Rue test1", "99999", "TEST1", "1990-2000");
-		Location location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001","mary123",true);
+		Location location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001","mary123",null,null);
 		Logement log = new Logement(Date.valueOf("2004-01-12"), "testBien001", 3, 5,21.0f,200.0f);
 		
 		
