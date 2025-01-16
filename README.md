@@ -16,18 +16,26 @@ Membres de l'équipe\n
 Emails 
 
 tristan.gallardo@etu.iut-tlse3.fr
+
 ellisa.ee@etu.iut-tlse3.fr
+
 matheo.depuydt@etu.iut-tlse3.fr
+
 maxence.beth@etu.iut-tlse3.fr
 
 Login Gitlab
 
 @glt5090a
+
 @wwl4521a
+
 @dpm4278a
+
 @btm5343a
 
 Lien Board Gitlab
+
+https://gitlab.info.iut-tlse3.fr/wwl4521a/sae3a01/-/boards
 
 
 
