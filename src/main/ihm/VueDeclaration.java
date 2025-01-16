@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurDeclaration;
 
@@ -133,6 +135,30 @@ public class VueDeclaration extends JFrame {
 		this.btnImprimer.setEnabled(true);
 	}
 	
+	public void afficherTexteRegimeReel(float revenus, float charges) {
+		float revenuNet = revenus - charges;
+		String text = "";
+		if (revenuNet > 0) {
+			text = "Recettes brutes : "+ revenus +" €\r\n"
+					+ "Charges : "+ charges +" €\r\n"
+					+ "\r\n"
+					+ "Revenus fonciers imposables 4BA : "+ revenuNet +" €\r\n"
+					+ "Déficit imputable sur les revenus fonciers 4BB : 0 €\r\n"
+					+ "Déficit imputable sur le revenu global 4BC : 0 €\r\n"
+					+ "Déficits antérieurs non encore imputés 4BD : 0 €\r\n";
+		} else {
+			text = "Recettes brutes : "+ revenus +" €\r\n"
+					+ "Charges : "+ charges +" €\r\n"
+					+ "\r\n"
+					+ "Revenus fonciers imposables 4BA : 0 €\r\n"
+					+ "Déficit imputable sur les revenus fonciers 4BB : 0 €\r\n"
+					+ "Déficit imputable sur le revenu global 4BC : "+ -revenuNet +" €\r\n"
+					+ "Déficits antérieurs non encore imputés 4BD : 0 €\r\n";
+		}
+		this.textAreaDeclaration.setText(text);
+		this.btnImprimer.setEnabled(true);
+	}
+	
 	public void imprimerTexte() {
 		PrinterJob printerJob = PrinterJob.getPrinterJob();
         printerJob.setJobName("Déclaration fiscale");
@@ -194,5 +220,4 @@ public class VueDeclaration extends JFrame {
             }
         }
 	}
-	
 }

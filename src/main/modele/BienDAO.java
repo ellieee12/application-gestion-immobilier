@@ -232,7 +232,7 @@ public class BienDAO{
 	/**
 	 * 
 	 * @param annee
-	 * @return 
+	 * @return la somme des loyers qui ont été payés pendant toute l'année entrée
 	 * @throws DAOException 
 	 */
 	public float getSommeLoyers12Mois(int annee) throws DAOException {
@@ -254,7 +254,7 @@ public class BienDAO{
 	/**
 	 * 
 	 * @param annee
-	 * @return 
+	 * @return la liste des loyers des locations qui se sont terminées pendant l'année entrée, leur mois de debut, et leur mois de fin
 	 * @throws DAOException 
 	 */
 	public List<List<Object>> getLoyersTermine(int annee) throws DAOException {
@@ -289,7 +289,7 @@ public class BienDAO{
 	/**
 	 * 
 	 * @param annee
-	 * @return 
+	 * @return la liste des loyers des locations ayant commencé pendant l'année entrée, et leur date de début
 	 * @throws DAOException 
 	 */
 	public List<List<Object>> getLoyersCommence(int annee) throws DAOException {
@@ -315,6 +315,28 @@ public class BienDAO{
 			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
 		}
 		return resultList;
+	}
+	
+	/**
+	 * 
+	 * @param int annee
+	 * @return float : le montant des travaux moins la partie imputable au locataire
+	 * @throws DAOException 
+	 */
+	public float getMontantTravaux(int annee) throws DAOException {
+		try {
+			String req = "{CALL getMontantTravaux(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setInt(1, annee);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				return rs.getFloat(1);
+			}
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des travaux.",e);
+			throw new DAOException("Erreurs lors de la récupération des travaux.",e);
+		}
+		return -1.0F;
 	}
 
 }

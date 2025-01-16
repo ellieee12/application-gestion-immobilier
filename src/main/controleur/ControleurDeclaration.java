@@ -3,10 +3,17 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
 
 import ihm.VueDeclaration;
 import modele.BienDAO;
@@ -16,6 +23,7 @@ public class ControleurDeclaration implements ActionListener {
 	
 	private VueDeclaration vue;
 	private float revenus;
+	private float charges;
 	
 	public ControleurDeclaration(VueDeclaration vue) {
 		this.vue = vue;
@@ -24,20 +32,39 @@ public class ControleurDeclaration implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e)  {
 		JButton b = (JButton) e.getSource();
-		int annee = this.getAnneeEnCours();
+		int annee = this.getAnneeEnCours()-1;
 		if (b.getText() == "Calculer le revenu") {
 			try {
 				this.revenus = this.calculSomme12mois(annee)
 						+this.calculLoyersTermine(annee)
 						+this.getLoyersCommence(annee);
+				System.out.println(annee);
 			} catch (DAOException e1) {
 				e1.printStackTrace();
 			}
-			//this.revenus = 10000F;
 			this.vue.afficherRevenus(this.revenus);
 		}
 		if (b.getText() == "Micro-foncier") {
 			this.vue.afficherTexteMicroFoncier(revenus);
+		}
+		if (b.getText() == "Régime Réel") {
+			JPanel panel = new JPanel();
+			NumberFormatter formatter = createNumberformatter();
+	        panel.add(new JLabel("<html>Veuillez entrer le montant des charges  <br>de l'année autre que les travaux</html>"));
+	        JFormattedTextField textField = new JFormattedTextField(formatter);
+	        textField.setColumns(10);
+	        textField.setValue(0);
+	        panel.add(textField);
+			int option = JOptionPane.showConfirmDialog(this.vue, panel, "Charges", JOptionPane.OK_CANCEL_OPTION);
+			if (option == JOptionPane.OK_OPTION) {
+				float autresCharges = Float.valueOf(textField.getText());
+				try {
+					this.charges = this.calculCharges(annee, autresCharges);
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
+				this.vue.afficherTexteRegimeReel(this.revenus, this.charges);
+	        }
 		}
 		if (b.getText() == "Imprimer") {
 			this.vue.imprimerTexte();
@@ -64,7 +91,7 @@ public class ControleurDeclaration implements ActionListener {
 			int anneeDebut = (int) l.get(i).get(1);
 			int moisDebut = (int) l.get(i).get(2);
 			int moisFin = (int) l.get(i).get(3);
-			if (anneeDebut < annee -1) {
+			if (anneeDebut < annee) {
 				res = loyer*moisFin;
 			} else {
 				res = loyer*(moisFin-moisDebut+1);
@@ -91,5 +118,21 @@ public class ControleurDeclaration implements ActionListener {
 	private int getAnneeEnCours() {
 		return Integer.valueOf(new Date(Calendar.getInstance()
 				.getTime().getTime()).toString().substring(0, 4));
+	}
+	
+	private float calculCharges(int annee, float autresCharges) throws DAOException {
+		BienDAO dao = new BienDAO();
+		return dao.getMontantTravaux(annee)+autresCharges;
+	}
+	
+	private NumberFormatter createNumberformatter() {
+		NumberFormat format = NumberFormat.getInstance();
+		format.setGroupingUsed(false);
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+		return formatter;
 	}
 }
