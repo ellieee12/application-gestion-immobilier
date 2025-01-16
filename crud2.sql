@@ -335,9 +335,11 @@ END$$
 
 CREATE PROCEDURE getMontantTravaux(IN v_annee int)
 BEGIN
-	SELECT montant_reel_paye - (SELECT imputable_locataire 
-                                FROM `facture` 
-                                WHERE year(date_paiement)=v_annee)
+	SELECT sum(montant_reel_paye) - (
+        SELECT sum(imputable_locataire) 
+        FROM `facture` 
+        WHERE year(date_paiement)=v_annee
+    )
     FROM `facture` 
     WHERE year(date_paiement)=v_annee;
 END$$
