@@ -314,23 +314,23 @@ END$$
 CREATE PROCEDURE getSommeLoyers12Mois(IN v_annee int)
 BEGIN
     select sum(loyer_ttc) from location 
-	where (date_fin is null or year(date_fin)>v_annee-1) 
-	and year(date_debut) < v_annee - 1;
+	where (date_fin is null or year(date_fin)>v_annee) 
+	and year(date_debut) < v_annee;
 END$$
 
 CREATE PROCEDURE getLoyersTermine(IN v_annee int)
 BEGIN
 	select loyer_ttc, year(date_debut), month(date_debut), month(date_fin) 
 	from location  
-	where year(date_fin) = v_annee -1;
+	where year(date_fin) = v_annee;
 END$$
 
 CREATE PROCEDURE getLoyersCommence(IN v_annee int)
 BEGIN
 	select loyer_ttc, month(date_debut) 
 	from location 
-	where year(date_debut) = v_annee -1 
-	and (date_fin is null or year(date_fin)>v_annee-1);
+	where year(date_debut) = v_annee 
+	and (date_fin is null or year(date_fin)>v_annee);
 END$$
 
 CREATE PROCEDURE getMontantTravaux(IN v_annee int)
