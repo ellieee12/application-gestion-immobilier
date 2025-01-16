@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,45 +56,53 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		} else if (this.vue.getLigneChoisi() != -1 && this.location.get(this.vue.getLigneChoisi()).getDate_fin() == null){
-			if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
-				try {
-					Calendar c = Calendar.getInstance();
-					c.add(Calendar.YEAR, -1);
-					if (c.getTime().compareTo(this.location.get(this.vue.getLigneChoisi()).getDate_regularisation() == null?this.location.get(this.vue.getLigneChoisi()).getDate_debut():this.location.get(this.vue.getLigneChoisi()).getDate_regularisation()) > 0) {
-						VueRegularisation frame = new VueRegularisation(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+		} else if (this.vue.getLigneChoisi() != -1){
+			if (this.location.get(this.vue.getLigneChoisi()).getDate_fin() != null) {
+				JOptionPane.showMessageDialog(this.vue, 
+						"La location selectionnée est terminée","Attention", JOptionPane.WARNING_MESSAGE);
+			} else {
+				if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
+					try {
+						if (LocalDate.now().minusYears(1).isAfter(LocalDate.parse((this.location.get(this.vue.getLigneChoisi()).getDate_regularisation() == null?this.location.get(this.vue.getLigneChoisi()).getDate_debut():this.location.get(this.vue.getLigneChoisi()).getDate_regularisation()).toString()))) {
+							VueRegularisation frame = new VueRegularisation(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+							frame.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(this.vue, 
+									"Cela ne fait pas 1 ans depuis le commencement de la location ou de la dernière régularisation","Attention", JOptionPane.WARNING_MESSAGE);
+						}
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				} else if (b.getText().equals("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>")){
+					try {
+						VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
 						frame.setVisible(true);
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			} else if (b.getText().equals("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>")){
-				try {
-					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
-					frame.setVisible(true);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			} else if (b.getText().equals("Supprimer")){
-				System.out.println("yes");
-				String[] options = {"Supprimer", "Annuler"};
-				JOptionPane pane = new JOptionPane();
-				@SuppressWarnings("static-access")
-				int resultat=pane.showOptionDialog(this.vue, 
-						"Tout les documents associés à cette location vont êtres supprimés.",
-						"Attention", 
-						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-				
-				try {
-					if (resultat == JOptionPane.YES_OPTION) {
-						LocationDAO location = new LocationDAO();
-						location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+				} else if (b.getText().equals("Supprimer")){
+					System.out.println("yes");
+					String[] options = {"Supprimer", "Annuler"};
+					JOptionPane pane = new JOptionPane();
+					@SuppressWarnings("static-access")
+					int resultat=pane.showOptionDialog(this.vue, 
+							"Tout les documents associés à cette location vont êtres supprimés.",
+							"Attention", 
+							JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);	
+					try {
+						if (resultat == JOptionPane.YES_OPTION) {
+							LocationDAO location = new LocationDAO();
+							location.supprimerLocation(this.location.get(this.vue.getLigneChoisi()).getIdBien(),this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+						}
+						this.Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
 					}
-					this.Update();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
 				}
 			}
+		} else {
+			JOptionPane.showMessageDialog(this.vue, 
+					"Veuillez sélectionner une location avant de faire une action","Attention", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

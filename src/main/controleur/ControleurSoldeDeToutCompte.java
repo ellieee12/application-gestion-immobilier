@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -71,37 +73,22 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 		JButton b = (JButton) e.getSource();
 		if (b.getText() == "Valider") {
 			if(this.isComplet()) {
-
-				// eau
-				//récupérer l'id du compteur
 				try {
+					// eau
+					//récupérer l'id du compteur
 					this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				}
-
-				//créer le compteur
-				this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
-				//récupérer l'index du relevé
-				try {
+					//créer le compteur
+					this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
+					//récupérer l'index du relevé
 					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				}
-				//créer le relevé
-				this.releveEau = new Releve(this.annee, this.index);
-
-				//electricite
-				//récupérer l'id du compteur
-				try {
+					//créer le relevé
+					this.releveEau = new Releve(this.annee, this.index);
+					//electricite
+					//récupérer l'id du compteur
 					this.idcompteurElec = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.ELECTRICITE);
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				}
-				//créer le compteur
-				this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
-				//récupérer l'index du relevé
-				try {
+					//créer le compteur
+					this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
+					//récupérer l'index du relevé
 					this.index = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
 				} catch (DAOException e1) {
 					e1.printStackTrace();
@@ -118,10 +105,12 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				ConsoEau = newIndexEau-releveEau.getIndexcomp();
 				ConsoElec = newIndexElec-releveElec.getIndexcomp();
 				//calcul des montants
-				float montantEau = this.montantEau(ConsoEau);
-				float montantElec = this.montantElec(ConsoElec);
-				float montantEntretien = 0F;
+				float montantEau = 0f;
+				float montantElec = 0f;
+				float montantEntretien = 0f;
 				try {
+					montantEau = this.montantEau(ConsoEau);
+					montantElec = this.montantElec(ConsoElec);
 					montantEntretien = this.bienDAO.getEntretienFromIdBien(id_bien);
 				} catch (DAOException e1) {
 					e1.printStackTrace();
@@ -129,11 +118,9 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 				float montantTotal = montantEau+montantElec+montantOrdures+montantEntretien;
 				float montantProvision = 0;
 				try {
-					Calendar c = Calendar.getInstance();
-					c.add(Calendar.YEAR, -1);
-					if (c.getTime().compareTo(this.locationDAO.getLocationById_Bien(id_bien).getDate_regularisation() == null?date_debut:locationDAO.getLocationById_Bien(id_bien).getDate_regularisation()) > 0) {
-						c.setTimeInMillis(c.getTime().getTime() - (this.locationDAO.getLocationById_Bien(id_bien).getDate_regularisation() == null?date_debut.getTime():locationDAO.getLocationById_Bien(id_bien).getDate_regularisation().getTime()));
-						montantProvision = this.provisionSurCharges*(c.get(Calendar.MONTH));
+					if (LocalDate.now().minusYears(1).isBefore(LocalDate.parse((this.locationDAO.getLocationById_Bien(id_bien).getDate_regularisation() == null?date_debut:locationDAO.getLocationById_Bien(id_bien).getDate_regularisation()).toString()))) {
+						Period d = LocalDate.parse((this.locationDAO.getLocationById_Bien(id_bien).getDate_regularisation() == null?date_debut:locationDAO.getLocationById_Bien(id_bien).getDate_regularisation()).toString()).until(LocalDate.now());
+						montantProvision = this.provisionSurCharges*(d.getMonths() + d.getYears()*12);
 					} else {
 						montantProvision = this.provisionSurCharges*12;
 					}
@@ -176,9 +163,9 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	}
 
 	//calcul le montant d'eau à partir de la consommation
-	public float montantEau(int conso) {
+	public float montantEau(int conso) throws DAOException {
 		String typeImmeuble="";
-		try {
+		try { 
 			typeImmeuble = this.immeubleDAO.getTypeImmeubleFromIdBien(id_bien);	// on récupère le type d'immeuble
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -186,15 +173,15 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 		if (typeImmeuble.equals("")) {
 			System.out.println("Erreur");
 			return 0F;
-		} else if (typeImmeuble.equals("Maison")) {
-			return (float) (conso*this.compteurEau.getPrix_abonnement() + 176.16);	//le prix est différent si c'est une maison ou un batiment
+		} else if (typeImmeuble.equals("M")) {
+			return this.compteurEau.calculerMontantEauMaison(conso);	//le prix est différent si c'est une maison ou un batiment
 		} else {
-			return (float) (conso*this.compteurEau.getPrix_abonnement() + 11.02);
+			return this.compteurEau.calculerMontantEauBatiment(conso);
 		}
 	}
 	
 	//calcul le montant d'électricité à partir de la consommation
 	public float montantElec (int conso) {
-		return (float) (conso*this.compteurElec.getPrix_abonnement());
+		return (float) this.compteurElec.calculerMontantElec(conso);
 	}
 }

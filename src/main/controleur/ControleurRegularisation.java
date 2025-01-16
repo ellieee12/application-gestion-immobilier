@@ -76,8 +76,6 @@ public class ControleurRegularisation implements ActionListener {
 					// eau
 					//récupérer l'id du compteur
 					this.idcompteurEau = this.compteurDAO.getCompteurFromOneBienSelonType(this.id_bien, typeCompteur.EAU);
-					System.out.println(this.idcompteurEau);
-					System.out.println(this.id_bien);
 					//créer le compteur
 					this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
 					//récupérer l'index du relevé
