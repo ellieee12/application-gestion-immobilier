@@ -6,11 +6,14 @@ Description du projet
 
 Ce projet est une application de gestion de biens immobiliers. Elle permet au client de gérer efficacement ses biens loués, incluant les locataires actuels et passés. L’application centralise les données essentielles, telles que les baux, diagnostics et états des lieux, tout en proposant des fonctionnalités clés : calcul des régularisations de charges, suivi des travaux, génération de documents fiscaux et gestion du solde de tout compte.
 
-Membres de l'équipe\n
+Membres de l'équipe
 
 •	Tristan Gallardo, équipe de développement 
+
 •	Ellisa Ee, Product Owner, équipe de développement
+
 •	Mathéo, Scrum Master, équipe de développement
+
 •	Maxence, équipe de développement
 
 Emails 
@@ -37,6 +40,7 @@ Lien Board Gitlab
 
 https://gitlab.info.iut-tlse3.fr/wwl4521a/sae3a01/-/boards
 
+Lien Dossier Teams
 
 
 
