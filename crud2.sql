@@ -347,6 +347,8 @@ CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
 
 BEGIN 
     delete from Releve where id_compteur = v_id_compteur and annee = v_annee;
+END$$
+
 CREATE PROCEDURE getSommeLoyers12Mois(IN v_annee int)
 BEGIN
     select sum(loyer_ttc) from location 
