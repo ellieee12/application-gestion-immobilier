@@ -37,6 +37,7 @@ DROP PROCEDURE IF EXISTS getColocationByIdBien$$
 DROP PROCEDURE IF EXISTS getSommeLoyers12Mois$$
 DROP PROCEDURE IF EXISTS getLoyersTermine$$
 DROP PROCEDURE IF EXISTS getLoyersCommence$$
+DROP PROCEDURE IF EXISTS getMontantTravaux$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -330,6 +331,15 @@ BEGIN
 	from location 
 	where year(date_debut) = v_annee -1 
 	and (date_fin is null or year(date_fin)>v_annee-1);
+END$$
+
+CREATE PROCEDURE getMontantTravaux(IN v_annee int)
+BEGIN
+	SELECT montant_reel_paye - (SELECT imputable_locataire 
+                                FROM `facture` 
+                                WHERE year(date_paiement)=v_annee)
+    FROM `facture` 
+    WHERE year(date_paiement)=v_annee;
 END$$
 
 DELIMITER ;
