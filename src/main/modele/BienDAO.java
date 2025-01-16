@@ -238,7 +238,7 @@ public class BienDAO{
 			 logger.log(Level.SEVERE, "Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
 		     throw new DAOException("Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
 		}
-	
+	}
 	/**
 	 * 
 	 * @param annee

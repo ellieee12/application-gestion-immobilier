@@ -67,6 +67,7 @@ public class VueMenu extends JFramePlus {
 		tabbedPane.addTab("Mes Factures", null, new VueListFactures(), null);
 		tabbedPane.addTab("Mes Locations", null, new VueMesLocations(), null);
 		tabbedPane.addTab("Mes Locataires", null, new VueMesLocataires(), null);
+		tabbedPane.addTab("Déclaration Fiscale", null, new VueDeclaration(),null);
 		
 		this.setSizeMulti();
 	}

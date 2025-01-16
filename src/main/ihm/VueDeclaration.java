@@ -21,7 +21,7 @@ import javax.swing.text.NumberFormatter;
 
 import controleur.ControleurDeclaration;
 
-public class VueDeclaration extends JFrame {
+public class VueDeclaration extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
