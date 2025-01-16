@@ -39,6 +39,10 @@ DROP PROCEDURE IF EXISTS setDateRegularisation$$
 DROP PROCEDURE IF EXISTS getDateFinFromLocation$$
 DROP PROCEDURE IF EXISTS setDateFin$$
 DROP PROCEDURE IF EXISTS deleteReleve$$
+DROP PROCEDURE IF EXISTS getSommeLoyers12Mois$$
+DROP PROCEDURE IF EXISTS getLoyersTermine$$
+DROP PROCEDURE IF EXISTS getLoyersCommence$$
+DROP PROCEDURE IF EXISTS getMontantTravaux$$
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -343,6 +347,37 @@ CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
 
 BEGIN 
     delete from Releve where id_compteur = v_id_compteur and annee = v_annee;
+CREATE PROCEDURE getSommeLoyers12Mois(IN v_annee int)
+BEGIN
+    select sum(loyer_ttc) from location 
+	where (date_fin is null or year(date_fin)>v_annee) 
+	and year(date_debut) < v_annee;
+END$$
+
+CREATE PROCEDURE getLoyersTermine(IN v_annee int)
+BEGIN
+	select loyer_ttc, year(date_debut), month(date_debut), month(date_fin) 
+	from location  
+	where year(date_fin) = v_annee;
+END$$
+
+CREATE PROCEDURE getLoyersCommence(IN v_annee int)
+BEGIN
+	select loyer_ttc, month(date_debut) 
+	from location 
+	where year(date_debut) = v_annee 
+	and (date_fin is null or year(date_fin)>v_annee);
+END$$
+
+CREATE PROCEDURE getMontantTravaux(IN v_annee int)
+BEGIN
+	SELECT sum(montant_reel_paye) - (
+        SELECT sum(imputable_locataire) 
+        FROM `facture` 
+        WHERE year(date_paiement)=v_annee
+    )
+    FROM `facture` 
+    WHERE year(date_paiement)=v_annee;
 END$$
 
 DELIMITER ;
