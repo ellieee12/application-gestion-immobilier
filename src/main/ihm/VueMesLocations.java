@@ -103,7 +103,7 @@ public class VueMesLocations extends JPanel {
 				},
 				new String[] {
 					"Id Bien", "Date début location", "Colocation", "Nombre de mois", "Loyer TTC", "Provisions chargement TTC",
-						"Caution TTC", "Loyer payé","Date dernière régularisation", "Date Fin Location", "Id Locataire"	
+						"Caution TTC", "Date dernière régularisation", "Date Fin Location", "Id Locataire"	
 				}
 			) {
 				/**
@@ -113,14 +113,14 @@ public class VueMesLocations extends JPanel {
 				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Integer.class, Integer.class, Float.class, Float.class,
-					Float.class, Integer.class, Date.class, Date.class, String.class
+					Float.class, Date.class, Date.class, String.class
 				};
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
 				boolean[] columnEditables = new boolean[] {
-						false, false, false, false, false, false, false, false, false, false, false
+						false, false, false, false, false, false, false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -142,7 +142,7 @@ public class VueMesLocations extends JPanel {
 			t.addRow(new Object[]{
 				    l.getIdBien(), l.getDate_debut(), l.isColocation(), l.getNb_mois(),
 				    l.getLoyer_TTC(), l.getProvision_chargement_TTC(), l.getCaution_TTC(),
-				    "1er janvier 2025", l.getDate_regularisation(), l.getDate_fin(), l.getIdLocataire()
+				    l.getDate_regularisation(), l.getDate_fin(), l.getIdLocataire()
 			});
 		}
 	}

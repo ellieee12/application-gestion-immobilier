@@ -72,11 +72,7 @@ public class ControleurRegularisation implements ActionListener {
 			//créer le compteur
 			this.compteurEau = new Compteur(typeCompteur.EAU, this.PRIX_EAU);
 			//récupérer l'index du relevé
-			if (this.releveDAO.releveExists(this.idcompteurEau,this.annee)) {
-				this.indexEau = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee);
-			} else {
-				this.indexEau = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
-			}
+			this.indexEau = this.releveDAO.getReleveFromIdCompteur(this.idcompteurEau,this.annee-1);
 			//créer le relevé
 			this.releveEau = new Releve(this.annee, this.indexEau);
 			//electricite
@@ -85,11 +81,7 @@ public class ControleurRegularisation implements ActionListener {
 			//créer le compteur
 			this.compteurElec = new Compteur(typeCompteur.ELECTRICITE, this.PRIX_ELEC);
 			//récupérer l'index du relevé
-			if (this.releveDAO.releveExists(this.idcompteurElec,this.annee)) {
-				this.indexElec = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee);
-			} else {
-				this.indexElec = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
-			}
+			this.indexElec = this.releveDAO.getReleveFromIdCompteur(this.idcompteurElec,this.annee-1);
 			//créer le relevé
 			this.releveElec = new Releve(this.annee, this.indexElec);
 		} catch (DAOException e1) {

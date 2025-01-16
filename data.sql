@@ -77,7 +77,15 @@ INSERT INTO Facture VALUES
 -- Compteur
 INSERT INTO Compteur VALUES
 (1,'Electricity', 100.00, 'B001'),
-(2,'Water', 50.00, 'B002');
+(2,'Water', 50.00, 'B001'),
+(3,'Electricity', 100.00, 'B002'),
+(4,'Water', 50.00, 'B002'),
+(5,'Electricity', 100.00, 'B003'),
+(6,'Water', 50.00, 'B003'),
+(7,'Electricity', 100.00, 'B004'),
+(8,'Water', 50.00, 'B004'),
+(9,'Electricity', 100.00, 'B005'),
+(10,'Water', 50.00, 'B005');
 
 -- Releve
 INSERT INTO Releve VALUES
