@@ -61,18 +61,23 @@ public class ControleurListFactures implements ActionListener{
 		} else if (b.getText() == "Supprimer") {
 			String[] options = {"Supprimer","Annuler"};
 			JOptionPane pane = new JOptionPane();
-			@SuppressWarnings("static-access")
-			int resultat=pane.showOptionDialog(this.vue, 
-					"Êtes-vous sûr de vouloir supprimer cette facture.",
-					"Attention", 
-					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-			if (resultat==JOptionPane.YES_OPTION) {
-				FactureDAO facture = new FactureDAO();
-				try {
-					facture.supprimerFacture(this.factures.get(this.vue.getLigneChoisi()).getNumero());
-					this.Update();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
+			if (this.vue.getLigneChoisi() == -1) {
+				JOptionPane.showMessageDialog(this.vue, 
+						"Veuillez sélectionner une Facture avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+			} else {
+				@SuppressWarnings("static-access")
+				int resultat=pane.showOptionDialog(this.vue,
+						"Êtes-vous sûr de vouloir supprimer cette facture.",
+						"Attention",
+						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+				if (resultat==JOptionPane.YES_OPTION) {
+					FactureDAO facture = new FactureDAO();
+					try {
+						facture.supprimerFacture(this.factures.get(this.vue.getLigneChoisi()).getNumero());
+						this.Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		}

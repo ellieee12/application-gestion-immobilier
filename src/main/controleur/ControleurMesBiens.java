@@ -61,18 +61,23 @@ public class ControleurMesBiens implements ActionListener {
 		} else if (b.getText() == "Supprimer") {
 			String[] options = {"Supprimer","Annuler"};
 			JOptionPane pane = new JOptionPane();
-			@SuppressWarnings("static-access")
-			int resultat=pane.showOptionDialog(this.vue, 
-					"Tous les locations associées à ce bien seront également supprimées.",
-					"Attention", 
-					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-			if (resultat==JOptionPane.YES_OPTION) {
-				BienDAO bien = new BienDAO();
-				try {
-					bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
-					this.Update();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
+			if (this.vue.getLigneChoisi() == -1) {
+				JOptionPane.showMessageDialog(this.vue, 
+						"Veuillez sélectionner un Bien avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+			} else {
+				@SuppressWarnings("static-access")
+				int resultat=pane.showOptionDialog(this.vue, 
+						"Tous les locations associées à ce bien seront également supprimées.",
+						"Attention", 
+						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+				if (resultat==JOptionPane.YES_OPTION) {
+					BienDAO bien = new BienDAO();
+					try {
+						bien.supprimerBien(this.bien.get(this.vue.getLigneChoisi()).getId_bien());
+						this.Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		}

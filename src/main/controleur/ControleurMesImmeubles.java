@@ -56,20 +56,26 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 		} else if (b.getText() == "Supprimer") {
 			String[] options = {"Supprimer","Annuler"};
 			JOptionPane pane = new JOptionPane();
-			@SuppressWarnings("static-access")
-			int resultat=pane.showOptionDialog(this.vue, 
-					"Tous les biens associés à cet immeuble seront également supprimés.",
-					"Attention", 
-					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-			if (resultat==JOptionPane.YES_OPTION) {
-				ImmeubleDAO immeuble = new ImmeubleDAO();
-				try {
-					immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
-					this.Update();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
+			if (this.vue.getLigneChoisi() == -1) {
+				JOptionPane.showMessageDialog(this.vue, 
+						"Veuillez sélectionner un immeuble avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+			} else {
+				@SuppressWarnings("static-access")
+				int resultat=pane.showOptionDialog(this.vue, 
+						"Tous les biens associés à cet immeuble seront également supprimés.",
+						"Attention", 
+						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+				
+				if (resultat==JOptionPane.YES_OPTION) {
+					ImmeubleDAO immeuble = new ImmeubleDAO();
+					try {
+							immeuble.supprimerImmeuble(this.immeuble.get(this.vue.getLigneChoisi()).getId_immeuble());
+							this.Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
 				}
-			}
+			}			
 		}
 	}
 	

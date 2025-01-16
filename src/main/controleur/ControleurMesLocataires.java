@@ -61,15 +61,26 @@ public class ControleurMesLocataires implements ActionListener {
 		} else if (b.getText().equals("Supprimer")){
 			String[] options = {"Supprimer", "Annuler"};
 			JOptionPane pane = new JOptionPane();
-			@SuppressWarnings("static-access")
-			int resultat=pane.showOptionDialog(this.vue, 
-					"Tout les documents associés à cette location vont êtres supprimés.",
-					"Attention", 
-					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
-			if (resultat == JOptionPane.YES_OPTION) {
-				LocataireDAO location = new LocataireDAO();
+			if (this.vue.getLigneChoisi() == -1) {
+				JOptionPane.showMessageDialog(this.vue, 
+						"Veuillez sélectionner une Facture avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+			} else {
+				@SuppressWarnings("static-access")
+				int resultat=pane.showOptionDialog(this.vue, 
+						"Tout les documents associés à ce locataire vont êtres supprimés.",
+						"Attention", 
+						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
+				if (resultat == JOptionPane.YES_OPTION) {
+					LocataireDAO locataire = new LocataireDAO();
+					try {
+						locataire.supprimerLocataire(this.locataires.get(this.vue.getLigneChoisi()).getId_locataire());
+						this.Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				this.Update();
 			}
-			this.Update();
 		}
 		
 	}
