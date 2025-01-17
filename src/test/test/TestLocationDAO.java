@@ -48,8 +48,8 @@ public class TestLocationDAO {
 		Garage garage = new Garage(Date.valueOf("2004-02-12"), "testBien002", 100.0f);
 		Logement logM = new Logement(Date.valueOf("2004-03-12"), "testBien003", 3,5,21.0f,200.0f);
 		this.location1 = new Location(Date.valueOf("2023-06-23"),"Non",36,400.0f,100.0f,200.0f,"testBien001","mary123",null,null);
-		this.location2 = new Location(Date.valueOf("2023-06-23"),"Non",36,100.0f,20.0f,50.0f,"testBien002","mary123",null,null);
-		this.location3 = new Location(Date.valueOf("2024-01-25"),"Non",40,500.0f,150.0f,200.0f,"testBien003","johnnyboy",null,null);
+		this.location2 = new Location(Date.valueOf("2023-06-23"),"Non",36,100.0f,20.0f,50.0f,"testBien002","mary123",Date.valueOf("2024-06-23"),null);
+		this.location3 = new Location(Date.valueOf("2024-03-25"),"Non",40,500.0f,150.0f,200.0f,"testBien003","johnnyboy",null,null);
 		
 		immeubleDAO.ajouterImmeuble(bat);
 		immeubleDAO.ajouterImmeuble(maison);
@@ -71,7 +71,7 @@ public class TestLocationDAO {
 		if(this.locationDAO.locationExists("testBien002", "mary123",Date.valueOf("2023-06-23"))){
 			this.locationDAO.supprimerLocation("testBien002", Date.valueOf("2023-06-23"));
 		}
-		if(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25"))) {
+		if(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-03-25"))) {
 			this.locationDAO.supprimerLocation("testBien003", Date.valueOf("2024-01-25"));
 		}
 		if (this.bienDAO.bienExiste("testBien001")) {
@@ -106,7 +106,7 @@ public class TestLocationDAO {
 	@Test
 	public void testAddLocation() throws DAOException {
 		assertTrue(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
-		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25")));
+		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-03-25")));
 		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
 	}
 	
@@ -122,7 +122,7 @@ public class TestLocationDAO {
 	public void testDeleteLocation() throws DAOException {
 		this.locationDAO.supprimerLocation("testBien002",Date.valueOf("2023-06-23"));
 		assertFalse(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
-		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-01-25")));
+		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-03-25")));
 		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
 	}
 	
@@ -147,6 +147,45 @@ public class TestLocationDAO {
 				this.locationDAO.getProvisionFromLocation(this.location2.getIdBien(), this.location2.getDate_debut()));
 		assertEquals(this.location3.getProvision_chargement_TTC(),
 				this.locationDAO.getProvisionFromLocation(this.location3.getIdBien(), this.location3.getDate_debut()));
+	}
+	
+	@Test
+	public void getSommeLoyers12Mois() throws DAOException{
+		assertEquals(this.locationDAO.getSommeLoyers12Mois(2024), location1.getLoyer_TTC()*12,0.001);
+	}
+	
+	@Test
+	public void getLoyersTermine() throws DAOException{
+		List<List<Object>> l = this.locationDAO.getLoyersTermine(2024);
+		float resFinal = 0.0F;
+		for (int i=0;i<l.size();i++) {
+			float res = 0.0F;
+			float loyer = (float) l.get(i).get(0);
+			int anneeDebut = (int) l.get(i).get(1);
+			int moisDebut = (int) l.get(i).get(2);
+			int moisFin = (int) l.get(i).get(3);
+			if (anneeDebut < 2024) {
+				res = loyer*moisFin;
+			} else {
+				res = loyer*(moisFin-moisDebut+1);
+			}
+			resFinal+=res;
+		}
+		assertEquals(location2.getLoyer_TTC()*6, resFinal,0.001);	
+	}
+	
+	@Test
+	public void getLoyersCommence() throws DAOException{
+		List<List<Object>> l = this.locationDAO.getLoyersCommence(2024);
+		float resFinal = 0.0F;
+		for (int i=0;i<l.size();i++) {
+			float res = 0.0F;
+			float loyer = (float) l.get(i).get(0);
+			int moisDebut = (int) l.get(i).get(1);
+			res = loyer*(12-moisDebut+1);
+			resFinal+=res;
+		}
+		assertEquals(location3.getLoyer_TTC()*10, resFinal,0.001);
 	}
 	
 }
