@@ -58,7 +58,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			JOptionPane pane = new JOptionPane();
 			if (this.vue.getLigneChoisi() == -1) {
 				JOptionPane.showMessageDialog(this.vue, 
-						"Veuillez sélectionner un immeuble avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+						"Veuillez sélectionner un Immeuble avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				@SuppressWarnings("static-access")
 				int resultat=pane.showOptionDialog(this.vue, 

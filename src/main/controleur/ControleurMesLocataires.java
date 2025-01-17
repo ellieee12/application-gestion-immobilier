@@ -63,7 +63,7 @@ public class ControleurMesLocataires implements ActionListener {
 			JOptionPane pane = new JOptionPane();
 			if (this.vue.getLigneChoisi() == -1) {
 				JOptionPane.showMessageDialog(this.vue, 
-						"Veuillez sélectionner une Facture avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+						"Veuillez sélectionner une Locataire avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				@SuppressWarnings("static-access")
 				int resultat=pane.showOptionDialog(this.vue, 

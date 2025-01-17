@@ -53,14 +53,18 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (loc == null) {
 			return 0;
 		}
-		if (loc.isColocation().equals("Oui") &&
-				 this.vue.isColocation().equals("Non")){
+		
+		boolean bienSelectionnéEnColocation = "Oui".equals(loc.isColocation());
+		boolean bienEnColocation = "Oui".equals(this.vue.isColocation());
+		
+		
+		if (bienSelectionnéEnColocation && !bienEnColocation){
 			return 1;
-		} else if (loc.isColocation().equals("Non")){
+		} else if (!bienSelectionnéEnColocation && !bienEnColocation){
 			return 2;
-		} else {
-			return 0;
 		}
+		
+		return 0;
 		
 	}
 	
@@ -80,20 +84,32 @@ public class ControleurAjouterLocation implements ActionListener{
 	}
 	
 	private boolean verifColocationChecked() throws DAOException {
-		if (verifcheckBoxColoc() == 1) {
-			JOptionPane.showMessageDialog(this.vue, 
+		
+		int statutColocation = verifcheckBoxColoc();
+		
+		switch (statutColocation) {
+			case 1: 
+				JOptionPane.showMessageDialog(
+					this.vue, 
 					"Ce bien est déjà associé à une colocation. Vous ne pouvez ajouter qu'une autre colocation.",
-					"Attention", JOptionPane.WARNING_MESSAGE);
-			return false;
-		} else if (verifcheckBoxColoc() == 2) {
-			JOptionPane.showMessageDialog(this.vue, 
-					"Vous ne pouvez pas ajouter de colocation ou de location à un bien qui possède déjà une location.",
-					"Attention", JOptionPane.WARNING_MESSAGE);
-			return false;
-		} else if (verifcheckBoxColoc() == 0){
-			return true;
+					"Attention", JOptionPane.WARNING_MESSAGE
+				);
+				
+				return false;	
+				
+			case 2:
+	            JOptionPane.showMessageDialog(
+	                this.vue,
+	                "Vous ne pouvez pas ajouter de colocation ou de location à un bien qui possède déjà une location.",
+	                "Attention",
+	                JOptionPane.WARNING_MESSAGE
+	            );
+	            
+	            return false;
+	        
+	        default:
+	        	return true;
 		}
-		return false;
 	}
 	
 	

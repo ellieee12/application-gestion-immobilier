@@ -86,7 +86,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 					JOptionPane pane = new JOptionPane();
 					@SuppressWarnings("static-access")
 					int resultat=pane.showOptionDialog(this.vue, 
-							"Tout les documents associés à cette location vont êtres supprimés.",
+							"Tout les documents associés à cette Location vont êtres supprimés.",
 							"Attention", 
 							JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);	
 					try {
@@ -102,7 +102,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			}
 		} else {
 			JOptionPane.showMessageDialog(this.vue, 
-					"Veuillez sélectionner une location avant de faire une action","Attention", JOptionPane.WARNING_MESSAGE);
+					"Veuillez sélectionner une Location avant de faire une action","Attention", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

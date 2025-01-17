@@ -77,7 +77,7 @@ public class ControleurAjouterBien implements ActionListener {
 					if (verificationBienExiste()) {
 						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà et/ou l'identifiant a déjà été utilisé","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampIDBien()) {
-						JOptionPane.showMessageDialog(this.vue, "Veuillez remplir tout les champs","Attention", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date d'acquisition invalide","Attention", JOptionPane.WARNING_MESSAGE);
 					}else if(!verificationChampsDateAcquisition()) {
 						try {
 							throw new ParseException("Veuillez remplir tout les champs",0);
