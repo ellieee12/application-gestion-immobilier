@@ -25,30 +25,38 @@ INSERT INTO Locataire VALUES
 ('LOC004', 'Durand', 'Marie', '0634567890', 'marie.durand@mail.com', '1995-12-05'),
 ('LOC005', 'Petit', 'Luc', '0645678901', NULL, '2000-08-14');
 
+-- ICC
+INSERT INTO ICC VALUES
+('2023-01-01', 2, 115),
+('2023-04-01', 3, 120),
+('2023-07-01', 3, 125),
+('2023-10-01', 4, 130),
+('2024-01-01', 1, 135);
+
 -- Location
 INSERT INTO Location VALUES
-('B001', '2023-06-01', 12, "Non", 50.00, 1200.00, 2400.00, NULL, NULL),
-('B002', '2023-07-01', 24, "Oui", 60.00, 1500.00, 3000.00, NULL, NULL),
-('B003', '2023-08-01', 6, "Non", 40.00, 900.00, 1800.00, NULL, NULL),
-('B004', '2023-09-01', 36, "Oui", 70.00, 1800.00, 3600.00, NULL, NULL),
-('B005', '2023-10-01', 18, "Non", 30.00, 750.00, 1500.00, NULL, NULL);
+('B001', '2023-06-01', 12, 0, 50.00, 300.00, 2400.00, '2023-01-01', 2, NULL, '2024-06-01'),
+('B002', '2023-07-01', 24, 1, 60.00, 500.00, 3000.00, '2023-04-01', 3, NULL, NULL),
+('B003', '2024-11-01', 6, 0, 40.00, 800.00, 1800.00, '2023-07-01', 3, NULL, NULL),
+('B004', '2024-10-01', 36, 1, 70.00, 750.00, 3600.00, '2023-10-01', 4, NULL, NULL),
+('B005', '2024-07-01', 18, 0, 30.00, 400.00, 1500.00, '2024-01-01', 1, NULL, NULL);
 
 
 -- Document_Location
 INSERT INTO Document_Location(filepath, description, date_enregistrement, id_bien, id_locataire, date_debut) VALUES
 ('docs/contract_001.pdf', 'Lease Agreement', '2023-06-01', 'B001', 'LOC001', '2023-06-01'),
 ('docs/contract_002.pdf', 'Lease Agreement', '2023-07-01', 'B002', 'LOC002', '2023-07-01'),
-('docs/contract_003.pdf', 'Lease Agreement', '2023-08-01', 'B003', 'LOC003', '2023-08-01'),
-('docs/contract_004.pdf', 'Lease Agreement', '2023-09-01', 'B004', 'LOC004', '2023-09-01'),
-('docs/contract_005.pdf', 'Lease Agreement', '2023-10-01', 'B005', 'LOC005', '2023-10-01');
+('docs/contract_003.pdf', 'Lease Agreement', '2023-08-01', 'B003', 'LOC003', '2024-11-01'),
+('docs/contract_004.pdf', 'Lease Agreement', '2023-09-01', 'B004', 'LOC004', '2024-10-01'),
+('docs/contract_005.pdf', 'Lease Agreement', '2023-10-01', 'B005', 'LOC005', '2024-07-01');
 
 -- Louer
 INSERT INTO Louer VALUES
 ('B001', '2023-06-01', 'LOC001'),
 ('B002', '2023-07-01', 'LOC002'),
-('B003', '2023-08-01', 'LOC003'),
-('B004', '2023-09-01', 'LOC004'),
-('B005', '2023-10-01', 'LOC005');
+('B003', '2024-11-01', 'LOC003'),
+('B004', '2024-10-01', 'LOC004'),
+('B005', '2024-07-01', 'LOC005');
 
 -- SignUp
 INSERT INTO SignUp VALUES
