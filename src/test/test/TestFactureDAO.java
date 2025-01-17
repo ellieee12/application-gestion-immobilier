@@ -88,5 +88,11 @@ public class TestFactureDAO {
 		assertEquals(this.facture1,this.facDAO.getFactureByNumero(this.facture1.getNumero()));
 		assertEquals(this.facture2,this.facDAO.getFactureByNumero(this.facture2.getNumero()));
 	}
+	
+	@Test
+	public void testgetMontantTravaux()throws DAOException {
+		assertEquals(this.facDAO.getMontantTravaux(2020),this.facture1.getMontant_reel_paye()-facture1.getImputable_locataire(),0.001);
+		assertEquals(this.facDAO.getMontantTravaux(2024),this.facture2.getMontant_reel_paye()-facture2.getImputable_locataire(),0.001);
+	}
 
 }

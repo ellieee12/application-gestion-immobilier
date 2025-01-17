@@ -266,7 +266,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt.setInt(1, annee);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
-				return rs.getFloat(1);
+				return rs.getFloat(1)*12;
 			}
 		}catch(SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);

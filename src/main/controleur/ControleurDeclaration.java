@@ -74,7 +74,7 @@ public class ControleurDeclaration implements ActionListener {
 	private float calculSomme12mois(int annee) {
 		LocationDAO dao = new LocationDAO();
 		try {
-			return dao.getSommeLoyers12Mois(annee)*12;	//on multiplie par le nb de mois
+			return dao.getSommeLoyers12Mois(annee);	//on multiplie par le nb de mois
 		} catch (DAOException e1) {
 			e1.printStackTrace();
 		}
