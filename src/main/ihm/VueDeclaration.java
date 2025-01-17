@@ -115,6 +115,7 @@ public class VueDeclaration extends JPanel {
 	}
 	
 	public void afficherRevenus(float montant) {
+		this.btnMicroFoncier.setVisible(false);
 		this.lblRevenu.setText("Revenus : "+String.valueOf(montant)+" €");
 		if (montant < 15000) {
 			this.btnMicroFoncier.setVisible(true);

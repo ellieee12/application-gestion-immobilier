@@ -38,7 +38,6 @@ public class ControleurDeclaration implements ActionListener {
 				this.revenus = this.calculSomme12mois(annee)
 						+this.calculLoyersTermine(annee)
 						+this.getLoyersCommence(annee);
-				System.out.println(annee);
 			} catch (DAOException e1) {
 				e1.printStackTrace();
 			}
