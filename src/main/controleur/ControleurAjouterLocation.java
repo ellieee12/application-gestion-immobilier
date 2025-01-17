@@ -77,7 +77,7 @@ public class ControleurAjouterLocation implements ActionListener{
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
 			JOptionPane.showMessageDialog(this.vue, 
-					"Cet location existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
+					"Cette location existe déjà","Attention", JOptionPane.WARNING_MESSAGE);
 			return true;
 		}
 		return false;
