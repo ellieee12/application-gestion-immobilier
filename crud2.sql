@@ -102,7 +102,7 @@ BEGIN
     DELETE FROM louer where id_bien = v_id_bien;
     DELETE FROM document_location WHERE id_bien = v_id_bien;
     DELETE FROM location where id_bien = v_id_bien;
-    DELETE FROM releve where id_compteur = (select id_compteur from compteur where id_bien = v_id_bien);
+    DELETE FROM releve where id_compteur in (select id_compteur from compteur where id_bien = v_id_bien);
     DELETE FROM compteur WHERE id_bien = v_id_bien;
     DELETE FROM bien WHERE id_bien = v_id_bien;
 END$$
