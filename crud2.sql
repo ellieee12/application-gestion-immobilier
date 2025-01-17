@@ -28,6 +28,7 @@ DROP PROCEDURE IF EXISTS insertFacture$$
 DROP PROCEDURE IF EXISTS getAllLocataires$$
 DROP PROCEDURE IF EXISTS getLocataireById$$
 DROP PROCEDURE IF EXISTS insertLocataire$$
+DROP PROCEDURE IF EXISTS deleteLocataire$$
 DROP PROCEDURE IF EXISTS deleteLocation$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
@@ -271,6 +272,13 @@ END$$
 CREATE PROCEDURE getLocataireById(v_id_locataire varchar(20))
 BEGIN
     select * from locataire where id_locataire=v_id_locataire;
+END$$
+
+CREATE PROCEDURE deleteLocataire(
+    v_id_locataire varchar(20)
+)
+BEGIN
+    delete from locataire where id_locataire = v_id_locataire;
 END$$
 
 CREATE PROCEDURE deleteLocation(
