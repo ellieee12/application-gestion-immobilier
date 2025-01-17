@@ -50,7 +50,7 @@ public class TestImmeubleDAO {
 		this.maison = null;
 		this.bat = null;
 		this.idBat = null;
-		this.imDAO=null;	
+		this.imDAO=null;
 	}
 	
 	@Test

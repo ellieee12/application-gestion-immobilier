@@ -179,7 +179,8 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_13_1);
 		panel_13_1.setLayout(new BorderLayout(0, 0));
 		
-		textFieldEntretien = new JTextField();
+		textFieldEntretien = new JFormattedTextField(formatter);
+		BuddySupport.addRight(new JLabel("€"), textFieldEntretien);
 		textFieldEntretien.setColumns(10);
 		panel_13_1.add(textFieldEntretien, BorderLayout.NORTH);
 		
@@ -199,7 +200,7 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		textFieldNumeroEtage = new JTextField();
+		textFieldNumeroEtage = new JFormattedTextField(formatter);
 		panel_7.add(textFieldNumeroEtage, BorderLayout.NORTH);
 		textFieldNumeroEtage.setColumns(10);
 		
@@ -207,7 +208,7 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		textFieldNombreDePieces = new JTextField();
+		textFieldNombreDePieces = new JFormattedTextField(formatter);
 		panel_8.add(textFieldNombreDePieces, BorderLayout.NORTH);
 		textFieldNombreDePieces.setColumns(10);
 		
@@ -250,7 +251,7 @@ public class VueAjouterBien extends JFramePlus {
 		
 		textFieldEau = new JFormattedTextField(formatter);
 		textFieldEau.setValue(0.0f);
-		BuddySupport.addRight(new JLabel("€"), textFieldEau);
+		BuddySupport.addRight(new JLabel("m³"), textFieldEau);
 		panel_16.add(textFieldEau, BorderLayout.NORTH);
 		textFieldEau.setColumns(10);
 		
@@ -260,7 +261,7 @@ public class VueAjouterBien extends JFramePlus {
 		
 		textFieldElectricite = new JFormattedTextField(formatter);
 		textFieldElectricite.setValue(0.0f);
-		BuddySupport.addRight(new JLabel("€"), textFieldElectricite);
+		BuddySupport.addRight(new JLabel("kWh"), textFieldElectricite);
 		panel_17.add(textFieldElectricite, BorderLayout.NORTH);
 		textFieldElectricite.setColumns(10);
 		
@@ -341,7 +342,7 @@ public class VueAjouterBien extends JFramePlus {
 		if(textFieldSurfaceHabitable.getText().equals("")) {
 			return null;
 		}
-		return Float.valueOf(textFieldSurfaceHabitable.getText().replace(" ", ""));
+		return Float.valueOf(textFieldSurfaceHabitable.getText());
 	}
 	
 	public String getComboBoxTypeBien () {
@@ -361,18 +362,19 @@ public class VueAjouterBien extends JFramePlus {
 		if(textFieldEau.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(textFieldEau.getText().replace(" ", ""));
+		return Integer.valueOf(textFieldEau.getText());
 	}
 	
 	public Integer getChampsElectricite() {
 		if(textFieldElectricite.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(textFieldElectricite.getText().replace(" ", ""));
+		return Integer.valueOf(textFieldElectricite.getText());
 	}
 	
 	private NumberFormatter createNumberformatter() {
 		NumberFormat format = NumberFormat.getInstance();
+		format.setGroupingUsed(false);
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);

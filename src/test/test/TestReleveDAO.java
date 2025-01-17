@@ -35,6 +35,7 @@ public class TestReleveDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		
 		this.compteurDAO = new CompteurDAO();
 		this.bienDAO = new BienDAO();
 		this.immeubleDAO = new ImmeubleDAO();

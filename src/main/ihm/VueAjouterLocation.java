@@ -256,6 +256,7 @@ public class VueAjouterLocation extends JFramePlus {
 		NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
+        format.setGroupingUsed(false);
         formatter.setAllowsInvalid(false);
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
@@ -306,7 +307,7 @@ public class VueAjouterLocation extends JFramePlus {
 		if(textFieldNombreMoisPrevus.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText().replace(" ", ""));
+		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText());
 
 	}
 	
@@ -315,20 +316,20 @@ public class VueAjouterLocation extends JFramePlus {
 		if(textFieldLoyerLocataire.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.textFieldLoyerLocataire.getText().replace(" ", ""));
+		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
 	
 	public Float getProvisionsCharges() {
 		if(formattedProvisionCharges.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.formattedProvisionCharges.getText().replace(" ", ""));
+		return Float.valueOf(this.formattedProvisionCharges.getText());
 	}
 	
 	public Float getCaution() {
 		if(formattedCaution.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.formattedCaution.getText().replace(" ", ""));
+		return Float.valueOf(this.formattedCaution.getText());
 	}	
 }

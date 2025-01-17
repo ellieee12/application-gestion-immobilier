@@ -310,7 +310,7 @@ public class VueAjouterFacture extends JFramePlus {
 		if(textFieldMontant.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontant.getText().replace(" ", ""));
+		return Float.valueOf(textFieldMontant.getText());
 	}
 	
 	public String getChampsNumeroDevis() {
@@ -324,18 +324,19 @@ public class VueAjouterFacture extends JFramePlus {
 		if(textFieldMontantReelPaye.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontantReelPaye.getText().replace(" ", ""));
+		return Float.valueOf(textFieldMontantReelPaye.getText());
 	}
 	
 	public Float getChampsImputableLocataire() {
 		if(textFieldImputableLocataire.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldImputableLocataire.getText().replace(" ", ""));
+		return Float.valueOf(textFieldImputableLocataire.getText());
 	}
 	
 	private NumberFormatter createNumberformatter() {
 		NumberFormat format = NumberFormat.getInstance();
+		format.setGroupingUsed(false);
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
