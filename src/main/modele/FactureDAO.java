@@ -121,4 +121,26 @@ public class FactureDAO {
 		return this.getFactureByNumero(numero_factures) != null;
 	}
 	
+	/**
+	 * 
+	 * @param int annee
+	 * @return float : le montant des travaux moins la partie imputable au locataire
+	 * @throws DAOException 
+	 */
+	public float getMontantTravaux(int annee) throws DAOException {
+		try {
+			String req = "{CALL getMontantTravaux(?)}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setInt(1, annee);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				return rs.getFloat(1);
+			}
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la récupération des travaux.",e);
+			throw new DAOException("Erreurs lors de la récupération des travaux.",e);
+		}
+		return -1.0F;
+	}
+	
 }

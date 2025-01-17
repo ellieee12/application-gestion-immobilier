@@ -3,7 +3,6 @@ package modele;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -238,115 +237,6 @@ public class BienDAO{
 			 logger.log(Level.SEVERE, "Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
 		     throw new DAOException("Erreur lors de la récupération de l'entretien des parties communes à partir de l'identifiant d'un bien", e);
 		}
-	}
-	/**
-	 * 
-	 * @param annee
-	 * @return la somme des loyers qui ont été payés pendant toute l'année entrée
-	 * @throws DAOException 
-	 */
-	public float getSommeLoyers12Mois(int annee) throws DAOException {
-		try {
-			String req = "{CALL getSommeLoyers12Mois(?)}";
-			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1, annee);
-			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				return rs.getFloat(1);
-			}
-		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
-			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
-		}
-		return -1.0F;
-	}
-	
-	/**
-	 * 
-	 * @param annee
-	 * @return la liste des loyers des locations qui se sont terminées pendant l'année entrée, leur mois de debut, et leur mois de fin
-	 * @throws DAOException 
-	 */
-	public List<List<Object>> getLoyersTermine(int annee) throws DAOException {
-		List<List<Object>> resultList = new ArrayList<>();
-		try {
-			String req = "{CALL getLoyersTermine(?)}";
-			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1, annee);
-			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				float loyer = rs.getFloat(1);
-                int anneeDebut = rs.getInt(2);
-                int moisDebut = rs.getInt(3);
-                int moisFin = rs.getInt(4); // Numéro du mois de fin
-
-                // Stocker la ligne de résultat dans une liste
-                List<Object> row = new ArrayList<>();
-                row.add(loyer);
-                row.add(anneeDebut);
-                row.add(moisDebut);
-                row.add(moisFin);
-
-                resultList.add(row);
-			}
-		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
-			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
-		}
-		return resultList;
-	}
-	
-	/**
-	 * 
-	 * @param annee
-	 * @return la liste des loyers des locations ayant commencé pendant l'année entrée, et leur date de début
-	 * @throws DAOException 
-	 */
-	public List<List<Object>> getLoyersCommence(int annee) throws DAOException {
-		List<List<Object>> resultList = new ArrayList<>();
-		try {
-			String req = "{CALL getLoyersCommence(?)}";
-			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1, annee);
-			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				float loyer = rs.getFloat(1);
-                int moisDebut = rs.getInt(2);
-
-                // Stocker la ligne de résultat dans une liste
-                List<Object> row = new ArrayList<>();
-                row.add(loyer);
-                row.add(moisDebut);
-
-                resultList.add(row);
-			}
-		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
-			throw new DAOException("Erreurs lors de la récupération des loyers.",e);
-		}
-		return resultList;
-	}
-	
-	/**
-	 * 
-	 * @param int annee
-	 * @return float : le montant des travaux moins la partie imputable au locataire
-	 * @throws DAOException 
-	 */
-	public float getMontantTravaux(int annee) throws DAOException {
-		try {
-			String req = "{CALL getMontantTravaux(?)}";
-			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
-			stmt.setInt(1, annee);
-			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				return rs.getFloat(1);
-			}
-		}catch(SQLException e) {
-			logger.log(Level.SEVERE,"Erreurs lors de la récupération des travaux.",e);
-			throw new DAOException("Erreurs lors de la récupération des travaux.",e);
-		}
-		return -1.0F;
 	}
 
 }

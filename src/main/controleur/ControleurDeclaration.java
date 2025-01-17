@@ -12,12 +12,12 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
 import ihm.VueDeclaration;
-import modele.BienDAO;
 import modele.DAOException;
+import modele.FactureDAO;
+import modele.LocationDAO;
 
 public class ControleurDeclaration implements ActionListener {
 	
@@ -72,7 +72,7 @@ public class ControleurDeclaration implements ActionListener {
 	}
 
 	private float calculSomme12mois(int annee) {
-		BienDAO dao = new BienDAO();
+		LocationDAO dao = new LocationDAO();
 		try {
 			return dao.getSommeLoyers12Mois(annee)*12;	//on multiplie par le nb de mois
 		} catch (DAOException e1) {
@@ -82,7 +82,7 @@ public class ControleurDeclaration implements ActionListener {
 	}
 	
 	private float calculLoyersTermine(int annee) throws DAOException {
-		BienDAO dao = new BienDAO();
+		LocationDAO dao = new LocationDAO();
 		List<List<Object>> l = dao.getLoyersTermine(annee);
 		float resFinal = 0.0F;
 		for (int i=0;i<l.size();i++) {
@@ -102,7 +102,7 @@ public class ControleurDeclaration implements ActionListener {
 	}
 	
 	private float getLoyersCommence(int annee) throws DAOException {
-		BienDAO dao = new BienDAO();
+		LocationDAO dao = new LocationDAO();
 		List<List<Object>> l = dao.getLoyersCommence(annee);
 		float resFinal = 0.0F;
 		for (int i=0;i<l.size();i++) {
@@ -121,7 +121,7 @@ public class ControleurDeclaration implements ActionListener {
 	}
 	
 	private float calculCharges(int annee, float autresCharges) throws DAOException {
-		BienDAO dao = new BienDAO();
+		FactureDAO dao = new FactureDAO();
 		return dao.getMontantTravaux(annee)+autresCharges;
 	}
 	
