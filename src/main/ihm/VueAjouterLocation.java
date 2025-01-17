@@ -302,7 +302,7 @@ public class VueAjouterLocation extends JFramePlus {
 		if(textFieldNombreMoisPrevus.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText());
+		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText().replace(" ", ""));
 
 	}
 	
@@ -311,20 +311,20 @@ public class VueAjouterLocation extends JFramePlus {
 		if(textFieldLoyerLocataire.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.textFieldLoyerLocataire.getText());
+		return Float.valueOf(this.textFieldLoyerLocataire.getText().replace(" ", ""));
 	}
 	
 	public Float getProvisionsCharges() {
 		if(formattedProvisionCharges.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.formattedProvisionCharges.getText());
+		return Float.valueOf(this.formattedProvisionCharges.getText().replace(" ", ""));
 	}
 	
 	public Float getCaution() {
 		if(formattedCaution.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(this.formattedCaution.getText());
+		return Float.valueOf(this.formattedCaution.getText().replace(" ", ""));
 	}	
 }

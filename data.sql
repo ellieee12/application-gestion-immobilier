@@ -25,14 +25,6 @@ INSERT INTO Locataire VALUES
 ('LOC004', 'Durand', 'Marie', '0634567890', 'marie.durand@mail.com', '1995-12-05'),
 ('LOC005', 'Petit', 'Luc', '0645678901', NULL, '2000-08-14');
 
--- ICC
-INSERT INTO ICC VALUES
-('2023-01-01', 2, 115),
-('2023-04-01', 3, 120),
-('2023-07-01', 3, 125),
-('2023-10-01', 4, 130),
-('2024-01-01', 1, 135);
-
 -- Location
 INSERT INTO Location VALUES
 ('B001', '2023-06-01', 12, "Non", 50.00, 1200.00, 2400.00, NULL, NULL),

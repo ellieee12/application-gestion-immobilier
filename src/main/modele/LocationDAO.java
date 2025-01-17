@@ -29,8 +29,6 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			while(rs.next()) {
 				liste.add(new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), 
 						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(8), rs.getDate(9), rs.getDate(10)));
-				System.out.println(liste);
-				System.out.println(rs.getDate(2));
 			}
 			System.out.println(liste);
 			rs.close();

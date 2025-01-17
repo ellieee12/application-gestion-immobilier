@@ -50,13 +50,6 @@ create table Locataire (
     primary key(id_locataire)
 );
 
-create table icc (
-    annee date not null,
-    trimestre smallint not null,
-    indice int not null,
-    primary key(annee, trimestre)
-);
-
 CREATE TABLE Location(
     id_bien VARCHAR(20) not null,
     date_debut DATE not null,
