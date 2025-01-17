@@ -23,6 +23,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
+import org.jdesktop.swingx.prompt.BuddySupport;
+
 import controleur.ControleurAjouterLocation;
 import modele.DAOException;
 import javax.swing.BoxLayout;
@@ -213,8 +215,8 @@ public class VueAjouterLocation extends JFramePlus {
 		
 		textFieldLoyerLocataire = new JFormattedTextField(formatter);
 		textFieldLoyerLocataire.setValue(0.0);
+		BuddySupport.addRight(new JLabel("€"), textFieldLoyerLocataire);
 		textFieldLoyerLocataire.setColumns(10);
-		
 		panel_c_loyer.add(textFieldLoyerLocataire, BorderLayout.NORTH);
 		
 		JPanel panel_c_provisions = new JPanel();
@@ -223,6 +225,7 @@ public class VueAjouterLocation extends JFramePlus {
 		
 		formattedProvisionCharges = new JFormattedTextField(formatter);
 		formattedProvisionCharges.setValue(0.0);
+		BuddySupport.addRight(new JLabel("€"), formattedProvisionCharges);
 		panel_c_provisions.add(formattedProvisionCharges, BorderLayout.NORTH);
 		
 		JPanel panel__c_caution = new JPanel();
@@ -231,6 +234,7 @@ public class VueAjouterLocation extends JFramePlus {
 
 		formattedCaution = new JFormattedTextField(formatter);
 		formattedCaution.setValue(0.0);
+		BuddySupport.addRight(new JLabel("€"), formattedCaution);
 		panel__c_caution.add(formattedCaution, BorderLayout.NORTH);
 		
 		JPanel PanelBoutons = new JPanel();

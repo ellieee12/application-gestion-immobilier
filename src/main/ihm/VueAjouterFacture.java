@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 import org.jdesktop.swingx.JXFormattedTextField;
 import org.jdesktop.swingx.painter.GlossPainter;
@@ -78,6 +79,8 @@ public class VueAjouterFacture extends JFramePlus {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 20));
+		
+		NumberFormatter formatter = createNumberformatter();
 		
 		JLabel lblNewLabel = new JLabel("Ajouter Facture");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -208,7 +211,7 @@ public class VueAjouterFacture extends JFramePlus {
 		panel_1.add(panel_16);
 		panel_16.setLayout(new BorderLayout(0, 0));
 		
-		textFieldMontant = new JFormattedTextField();
+		textFieldMontant = new JFormattedTextField(formatter);
 		textFieldMontant.setValue(0.0);
 		BuddySupport.addRight(new JLabel("€"), textFieldMontant);
 		panel_16.add(textFieldMontant, BorderLayout.NORTH);
@@ -226,7 +229,7 @@ public class VueAjouterFacture extends JFramePlus {
 		panel_1.add(panel_19);
 		panel_19.setLayout(new BorderLayout(0, 0));
 		
-		textFieldMontantReelPaye = new JFormattedTextField();
+		textFieldMontantReelPaye = new JFormattedTextField(formatter);
 		textFieldMontantReelPaye.setValue(0.0f);
 		BuddySupport.addRight(new JLabel("€"), textFieldMontantReelPaye);
 		panel_19.add(textFieldMontantReelPaye, BorderLayout.NORTH);
@@ -236,7 +239,7 @@ public class VueAjouterFacture extends JFramePlus {
 		panel_1.add(panel_20);
 		panel_20.setLayout(new BorderLayout(0, 0));
 		
-		textFieldImputableLocataire = new JFormattedTextField();
+		textFieldImputableLocataire = new JFormattedTextField(formatter);
 		textFieldImputableLocataire.setValue(0.0f);
 		BuddySupport.addRight(new JLabel("€"), textFieldImputableLocataire);
 		panel_20.add(textFieldImputableLocataire, BorderLayout.NORTH);
@@ -307,7 +310,7 @@ public class VueAjouterFacture extends JFramePlus {
 		if(textFieldMontant.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontant.getText());
+		return Float.valueOf(textFieldMontant.getText().replace(" ", ""));
 	}
 	
 	public String getChampsNumeroDevis() {
@@ -321,14 +324,24 @@ public class VueAjouterFacture extends JFramePlus {
 		if(textFieldMontantReelPaye.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontantReelPaye.getText());
+		return Float.valueOf(textFieldMontantReelPaye.getText().replace(" ", ""));
 	}
 	
 	public Float getChampsImputableLocataire() {
 		if(textFieldImputableLocataire.getText().equals("0")) {
 			return null;
 		}
-		return Float.valueOf(textFieldImputableLocataire.getText());
+		return Float.valueOf(textFieldImputableLocataire.getText().replace(" ", ""));
+	}
+	
+	private NumberFormatter createNumberformatter() {
+		NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+		return formatter;
 	}
 
 }
