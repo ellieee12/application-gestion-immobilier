@@ -21,27 +21,24 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	}
 	
 	public List<Location> getAllLocations() throws DAOException {
-		String req = "select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, "
-				+ "l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, "
-				+ "l1.trimestre, l2.id_locataire, l1.date_fin, l1.date_regularisation "
-				+ "from location l1, louer l2 "
-				+ "where l2.id_bien=l1.id_bien "
-				+ "and l1.date_debut = l2.date_debut";
-		Statement stmt;
-		List<Location> liste = new LinkedList<>();
 		try {
-			stmt = this.mySQLCon.getConnection().createStatement();
+			String req = "{call getAllLocations()}";
+			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
 			ResultSet rs = stmt.executeQuery(req);
+			List<Location> liste = new LinkedList<>();
 			while(rs.next()) {
 				liste.add(new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), 
-						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getDate(11), rs.getDate(12)));
+						rs.getFloat(6), rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(8), rs.getDate(9), rs.getDate(10)));
+				System.out.println(liste);
+				System.out.println(rs.getDate(2));
 			}
+			System.out.println(liste);
+			rs.close();
+			return liste;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération de la liste des locations",e);
 			throw new DAOException("Erreurs lors de la récupération de la liste des locations",e);
 		}
-		
-		return liste;
 	}
 	
 	public void supprimerLocation(String id, Date date_debut) throws DAOException {
@@ -63,7 +60,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		String id_bien,
 		Location location) throws DAOException {
 		try {
-			String reqInsertLocation = "{CALL insertLocation(?,?,?,?,?,?,?,?,?,?,?)}";
+			String reqInsertLocation = "{CALL insertLocation(?,?,?,?,?,?,?,?,?)}";
 			PreparedStatement stmtInsertLocation = this.mySQLCon.getConnection().prepareStatement(reqInsertLocation);
 			stmtInsertLocation.setString(1, id_bien);
 			stmtInsertLocation.setDate(2, location.getDate_debut());
@@ -72,10 +69,8 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmtInsertLocation.setFloat(5, location.getProvision_chargement_TTC());
 			stmtInsertLocation.setFloat(6, location.getLoyer_TTC());
 			stmtInsertLocation.setFloat(7, location.getCaution_TTC());
-			stmtInsertLocation.setDate(8,Date.valueOf("2025-01-01"));
-			stmtInsertLocation.setInt(9,1);
-			stmtInsertLocation.setDate(10,location.getDate_regularisation());
-			stmtInsertLocation.setDate(11,location.getDate_fin());
+			stmtInsertLocation.setDate(8,location.getDate_regularisation());
+			stmtInsertLocation.setDate(9,location.getDate_fin());
 			int i = stmtInsertLocation.executeUpdate();
 			stmtInsertLocation.close();
 			
@@ -122,7 +117,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				return new Location(rs.getDate(2), rs.getString(4), rs.getInt(3), rs.getFloat(6),
-						rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(10), rs.getDate(11), rs.getDate(12));
+						rs.getFloat(5), rs.getFloat(7), rs.getString(1), rs.getString(8), rs.getDate(9), rs.getDate(10));
 			}
 			return null;
 		} catch (Exception e) {

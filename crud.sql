@@ -65,13 +65,10 @@ CREATE TABLE Location(
     provision_charges_ttc decimal(15,2),
     loyer_ttc decimal(15,2),
     caution_ttc decimal(15,2),
-    annee date NOT NULL,
-    trimestre smallint NOT NULL,
     date_regularisation date,
     date_fin date,
     PRIMARY KEY(id_bien, date_debut),
-    constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien),
-    constraint fk_location_annee_trimestre FOREIGN KEY (annee, trimestre) REFERENCES ICC(annee, trimestre)
+    constraint fk_location_id_bien FOREIGN KEY(id_bien) REFERENCES Bien(id_bien)
 );
 
 CREATE TABLE Document_Location(

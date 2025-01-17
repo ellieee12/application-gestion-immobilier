@@ -33,6 +33,7 @@ DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS getFactureByNumero$$
 DROP PROCEDURE IF EXISTS insertLocation$$
 DROP PROCEDURE IF EXISTS insertCompteur$$
+DROP PROCEDURE IF EXISTS getAllLocations$$
 DROP PROCEDURE IF EXISTS getColocationByIdBien$$
 DROP PROCEDURE IF EXISTS getDateRegularisationFromLocation$$
 DROP PROCEDURE IF EXISTS setDateRegularisation$$
@@ -290,16 +291,14 @@ CREATE PROCEDURE insertLocation (
     v_provision_charges_ttc decimal(15,2),
     v_loyer_ttc decimal(15,2),
     v_caution_ttc decimal(15,2),
-    v_annee date,
-    v_trimestre smallint(6),
     v_date_regularisation date,
     v_date_fin date
 )
 BEGIN
     insert into location (id_bien,date_debut,nb_mois,colocation,provision_charges_ttc,
-    loyer_ttc,caution_ttc,annee,trimestre,date_regularisation,date_fin)
+    loyer_ttc,caution_ttc,date_regularisation,date_fin)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
-    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_annee, v_trimestre, v_date_regularisation, v_date_fin);
+    v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_date_regularisation, v_date_fin);
 END$$
 
 CREATE PROCEDURE insertCompteur (
@@ -312,12 +311,22 @@ BEGIN
     values (v_type_compteur,v_prix,v_id_bien);
 END$$
 
+CREATE PROCEDURE getAllLocations()
+
+BEGIN
+    select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc,
+    l2.id_locataire, l1.date_fin, l1.date_regularisation
+    from location l1, louer l2
+    where l2.id_bien=l1.id_bien
+    and l1.date_debut = l2.date_debut;
+END$$
+
 CREATE PROCEDURE getColocationByIdBien (
     v_id_bien varchar(20)
     )
 BEGIN 
-    select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, l1.annee, 
-    l1.trimestre, l2.id_locataire, l1.date_fin, l1.date_regularisation 
+    select distinct l1.id_bien, l1.date_debut, l1.nb_mois, l1.colocation, l1.provision_charges_ttc, l1.loyer_ttc, l1.caution_ttc, 
+    l2.id_locataire, l1.date_fin, l1.date_regularisation 
     from location l1, louer l2
 	where l2.id_bien=l1.id_bien
 	and l1.date_debut = l2.date_debut
