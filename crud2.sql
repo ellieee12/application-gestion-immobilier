@@ -100,7 +100,9 @@ CREATE PROCEDURE deleteBien (v_id_bien varchar(20))
 
 BEGIN
     DELETE FROM louer where id_bien = v_id_bien;
+    DELETE FROM document_location WHERE id_bien = v_id_bien;
     DELETE FROM location where id_bien = v_id_bien;
+    DELETE FROM compteur WHERE id_bien = v_id_bien;
     DELETE FROM bien WHERE id_bien = v_id_bien;
 END$$
 

@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+
+import org.jdesktop.swingx.prompt.BuddySupport;
 
 import controleur.ControleurAjouterBien;
 import modele.DAOException;
@@ -15,6 +18,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -40,7 +44,7 @@ public class VueAjouterBien extends JFramePlus {
 	private JTextField textFieldIdBien;
 	private JTextField textFieldNumeroEtage;
 	private JTextField textFieldNombreDePieces;
-	private JTextField textFieldSurfaceHabitable;
+	private JFormattedTextField textFieldSurfaceHabitable;
 	private JFormattedTextField formattedTextField;
 	private JComboBox<String> comboBox;
 	public JComboBox<String> getComboBox() {
@@ -54,8 +58,8 @@ public class VueAjouterBien extends JFramePlus {
 
 	private JComboBox<String> comboBox_Immeuble;
 	private JTextField textFieldEntretien;
-	private JTextField textFieldEau;
-	private JTextField textFieldElectricite;
+	private JFormattedTextField textFieldEau;
+	private JFormattedTextField textFieldElectricite;
 
 	/**
 	 * Create the frame.
@@ -72,6 +76,8 @@ public class VueAjouterBien extends JFramePlus {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 20));
+		
+		NumberFormatter formatter = createNumberformatter();
 		
 		JLabel lblNewLabel = new JLabel("Ajouter Bien");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -209,7 +215,9 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
-		textFieldSurfaceHabitable = new JTextField();
+		textFieldSurfaceHabitable = new JFormattedTextField(formatter);
+		textFieldSurfaceHabitable.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("m²"), textFieldSurfaceHabitable);
 		panel_11.add(textFieldSurfaceHabitable, BorderLayout.NORTH);
 		textFieldSurfaceHabitable.setColumns(10);
 		
@@ -240,7 +248,9 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_16);
 		panel_16.setLayout(new BorderLayout(0, 0));
 		
-		textFieldEau = new JTextField();
+		textFieldEau = new JFormattedTextField(formatter);
+		textFieldEau.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), textFieldEau);
 		panel_16.add(textFieldEau, BorderLayout.NORTH);
 		textFieldEau.setColumns(10);
 		
@@ -248,7 +258,9 @@ public class VueAjouterBien extends JFramePlus {
 		PanelChamps.add(panel_17);
 		panel_17.setLayout(new BorderLayout(0, 0));
 		
-		textFieldElectricite = new JTextField();
+		textFieldElectricite = new JFormattedTextField(formatter);
+		textFieldElectricite.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), textFieldElectricite);
 		panel_17.add(textFieldElectricite, BorderLayout.NORTH);
 		textFieldElectricite.setColumns(10);
 		
@@ -329,7 +341,7 @@ public class VueAjouterBien extends JFramePlus {
 		if(textFieldSurfaceHabitable.getText().equals("")) {
 			return null;
 		}
-		return Float.valueOf(textFieldSurfaceHabitable.getText());
+		return Float.valueOf(textFieldSurfaceHabitable.getText().replace(" ", ""));
 	}
 	
 	public String getComboBoxTypeBien () {
@@ -349,14 +361,24 @@ public class VueAjouterBien extends JFramePlus {
 		if(textFieldEau.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(textFieldEau.getText());
+		return Integer.valueOf(textFieldEau.getText().replace(" ", ""));
 	}
 	
 	public Integer getChampsElectricite() {
 		if(textFieldElectricite.getText().equals("")) {
 			return null;
 		}
-		return Integer.valueOf(textFieldElectricite.getText());
+		return Integer.valueOf(textFieldElectricite.getText().replace(" ", ""));
+	}
+	
+	private NumberFormatter createNumberformatter() {
+		NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+		return formatter;
 	}
 }
 

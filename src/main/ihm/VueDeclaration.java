@@ -63,7 +63,7 @@ public class VueDeclaration extends JPanel {
 		panelHaut.setLayout(new BorderLayout(0, 20));
 		
 		JLabel lblTitre = new JLabel("Déclaration fiscale");
-		lblTitre.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblTitre.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelHaut.add(lblTitre, BorderLayout.NORTH);
 		
 		JPanel panelRevenus = new JPanel();

@@ -6,13 +6,16 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
 
 import org.jdesktop.swingx.prompt.BuddySupport;
 
@@ -23,9 +26,9 @@ public class VueRegularisation extends JFramePlus {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField champEau;
-	private JTextField champElec;
-	private JTextField champOrdure;
+	private JFormattedTextField champEau;
+	private JFormattedTextField champElec;
+	private JFormattedTextField champOrdure;
 	private JLabel lblEau;
 	private JLabel lblElec;
 	private JLabel lblEntretien;
@@ -33,7 +36,7 @@ public class VueRegularisation extends JFramePlus {
 	private JLabel lblTotal;
 	private JLabel lblProvision;
 	private JLabel lblReste;
-	private JTextField champNouvelleProvision;
+	private JFormattedTextField champNouvelleProvision;
 
 	/**
 	 * Launch the application.
@@ -67,6 +70,8 @@ public class VueRegularisation extends JFramePlus {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(20, 20));
 		
+		NumberFormatter formatter = createNumberformatter();
+		
 		JPanel panelHaut = new JPanel();
 		contentPane.add(panelHaut, BorderLayout.NORTH);
 		panelHaut.setLayout(new BorderLayout(10, 10));
@@ -82,7 +87,8 @@ public class VueRegularisation extends JFramePlus {
 		JLabel lblIndexEau = new JLabel("Nouvel index eau");
 		panelChamps.add(lblIndexEau);
 		
-		champEau = new JTextField();
+		champEau = new JFormattedTextField(formatter);
+		champEau.setValue(0.0f);
 		BuddySupport.addRight(new JLabel("m³"), champEau);
 		panelChamps.add(champEau);
 		champEau.setColumns(10);
@@ -90,7 +96,8 @@ public class VueRegularisation extends JFramePlus {
 		JLabel lblNewLabel = new JLabel("Nouvel index électricité");
 		panelChamps.add(lblNewLabel);
 		
-		champElec = new JTextField();
+		champElec = new JFormattedTextField(formatter);
+		champElec.setValue(0);
 		BuddySupport.addRight(new JLabel("Kw/h"), champElec);
 		panelChamps.add(champElec);
 		champElec.setColumns(10);
@@ -98,7 +105,9 @@ public class VueRegularisation extends JFramePlus {
 		JLabel lblNewLabel_1 = new JLabel("Montant ordures ménagères");
 		panelChamps.add(lblNewLabel_1);
 		
-		champOrdure = new JTextField();
+		champOrdure = new JFormattedTextField(formatter);
+		champOrdure.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), champOrdure);
 		panelChamps.add(champOrdure);
 		champOrdure.setColumns(10);
 		
@@ -167,7 +176,9 @@ public class VueRegularisation extends JFramePlus {
 		lblNewLabel_9.setToolTipText("laisser vide si inchangé");
 		panelNouvelleProvision.add(lblNewLabel_9);
 		
-		champNouvelleProvision = new JTextField();
+		champNouvelleProvision = new JFormattedTextField(formatter);
+		champNouvelleProvision.setValue(0.0f);
+		BuddySupport.addRight(new JLabel("€"), champNouvelleProvision);
 		panelNouvelleProvision.add(champNouvelleProvision);
 		champNouvelleProvision.setColumns(10);
 		
@@ -183,15 +194,16 @@ public class VueRegularisation extends JFramePlus {
 		panel_3.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(controleur);
 		
+		controleur.setPreviousValue();
 		this.setSizeMulti();
 	}
 
 	public String getChampEau() {
-		return champEau.getText();
+		return champEau.getText().replace(" ", "");
 	}
 	
 	public String getChampElec() {
-		return champElec.getText();
+		return champElec.getText().replace(" ", "");
 	}
 	
 	public void setChampEau(int valeur) {
@@ -203,11 +215,11 @@ public class VueRegularisation extends JFramePlus {
 	}
 	
 	public String getChampNouvelleProvision() {
-		return champNouvelleProvision.getText();
+		return champNouvelleProvision.getText().replace(" ", "");
 	}
 	
 	public String getChampOrdure() {
-		return champOrdure.getText();
+		return champOrdure.getText().replace(" ", "");
 	}
 	
 	public void afficherMontantEau(float montant) {
@@ -236,5 +248,15 @@ public class VueRegularisation extends JFramePlus {
 	
 	public void afficherReste(float montant) {
 		this.lblReste.setText(String.valueOf(montant)+" €");
+	}
+	
+	private NumberFormatter createNumberformatter() {
+		NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+		return formatter;
 	}
 }
