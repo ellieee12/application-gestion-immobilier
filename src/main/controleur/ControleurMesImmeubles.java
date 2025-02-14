@@ -50,6 +50,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 				try {
 					VueAjouterImmeuble frame = new VueAjouterImmeuble(this.vue);
 					frame.setVisible(true);
+					b.setEnabled(false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -95,6 +96,6 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 				}
 			});
         	}
-	}	
+	}
 
 }
