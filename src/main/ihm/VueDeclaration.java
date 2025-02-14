@@ -117,12 +117,13 @@ public class VueDeclaration extends JPanel {
 	public void afficherRevenus(float montant) {
 		this.btnMicroFoncier.setVisible(false);
 		this.lblRevenu.setText("Revenus : "+String.valueOf(montant)+" €");
-		if (montant < 15000) {
+		if (montant < 15000) {	//on n'affiche le bouton micro-foncier que si le revenu est inférieur à 15 000€
 			this.btnMicroFoncier.setVisible(true);
 		}
 		this.btnRegimeReel.setVisible(true);
 	}
 
+	//on affiche les informations du formulaire 2044
 	public void afficherTexteMicroFoncier(float montant) {
 		String text = "Recettes brutes sans abattement 4BE : "+ montant +" €\r\n"
 				+ "       dont recettes de source étrangère ouvrant droit à un crédit d’impôt égal à l’impôt français 4BK : 0 €\r\n"
@@ -132,10 +133,11 @@ public class VueDeclaration extends JPanel {
 		this.btnImprimer.setEnabled(true);
 	}
 	
+	//on affiche les informations du formulaire 2044
 	public void afficherTexteRegimeReel(float revenus, float charges) {
 		float revenuNet = revenus - charges;
 		String text = "";
-		if (revenuNet > 0) {
+		if (revenuNet > 0) {	//recette ou déficit en fonction du revenu
 			text = "Recettes brutes : "+ revenus +" €\r\n"
 					+ "Charges : "+ charges +" €\r\n"
 					+ "\r\n"

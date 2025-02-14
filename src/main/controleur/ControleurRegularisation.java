@@ -3,6 +3,7 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Calendar;
 
@@ -147,13 +148,23 @@ public class ControleurRegularisation implements ActionListener {
 			this.vue.dispose();
 		}
 	}
-
+	
+	/**
+	 * Vérifie que les champs sont bien remplis
+	 * @return vrai si tout est bien rempli, faux sinon
+	 */
 	public boolean isComplet() {
 		return !this.vue.getChampEau().isEmpty() && !this.vue.getChampElec().isEmpty() 
 				&& !this.vue.getChampOrdure().isEmpty();
 	}
 
-	//calcul le montant d'eau à partir de la consommation
+	
+	/**
+	 * calcule le montant d'eau à partir de la consommation
+	 * @return Le montant en float
+	 * @param conso Consommation d'eau en mètre cube
+	 * @throws DAOException
+	 */
 	public float montantEau(int conso) throws DAOException {
 		String typeImmeuble="";
 		try { 
@@ -171,11 +182,18 @@ public class ControleurRegularisation implements ActionListener {
 		}
 	}
 	
-	//calcul le montant d'électricité à partir de la consommation
+	/**
+	 * calcule le montant d'électricité à partir de la consommation
+	 * @param conso Consommation d'électricité en kWh
+	 * @return Le montant en float
+	 */
 	public float montantElec (int conso) {
 		return (float) this.compteurElec.calculerMontantElec(conso);
 	}
 	
+	/**
+	 * pre-affiche dans le champs la consommation de l'année précedente
+	 */
 	public void setPreviousValue() {
 		this.vue.setChampEau(this.indexEau);
 		this.vue.setChampElec(this.indexElec);

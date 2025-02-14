@@ -38,11 +38,11 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 		}
 	}
 	
-	public void supprimerLocation(String id, Date date_debut) throws DAOException {
+	public void supprimerLocation(String id_bien, Date date_debut) throws DAOException {
 		try {
 	        String reqDeleteLouer = "{CALL deleteLocation (?,?)}";
 	        PreparedStatement stmtDeleteLouer = this.mySQLCon.getConnection().prepareCall(reqDeleteLouer);
-	        stmtDeleteLouer.setString(1, id);
+	        stmtDeleteLouer.setString(1, id_bien);
 	        stmtDeleteLouer.setDate(2, date_debut);
 	        int i = stmtDeleteLouer.executeUpdate();
 	        System.out.println(i +"lignes supprimées");
@@ -246,9 +246,8 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	}
 	
 	/**
-	 * 
-	 * @param annee
-	 * @return la somme des loyers qui ont été payés pendant toute l'année entrée
+	 * @param annee L'année de la déclaration
+	 * @return la somme des loyers qui ont été payés pendant toute l'année
 	 * @throws DAOException 
 	 */
 	public float getSommeLoyers12Mois(int annee) throws DAOException {
@@ -258,7 +257,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt.setInt(1, annee);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
-				return rs.getFloat(1)*12;
+				return rs.getFloat(1)*12;	//on multiplie la somme des loyers par le nombre de mois
 			}
 		}catch(SQLException e) {
 			logger.log(Level.SEVERE,"Erreurs lors de la récupération des loyers.",e);
@@ -269,8 +268,9 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	
 	/**
 	 * 
-	 * @param annee
-	 * @return la liste des loyers des locations qui se sont terminées pendant l'année entrée, leur mois de debut, et leur mois de fin
+	 * @param annee L'année de la déclaration
+	 * @return la liste des loyers des locations qui se sont terminées pendant
+	 * l'année entrée, leur mois de debut, et leur mois de fin
 	 * @throws DAOException 
 	 */
 	public List<List<Object>> getLoyersTermine(int annee) throws DAOException {
@@ -281,9 +281,9 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 			stmt.setInt(1, annee);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				float loyer = rs.getFloat(1);
-                int anneeDebut = rs.getInt(2);
-                int moisDebut = rs.getInt(3);
+				float loyer = rs.getFloat(1);	//montant du loyer
+                int anneeDebut = rs.getInt(2);	// Numéro de l'année de début
+                int moisDebut = rs.getInt(3);	// Numéro du mois de début
                 int moisFin = rs.getInt(4); // Numéro du mois de fin
 
                 // Stocker la ligne de résultat dans une liste
@@ -304,7 +304,7 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	
 	/**
 	 * 
-	 * @param annee
+	 * @param annee L'année de la déclaration
 	 * @return la liste des loyers des locations ayant commencé pendant l'année entrée, et leur date de début
 	 * @throws DAOException 
 	 */

@@ -57,8 +57,8 @@ public class ControleurDeclaration implements ActionListener {
 			int option = JOptionPane.showConfirmDialog(this.vue, panel, "Charges", JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
 				float autresCharges = Float.valueOf(textField.getText());
-				try {
-					this.charges = this.calculCharges(annee, autresCharges);
+				try {	
+					this.charges = this.calculCharges(annee, autresCharges); //on récupère les charges des travaux
 				} catch (DAOException e1) {
 					e1.printStackTrace();
 				}
@@ -70,16 +70,26 @@ public class ControleurDeclaration implements ActionListener {
 		}
 	}
 
+	/**
+	 * @param annee L'année de la déclaration
+	 * @return la somme des loyers qui ont été payés pendant toute l'année
+	 * @throws DAOException 
+	 */
 	private float calculSomme12mois(int annee) {
 		LocationDAO dao = new LocationDAO();
 		try {
-			return dao.getSommeLoyers12Mois(annee);	//on multiplie par le nb de mois
+			return dao.getSommeLoyers12Mois(annee);
 		} catch (DAOException e1) {
 			e1.printStackTrace();
 		}
 		return -1.0F;
 	}
 	
+	/**
+	 * @param annee L'année de la déclaration
+	 * @return la somme des loyers des locations terminées pendant l'année
+	 * @throws DAOException 
+	 */
 	private float calculLoyersTermine(int annee) throws DAOException {
 		LocationDAO dao = new LocationDAO();
 		List<List<Object>> l = dao.getLoyersTermine(annee);
@@ -90,16 +100,21 @@ public class ControleurDeclaration implements ActionListener {
 			int anneeDebut = (int) l.get(i).get(1);
 			int moisDebut = (int) l.get(i).get(2);
 			int moisFin = (int) l.get(i).get(3);
-			if (anneeDebut < annee) {
-				res = loyer*moisFin;
-			} else {
-				res = loyer*(moisFin-moisDebut+1);
+			if (anneeDebut < annee) {	//si la location a commencé avant l'année en cours
+				res = loyer*moisFin;	//on multiplie par le nombre de mois du début de l'année jusqu'au mois de fin
+			} else {					//si la location a commencé après l'année en cours
+				res = loyer*(moisFin-moisDebut+1); //on multiplie par le nombre de mois du mois de début (inclu) jusqu'au mois de fin
 			}
 			resFinal+=res;
 		}
 		return resFinal;
 	}
 	
+	/**
+	 * @param annee L'année de la déclaration
+	 * @return la somme des loyers des locations commencées pendant l'année
+	 * @throws DAOException 
+	 */
 	private float getLoyersCommence(int annee) throws DAOException {
 		LocationDAO dao = new LocationDAO();
 		List<List<Object>> l = dao.getLoyersCommence(annee);
@@ -108,7 +123,7 @@ public class ControleurDeclaration implements ActionListener {
 			float res = 0.0F;
 			float loyer = (float) l.get(i).get(0);
 			int moisDebut = (int) l.get(i).get(1);
-			res = loyer*(12-moisDebut+1);
+			res = loyer*(12-moisDebut+1);	//on multiplie par le nombre de mois du mois de début jusqu'à la fin de l'année
 			resFinal+=res;
 		}
 		return resFinal;
@@ -119,6 +134,12 @@ public class ControleurDeclaration implements ActionListener {
 				.getTime().getTime()).toString().substring(0, 4));
 	}
 	
+	/**
+	 * @param annee L'année de la déclaration
+	 * @param autresCharges Les charges entrées par l'utilisateur
+	 * @return la somme des travaux plus les autres charges
+	 * @throws DAOException 
+	 */
 	private float calculCharges(int annee, float autresCharges) throws DAOException {
 		FactureDAO dao = new FactureDAO();
 		return dao.getMontantTravaux(annee)+autresCharges;
