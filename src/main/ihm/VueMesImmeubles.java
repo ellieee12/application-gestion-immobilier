@@ -24,6 +24,8 @@ public class VueMesImmeubles extends JPanel {
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesImmeubles controleurMesImmeubles;
+	private JButton supprimerImmeuble;
+	private JButton ajouterImmeuble;
 
 	/**
 	 * Create the frame.
@@ -57,9 +59,9 @@ public class VueMesImmeubles extends JPanel {
 		PanelBouton.add(PanelBoutonSupprimer);
 		PanelBoutonSupprimer.setLayout(new BorderLayout(0, 0));
 		
-		JButton SupprimerImeuble = new JButton("Supprimer");
-		PanelBoutonSupprimer.add(SupprimerImeuble, BorderLayout.NORTH);
-		SupprimerImeuble.addActionListener(controleurMesImmeubles);
+		supprimerImmeuble = new JButton("Supprimer");
+		PanelBoutonSupprimer.add(supprimerImmeuble, BorderLayout.NORTH);
+		supprimerImmeuble.addActionListener(controleurMesImmeubles);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -107,5 +109,9 @@ public class VueMesImmeubles extends JPanel {
 
 	public ControleurMesImmeubles getControleurMesImmeubles() {
 		return this.controleurMesImmeubles;
+	}
+	
+	public void getBoutonSuppr() {
+		this.supprimerImmeuble.setEnabled(false);
 	}
 }

@@ -1,60 +1,60 @@
 use saes3;
-DELIMITER $$
+DELIMITER ;
 
-DROP PROCEDURE IF EXISTS getAllBiens$$
-DROP PROCEDURE IF EXISTS getBiensByImmeuble$$
-DROP PROCEDURE IF EXISTS insertGarage$$
-DROP PROCEDURE IF EXISTS insertLogement$$
-DROP PROCEDURE IF EXISTS deleteBien$$
-DROP PROCEDURE IF EXISTS getBienById$$
-DROP PROCEDURE IF EXISTS getAllImmeubles$$
-DROP PROCEDURE IF EXISTS getImmeubleById$$
-DROP PROCEDURE IF EXISTS deleteImmeuble$$
-DROP PROCEDURE IF EXISTS addImmeuble$$
-DROP PROCEDURE IF EXISTS getImmeublesDisponibles$$
-DROP PROCEDURE IF EXISTS getCompteByUsernameMdp$$
-DROP PROCEDURE IF EXISTS insertCompte$$
-DROP PROCEDURE IF EXISTS getMdpByUsername$$
-DROP PROCEDURE IF EXISTS getCompteurByBienAndType$$
-DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien$$
-DROP PROCEDURE IF EXISTS getReleveFromIdCompteur$$
-DROP PROCEDURE IF EXISTS getEntretienFromIdBien$$
-DROP PROCEDURE IF EXISTS getProvisionFromLocation$$
-DROP PROCEDURE IF EXISTS setNouvelleProvision$$
-DROP PROCEDURE IF EXISTS addReleve$$
-DROP PROCEDURE IF EXISTS getAllFactures$$
-DROP PROCEDURE IF EXISTS deleteFacture$$
-DROP PROCEDURE IF EXISTS insertFacture$$
-DROP PROCEDURE IF EXISTS getAllLocataires$$
-DROP PROCEDURE IF EXISTS getLocataireById$$
-DROP PROCEDURE IF EXISTS insertLocataire$$
-DROP PROCEDURE IF EXISTS deleteLocataire$$
-DROP PROCEDURE IF EXISTS deleteLocation$$
-DROP PROCEDURE IF EXISTS insertLocation$$
-DROP PROCEDURE IF EXISTS getFactureByNumero$$
-DROP PROCEDURE IF EXISTS insertLocation$$
-DROP PROCEDURE IF EXISTS insertCompteur$$
-DROP PROCEDURE IF EXISTS getAllLocations$$
-DROP PROCEDURE IF EXISTS getColocationByIdBien$$
-DROP PROCEDURE IF EXISTS getDateRegularisationFromLocation$$
-DROP PROCEDURE IF EXISTS setDateRegularisation$$
-DROP PROCEDURE IF EXISTS getDateFinFromLocation$$
-DROP PROCEDURE IF EXISTS setDateFin$$
-DROP PROCEDURE IF EXISTS deleteReleve$$
-DROP PROCEDURE IF EXISTS getSommeLoyers12Mois$$
-DROP PROCEDURE IF EXISTS getLoyersTermine$$
-DROP PROCEDURE IF EXISTS getLoyersCommence$$
-DROP PROCEDURE IF EXISTS getMontantTravaux$$
+DROP PROCEDURE IF EXISTS getAllBiens;
+DROP PROCEDURE IF EXISTS getBiensByImmeuble;
+DROP PROCEDURE IF EXISTS insertGarage;
+DROP PROCEDURE IF EXISTS insertLogement;
+DROP PROCEDURE IF EXISTS deleteBien;
+DROP PROCEDURE IF EXISTS getBienById;
+DROP PROCEDURE IF EXISTS getAllImmeubles;
+DROP PROCEDURE IF EXISTS getImmeubleById;
+DROP PROCEDURE IF EXISTS deleteImmeuble;
+DROP PROCEDURE IF EXISTS addImmeuble;
+DROP PROCEDURE IF EXISTS getImmeublesDisponibles;
+DROP PROCEDURE IF EXISTS getCompteByUsernameMdp;
+DROP PROCEDURE IF EXISTS insertCompte;
+DROP PROCEDURE IF EXISTS getMdpByUsername;
+DROP PROCEDURE IF EXISTS getCompteurByBienAndType;
+DROP PROCEDURE IF EXISTS getTypeImmeubleFromIdBien;
+DROP PROCEDURE IF EXISTS getReleveFromIdCompteur;
+DROP PROCEDURE IF EXISTS getEntretienFromIdBien;
+DROP PROCEDURE IF EXISTS getProvisionFromLocation;
+DROP PROCEDURE IF EXISTS setNouvelleProvision;
+DROP PROCEDURE IF EXISTS addReleve;
+DROP PROCEDURE IF EXISTS getAllFactures;
+DROP PROCEDURE IF EXISTS deleteFacture;
+DROP PROCEDURE IF EXISTS insertFacture;
+DROP PROCEDURE IF EXISTS getAllLocataires;
+DROP PROCEDURE IF EXISTS getLocataireById;
+DROP PROCEDURE IF EXISTS insertLocataire;
+DROP PROCEDURE IF EXISTS deleteLocataire;
+DROP PROCEDURE IF EXISTS deleteLocation;
+DROP PROCEDURE IF EXISTS insertLocation;
+DROP PROCEDURE IF EXISTS getFactureByNumero;
+DROP PROCEDURE IF EXISTS insertLocation;
+DROP PROCEDURE IF EXISTS insertCompteur;
+DROP PROCEDURE IF EXISTS getAllLocations;
+DROP PROCEDURE IF EXISTS getColocationByIdBien;
+DROP PROCEDURE IF EXISTS getDateRegularisationFromLocation;
+DROP PROCEDURE IF EXISTS setDateRegularisation;
+DROP PROCEDURE IF EXISTS getDateFinFromLocation;
+DROP PROCEDURE IF EXISTS setDateFin;
+DROP PROCEDURE IF EXISTS deleteReleve;
+DROP PROCEDURE IF EXISTS getSommeLoyers12Mois;
+DROP PROCEDURE IF EXISTS getLoyersTermine;
+DROP PROCEDURE IF EXISTS getLoyersCommence;
+DROP PROCEDURE IF EXISTS getMontantTravaux;
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
     SELECT * FROM bien;
-END$$
+END;
 
 CREATE PROCEDURE getBienById(IN v_id_bien varchar(20))
 BEGIN
     SELECT * FROM bien WHERE id_bien = v_id_bien;
-END$$
+END;
 
 CREATE PROCEDURE getBiensByImmeuble(IN v_id_immeuble varchar(20))
 BEGIN
@@ -68,7 +68,7 @@ BEGIN
         date_acquisition
     FROM bien 
     WHERE id_immeuble = v_id_immeuble;
-END$$
+END;
 
 CREATE PROCEDURE insertGarage(
     IN v_id_bien varchar(20), 
@@ -78,7 +78,7 @@ CREATE PROCEDURE insertGarage(
 BEGIN
     INSERT INTO bien (id_bien, date_acquisition,type_bien,id_immeuble,entretien_parties_communes)
     VALUES (v_id_bien, v_date_acquisition,'G',v_id_immeuble,v_entretien_parties_communes);
-END$$
+END;
 
 create procedure insertLogement(
     in v_id_bien varchar(20),
@@ -94,7 +94,7 @@ BEGIN
         surface_habitable, date_acquisition, type_bien, id_immeuble,entretien_parties_communes) 
     VALUES (v_id_bien, v_nb_pieces, v_numero_etage, v_surface_habitable, 
         v_date_acquisition, 'L', v_id_immeuble,v_entretien_parties_communes);
-END$$
+END;
 
 CREATE PROCEDURE deleteBien (v_id_bien varchar(20))
 
@@ -105,12 +105,12 @@ BEGIN
     DELETE FROM releve where id_compteur in (select id_compteur from compteur where id_bien = v_id_bien);
     DELETE FROM compteur WHERE id_bien = v_id_bien;
     DELETE FROM bien WHERE id_bien = v_id_bien;
-END$$
+END;
 
 CREATE PROCEDURE getAllImmeubles ()
 BEGIN
     select * from immeuble;
-END$$
+END;
 
 CREATE PROCEDURE getImmeubleById (v_id_immeuble varchar(20))
 
@@ -118,7 +118,7 @@ BEGIN
     select adresse, code_postal, ville, periode_construction, type_immeuble
     from immeuble
     where id_immeuble=v_id_immeuble;
-END$$
+END;
 
 CREATE PROCEDURE deleteImmeuble(v_id_immeuble varchar(20))
 
@@ -139,7 +139,7 @@ BEGIN
     );
     delete from bien where id_immeuble = v_id_immeuble;
     delete from immeuble where id_immeuble = v_id_immeuble;
-END$$
+END;
 
 CREATE PROCEDURE addImmeuble (
     v_id_immeuble varchar(20),
@@ -151,7 +151,7 @@ CREATE PROCEDURE addImmeuble (
 BEGIN
     insert into immeuble (id_immeuble, adresse, code_postal,ville,periode_construction,type_immeuble)
     values (v_id_immeuble,v_adresse,v_code_postal,v_ville,v_periode_construction,v_type_immeuble);
-END$$
+END;
     
 CREATE PROCEDURE getImmeublesDisponibles ()
 
@@ -161,77 +161,77 @@ BEGIN
         where b.id_immeuble=i.id_immeuble
         and i.type_immeuble='M'
     );
-END$$
+END;
 
 CREATE PROCEDURE getCompteByUsernameMdp (v_username VARCHAR(50))
 
 BEGIN
     SELECT * from signup where username = v_username;
-END$$
+END;
 
 CREATE PROCEDURE insertCompte (in v_username VARCHAR(50), v_mdp VARCHAR(50))
 
 BEGIN 
     INSERT INTO signup(username,mdp)
     VALUES (v_username, v_mdp);
-END$$
+END;
 
 CREATE PROCEDURE getMdpByUsername (v_username VARCHAR(50))
 
 BEGIN 
     SELECT mdp from signup where username = v_username;
-END$$
+END;
 
 CREATE PROCEDURE getCompteurByBienAndType (v_id_bien VARCHAR(50),v_type_compteur VARCHAR(50))
 
 BEGIN 
     SELECT id_compteur from compteur where id_bien = v_id_bien and type_compteur = v_type_compteur;
-END$$
+END;
 
 CREATE PROCEDURE getTypeImmeubleFromIdBien (v_id_bien VARCHAR(50))
 
 BEGIN 
     SELECT type_immeuble from immeuble,bien where bien.id_bien = v_id_bien and bien.id_immeuble = immeuble.id_immeuble;
-END$$
+END;
 
 CREATE PROCEDURE getReleveFromIdCompteur (v_id_compteur VARCHAR(50),v_annee int)
 
 BEGIN 
     SELECT index_comp from releve where id_compteur = v_id_compteur and annee = v_annee;
-END$$
+END;
 
 CREATE PROCEDURE getEntretienFromIdBien(v_id_bien varchar(20))
 BEGIN
     select entretien_parties_communes from bien where id_bien = v_id_bien;
-END$$
+END;
 
 CREATE PROCEDURE getProvisionFromLocation(v_id_bien varchar(20), v_date_debut date)
 BEGIN
     select provision_charges_ttc from location where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE setNouvelleProvision(v_id_bien varchar(20), v_date_debut date, v_provision decimal(15,2))
 BEGIN
     update location set provision_charges_ttc = v_provision where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE addReleve (v_annee int,v_index int,v_id_compteur varchar(50))
 BEGIN
     insert into releve (annee,index_comp,id_compteur)
     values (v_annee,v_index,v_id_compteur);
-END$$
+END;
 
 CREATE PROCEDURE getAllFactures()
 
 BEGIN
     select * from facture;
-END$$
+END;
 
 CREATE PROCEDURE deleteFacture(v_numero_facture varchar(50))
 
 BEGIN
     delete from facture where numero_facture=v_numero_facture;
-END$$
+END;
 
 CREATE PROCEDURE insertFacture (
     v_numero_facture VARCHAR(50),
@@ -247,17 +247,17 @@ CREATE PROCEDURE insertFacture (
 BEGIN
     insert into facture (numero_facture,date_paiement,date_emission,numero_devis,designation,montant_reel_paye,montant,imputable_locataire,id_bien)
     values (v_numero_facture,v_date_paiement,v_date_emission,v_numero_devis,v_designation,v_montant_reel_paye,v_montant,v_imputable_locataire,v_id_bien);
-END$$
+END;
 
 CREATE PROCEDURE getFactureByNumero(v_numero_facture varchar(50))
 BEGIN
     select * from facture where numero_facture = v_numero_facture;
-END$$
+END;
 
 CREATE PROCEDURE getAllLocataires()
 BEGIN
     select * from locataire;
-END$$
+END;
 
 CREATE PROCEDURE insertLocataire(
     v_id_locataire varchar(20),
@@ -270,19 +270,19 @@ CREATE PROCEDURE insertLocataire(
 BEGIN
     insert into locataire(id_locataire, nom, prenom, mail, telephone, date_naissance) 
     values (v_id_locataire,v_nom,v_prenom,v_mail,v_telephone,v_date_naissance);
-END$$ 
+END; 
 
 CREATE PROCEDURE getLocataireById(v_id_locataire varchar(20))
 BEGIN
     select * from locataire where id_locataire=v_id_locataire;
-END$$
+END;
 
 CREATE PROCEDURE deleteLocataire(
     v_id_locataire varchar(20)
 )
 BEGIN
     delete from locataire where id_locataire = v_id_locataire;
-END$$
+END;
 
 CREATE PROCEDURE deleteLocation(
     v_id_bien varchar(20),
@@ -292,7 +292,7 @@ BEGIN
     delete from louer where id_bien = v_id_bien and date_debut = v_date_debut;
     delete from Document_Location where id_bien = v_id_bien and date_debut = v_date_debut;
     delete from location where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE insertLocation (
     v_id_bien VARCHAR(20),
@@ -310,7 +310,7 @@ BEGIN
     loyer_ttc,caution_ttc,date_regularisation,date_fin)
     values (v_id_bien,v_date_debut,v_nb_mois,v_colocation,
     v_provision_charges_ttc,v_loyer_ttc,v_caution_ttc, v_date_regularisation, v_date_fin);
-END$$
+END;
 
 CREATE PROCEDURE insertCompteur (
     v_id_bien varchar(20),
@@ -320,7 +320,7 @@ CREATE PROCEDURE insertCompteur (
 BEGIN
     insert into compteur (type_compteur,prix_abonnement,id_bien)
     values (v_type_compteur,v_prix,v_id_bien);
-END$$
+END;
 
 CREATE PROCEDURE getAllLocations()
 
@@ -330,7 +330,7 @@ BEGIN
     from location l1, louer l2
     where l2.id_bien=l1.id_bien
     and l1.date_debut = l2.date_debut;
-END$$
+END;
 
 CREATE PROCEDURE getColocationByIdBien (
     v_id_bien varchar(20)
@@ -342,47 +342,47 @@ BEGIN
 	where l2.id_bien=l1.id_bien
 	and l1.date_debut = l2.date_debut
     and l1.id_bien = v_id_bien;
-END$$
+END;
 
 CREATE PROCEDURE getDateRegularisationFromLocation (v_id_bien VARCHAR(20),v_date_debut date)
 BEGIN 
     SELECT date_regularisation from location where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE setDateRegularisation (v_id_bien VARCHAR(20),v_date_debut date, v_date_regularisation date)
 BEGIN
     UPDATE location set date_regularisation = v_date_regularisation where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE getDateFinFromLocation (v_id_bien VARCHAR(20),v_date_debut date)
 BEGIN 
     SELECT date_fin from location where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE setDateFin (v_id_bien VARCHAR(20),v_date_debut date, v_date_fin date)
 BEGIN
     UPDATE location set date_fin = v_date_fin where id_bien = v_id_bien and date_debut = v_date_debut;
-END$$
+END;
 
 CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
 
 BEGIN 
     delete from Releve where id_compteur = v_id_compteur and annee = v_annee;
-END$$
+END;
 
 CREATE PROCEDURE getSommeLoyers12Mois(IN v_annee int)
 BEGIN
     select sum(loyer_ttc) from location 
 	where (date_fin is null or year(date_fin)>v_annee) 
 	and year(date_debut) < v_annee;
-END$$
+END;
 
 CREATE PROCEDURE getLoyersTermine(IN v_annee int)
 BEGIN
 	select loyer_ttc, year(date_debut), month(date_debut), month(date_fin) 
 	from location  
 	where year(date_fin) = v_annee;
-END$$
+END;
 
 CREATE PROCEDURE getLoyersCommence(IN v_annee int)
 BEGIN
@@ -390,7 +390,7 @@ BEGIN
 	from location 
 	where year(date_debut) = v_annee 
 	and (date_fin is null or year(date_fin)>v_annee);
-END$$
+END;
 
 CREATE PROCEDURE getMontantTravaux(IN v_annee int)
 BEGIN
@@ -401,6 +401,6 @@ BEGIN
     )
     FROM `facture` 
     WHERE year(date_paiement)=v_annee;
-END$$
+END;
 
 DELIMITER ;
