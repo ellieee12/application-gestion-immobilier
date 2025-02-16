@@ -156,6 +156,7 @@ public class VueMesBiens extends JFramePlus {
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
+	
 
 	public String getIdImmeuble() {
 		return idImmeuble;

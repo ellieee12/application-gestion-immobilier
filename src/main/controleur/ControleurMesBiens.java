@@ -53,8 +53,23 @@ public class ControleurMesBiens implements ActionListener {
 		JButton  b = (JButton) e.getSource();	
 		if (b.getText() == "Ajouter") {
 			try {
-				VueAjouterBien frame = new VueAjouterBien(this.vue);
-				frame.setVisible(true);
+				ImmeubleDAO immeuble = new ImmeubleDAO();
+				List<Immeuble> liste = immeuble.getImmeublesPourAjouterBien();
+				boolean inList = false; int i = 0;
+				while (!inList && i<liste.size()) {
+					if (liste.get(i).getId_immeuble().equals(vue.getIdImmeuble())) {
+						inList = true;
+					}
+					i++;
+				}
+				if (inList) {
+					VueAjouterBien frame = new VueAjouterBien(this.vue);
+					frame.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(this.vue, 
+							"Immeuble indisponible pour ajouter un bien","Attention", JOptionPane.WARNING_MESSAGE);
+				}
+				
 			} catch (Exception error) {
 				error.printStackTrace();
 			}

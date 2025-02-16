@@ -227,15 +227,19 @@ public class VueAjouterBien extends JFramePlus {
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
 		//comboBox Immeuble
-		comboBox_Immeuble = new JComboBox();
+		comboBox_Immeuble = new JComboBox<String>();
 		for (Map.Entry<String, String> s : controleur.getNameImmeubles().entrySet()) {
+			if (s.getKey().equals(vueBiens.getIdImmeuble())) {
+				comboBox_Immeuble.setSelectedItem(vueBiens.getIdImmeuble());
+			}
 			comboBox_Immeuble.addItem(s.getKey());
 		}
+		
+		
 		
 		panel_13.add(comboBox_Immeuble, BorderLayout.NORTH);
 		
 		comboBox = new JComboBox<>();
-		comboBox = new JComboBox();
 		
 		String type = controleur.getNameImmeubles().get(comboBox_Immeuble.getSelectedItem());
 		if (type.equals("M")) {
