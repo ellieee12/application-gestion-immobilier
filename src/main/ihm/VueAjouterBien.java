@@ -67,7 +67,7 @@ public class VueAjouterBien extends JFramePlus {
 	 */
 	public VueAjouterBien(VueMesBiens vueBiens) throws DAOException {
 		//mise en place du controleur
-		ControleurAjouterBien controleur = new ControleurAjouterBien(this,vueBiens);
+		ControleurAjouterBien controleur = new ControleurAjouterBien(this);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

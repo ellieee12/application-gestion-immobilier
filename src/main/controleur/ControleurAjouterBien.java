@@ -12,7 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import ihm.VueAjouterBien;
-import ihm.VueMesBiens;
 import modele.BienDAO;
 import modele.Compteur;
 import modele.Compteur.typeCompteur;
@@ -28,7 +27,6 @@ import modele.ReleveDAO;
 
 public class ControleurAjouterBien implements ActionListener {
 	
-	private VueMesBiens vueBiens;
 	private VueAjouterBien vue;
 	private BienDAO dao;
 	private CompteurDAO daoC;
@@ -37,11 +35,14 @@ public class ControleurAjouterBien implements ActionListener {
 	private final float PRIX_EAU = 2.86F;
 	private final float PRIX_ELEC = 0.2F;
 	
-	//Constructeur du controleur
-	public ControleurAjouterBien (VueAjouterBien vue, VueMesBiens vueBiens) throws DAOException {
+	/**
+	 * Constructeur ControleurAjouterBien
+	 * @param vue
+	 * @throws DAOException
+	 */
+	public ControleurAjouterBien (VueAjouterBien vue) throws DAOException {
 		try {
 			this.vue = vue;
-			this.vueBiens=vueBiens;
 			this.dao = new BienDAO();
 			this.daoC = new CompteurDAO();
 			this.daoR = new ReleveDAO();
@@ -61,25 +62,17 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Actions à effectué lors d'un clique d'un bouton
+	 */
 	public void actionPerformed (ActionEvent e) {
 		if (e.getSource() instanceof JButton) {
 			String s = ((JButton) e.getSource()).getText();
 			if (s.equals("Annuler")) {
 				this.vue.dispose();
 			} else if (s.equals("Valider")) {
-				//vérifier si l'identifiant existe dans la base de données
 				try {
-					if (!verificationChampIDBien()) {
-						this.afficherMessageErreur("Identifiant bien non rempli");
-					}else if (verificationBienExiste()) {
-						this.afficherMessageErreur("Ce bien avec cet identifiant existe déjà");
-					}else if (this.verificationEtAffichageErreurChampsDateAcquisition()) {
-						if (this.isLogement()) {
-							this.ajouterLogement();
-						}else {
-							this.ajouterGarage();
-						}
-					}
+					this.addBien();
 				} catch (DAOException de1) {
 					de1.printStackTrace();
 				}
@@ -107,6 +100,25 @@ public class ControleurAjouterBien implements ActionListener {
 			}
 		}
 	}
+
+	/**
+	 * Vérifier et ajouter le bien dans la base de données
+	 * @throws DAOException
+	 */
+	private void addBien() throws DAOException {
+		if (!verificationChampIDBien()) { //vérifier si l'identifiant est vide ou null
+			this.afficherMessageErreur("Identifiant bien non rempli");
+		}else if (verificationBienExiste()) { //vérifier si l'identifiant existe dans la base de données
+			this.afficherMessageErreur("Ce bien avec cet identifiant existe déjà");
+		}else if (this.verificationEtAffichageErreurChampsDateAcquisition()) { //vérifier et affichage de message d'erreurs du champs de date d'acquisition
+			//ajouter le bien dans la base de données
+			if (this.isLogement()) {
+				this.ajouterLogement();
+			}else {
+				this.ajouterGarage();
+			}
+		}
+	}
 	
 	/**
 	 * Ajouter des informations sur un garage dans la base de donnees
@@ -120,8 +132,9 @@ public class ControleurAjouterBien implements ActionListener {
 		
 	}
 	
-	/*
+	/**
 	 * Ajouter des informations sur un logement dans la base de donnees
+	 * @throws DAOException
 	 */
 	private void ajouterLogement() throws DAOException{
 		// Verification des champs des informations liées au logement
@@ -186,19 +199,27 @@ public class ControleurAjouterBien implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Verification des champs garage et affichage de message en cas d'erreur
+	 * @return boolean
+	 */
 	private boolean verificationChampsGarage() {
 		if(this.vue.getEntretienPartieCommune()==null) {
 			this.afficherMessageErreur("Entretien partie commune non rempli");
 		}else if(this.vue.getChampsEau() == null) {
-			JOptionPane.showMessageDialog(this.vue, "L'index eau non rempli","Attention", JOptionPane.WARNING_MESSAGE);
+			this.afficherMessageErreur("L'index eau non rempli");
 		}else if(this.vue.getChampsElectricite() == null) {
-			JOptionPane.showMessageDialog(this.vue, "L'index éléctricité non rempli","Attention", JOptionPane.WARNING_MESSAGE);
+			this.afficherMessageErreur("L'index éléctricité non rempli");		
 		}else {
 			return true;
 		}
 		return false;
 	}
 	
+	/**
+	 * Vérification si le bien ajouté est un logement
+	 * @return boolean
+	 */
 	private boolean isLogement() {
 		return this.vue.getComboBoxTypeBien().equals("L");
 	}
@@ -219,19 +240,35 @@ public class ControleurAjouterBien implements ActionListener {
 		
 	}
 
+	/**
+	 * Vérifier si le champ de l'identifiant est vide ou null
+	 * @return boolean
+	 */
 	private boolean verificationChampIDBien() {
 		return this.vue.getChampsIdBien()!=null && !this.vue.getChampsIdBien().isEmpty();
 	}
 
+	/**
+	 * Vérifier si un bien avec l'identifiant donné existe dans la base de données
+	 * @return boolean
+	 * @throws DAOException
+	 */
 	private boolean verificationBienExiste() throws DAOException {
 		return this.dao.bienExiste(this.vue.getChampsIdBien());
 	}
 
-
+	/**
+	 * Retourner le map contenant les identifiants des immeubles avec leur type
+	 * @return Map
+	 */
 	public Map<String, String> getNameImmeubles() {
 		return NameImmeubles;
 	}	
 	
+	/**
+	 * Afficher une message d'erreur dans une JOptionPan avec l'option de WARNING_MESSAGE 
+	 * @param msg message d'erreur à afficher
+	 */
 	public void afficherMessageErreur(String msg) {
 		JOptionPane.showMessageDialog(this.vue, msg,"Attention", JOptionPane.WARNING_MESSAGE);
 	}
