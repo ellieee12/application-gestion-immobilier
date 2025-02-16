@@ -313,11 +313,17 @@ public class VueAjouterBien extends JFramePlus {
 		return String.valueOf(textFieldIdBien.getText());
 	}
 	
-	public Date getChampsDateAcquisition () {
+	public Date getChampsDateAcquisition () throws IllegalArgumentException{
+		String date = formattedTextField.getText();
+		if (date.equals("  /  /    ")) {
+        	throw new IllegalArgumentException("Date vide");
+		}
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
-	        java.util.Date parsedDate = sdf.parse(formattedTextField.getText());
+	        
+	        java.util.Date parsedDate = sdf.parse(date);
+	        System.out.println(date);
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
 	        return null; // Retourne null en cas d'erreur
@@ -355,6 +361,9 @@ public class VueAjouterBien extends JFramePlus {
 	}
 	
 	public Float getEntretienPartieCommune() {
+		if (this.textFieldEntretien.getText().equals("")) {
+			return null;
+		}
 		return Float.valueOf(this.textFieldEntretien.getText());
 	}
 	

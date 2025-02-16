@@ -1,10 +1,7 @@
 package controleur;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,52 +62,27 @@ public class ControleurAjouterBien implements ActionListener {
 	}
 	
 	public void actionPerformed (ActionEvent e) {
-		
 		if (e.getSource() instanceof JButton) {
 			String s = ((JButton) e.getSource()).getText();
-
-			if (s == "Annuler") {
+			if (s.equals("Annuler")) {
 				this.vue.dispose();
-			} else if (s == "Valider") {
+			} else if (s.equals("Valider")) {
 				//vérifier si l'identifiant existe dans la base de données
 				try {
-					if (verificationBienExiste()) {
-						JOptionPane.showMessageDialog(this.vue, "Ce bien existe déjà et/ou l'identifiant a déjà été utilisé","Attention", JOptionPane.WARNING_MESSAGE);
-					}else if(!verificationChampIDBien()) {
-						JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date d'acquisition invalide","Attention", JOptionPane.WARNING_MESSAGE);
-					}else if(!verificationChampsDateAcquisition()) {
-						try {
-							throw new ParseException("Veuillez remplir tout les champs",0);
-						}catch(ParseException pEx) {
-							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
-						}
-					}else if (isLogement()) {
-						if (champsLogementNonRemplis()){
-							JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date d'acquisition invalide","Attention", JOptionPane.WARNING_MESSAGE);
+					if (!verificationChampIDBien()) {
+						this.afficherMessageErreur("Identifiant bien non rempli");
+					}else if (verificationBienExiste()) {
+						this.afficherMessageErreur("Ce bien avec cet identifiant existe déjà");
+					}else if (this.verificationEtAffichageErreurChampsDateAcquisition()) {
+						if (this.isLogement()) {
+							this.ajouterLogement();
 						}else {
-							 ajouterLogement();
-							 this.vueBiens.getControleurMesBiens().Update();
-							 this.vue.dispose();
-							
+							this.ajouterGarage();
 						}
-					}else { /*if (isImmeubleMaison()) {
-						JOptionPane.showMessageDialog(this.vue, "Une maison ne peut contenir qu'un bien de type logement","Attention", JOptionPane.WARNING_MESSAGE);
-					} else {*/
-						ajouterGarage();
-						this.vueBiens.getControleurMesBiens().Update();
-						this.vue.dispose();
 					}
-				} catch (HeadlessException e1) {
-					e1.printStackTrace();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}				
+				} catch (DAOException de1) {
+					de1.printStackTrace();
+				}
 			}
 				
 		} else {
@@ -136,40 +108,51 @@ public class ControleurAjouterBien implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Ajouter des informations sur un garage dans la base de donnees
+	 * @throws DAOException
+	 */
 	private void ajouterGarage() throws DAOException {
-		Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getEntretienPartieCommune());
-		this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
+		if (this.verificationChampsGarage()) {
+			Garage g = new Garage (this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getEntretienPartieCommune());
+			this.dao.ajouterBien(g,this.vue.getSelectedImmeuble());
+		}
+		
 	}
-
-//	private void ajouterLogement() throws  SQLException, DAOException {
-//		Logement l = new Logement(this.vue.getChampsDateAcquisition(),this.vue.getChampsIdBien(),this.vue.getChampsNumeroEtage(),this.vue.getChampsNombreDePiece(), this.vue.getChampsSurfaceHabitable(),this.vue.getEntretienPartieCommune());
-//		this.dao.ajouterBien(l,this.vue.getSelectedImmeuble());
-//		ajouterCompteursEtReleves(l);
-//	}
 	
-	private void ajouterLogement() throws SQLException, DAOException, InterruptedException {
-	    // Création du logement
-	    Logement l = new Logement(
-	        this.vue.getChampsDateAcquisition(),
-	        this.vue.getChampsIdBien(),
-	        this.vue.getChampsNumeroEtage(),
-	        this.vue.getChampsNombreDePiece(),
-	        this.vue.getChampsSurfaceHabitable(),
-	        this.vue.getEntretienPartieCommune()
-	    );
+	/*
+	 * Ajouter des informations sur un logement dans la base de donnees
+	 */
+	private void ajouterLogement() throws DAOException{
+		// Verification des champs des informations liées au logement
+		if (this.verificationChampsLogement()) {
+			// Création du logement
+		    Logement l = new Logement(
+		        this.vue.getChampsDateAcquisition(),
+		        this.vue.getChampsIdBien(),
+		        this.vue.getChampsNumeroEtage(),
+		        this.vue.getChampsNombreDePiece(),
+		        this.vue.getChampsSurfaceHabitable(),
+		        this.vue.getEntretienPartieCommune()
+		    );
 
-	    // Création des compteurs associés
-	    List<Compteur> compteurs = new ArrayList<>();
-	    compteurs.add(new Compteur(typeCompteur.EAU,PRIX_EAU ));
-	    compteurs.add(new Compteur(typeCompteur.ELECTRICITE, PRIX_ELEC));
+		    // Création des compteurs associés
+		    List<Compteur> compteurs = new ArrayList<>();
+		    compteurs.add(new Compteur(typeCompteur.EAU,PRIX_EAU ));
+		    compteurs.add(new Compteur(typeCompteur.ELECTRICITE, PRIX_ELEC));
 
-	    // Appel à la méthode DAO
-	    this.dao.ajouterBienEtCompteurs(l, this.vue.getSelectedImmeuble(), compteurs);
-	    ajouterReleves(l);
+		    // Appel à la méthode DAO
+		    this.dao.ajouterBienEtCompteurs(l, this.vue.getSelectedImmeuble(), compteurs);
+		    ajouterReleves(l);
+		}
 	}
 
-
-	private void ajouterReleves(Logement l) throws DAOException, SQLException {
+	/**
+	 * Ajouter un releve dans la base de données
+	 * @param l classe Logement contenant ses informations
+	 * @throws DAOException
+	 */
+	private void ajouterReleves(Logement l) throws DAOException{
 		String id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
 		Releve releveEau = new Releve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)));
 		this.daoR.ajouterReleve(releveEau, id_eau);
@@ -178,18 +161,62 @@ public class ControleurAjouterBien implements ActionListener {
 		this.daoR.ajouterReleve(releveElec, id_elec);
 	}
 	
-	private boolean champsLogementNonRemplis() {
-		return this.vue.getChampsNombreDePiece()==null || this.vue.getChampsNumeroEtage()==null || 
-				this.vue.getChampsSurfaceHabitable()==null || this.vue.getChampsEau() == null ||
-				this.vue.getChampsElectricite() == null;
+	/**
+	 * Verification des chammps logement et affichage de message en cas d'erreur
+	 * @return boolean
+	 */
+	private boolean verificationChampsLogement() {
+		if(this.vue.getEntretienPartieCommune()==null) {
+			this.afficherMessageErreur("Entretien partie commune non rempli");
+		}else if (this.vue.getChampsNombreDePiece()==null) {
+			this.afficherMessageErreur("Le nombre de pièce non rempli");
+		}else if (this.vue.getChampsNumeroEtage()==null) {
+			this.afficherMessageErreur("Le numéro d'étage non rempli");
+		}else if(this.vue.getChampsSurfaceHabitable()==null) {
+			this.afficherMessageErreur("La surface habitable non rempli");
+		}else if(this.vue.getChampsEau() == null) {
+			this.afficherMessageErreur("L'index eau non rempli");
+		}else if(this.vue.getChampsElectricite() == null) {
+			this.afficherMessageErreur("L'index éléctricité non rempli");
+		}else if(this.vue.getChampsSurfaceHabitable()==0) {
+			this.afficherMessageErreur("La surface habitable null");
+		} else {
+			return true;
+		}
+		return false;
 	}
 
+	private boolean verificationChampsGarage() {
+		if(this.vue.getEntretienPartieCommune()==null) {
+			this.afficherMessageErreur("Entretien partie commune non rempli");
+		}else if(this.vue.getChampsEau() == null) {
+			JOptionPane.showMessageDialog(this.vue, "L'index eau non rempli","Attention", JOptionPane.WARNING_MESSAGE);
+		}else if(this.vue.getChampsElectricite() == null) {
+			JOptionPane.showMessageDialog(this.vue, "L'index éléctricité non rempli","Attention", JOptionPane.WARNING_MESSAGE);
+		}else {
+			return true;
+		}
+		return false;
+	}
+	
 	private boolean isLogement() {
 		return this.vue.getComboBoxTypeBien().equals("L");
 	}
 
-	private boolean verificationChampsDateAcquisition() {
-		return this.vue.getChampsDateAcquisition()!=null;
+	/**
+	 * Vérification du champs date d'acquisition et affichage de message d'erreur correspondante dans le cas d'échec
+	 */
+	private boolean verificationEtAffichageErreurChampsDateAcquisition() {
+		try {
+			if (this.vue.getChampsDateAcquisition()==null) {
+				this.afficherMessageErreur("Le format de la date d'acquisition est incorrect");
+			}
+			return !(this.vue.getChampsDateAcquisition()==null);
+		}catch(IllegalArgumentException iae) {
+			this.afficherMessageErreur("La date d'acquisition non remplie");
+			return false;
+		}
+		
 	}
 
 	private boolean verificationChampIDBien() {
@@ -204,4 +231,8 @@ public class ControleurAjouterBien implements ActionListener {
 	public Map<String, String> getNameImmeubles() {
 		return NameImmeubles;
 	}	
+	
+	public void afficherMessageErreur(String msg) {
+		JOptionPane.showMessageDialog(this.vue, msg,"Attention", JOptionPane.WARNING_MESSAGE);
+	}
 }
