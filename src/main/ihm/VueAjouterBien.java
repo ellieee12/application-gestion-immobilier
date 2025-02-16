@@ -1,7 +1,5 @@
 package ihm;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -27,15 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
-
-import controleur.ControleurAjouterBien;
-import modele.DAOException;
 
 public class VueAjouterBien extends JFramePlus {
 
@@ -47,15 +37,6 @@ public class VueAjouterBien extends JFramePlus {
 	private JFormattedTextField textFieldSurfaceHabitable;
 	private JFormattedTextField formattedTextField;
 	private JComboBox<String> comboBox;
-	public JComboBox<String> getComboBox() {
-		return comboBox;
-	}
-
-	public JComboBox<String> getComboBox_Immeuble() {
-		return comboBox_Immeuble;
-	}
-
-
 	private JComboBox<String> comboBox_Immeuble;
 	private JTextField textFieldEntretien;
 	private JFormattedTextField textFieldEau;
@@ -287,36 +268,59 @@ public class VueAjouterBien extends JFramePlus {
 		this.setSizeMulti();
 	}
 
+	/**
+	 * Initialiser la liste de types de biens disponibles dans le cas d'un bâtiment
+	 */
 	public void initialiserComboBoxBatiment() {
 		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Logement", "Garage"}));
 	}
 
+	/**
+	 * Initialiser la liste de types de biens disponibles dans le cas d'une maison
+	 */
 	public void initialiserComboBoxMaison() {
 		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Logement"}));
 	}
 
+	/**
+	 * Retourner l'immeuble séléctionné
+	 * @return String identifiant immeuble
+	 */
 	public String getSelectedImmeuble() {
 		return comboBox_Immeuble.getSelectedItem().toString();
 	}
 	
-	//Methode pour désactiver les champs
+	/**
+	 * Desactiver les champs non concernés par un garage
+	 */
 	public void desactiverChamps() {
 		textFieldNombreDePieces.setEnabled(false);
 		textFieldNumeroEtage.setEnabled(false);
 		textFieldSurfaceHabitable.setEnabled(false);
 	}
 
-	//Methode pour activer les champs
+	/**
+	 * Activer les champs non concernés par un logement
+	 */
 	public void activerChamps() {
 		textFieldNombreDePieces.setEnabled(true);
 		textFieldNumeroEtage.setEnabled(true);
 		textFieldSurfaceHabitable.setEnabled(true);
 	}
 	
+	/**
+	 * Retourner l'identifiant du bien saisi
+	 * @return String
+	 */
 	public String getChampsIdBien () {
 		return String.valueOf(textFieldIdBien.getText());
 	}
 	
+	/**
+	 * Retourner la date d'acquisition saisie
+	 * @return Date
+	 * @throws IllegalArgumentException
+	 */
 	public Date getChampsDateAcquisition () throws IllegalArgumentException{
 		String date = formattedTextField.getText();
 		if (date.equals("  /  /    ")) {
@@ -334,6 +338,10 @@ public class VueAjouterBien extends JFramePlus {
 	    }
 	}
 	
+	/**
+	 * Retourner le numéro d'étage saisi
+	 * @return Integer
+	 */
 	public Integer getChampsNumeroEtage () {
 		if(textFieldNumeroEtage.getText().equals("")) {
 			return null;
@@ -341,20 +349,30 @@ public class VueAjouterBien extends JFramePlus {
 		return Integer.valueOf(textFieldNumeroEtage.getText());
 	}
 	
+	/**
+	 * Retourner le nombre de pièces saisi
+	 * @return Integer
+	 */
 	public Integer getChampsNombreDePiece () {
 		if(textFieldNombreDePieces.getText().equals("")) {
 			return null;
 		}
 		return Integer.valueOf(textFieldNombreDePieces.getText());
 	}
-	
+	/**
+	 * Retourner la surface habitable saisie
+	 * @return Float
+	 */
 	public Float getChampsSurfaceHabitable () {
 		if(textFieldSurfaceHabitable.getText().equals("")) {
 			return null;
 		}
 		return Float.valueOf(textFieldSurfaceHabitable.getText());
 	}
-	
+	/**
+	 * Retourner le type du bien saisi
+	 * @return String
+	 */
 	public String getComboBoxTypeBien () {
 		if (((String) comboBox.getSelectedItem()).equals("Logement")) {
 			return "L";
@@ -363,28 +381,40 @@ public class VueAjouterBien extends JFramePlus {
 		}
 
 	}
-	
+	/**
+	 * Retourner l'entretien partie commune saisi
+	 * @return Float
+	 */
 	public Float getEntretienPartieCommune() {
 		if (this.textFieldEntretien.getText().equals("")) {
 			return null;
 		}
 		return Float.valueOf(this.textFieldEntretien.getText());
 	}
-	
+	/**
+	 * Retourner l'index d'eau saisi
+	 * @return Integer
+	 */
 	public Integer getChampsEau() {
 		if(textFieldEau.getText().equals("")) {
 			return null;
 		}
 		return Integer.valueOf(textFieldEau.getText());
 	}
-	
+	/**
+	 * Retourner l'index d'éléctricité saisi
+	 * @return Integer
+	 */
 	public Integer getChampsElectricite() {
 		if(textFieldElectricite.getText().equals("")) {
 			return null;
 		}
 		return Integer.valueOf(textFieldElectricite.getText());
 	}
-	
+	/**
+	 * Créer et formatter un champs
+	 * @return NumberFormatter
+	 */
 	private NumberFormatter createNumberformatter() {
 		NumberFormat format = NumberFormat.getInstance();
 		format.setGroupingUsed(false);
@@ -394,6 +424,20 @@ public class VueAjouterBien extends JFramePlus {
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
 		return formatter;
+	}
+	/**
+	 * Retourner un combo box
+	 * @return JComboBox
+	 */
+	public JComboBox<String> getComboBox() {
+		return comboBox;
+	}
+	/**
+	 * Retourner un combo box immeuble
+	 * @return JComboBox
+	 */
+	public JComboBox<String> getComboBox_Immeuble() {
+		return comboBox_Immeuble;
 	}
 }
 
