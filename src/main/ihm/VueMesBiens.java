@@ -114,9 +114,15 @@ public class VueMesBiens extends JFramePlus {
 					"Id bien", "Type", "Num\u00E9ro \u00E9tage", "Surface habitable", "Nb pi\u00E8ces", "Entretien parties communes","Date d'acquisition"
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, Integer.class, Float.class, Integer.class, Float.class, Date.class
 				};
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				};
