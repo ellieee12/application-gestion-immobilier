@@ -96,7 +96,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Nom :");
+		JLabel lblNewLabel_1 = new JLabel("<html><font size='3' color=black>Nom</font> <font size='3'color=red>*</font></html>");
 		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_2.add(lblNewLabel_1, BorderLayout.NORTH);
 		
@@ -104,7 +104,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Prenom :");
+		JLabel lblNewLabel_2 = new JLabel("<html><font size='3' color=black>Prenom</font> <font size='3'color=red>*</font></html>");
 		lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_3.add(lblNewLabel_2, BorderLayout.NORTH);
 		
@@ -112,7 +112,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Téléphone :");
+		JLabel lblNewLabel_3 = new JLabel("<html><font size='3' color=black>Téléphone</font> <font size='3'color=red>*</font></html>");
 		lblNewLabel_3.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_6.add(lblNewLabel_3, BorderLayout.NORTH);
 		
@@ -120,7 +120,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_4 = new JLabel("Mail :");
+		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Mail</font><font size='3'color=red>*</font></html>");
 		lblNewLabel_4.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_10.add(lblNewLabel_4, BorderLayout.NORTH);
 		
@@ -128,7 +128,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_5 = new JLabel("Date de naissance :");
+		JLabel lblNewLabel_5 = new JLabel("<html><font size='3' color=black></font>Date de naissance<font size='3'color=red>*</font></html>");
 		lblNewLabel_5.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_11.add(lblNewLabel_5, BorderLayout.NORTH);
 		
@@ -136,7 +136,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelLibellés.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_6 = new JLabel("Identifiant :");
+		JLabel lblNewLabel_6 = new JLabel("<html><font size='3' color=black>Identifiant</font> <font size='3'color=red>*</font></html>");
 		lblNewLabel_6.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_12.add(lblNewLabel_6, BorderLayout.NORTH);
 		
