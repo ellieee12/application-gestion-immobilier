@@ -85,8 +85,10 @@ public class ControleurAjouterBien implements ActionListener {
 				String optionSelected = (String) ComboBoxselected.getSelectedItem();
 				if (optionSelected == "Garage") {
 					this.vue.desactiverChamps();
+					this.vue.champsNonObligatoiresGarage();
 				}else {
 					this.vue.activerChamps();
+					this.vue.champsObligatoireLogement();
 				}
 			}else {
 				String optionSelected = (String) ComboBoxselected.getSelectedItem();
