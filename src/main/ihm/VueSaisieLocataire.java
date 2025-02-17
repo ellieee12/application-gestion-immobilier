@@ -28,15 +28,24 @@ public class VueSaisieLocataire extends JFramePlus {
 	private JTextField textFieldDateDeNaissance;
 	private JTextField textFieldId;
 	private JPanel contentPane;
-	
+	/**
+	 * Retourner le nom saisi
+	 * @return String
+	 */
 	public String getNom() {
 		return textFieldNom.getText();
 	}
-	
+	/**
+	 * Retourner le prénom saisi
+	 * @return String
+	 */
 	public String getPrenom() {
 		return textFieldPrenom.getText();
 	}
-	
+	/**
+	 * Retourner le numéro de téléphone saisi
+	 * @return String
+	 */
 	public String getTel() {
 		if (textFieldTel.getText().equals("  -  -  -  -  ")) {
 	        return null; // Retourne null en cas d'erreur
@@ -45,7 +54,11 @@ public class VueSaisieLocataire extends JFramePlus {
 	    }
 		
 	}
-	
+	/**
+	 * Retourner le mail saisi
+	 * @return String
+	 * @throws IllegalArgumentException
+	 */
 	public String getMail() throws IllegalArgumentException{
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		// Compile the regex
@@ -59,8 +72,12 @@ public class VueSaisieLocataire extends JFramePlus {
         	return textFieldMail.getText();
         }
 	}
-	
-	public Date getDateDeNaissance () {
+	/**
+	 * Retourner la date de naissance
+	 * @return Date
+	 * @throws IllegalArgumentException
+	 */
+	public Date getDateDeNaissance () throws IllegalArgumentException{
 		try {
 			if (textFieldDateDeNaissance.getText().equals("  /  /    ")) {
 	        	return null;
@@ -73,16 +90,13 @@ public class VueSaisieLocataire extends JFramePlus {
 	        throw new IllegalArgumentException("Format date incorrect"); // Retourne null en cas d'erreur
 	    }
 	}
-	
+	/**
+	 * Retourner l'identifiant de locataire saisi
+	 * @return String
+	 */
 	public String getId() {
 		return textFieldId.getText();
 	}
-	
-//	public boolean isComplet() {
-//		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty()
-//				&& this.getTel() != null && !this.getMail().isEmpty() 
-//				&& !this.getId().isEmpty() && this.getDateDeNaissance() != null;
-//	}
 
 	/**
 	 * Create the frame.
