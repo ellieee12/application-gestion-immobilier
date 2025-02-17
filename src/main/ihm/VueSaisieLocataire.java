@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -45,18 +46,31 @@ public class VueSaisieLocataire extends JFramePlus {
 		
 	}
 	
-	public String getMail() {
-		return textFieldMail.getText();
+	public String getMail() throws IllegalArgumentException{
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+		// Compile the regex
+        Pattern p = Pattern.compile(emailRegex);
+        // Check if email matches the pattern
+        if (textFieldMail.getText().isEmpty()) {
+        	return null;
+        }else if (!p.matcher(textFieldMail.getText()).matches()) {
+        	throw new IllegalArgumentException("Format email incorrect");
+        }else {
+        	return textFieldMail.getText();
+        }
 	}
 	
 	public Date getDateDeNaissance () {
 		try {
+			if (textFieldDateDeNaissance.getText().equals("  /  /    ")) {
+	        	return null;
+			}
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
 	        java.util.Date parsedDate = sdf.parse(textFieldDateDeNaissance.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
-	        return null; // Retourne null en cas d'erreur
+	        throw new IllegalArgumentException("Format date incorrect"); // Retourne null en cas d'erreur
 	    }
 	}
 	
@@ -64,11 +78,11 @@ public class VueSaisieLocataire extends JFramePlus {
 		return textFieldId.getText();
 	}
 	
-	public boolean isComplet() {
-		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty()
-				&& this.getTel() != null && !this.getMail().isEmpty() 
-				&& !this.getId().isEmpty() && this.getDateDeNaissance() != null;
-	}
+//	public boolean isComplet() {
+//		return !this.getNom().isEmpty() && !this.getPrenom().isEmpty()
+//				&& this.getTel() != null && !this.getMail().isEmpty() 
+//				&& !this.getId().isEmpty() && this.getDateDeNaissance() != null;
+//	}
 
 	/**
 	 * Create the frame.

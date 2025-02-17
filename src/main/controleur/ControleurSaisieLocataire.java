@@ -36,39 +36,98 @@ public class ControleurSaisieLocataire implements ActionListener {
 		return false;
 	}
 	
-	private boolean verificationComplet() {
-		if (!this.vue.isComplet()) {
-			JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date de naissance invalide",
-					"Attention", JOptionPane.WARNING_MESSAGE);
+//	private boolean verificationComplet() {
+//		if (!this.vue.isComplet()) {
+//			JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date de naissance invalide",
+//					"Attention", JOptionPane.WARNING_MESSAGE);
+//			return false;
+//		}
+//		return true;
+//	}
+	
+//	private boolean allVerif(){
+//		return verificationComplet() && !verificationLocataireExiste();
+//	}
+	
+	private void afficherMsgErreurMail() {
+		try {
+			if ( vue.getMail()==null) {
+				this.afficherMessageErreur("Mail non rempli");
+			}
+		}catch(IllegalArgumentException iae) {
+			this.afficherMessageErreur("Format du mail incorrect (Ex : nom@gmail.com)");
+		}
+	}
+
+	private boolean verifierMail() {
+		try {
+			return vue.getMail()!=null;
+		}catch(IllegalArgumentException iae) {
 			return false;
 		}
-		return true;
 	}
 	
-	private boolean allVerif(){
-		return verificationComplet() && !verificationLocataireExiste();
+	private boolean verifierDateNaissance() { 
+		try {
+			return vue.getDateDeNaissance()!=null;
+		}catch(IllegalArgumentException iae) {
+			return false;
+		}
+	}
+	private void afficherMsgErreurDateNaissaice() {
+		try {
+			if (vue.getDateDeNaissance()==null) {
+				this.afficherMessageErreur("Date de naissance non remplie");
+			}
+		}catch(IllegalArgumentException e) {
+			this.afficherMessageErreur("Format de la date de naissance incorrect");
+		}
+	}
+	private boolean verifierChampsEtAfficherMsgErreur() {
+		if (vue.getNom().isEmpty()) {
+			this.afficherMessageErreur("Nom non rempli");
+		}else if (vue.getPrenom().isEmpty()) {
+			this.afficherMessageErreur("Prenom non rempli");
+		}else if (vue.getTel()==null) {
+			this.afficherMessageErreur("Numéro de téléphone non rempli");
+		}else if (!this.verifierMail()) {
+			this.afficherMsgErreurMail();
+		}else if(!this.verifierDateNaissance()) {
+			this.afficherMsgErreurDateNaissaice();
+		}else if(vue.getId().isEmpty()) {
+			this.afficherMessageErreur("Identifiant locataire non rempli");
+		}else {
+			return true;
+		}
+		return false;
+	}
+	
+	public void afficherMessageErreur(String msg) {
+		JOptionPane.showMessageDialog(this.vue, msg,"Attention", JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
-		if (b.getText() == "Annuler") {
+		if (b.getText().equals("Annuler")) {
 			this.vue.dispose();
-		} else if (b.getText() == "Ajouter") {
-			if (allVerif()) {
-				Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
-				try {
-					this.dao.ajouterLocataire(loc);
-					this.vueLocataires.getControleurMesLocataires().Update();
-				} catch (DAOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+		} else if (b.getText().equals("Ajouter")) {
+			if (this.verifierChampsEtAfficherMsgErreur()) {
+				if (!this.verificationLocataireExiste()) {
+					Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
+					try {
+						this.dao.ajouterLocataire(loc);
+						this.vueLocataires.getControleurMesLocataires().Update();
+					} catch (DAOException e1) {
+						e1.printStackTrace();
+					}
+					//ferme cette page et ouvre le Menu
+					this.vue.dispose();
 				}
-				//ferme cette page et ouvre le Menu
-				this.vue.dispose();
 			}
-			
 		}
 	}
+	
+	
 
 }
