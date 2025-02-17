@@ -1,11 +1,11 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.ParseException;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,8 +18,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controleur.ControleurAjouterImmeuble;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 public class VueAjouterImmeuble extends JFramePlus {
 
