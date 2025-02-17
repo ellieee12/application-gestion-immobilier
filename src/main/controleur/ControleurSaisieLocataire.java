@@ -1,10 +1,7 @@
 package controleur;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -26,14 +23,14 @@ public class ControleurSaisieLocataire implements ActionListener {
 		this.dao = new LocataireDAO();
 	}
 	
-	private boolean verificationLocataireExiste() throws SQLException {
+	private boolean verificationLocataireExiste(){
 		try {
 			if (this.dao.locataireExists(this.vue.getId())) {
 				JOptionPane.showMessageDialog(this.vue, "Ce locataire existe déjà ou cet identifiant à déjà été utilisé",
 						"Attention", JOptionPane.WARNING_MESSAGE);
 				return true;
 			}
-		} catch (HeadlessException | DAOException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -48,7 +45,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		return true;
 	}
 	
-	private boolean allVerif() throws SQLException {
+	private boolean allVerif(){
 		return verificationComplet() && !verificationLocataireExiste();
 	}
 
@@ -58,23 +55,19 @@ public class ControleurSaisieLocataire implements ActionListener {
 		if (b.getText() == "Annuler") {
 			this.vue.dispose();
 		} else if (b.getText() == "Ajouter") {
-			try {
-				if (allVerif()) {
-					Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
-					try {
-						this.dao.ajouterLocataire(loc);
-						this.vueLocataires.getControleurMesLocataires().Update();
-					} catch (DAOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					//ferme cette page et ouvre le Menu
-					this.vue.dispose();
+			if (allVerif()) {
+				Locataire loc = new Locataire(this.vue.getNom(), this.vue.getPrenom(), this.vue.getTel(), this.vue.getMail(),this.vue.getId(), this.vue.getDateDeNaissance());
+				try {
+					this.dao.ajouterLocataire(loc);
+					this.vueLocataires.getControleurMesLocataires().Update();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//ferme cette page et ouvre le Menu
+				this.vue.dispose();
 			}
+			
 		}
 	}
 
