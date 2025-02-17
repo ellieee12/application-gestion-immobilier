@@ -106,6 +106,10 @@ public class VueMesImmeubles extends JPanel {
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
+	
+	public String getIdImmeubleChoisi() {
+		return (String) this.table.getModel().getValueAt(this.getLigneChoisi(), 0);
+	}
 
 	public ControleurMesImmeubles getControleurMesImmeubles() {
 		return this.controleurMesImmeubles;

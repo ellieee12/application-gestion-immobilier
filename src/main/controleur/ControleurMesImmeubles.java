@@ -49,6 +49,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 			//ouvrir ajouterImmeuble
 				try {
 					VueAjouterImmeuble frame = new VueAjouterImmeuble(this.vue);
+
 					frame.setVisible(true);
 					b.setEnabled(false);
 				} catch (Exception e1) {
@@ -85,6 +86,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 	public void mouseClicked(MouseEvent e) {
 		JTable table =(JTable) e.getSource();
         	if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+        		//System.out.println(this.vue.getIdImmeubleChoisi());
         		EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
