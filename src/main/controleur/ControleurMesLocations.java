@@ -28,8 +28,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			this.location = new LinkedList<Location>();
 			
 			locationDAO = new LocationDAO();
-			this.location = locationDAO.getAllLocations();
-		
+			this.location = locationDAO.getAllLocations();	
 	}
 	
 	public List<Location> getLocation(){
@@ -38,7 +37,6 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 	
 	public void Update() throws DAOException {
 		this.location = new LinkedList<>();
-		
 		LocationDAO location = new LocationDAO();
 		this.location = location.getAllLocations();
         this.vue.buildTable(this);
@@ -56,7 +54,9 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+		// on vérifie qu'une ligne est selectionnée
 		} else if (this.vue.getLigneChoisi() != -1){
+			// on vérifie si la location est terminée
 			if (this.location.get(this.vue.getLigneChoisi()).getDate_fin() != null) {
 				JOptionPane.showMessageDialog(this.vue, 
 						"La location selectionnée est terminée","Attention", JOptionPane.WARNING_MESSAGE);

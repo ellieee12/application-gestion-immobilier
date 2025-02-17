@@ -39,6 +39,7 @@ public class ControleurSaisieLocataire implements ActionListener {
 		return false;
 	}
 	
+	//vérifie si tous les champs obligatoires sont remplis
 	private boolean verificationComplet() {
 		if (!this.vue.isComplet()) {
 			JOptionPane.showMessageDialog(this.vue, "Champs obligatoires non remplis et/ou date de naissance invalide",
@@ -65,14 +66,12 @@ public class ControleurSaisieLocataire implements ActionListener {
 						this.dao.ajouterLocataire(loc);
 						this.vueLocataires.getControleurMesLocataires().Update();
 					} catch (DAOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					//ferme cette page et ouvre le Menu
 					this.vue.dispose();
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
