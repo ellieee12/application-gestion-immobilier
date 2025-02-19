@@ -343,7 +343,7 @@ BEGIN
 	and l1.date_debut = l2.date_debut
     and l1.id_bien = v_id_bien
     and l1.date_fin is null;
-END$$
+END;
 
 CREATE PROCEDURE getDateRegularisationFromLocation (v_id_bien VARCHAR(20),v_date_debut date)
 BEGIN 
