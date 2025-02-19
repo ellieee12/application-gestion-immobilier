@@ -31,22 +31,6 @@ public class VueDeclaration extends JPanel {
 	private JButton btnImprimer;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueDeclaration frame = new VueDeclaration();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public VueDeclaration() {
