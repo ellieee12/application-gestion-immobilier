@@ -19,19 +19,29 @@ public class ControleurAjouterImmeuble implements ActionListener {
 	private VueAjouterImmeuble vue;
 	private ImmeubleDAO dao;
 	
-	
+	/**
+	 * Constructeur de ControleurAjouterImmeuble
+	 * @param vue
+	 * @param vueImmeubles
+	 */
 	public ControleurAjouterImmeuble(VueAjouterImmeuble vue, VueMesImmeubles vueImmeubles) {
 		this.vueImmeubles=vueImmeubles;
 		this.vue=vue;
 		this.dao = new ImmeubleDAO();
 	}
-	
+	/**
+	 * Vérification si l'immeuble avec un identifiant donné existe dans la base de données
+	 * @return
+	 * @throws DAOException
+	 */
 	private boolean verifImmeubleExiste() throws DAOException {
 		return this.dao.immeubleExiste(this.vue.getId());
 	}
-	
+	/**
+	 * Vérification des champs
+	 * @return
+	 */
 	private boolean verifComplet() {
-		System.out.println("id:"+this.vue.getId());
 		if (this.vue.getAdresse().equals("")) {
 			this.afficherMessageErreur("Adresse non remplie");
 		}else if (this.vue.getCP()==null) {
@@ -44,16 +54,12 @@ public class ControleurAjouterImmeuble implements ActionListener {
 			return true;
 		}
 		return false;
-//		if (!this.vue.isComplet()) {
-//			JOptionPane.showMessageDialog(this.vue, 
-//					"Champs obligatoires non remplis","Attention", JOptionPane.WARNING_MESSAGE);
-//			return false;
-//		}
-//		return true;
 	}
 
-	
-	// ouvre mes immeubles et ferme cette page
+	/**
+	 * Ouvrir la page des immeubles et fermer cette page
+	 * @throws DAOException
+	 */
 	private void valider() throws DAOException {
 		this.vueImmeubles.getControleurMesImmeubles().Update();
 		this.vue.dispose();
