@@ -235,6 +235,7 @@ public class VueAjouterFacture extends JFramePlus {
 		this.valider.addActionListener(controleur);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 	/**
 	 * initialiser le combo box contenant la liste des biens
