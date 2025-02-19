@@ -23,22 +23,7 @@ public class VueMesLocataires extends JPanel {
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesLocataires controleur;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesLocataires frame = new VueMesLocataires();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
