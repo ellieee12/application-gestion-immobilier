@@ -30,34 +30,50 @@ public class VueAjouterImmeuble extends JFramePlus {
 	private JComboBox<String> comboBox;
 	private JFormattedTextField formattedTextField_date;
 
-	
+	/**
+	 * Retourner le type d'immeuble
+	 * @return String
+	 */
 	public String getTypeImmeuble() {
 		return comboBox.getSelectedItem().toString();
 	}
-	
+	/**
+	 * Retourner l'adresse
+	 * @return String
+	 */
 	public String getAdresse() {
 		return textField_adresse.getText();
 	}
-	
+	/**
+	 * Retourner le code postal
+	 * @return String
+	 */
 	public String getCP() {
+		if (textField_code_postal.getText().trim().isEmpty()) {
+			return null;
+		}
 		return textField_code_postal.getText();
 	}
-	
+	/**
+	 * Retourner la ville
+	 * @return String
+	 */
 	public String getVille() {
 		return textField_ville.getText();
 	}
-	
+	/**
+	 * Retourner l'identifier de l'immeuble
+	 * @return String
+	 */
 	public String getId() {
 		return textField_id.getText();
 	}
-
+	/**
+	 * Retourner la periode construction
+	 * @return
+	 */
 	public String getPeriodeConstruction() {
 		return this.formattedTextField_date.getText();
-	}
-	
-	public boolean isComplet() {
-		return !this.getAdresse().isEmpty() && !this.getTypeImmeuble().isEmpty()
-				&& !this.getCP().equals("     ") && !this.getVille().isEmpty() && !this.getId().isEmpty();
 	}
 
 	/**
