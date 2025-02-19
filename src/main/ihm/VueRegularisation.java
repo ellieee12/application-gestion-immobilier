@@ -37,24 +37,6 @@ public class VueRegularisation extends JFramePlus {
 	private JLabel lblProvision;
 	private JLabel lblReste;
 	private JFormattedTextField champNouvelleProvision;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Date date = Date.valueOf("2021-12-17");
-					VueRegularisation frame = new VueRegularisation(new ControleurMesLocations(null), "11",date);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
