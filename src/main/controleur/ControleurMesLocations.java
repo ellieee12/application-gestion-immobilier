@@ -50,6 +50,7 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			//Ouvrir ajouterLocation
 			try {
 				VueAjouterLocation frame = new VueAjouterLocation(this.vue);
+				this.vue.updateVue();
 				frame.setVisible(true);
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -64,7 +65,8 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 				if (b.getText().equals("<html><div style='text-align: center;'>Régularisation<br>des charges</div></html>")){
 					try {
 						if (LocalDate.now().minusYears(1).isAfter(LocalDate.parse((this.location.get(this.vue.getLigneChoisi()).getDate_regularisation() == null?this.location.get(this.vue.getLigneChoisi()).getDate_debut():this.location.get(this.vue.getLigneChoisi()).getDate_regularisation()).toString()))) {
-							VueRegularisation frame = new VueRegularisation(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+							VueRegularisation frame = new VueRegularisation(this.vue,this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+							this.vue.updateVue();
 							frame.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(this.vue, 
@@ -75,7 +77,8 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 					}
 				} else if (b.getText().equals("<html><div style='text-align: center;'>Solde de<br>tout comptes</div></html>")){
 					try {
-						VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+						VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(this.vue,this, this.location.get(this.vue.getLigneChoisi()).getIdBien(), this.location.get(this.vue.getLigneChoisi()).getDate_debut());
+						this.vue.updateVue();
 						frame.setVisible(true);
 					} catch (Exception e1) {
 						e1.printStackTrace();

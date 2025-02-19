@@ -18,7 +18,7 @@ import controleur.ControleurMesImmeubles;
 import modele.Immeuble;
 import modele.DAOException;
 
-public class VueMesImmeubles extends JPanel {
+public class VueMesImmeubles extends JPanelPlus {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
@@ -33,7 +33,6 @@ public class VueMesImmeubles extends JPanel {
 	 */
 	public VueMesImmeubles() throws DAOException {
 		controleurMesImmeubles = new ControleurMesImmeubles(this);
-		
 		setBounds(100, 100, 750, 300);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -51,9 +50,9 @@ public class VueMesImmeubles extends JPanel {
 		PanelBouton.add(PanelBoutonNouveau);
 		PanelBoutonNouveau.setLayout(new BorderLayout(0, 0));
 		
-		JButton AjouterImmeuble = new JButton("Ajouter");
-		PanelBoutonNouveau.add(AjouterImmeuble, BorderLayout.SOUTH);
-		AjouterImmeuble.addActionListener(controleurMesImmeubles);
+		ajouterImmeuble = new JButton("Ajouter");
+		PanelBoutonNouveau.add(ajouterImmeuble, BorderLayout.SOUTH);
+		ajouterImmeuble.addActionListener(controleurMesImmeubles);
 		
 		JPanel PanelBoutonSupprimer = new JPanel();
 		PanelBouton.add(PanelBoutonSupprimer);
@@ -90,7 +89,6 @@ public class VueMesImmeubles extends JPanel {
 		this.table = new JTable(this.t);
 		table.getTableHeader().setReorderingAllowed(false);
 		this.table.setModel(this.t);
-		
 		scrollPane.setViewportView(table);
 		
 		this.table.addMouseListener(controleurMesImmeubles);
@@ -115,7 +113,9 @@ public class VueMesImmeubles extends JPanel {
 		return this.controleurMesImmeubles;
 	}
 	
-	public void getBoutonSuppr() {
-		this.supprimerImmeuble.setEnabled(false);
-	}
 }
+
+
+
+
+

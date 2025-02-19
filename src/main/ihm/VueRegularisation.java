@@ -39,28 +39,10 @@ public class VueRegularisation extends JFramePlus {
 	private JFormattedTextField champNouvelleProvision;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Date date = Date.valueOf("2021-12-17");
-					VueRegularisation frame = new VueRegularisation(new ControleurMesLocations(null), "11",date);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public VueRegularisation(ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
-		
-		
+	public VueRegularisation(VueMesLocations vue, ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
+		super(vue);
 		ControleurRegularisation controleur = new ControleurRegularisation(this,controleurMesLocations,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);

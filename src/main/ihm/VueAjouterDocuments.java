@@ -43,6 +43,7 @@ public class VueAjouterDocuments extends JFramePlus {
 	 * Create the frame.
 	 */
 	public VueAjouterDocuments(Location loc, String idBien, String idLocataire, VueMesLocations vueMesLocations) {
+		super(vueMesLocations);
 		this.loc= loc;
 		this.dateDebut=loc.getDate_debut();
 		this.idBien=idBien;

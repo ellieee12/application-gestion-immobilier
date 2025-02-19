@@ -4,8 +4,13 @@ import modele.DAOException;
 import modele.ImmeubleDAO;
 
 import java.awt.HeadlessException;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -14,7 +19,7 @@ import ihm.VueMesImmeubles;
 import modele.Batiment;
 import modele.Maison;
 
-public class ControleurAjouterImmeuble implements ActionListener {
+public class ControleurAjouterImmeuble extends WindowAdapter implements ActionListener  {
 		
 	private VueMesImmeubles vueImmeubles;
 	private VueAjouterImmeuble vue;
@@ -80,6 +85,4 @@ public class ControleurAjouterImmeuble implements ActionListener {
 			}
 		}
 	}
-
-
 }

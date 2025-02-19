@@ -40,6 +40,7 @@ public class VueMenu extends JFramePlus {
 	 * @throws DAOException 
 	 */
 	public VueMenu() throws DAOException {
+		super();
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception ex) {

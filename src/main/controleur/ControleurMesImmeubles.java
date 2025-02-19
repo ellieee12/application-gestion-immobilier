@@ -51,7 +51,7 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
 					VueAjouterImmeuble frame = new VueAjouterImmeuble(this.vue);
 
 					frame.setVisible(true);
-					b.setEnabled(false);
+					this.vue.updateVue();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -90,14 +90,14 @@ public class ControleurMesImmeubles extends MouseAdapter implements ActionListen
         		EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						VueMesBiens frame = new VueMesBiens(immeuble.get(table.getSelectedRow()).getId_immeuble());
+						VueMesBiens frame = new VueMesBiens(this.vue, immeuble.get(table.getSelectedRow()).getId_immeuble());
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-			});
-        	}
+				this.vue.updateVue();
+				frame.setVisible(true);
+			}
+    	}
 	}
-
-}

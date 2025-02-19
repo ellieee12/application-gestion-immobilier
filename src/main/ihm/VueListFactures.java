@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class VueListFactures extends JPanel {
+public class VueListFactures extends JPanelPlus {
 
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel t;

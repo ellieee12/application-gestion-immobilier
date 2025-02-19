@@ -64,6 +64,7 @@ public class ControleurMesBiens implements ActionListener {
 				boolean inList = isInList();
 				if (inList) {
 					VueAjouterBien frame = new VueAjouterBien(this.vue);
+					this.vue.updateVue();
 					frame.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(this.vue, "Immeuble indisponible pour ajouter un bien","Attention", JOptionPane.WARNING_MESSAGE);
