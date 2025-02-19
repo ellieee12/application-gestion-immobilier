@@ -87,7 +87,13 @@ private static final Logger logger = Logger.getLogger(ImmeubleDAO.class.getName(
 	
 	public boolean locationExists(String id_bien, String id_locataire,Date date_debut) throws DAOException {
 		try {
-			String req="select * from louer where id_bien=? and id_locataire=? and date_debut=?";
+			String req="select louer.id_bien, louer.id_locataire, louer.date_debut from louer, location "
+					+ "where louer.id_bien = location.id_bien "
+					+ "and louer.date_debut = location.date_debut "
+					+ "and louer.id_bien=? "
+					+ "and louer.id_locataire=? "
+					+ "and louer.date_debut=? "
+					+ "and date_fin is null;";
 			PreparedStatement stmt = this.mySQLCon.getConnection().prepareStatement(req);
 			stmt.setString(1, id_bien);
 			stmt.setDate(3, date_debut);
