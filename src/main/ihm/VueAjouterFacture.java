@@ -8,12 +8,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
-import org.jdesktop.swingx.JXFormattedTextField;
-import org.jdesktop.swingx.painter.GlossPainter;
 import org.jdesktop.swingx.prompt.BuddySupport;
 
 import controleur.ControleurAjouterFacture;
-import controleur.ControleurAjouterLocation;
 import modele.DAOException;
 
 import java.awt.GridLayout;
@@ -22,14 +19,11 @@ import java.awt.Font;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
@@ -94,63 +88,63 @@ public class VueAjouterFacture extends JFramePlus {
 		panel.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_6 = new JLabel("Id bien");
+		JLabel lblNewLabel_6 = new JLabel("<html><font size='3' color=black>ID Bien</font><font size='3'color=red>*</font></html>");
 		panel_12.add(lblNewLabel_6, BorderLayout.NORTH);
 		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Date emission");
+		JLabel lblNewLabel_1 = new JLabel("<html><font size='3' color=black>Date émission</font><font size='3'color=red>*</font></html>");
 		panel_3.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panel_4 = new JPanel();
 		panel.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("Date paiement");
+		JLabel lblNewLabel_2 = new JLabel("<html><font size='3' color=black>Date paiement</font><font size='3'color=red>*</font></html>");
 		panel_4.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Numero");
+		JLabel lblNewLabel_3 = new JLabel("<html><font size='3' color=black>Numéro</font><font size='3'color=red>*</font></html>");
 		panel_5.add(lblNewLabel_3, BorderLayout.NORTH);
 		
 		JPanel panel_6 = new JPanel();
 		panel.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_4 = new JLabel("Designation");
+		JLabel lblNewLabel_4 = new JLabel("<html><font size='3' color=black>Désignation</font><font size='3'color=red>*</font></html>");
 		panel_6.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		JPanel panel_11 = new JPanel();
 		panel.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_5 = new JLabel("Montant");
+		JLabel lblNewLabel_5 = new JLabel("<html><font size='3' color=black>Montant</font><font size='3'color=red>*</font></html>");
 		panel_11.add(lblNewLabel_5, BorderLayout.NORTH);
 		
 		JPanel panel_13 = new JPanel();
 		panel.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_7 = new JLabel("Numero devis");
+		JLabel lblNewLabel_7 = new JLabel("<html><font size='3' color=black>Numéro Devis</font><font size='3'color=red>*</font></html>");
 		panel_13.add(lblNewLabel_7, BorderLayout.NORTH);
 		
 		JPanel panel_14 = new JPanel();
 		panel.add(panel_14);
 		panel_14.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_8 = new JLabel("Montant réel payé");
+		JLabel lblNewLabel_8 = new JLabel("<html><font size='3' color=black>Montant réel payé</font><font size='3'color=red>*</font></html>");
 		panel_14.add(lblNewLabel_8, BorderLayout.NORTH);
 		
 		JPanel panel_15 = new JPanel();
 		panel.add(panel_15);
 		panel_15.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_9 = new JLabel("Imputable locataire");
+		JLabel lblNewLabel_9 = new JLabel("<html><font size='3' color=black>Imputable Locataire</font><font size='3'color=red>*</font></html>");
 		panel_15.add(lblNewLabel_9, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
@@ -161,7 +155,7 @@ public class VueAjouterFacture extends JFramePlus {
 		panel_1.add(panel_17);
 		panel_17.setLayout(new BorderLayout(0, 0));
 		
-		comboBoxBiens = new JComboBox();
+		comboBoxBiens = new JComboBox<String>();
 		this.initialiserComboBoxBiens(controleur);
 		panel_17.add(comboBoxBiens, BorderLayout.NORTH);
 		

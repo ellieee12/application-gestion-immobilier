@@ -79,4 +79,12 @@ public class ControleurAjouterFacture implements ActionListener {
 	public List<String> getBiens(){
 		return this.biens;
 	}
+	
+	/**
+	 * Afficher une message d'erreur dans une JOptionPan avec l'option de WARNING_MESSAGE 
+	 * @param msg message d'erreur à afficher
+	 */
+	public void afficherMessageErreur(String msg) {
+		JOptionPane.showMessageDialog(this.vue, msg,"Attention", JOptionPane.WARNING_MESSAGE);
+	}
 }
