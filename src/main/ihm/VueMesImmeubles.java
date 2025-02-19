@@ -73,6 +73,10 @@ public class VueMesImmeubles extends JPanel {
 					"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, String.class
 				};

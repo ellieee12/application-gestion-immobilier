@@ -70,6 +70,7 @@ public class VueMenu extends JFramePlus {
 		tabbedPane.addTab("Déclaration Fiscale", null, new VueDeclaration(),null);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 }

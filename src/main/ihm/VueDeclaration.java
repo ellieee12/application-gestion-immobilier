@@ -95,7 +95,6 @@ public class VueDeclaration extends JPanel {
 		textAreaDeclaration.setLineWrap(true);
 		textAreaDeclaration.setEditable(false);
 		this.add(textAreaDeclaration, BorderLayout.CENTER);
-		
 	}
 	
 	public void afficherRevenus(float montant) {

@@ -91,6 +91,7 @@ public class VueEnregistrerDocumentsLocation extends JFramePlus {
 		panel_3.add(this.lblNomFichier);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 	
 	public void afficherNomFichier(String nomFichier) {
