@@ -53,6 +53,7 @@ public class ControleurMesLocataires implements ActionListener {
 			//Ouvrir ajouterLocation
 			try {
 				VueSaisieLocataire frame = new VueSaisieLocataire(this.vue);
+				this.vue.updateVue();
 				frame.setVisible(true);
 				this.Update();
 			} catch (Exception e1) {

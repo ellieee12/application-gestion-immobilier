@@ -36,7 +36,8 @@ public class VueMesBiens extends JFramePlus {
 	 * Create the frame.
 	 * @throws DAOException 
 	 */
-	public VueMesBiens(String idImmeuble) throws DAOException {
+	public VueMesBiens(VueMesImmeubles vue,String idImmeuble) throws DAOException {
+		super(vue);
 		this.idImmeuble=idImmeuble;
 		controleurMesBiens = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

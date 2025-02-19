@@ -19,7 +19,21 @@ import javax.swing.plaf.FontUIResource;
 
 import org.jdesktop.swingx.JXLabel;
 
-public class JFramePlus extends JFrame {
+import controleur.ControleurFramePlus;
+
+public abstract class JFramePlus extends JFrame {
+	
+	public JFramePlus(JFramePlus vue) {
+		ControleurFramePlus controleur = new ControleurFramePlus(vue);
+		this.addWindowListener(controleur);
+	}
+	
+	public JFramePlus() {}
+	
+	public JFramePlus(JPanelPlus vue) {
+		ControleurFramePlus controleur = new ControleurFramePlus(vue);
+		this.addWindowListener(controleur);
+	}
 	
 	static final int i = 3;
 	
@@ -61,6 +75,29 @@ public class JFramePlus extends JFrame {
 	        	this.setBounds(new Rectangle(100,100,(int)this.getBounds().getWidth() + i,(int) this.getBounds().getHeight() + i));
 	        }
 	    }
+	}
+	
+	/**
+	 * Active ou désactive les boutons et le tableau sur la vue au moment où on change de page
+	 */
+	public void updateVue() {
+		List<Component> comps = getAllComponents(this);
+		for (Component c : comps) {
+	        if (c instanceof JButton) {
+	        	if (c.isEnabled()) {
+	    			c.setEnabled(false);
+	    		}else {
+	    			c.setEnabled(true);
+	    		}
+	        } else if (c instanceof JTable) {
+	        	if (c.isEnabled()) {
+	        		c.setEnabled(false);
+	        	} else {
+	        		c.setEnabled(true);
+	        	}
+	        }
+		}
+
 	}
 
 }

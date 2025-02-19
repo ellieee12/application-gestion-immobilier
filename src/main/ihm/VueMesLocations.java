@@ -20,7 +20,7 @@ import controleur.ControleurMesLocations;
 import modele.DAOException;
 import modele.Location;
 
-public class VueMesLocations extends JPanel {
+public class VueMesLocations extends JPanelPlus {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;

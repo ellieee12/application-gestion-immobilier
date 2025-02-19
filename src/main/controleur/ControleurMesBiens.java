@@ -54,6 +54,7 @@ public class ControleurMesBiens implements ActionListener {
 		if (b.getText() == "Ajouter") {
 			try {
 				VueAjouterBien frame = new VueAjouterBien(this.vue);
+				this.vue.updateVue();
 				frame.setVisible(true);
 			} catch (Exception error) {
 				error.printStackTrace();

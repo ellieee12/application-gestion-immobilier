@@ -25,6 +25,7 @@ public class VueEnregistrerDocumentsLocation extends JFramePlus {
 
 	public VueEnregistrerDocumentsLocation(Date dateDebut, String idBien, String idLocataire,VueAjouterDocuments vueAjouterDocuments,
 			 ControleurAjouterDocuments controleurAjouterDocument) {
+		super(vueAjouterDocuments);
 		this.controleur = new ControleurEnregistrerDocument(this,vueAjouterDocuments, controleurAjouterDocument);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

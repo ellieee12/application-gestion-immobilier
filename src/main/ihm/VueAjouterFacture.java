@@ -71,6 +71,7 @@ public class VueAjouterFacture extends JFramePlus {
 	 * @throws DAOException 
 	 */
 	public VueAjouterFacture(VueListFactures VueListFactures) throws DAOException, SQLException {
+		super(VueListFactures);
 		ControleurAjouterFacture controleur = new ControleurAjouterFacture(this, VueListFactures);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 450);

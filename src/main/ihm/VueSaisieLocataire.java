@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -74,9 +75,9 @@ public class VueSaisieLocataire extends JFramePlus {
 	 * Create the frame.
 	 */ 	
 	public VueSaisieLocataire(VueMesLocataires vue) {
-		
+		super(vue);
 		ControleurSaisieLocataire controleur = new ControleurSaisieLocataire(this, vue);
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

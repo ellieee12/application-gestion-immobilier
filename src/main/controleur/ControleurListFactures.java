@@ -54,6 +54,7 @@ public class ControleurListFactures implements ActionListener{
 			//ouvrir ajouterImmeuble
 				try {
 					VueAjouterFacture frame = new VueAjouterFacture(this.vue);
+					this.vue.updateVue();
 					frame.setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();

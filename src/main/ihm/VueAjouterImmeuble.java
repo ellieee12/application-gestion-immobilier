@@ -66,8 +66,8 @@ public class VueAjouterImmeuble extends JFramePlus {
 	 * Create the frame.
 	 */
 	public VueAjouterImmeuble(VueMesImmeubles vueImmeubles) {
+		super(vueImmeubles);
 		ControleurAjouterImmeuble controleur = new ControleurAjouterImmeuble(this,vueImmeubles);
-		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -200,6 +200,12 @@ public class VueAjouterImmeuble extends JFramePlus {
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		this.setSizeMulti();
+	}
+
+	@Override
+	public void updateVue() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import controleur.ControleurMesLocataires;
 import modele.Locataire;
 
-public class VueMesLocataires extends JPanel {
+public class VueMesLocataires extends JPanelPlus {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;

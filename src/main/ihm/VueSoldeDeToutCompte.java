@@ -38,30 +38,12 @@ public class VueSoldeDeToutCompte extends JFramePlus {
 	private JLabel lblProvision;
 	private JLabel lblReste;
 	private JFormattedTextField champNouvelleProvision;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Date date = Date.valueOf("2021-12-17");
-					VueSoldeDeToutCompte frame = new VueSoldeDeToutCompte(new ControleurMesLocations(null),"11",date);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public VueSoldeDeToutCompte(ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {
-		
-		
+	public VueSoldeDeToutCompte(VueMesLocations vue, ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {		
+		super(vue);
 		ControleurSoldeDeToutCompte controleur = new ControleurSoldeDeToutCompte(this,controleurMesLocations,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);

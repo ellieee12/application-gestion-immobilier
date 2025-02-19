@@ -50,7 +50,6 @@ public class VueDeclaration extends JPanel {
 	 * Create the frame.
 	 */
 	public VueDeclaration() {
-		
 		ControleurDeclaration controleur = new ControleurDeclaration(this);
 		
 		setBounds(100, 100, 650, 600);
