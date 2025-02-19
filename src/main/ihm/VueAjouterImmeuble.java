@@ -40,6 +40,9 @@ public class VueAjouterImmeuble extends JFramePlus {
 	}
 	
 	public String getCP() {
+		if (textField_code_postal.getText().trim().isEmpty()) {
+			return null;
+		}
 		return textField_code_postal.getText();
 	}
 	
