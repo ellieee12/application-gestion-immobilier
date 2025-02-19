@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JComboBox;
@@ -266,23 +266,29 @@ public class VueAjouterFacture extends JFramePlus {
 	
 	public Date getChampsDateEmission() {
 		try {
+			if (textFieldDateEmission.getText().equals("  /  /    ")) {
+	        	return null;
+			}
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
 	        java.util.Date parsedDate = sdf.parse(textFieldDateEmission.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
-	        return null; // Retourne null en cas d'erreur
+	        throw new IllegalArgumentException("Mauvais format date emission");
 	    }
 	}
 	
-	public Date getChampsDateAcquisition() {
+	public Date getChampsDatePaiement() {
 		try {
+			if (textFieldDatePaiement.getText().equals("  /  /    ")) {
+	        	return null;
+			}
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        sdf.setLenient(false);
 	        java.util.Date parsedDate = sdf.parse(textFieldDatePaiement.getText());
 	        return new Date(parsedDate.getTime());
 	    } catch (Exception e) {
-	        return null; // Retourne null en cas d'erreur
+	    	throw new IllegalArgumentException("Mauvais format date paiement");
 	    }
 	}
 	
@@ -301,10 +307,12 @@ public class VueAjouterFacture extends JFramePlus {
 	}
 	
 	public Float getChampsMontant() {
-		if(textFieldMontant.getText().equals("0")) {
+		try {
+			return Float.valueOf(textFieldMontant.getText());
+		}catch(Exception e) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontant.getText());
+		
 	}
 	
 	public String getChampsNumeroDevis() {
@@ -315,28 +323,40 @@ public class VueAjouterFacture extends JFramePlus {
 	}
 	
 	public Float getChampsMontantReelPaye() {
-		if(textFieldMontantReelPaye.getText().equals("0")) {
+		try {
+			return Float.valueOf(textFieldMontantReelPaye.getText());
+		}catch(Exception e) {
 			return null;
 		}
-		return Float.valueOf(textFieldMontantReelPaye.getText());
 	}
 	
 	public Float getChampsImputableLocataire() {
-		if(textFieldImputableLocataire.getText().equals("0")) {
+		try {
+			return Float.valueOf(textFieldImputableLocataire.getText());
+		}catch(Exception e) {
 			return null;
 		}
-		return Float.valueOf(textFieldImputableLocataire.getText());
 	}
 	
 	private NumberFormatter createNumberformatter() {
-		NumberFormat format = NumberFormat.getInstance();
-		format.setGroupingUsed(false);
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setAllowsInvalid(false);
-        formatter.setMinimum(0);
-        formatter.setMaximum(Integer.MAX_VALUE);
-		return formatter;
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00"); // Allows two decimal places
+	    decimalFormat.setGroupingUsed(false); // Disable thousands separator if not needed
+	    
+	    NumberFormatter formatter = new NumberFormatter(decimalFormat);
+	    formatter.setValueClass(Double.class); // Ensure values are treated as doubles
+	    formatter.setAllowsInvalid(false); // Prevents invalid input
+	    formatter.setMinimum(0.0); // Optional: Ensure only positive values
+	    formatter.setOverwriteMode(true); // Optional: Improves UX when typing
+	    
+	    return formatter;
+//		NumberFormat format = NumberFormat.getInstance();
+//		format.setGroupingUsed(false);
+//        NumberFormatter formatter = new NumberFormatter(format);
+//        formatter.setValueClass(Integer.class);
+//        formatter.setAllowsInvalid(false);
+//        formatter.setMinimum(0);
+//        formatter.setMaximum(Integer.MAX_VALUE);
+//		return formatter;
 	}
 
 }
