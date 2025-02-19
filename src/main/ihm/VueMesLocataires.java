@@ -23,8 +23,6 @@ public class VueMesLocataires extends JPanel {
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesLocataires controleur;
-
-
 	/**
 	 * Create the frame.
 	 */
