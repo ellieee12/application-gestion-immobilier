@@ -252,18 +252,27 @@ public class VueAjouterFacture extends JFramePlus {
 		
 		this.setSizeMulti();
 	}
-	
+	/**
+	 * initialiser le combo box contenant la liste des biens
+	 * @param controleur
+	 */
 	private void initialiserComboBoxBiens(ControleurAjouterFacture controleur) {
 		comboBoxBiens = new JComboBox<String>();
 		for (String s : controleur.getBiens()) {
 			comboBoxBiens.addItem(s);
 		}
 	}
-	
+	/**
+	 * Retourner le bien sélectionné
+	 * @return
+	 */
 	public String getSelectedBien() {
 		return comboBoxBiens.getSelectedItem().toString();
 	}
-	
+	/**
+	 * Retourner la date d'emission
+	 * @return Date
+	 */
 	public Date getChampsDateEmission() {
 		try {
 			if (textFieldDateEmission.getText().equals("  /  /    ")) {
@@ -277,7 +286,10 @@ public class VueAjouterFacture extends JFramePlus {
 	        throw new IllegalArgumentException("Mauvais format date emission");
 	    }
 	}
-	
+	/**
+	 * Retourner la date du paiement
+	 * @return Date
+	 */
 	public Date getChampsDatePaiement() {
 		try {
 			if (textFieldDatePaiement.getText().equals("  /  /    ")) {
@@ -298,14 +310,20 @@ public class VueAjouterFacture extends JFramePlus {
 		}
 		return String.valueOf(textFieldNumero.getText());
 	}
-	
+	/**
+	 * Retourner la désignation de la facture
+	 * @return String
+	 */
 	public String getChampsDesignation() {
 		if(textFieldDesignation.getText().equals("")) {
 			return null;
 		}
 		return String.valueOf(textFieldDesignation.getText());
 	}
-	
+	/**
+	 * Retourner le montant de la facture
+	 * @return Float
+	 */
 	public Float getChampsMontant() {
 		try {
 			return Float.valueOf(textFieldMontant.getText());
@@ -314,14 +332,20 @@ public class VueAjouterFacture extends JFramePlus {
 		}
 		
 	}
-	
+	/**
+	 * Retourner le numéro devis
+	 * @return
+	 */
 	public String getChampsNumeroDevis() {
 		if(textFieldNumeroDevis.getText().equals("")) {
 			return null;
 		}
 		return String.valueOf(textFieldNumeroDevis.getText());
 	}
-	
+	/**
+	 * Retourner le montant réel payé
+	 * @return Float
+	 */
 	public Float getChampsMontantReelPaye() {
 		try {
 			return Float.valueOf(textFieldMontantReelPaye.getText());
@@ -329,7 +353,10 @@ public class VueAjouterFacture extends JFramePlus {
 			return null;
 		}
 	}
-	
+	/**
+	 * Retourner l'imputable locataire
+	 * @return Float
+	 */
 	public Float getChampsImputableLocataire() {
 		try {
 			return Float.valueOf(textFieldImputableLocataire.getText());
@@ -338,25 +365,19 @@ public class VueAjouterFacture extends JFramePlus {
 		}
 	}
 	
+	/**
+	 * Créer la masque des champs pour les montants
+	 * @return NumberFormatter
+	 */
 	private NumberFormatter createNumberformatter() {
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00"); // Allows two decimal places
 	    decimalFormat.setGroupingUsed(false); // Disable thousands separator if not needed
-	    
 	    NumberFormatter formatter = new NumberFormatter(decimalFormat);
 	    formatter.setValueClass(Double.class); // Ensure values are treated as doubles
 	    formatter.setAllowsInvalid(false); // Prevents invalid input
-	    formatter.setMinimum(0.0); // Optional: Ensure only positive values
-	    formatter.setOverwriteMode(true); // Optional: Improves UX when typing
-	    
+	    formatter.setMinimum(0.0); 
+	    formatter.setOverwriteMode(true); 
 	    return formatter;
-//		NumberFormat format = NumberFormat.getInstance();
-//		format.setGroupingUsed(false);
-//        NumberFormatter formatter = new NumberFormatter(format);
-//        formatter.setValueClass(Integer.class);
-//        formatter.setAllowsInvalid(false);
-//        formatter.setMinimum(0);
-//        formatter.setMaximum(Integer.MAX_VALUE);
-//		return formatter;
 	}
 
 }
