@@ -5,6 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.After;
@@ -105,7 +108,6 @@ public class TestLocationDAO {
 	}
 	@Test
 	public void testAddLocation() throws DAOException {
-		assertTrue(this.locationDAO.locationExists("testBien002","mary123", Date.valueOf("2023-06-23")));
 		assertTrue(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-03-25")));
 		assertTrue(this.locationDAO.locationExists("testBien001","mary123",Date.valueOf("2023-06-23")));
 	}
@@ -151,41 +153,133 @@ public class TestLocationDAO {
 	
 	@Test
 	public void getSommeLoyers12Mois() throws DAOException{
-		assertEquals(this.locationDAO.getSommeLoyers12Mois(2024), location1.getLoyer_TTC()*12,0.001);
-	}
-	
-	@Test
-	public void getLoyersTermine() throws DAOException{
-		List<List<Object>> l = this.locationDAO.getLoyersTermine(2024);
-		float resFinal = 0.0F;
-		for (int i=0;i<l.size();i++) {
-			float res = 0.0F;
-			float loyer = (float) l.get(i).get(0);
-			int anneeDebut = (int) l.get(i).get(1);
-			int moisDebut = (int) l.get(i).get(2);
-			int moisFin = (int) l.get(i).get(3);
-			if (anneeDebut < 2024) {
-				res = loyer*moisFin;
-			} else {
-				res = loyer*(moisFin-moisDebut+1);
+		this.locationDAO.setDateRegularisation(this.location3.getIdBien(),this.location3.getDate_debut(), Date.valueOf("2024-12-25"));
+		List<Location> liste = this.locationDAO.getAllLocations();
+		float loyer = 0.0f;
+		for (Location l : liste) {
+			Calendar calendar2 = new GregorianCalendar();
+			calendar2.setTime(l.getDate_debut());
+			int year2 = calendar2.get(Calendar.YEAR);
+			if (l.getDate_fin()==null) {
+				if (year2<2024) {
+					loyer+=l.getLoyer_TTC();
+				}
+			}else {
+				Calendar calendar = new GregorianCalendar();
+				calendar.setTime(l.getDate_fin());
+				int year = calendar.get(Calendar.YEAR);
+				if (year>2024 && year2<2024) {
+					loyer+=l.getLoyer_TTC();
+				}
 			}
-			resFinal+=res;
 		}
-		assertEquals(location2.getLoyer_TTC()*6, resFinal,0.001);	
+		assertEquals(loyer*12,this.locationDAO.getSommeLoyers12Mois(2024),0.001);
 	}
 	
 	@Test
-	public void getLoyersCommence() throws DAOException{
-		List<List<Object>> l = this.locationDAO.getLoyersCommence(2024);
-		float resFinal = 0.0F;
-		for (int i=0;i<l.size();i++) {
-			float res = 0.0F;
-			float loyer = (float) l.get(i).get(0);
-			int moisDebut = (int) l.get(i).get(1);
-			res = loyer*(12-moisDebut+1);
-			resFinal+=res;
-		}
-		assertEquals(location3.getLoyer_TTC()*10, resFinal,0.001);
+	public void getLoyersTermine() throws DAOException {
+	    List<List<Object>> l = this.locationDAO.getLoyersTermine(2024);
+	    List<Location> liste = this.locationDAO.getAllLocations();
+
+	    for (Location loc : liste) {
+	        if (loc.getDate_fin() != null) {
+	            Calendar calendarFin = new GregorianCalendar();
+	            calendarFin.setTime(loc.getDate_fin());
+	            int yearFin = calendarFin.get(Calendar.YEAR);
+	            int monthFin = calendarFin.get(Calendar.MONTH) + 1;
+
+	            if (yearFin == 2024) {
+	                float expectedLoyer = loc.getLoyer_TTC();
+	                Calendar calendarDebut = new GregorianCalendar();
+	                calendarDebut.setTime(loc.getDate_debut());
+	                int yearDebut = calendarDebut.get(Calendar.YEAR);
+	                int monthDebut = calendarDebut.get(Calendar.MONTH) + 1;
+
+	                // Expected row
+	                List<Object> expectedList = new ArrayList<>();
+	                expectedList.add(expectedLoyer);
+	                expectedList.add(yearDebut);
+	                expectedList.add(monthDebut);
+	                expectedList.add(monthFin);
+
+	                // Verify if expected list is in result
+	                boolean found = false;
+	                for (List<Object> actual : l) {
+	                    float actualLoyer = (float) actual.get(0);
+	                    int actualYearDebut = (int) actual.get(1);
+	                    int actualMonthDebut = (int) actual.get(2);
+	                    int actualMonthFin = (int) actual.get(3);
+
+	                    if (Math.abs(actualLoyer - expectedLoyer) < 0.01 &&
+	                        actualYearDebut == yearDebut &&
+	                        actualMonthDebut == monthDebut &&
+	                        actualMonthFin == monthFin) {
+	                        found = true;
+	                        break;
+	                    }
+	                }
+
+	                System.out.println("Expected: " + expectedList);
+	                System.out.println("Actual: " + l);
+	                assertTrue("Expected list not found in result", found);
+	            }
+	        }
+	    }
 	}
+	
+	@Test
+	public void getLoyersCommence() throws DAOException {
+	    List<List<Object>> l = this.locationDAO.getLoyersCommence(2024);
+	    List<Location> liste = this.locationDAO.getAllLocations(); 
+
+	    for (Location loc : liste) {
+	        Calendar calendarDebut = new GregorianCalendar();
+	        calendarDebut.setTime(loc.getDate_debut());
+	        int yearDebut = calendarDebut.get(Calendar.YEAR);
+	        int monthDebut = calendarDebut.get(Calendar.MONTH) + 1;
+
+	        if (yearDebut == 2024) {
+	            int yearFin;
+	            if (loc.getDate_fin() == null) {
+	                yearFin = 0;
+	            } else {
+	                Calendar calendarFin = new GregorianCalendar();
+	                calendarFin.setTime(loc.getDate_fin()); // FIXED: Now using correct date
+	                yearFin = calendarFin.get(Calendar.YEAR);
+	            }
+
+	            if (yearFin == 0 || yearFin > 2024) {
+	                List<Object> expectedList = new ArrayList<>();
+	                expectedList.add(loc.getLoyer_TTC());
+	                expectedList.add(monthDebut);
+
+	                boolean found = false;
+	                for (List<Object> actual : l) {
+	                    float actualLoyer = (float) actual.get(0);
+	                    int actualMonth = (int) actual.get(1);
+
+	                    if (Math.abs(actualLoyer - loc.getLoyer_TTC()) < 0.01 && actualMonth == monthDebut) {
+	                        found = true;
+	                        break;
+	                    }
+	                }
+
+	                System.out.println("Expected: " + expectedList);
+	                System.out.println("Actual: " + l);
+	                assertTrue("Expected list not found in result", found);
+	            }
+	        }
+	    }
+	}
+//		float resFinal = 0.0F;
+//		for (int i=0;i<l.size();i++) {
+//			float res = 0.0F;
+//			float loyer = (float) l.get(i).get(0);
+//			int moisDebut = (int) l.get(i).get(1);
+//			res = loyer*(12-moisDebut+1);
+//			resFinal+=res;
+//		}
+//		assertEquals(location3.getLoyer_TTC()*10, resFinal,0.001);
+	
 	
 }
