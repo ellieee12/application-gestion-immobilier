@@ -20,6 +20,7 @@ import modele.LocataireDAO;
 import modele.Location;
 import modele.LocationDAO;
 import modele.Logement;
+import modele.MySQLCon;
 
 public class TestDocumentLocationDAO {
 	
@@ -31,6 +32,8 @@ public class TestDocumentLocationDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.doclocDAO = new DocumentLocationDAO();
 		this.locationDAO=new LocationDAO();
 		this.immeubleDAO= new ImmeubleDAO();
@@ -51,21 +54,8 @@ public class TestDocumentLocationDAO {
 	
 	@After
 	public void tearDown() throws DAOException {
-		if (this.locationDAO.locationExists("testBien001", "mary123",Date.valueOf("2023-06-23"))) {
-			this.locationDAO.supprimerLocation("testBien001", Date.valueOf("2023-06-23"));
-		}
-		if (this.bienDAO.bienExiste("testBien001")) {
-			this.bienDAO.supprimerBien("testBien001");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat001")) {
-			this.immeubleDAO.supprimerImmeuble("testBat001");
-		}
-		if (this.locataireDAO.locataireExists("mary123")) {
-			this.locataireDAO.supprimerLocataire("mary123");
-		}
-		if (this.doclocDAO.documentExists((new File("./file/path/name")).getAbsolutePath(), "testBien001", Date.valueOf("2023-06-23"), "mary123")){
-			this.doclocDAO.supprimerDocument((new File("./file/path/name")).getAbsolutePath(), "testBien001", Date.valueOf("2023-06-23"), "mary123");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.doclocDAO = null;
 		this.bienDAO = null;
 		this.immeubleDAO = null;
