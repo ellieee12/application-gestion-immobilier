@@ -1,7 +1,6 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
@@ -69,6 +68,10 @@ public class VueMesLocataires extends JPanel {
 					
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, Date.class
 				};
