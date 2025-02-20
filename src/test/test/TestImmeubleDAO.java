@@ -19,6 +19,7 @@ import modele.Immeuble;
 import modele.ImmeubleDAO;
 import modele.Logement;
 import modele.Maison;
+import modele.MySQLCon;
 
 public class TestImmeubleDAO {
 	private ImmeubleDAO imDAO;
@@ -29,6 +30,8 @@ public class TestImmeubleDAO {
 
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.idBat = "testImmeuble0010";
 		this.idMaison = "testImmeuble0020";
 		this.imDAO = new ImmeubleDAO();
@@ -40,12 +43,8 @@ public class TestImmeubleDAO {
 	
 	@After
 	public void tearDown() throws SQLException, DAOException {
-		if (imDAO.immeubleExiste(idBat)) {
-			this.imDAO.supprimerImmeuble(idBat);
-		}
-		if (imDAO.immeubleExiste(idMaison)) {
-			this.imDAO.supprimerImmeuble(idMaison);
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.idMaison=null;
 		this.maison = null;
 		this.bat = null;

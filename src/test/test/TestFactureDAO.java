@@ -18,6 +18,7 @@ import modele.Facture;
 import modele.FactureDAO;
 import modele.ImmeubleDAO;
 import modele.Logement;
+import modele.MySQLCon;
 
 public class TestFactureDAO {
 	private ImmeubleDAO immeubleDAO;
@@ -28,6 +29,8 @@ public class TestFactureDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.bienDAO = new BienDAO();
 		this.facDAO = new FactureDAO();
 		this.immeubleDAO = new ImmeubleDAO();
@@ -43,21 +46,9 @@ public class TestFactureDAO {
 	
 	@After
 	public void tearDown() throws DAOException{
-		if (this.facDAO.FactureExiste("F12345")) {
-			this.facDAO.supprimerFacture("F12345");
-		}
-		if (this.facDAO.FactureExiste("F54321")) {
-			this.facDAO.supprimerFacture("F54321");
-		}
-		if (this.facDAO.FactureExiste("F99999")) {
-			this.facDAO.supprimerFacture("F99999");
-		}
-		if (this.bienDAO.bienExiste("testBien001")) {
-			this.bienDAO.supprimerBien("testBien001");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat001")) {
-			this.immeubleDAO.supprimerImmeuble("testBat001");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
+		
 		this.bienDAO = null;
 		this.immeubleDAO = null;
 		this.facDAO = null;
