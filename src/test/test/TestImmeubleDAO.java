@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -42,7 +41,7 @@ public class TestImmeubleDAO {
 	}
 	
 	@After
-	public void tearDown() throws SQLException, DAOException {
+	public void tearDown() throws DAOException {
 		MySQLCon.getInstance().rollback();
 		MySQLCon.getInstance().setAutocommit(true);
 		this.idMaison=null;
@@ -71,7 +70,7 @@ public class TestImmeubleDAO {
 	}
 	
 	@Test
-	public void testGetImmeubleById() throws SQLException, DAOException {
+	public void testGetImmeubleById() throws DAOException {
 		Immeuble b = this.imDAO.getInfoImmeuble(idBat);
 		assertEquals(this.bat, b);
 	}

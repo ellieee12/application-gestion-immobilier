@@ -15,6 +15,7 @@ import org.junit.Test;
 import modele.DAOException;
 import modele.Locataire;
 import modele.LocataireDAO;
+import modele.MySQLCon;
 
 public class TestLocataireDAO {
 
@@ -24,6 +25,8 @@ public class TestLocataireDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.locDAO = new LocataireDAO();
 		this.loc1 = new Locataire("Doe", "John", "+33123456789", "johndoe@gmail.com", "johnnyboy", Date.valueOf("2004-01-12"));
 		this.loc2 = new Locataire("Jane", "Mary", "+33987654321", "maryjane@gmail.com", "mary123", Date.valueOf("2002-08-27"));
@@ -32,7 +35,7 @@ public class TestLocataireDAO {
 	}
 	
 	@After
-	public void tearDown() throws DAOException, SQLException {
+	public void tearDown() throws DAOException{
 		if (locDAO.locataireExists(loc1.getId_locataire())) {
 			this.locDAO.supprimerLocataire(loc1.getId_locataire());
 		}
