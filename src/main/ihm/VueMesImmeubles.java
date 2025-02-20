@@ -1,8 +1,5 @@
 package ihm;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -72,6 +69,10 @@ public class VueMesImmeubles extends JPanelPlus {
 					"Id Immeuble", "Type", "Adresse", "CP", "Ville", "Période Construction"
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, String.class
 				};

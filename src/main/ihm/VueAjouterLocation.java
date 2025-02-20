@@ -251,6 +251,7 @@ public class VueAjouterLocation extends JFramePlus {
 		ButtonValider.addActionListener(controleur);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 	private NumberFormatter createNumberformatter() {

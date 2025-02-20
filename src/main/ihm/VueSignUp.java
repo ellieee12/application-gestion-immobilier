@@ -155,6 +155,7 @@ public class VueSignUp extends JFramePlus {
 		panel_4.add(lblConnection);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 	public String getNouveauMDP() {

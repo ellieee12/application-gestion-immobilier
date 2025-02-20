@@ -246,6 +246,7 @@ public class VueSaisieLocataire extends JFramePlus {
 		panelBoutons.add(btnNewButton);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 }

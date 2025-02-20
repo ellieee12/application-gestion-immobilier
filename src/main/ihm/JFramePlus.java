@@ -5,19 +5,14 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
-
-import org.jdesktop.swingx.JXLabel;
 
 import controleur.ControleurFramePlus;
 
@@ -36,6 +31,14 @@ public abstract class JFramePlus extends JFrame {
 	}
 	
 	static final int i = 3;
+	
+	public void setLogo() {
+		try {
+			this.setIconImage(new ImageIcon(getClass().getResource("/images/logo.png")).getImage());
+		}catch(Exception e){
+		   System.out.println("Application icon not found");
+		}
+	}
 	
 	private static List<Component> getAllComponents(final Container c) {
 	    Component[] comps = c.getComponents();

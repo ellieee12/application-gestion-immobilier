@@ -1,7 +1,6 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
@@ -23,23 +22,6 @@ public class VueMesLocataires extends JPanelPlus {
 	private JTable table;
 	private DefaultTableModel t;
 	private ControleurMesLocataires controleur;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesLocataires frame = new VueMesLocataires();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -86,6 +68,10 @@ public class VueMesLocataires extends JPanelPlus {
 					
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, Date.class
 				};

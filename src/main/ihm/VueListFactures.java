@@ -57,6 +57,10 @@ public class VueListFactures extends JPanelPlus {
 					"Numero", "Date d'emission", "Date de paiement", "Numero de devis", "Designation", "Montant réel payé", "Montant", "Imputable locataire", "Id bien"
 				}
 			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				Class[] columnTypes = new Class[] {
 					String.class, Date.class, Date.class, String.class, String.class, Float.class, Float.class, Float.class, String.class
 				};

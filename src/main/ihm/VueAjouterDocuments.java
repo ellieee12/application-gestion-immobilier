@@ -124,6 +124,9 @@ public class VueAjouterDocuments extends JFramePlus {
 		this.bCaution = new JButton("Choisir");
 		panel_9.add(this.bCaution);
 		bCaution.addActionListener(controleur);
+		
+		this.setSizeMulti();
+		this.setLogo();
 	}
 	
 	public JLabel getCaution() {

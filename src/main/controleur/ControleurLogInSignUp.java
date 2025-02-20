@@ -47,6 +47,7 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 						VueMenu frame = null;
 						frame = new VueMenu();
 						frame.setVisible(true);
+						frame.setLogo();
 					}else {
 						JOptionPane.showMessageDialog(vueSignUp, "Login ou mot de passe incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
 					}

@@ -214,6 +214,7 @@ public class VueAjouterImmeuble extends JFramePlus {
 		panel.add(lblNewLabel_4, BorderLayout.NORTH);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 	@Override

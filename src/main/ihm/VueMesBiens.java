@@ -145,6 +145,7 @@ public class VueMesBiens extends JFramePlus {
 		scrollPane.setViewportView(this.table);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 	public void buildTable(ControleurMesBiens controleur) {

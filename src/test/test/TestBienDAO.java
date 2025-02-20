@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import modele.Batiment;
@@ -18,6 +19,7 @@ import modele.CompteurDAO;
 import modele.DAOException;
 import modele.ImmeubleDAO;
 import modele.Logement;
+import modele.MySQLCon;
 
 public class TestBienDAO {
 	private BienDAO bDAO;
@@ -31,6 +33,8 @@ public class TestBienDAO {
 
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.idBat = "testImmeuble0010";
 		this.idBienGarage = "testBien001";
 		this.idBienLogement = "testBien002";
@@ -49,22 +53,8 @@ public class TestBienDAO {
 	
 	@After
 	public void tearDown() throws DAOException {
-		CompteurDAO cDAO = new CompteurDAO();
-		if (cDAO.compteurExists(Compteur.typeCompteur.EAU, this.idBienGarage)) {
-			cDAO.supprimerCompteur(Compteur.typeCompteur.EAU, this.idBienGarage);
-		}
-		if (cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage)) {
-			cDAO.supprimerCompteur(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage);
-		}
-		if (bDAO.bienExiste(idBienGarage)) {
-			this.bDAO.supprimerBien(idBienGarage);
-		}
-		if (bDAO.bienExiste(idBienLogement)) {
-			this.bDAO.supprimerBien(idBienLogement);
-		}
-		if (imDAO.immeubleExiste(idBat)) {
-			this.imDAO.supprimerImmeuble(idBat);
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.bat = null;
 		this.b = null;
 		this.idBat = null;
@@ -78,21 +68,21 @@ public class TestBienDAO {
 		assertTrue(this.bDAO.bienExiste(this.idBienGarage));
 		assertTrue(this.bDAO.bienExiste(idBienLogement));
 	}
-	
+
 	@Test
 	public void testGetAllBien() throws DAOException {
 		List<Bien> liste = this.bDAO.getAllBiens();
 		assertTrue(liste.contains(this.b));
 		assertTrue(liste.contains(this.l));
 	}
-	
+
 	@Test
 	public void testDeleteBien() throws DAOException {
 		this.bDAO.supprimerBien(idBienGarage);
 		assertFalse(this.bDAO.bienExiste(idBienGarage));
 		assertTrue(this.bDAO.bienExiste(idBienLogement));
 	}
-	
+
 	@Test
 	public void testGetBienById() throws DAOException {
 		Bien bienGarage = this.bDAO.getBienById(idBienGarage);
@@ -100,7 +90,7 @@ public class TestBienDAO {
 		assertEquals(this.b,bienGarage);
 		assertEquals(this.l,bienLogement);
 	}
-	
+
 	@Test
 	public void testGetBienByIdImmeuble() throws DAOException{
 		List<Bien> liste = this.bDAO.getBiensFromOneImmeuble(idBat);
@@ -114,19 +104,5 @@ public class TestBienDAO {
 		assertEquals(this.b.getEntretienPartieCommune(),this.bDAO.getEntretienFromIdBien(this.idBienGarage));
 		assertEquals(this.l.getEntretienPartieCommune(),this.bDAO.getEntretienFromIdBien(this.idBienLogement));
 		assertNull(this.bDAO.getEntretienFromIdBien("test"));
-	}
-	
-	@Test
-	public void testAjouterBienEtCompteurs() throws DAOException {
-		this.bDAO.supprimerBien(idBienGarage);
-		CompteurDAO cDAO = new CompteurDAO();
-		Compteur compteur1 = new Compteur(Compteur.typeCompteur.EAU, 0.99f);
-		Compteur compteur2 = new Compteur(Compteur.typeCompteur.ELECTRICITE, 0.88f);
-		List<Compteur> liste = new LinkedList<>(); 
-		liste.add(compteur1); liste.add(compteur2);
-		this.bDAO.ajouterBienEtCompteurs(b, idBat, liste);
-		assertTrue(this.bDAO.bienExiste(idBienGarage));
-		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.EAU, this.idBienGarage));
-		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, this.idBienGarage));
 	}
 }

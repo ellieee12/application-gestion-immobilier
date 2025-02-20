@@ -276,6 +276,7 @@ public class VueAjouterBien extends JFramePlus {
 		ButtonValider.addActionListener(controleur);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 
 	/**

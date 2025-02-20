@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.FontUIResource;
-
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 
@@ -20,8 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -29,8 +25,6 @@ import javax.swing.UIManager;
 import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 
 public class VueLogin extends JFramePlus {
 
@@ -152,6 +146,7 @@ public class VueLogin extends JFramePlus {
 		panel.add(lblCreerCompte_2);
 		
 		this.setSizeMulti();
+		this.setLogo();
 	}
 	
 	public JTextField getUsername() {

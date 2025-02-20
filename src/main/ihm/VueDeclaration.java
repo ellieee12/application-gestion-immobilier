@@ -31,22 +31,6 @@ public class VueDeclaration extends JPanel {
 	private JButton btnImprimer;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueDeclaration frame = new VueDeclaration();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public VueDeclaration() {
@@ -110,7 +94,6 @@ public class VueDeclaration extends JPanel {
 		textAreaDeclaration.setLineWrap(true);
 		textAreaDeclaration.setEditable(false);
 		this.add(textAreaDeclaration, BorderLayout.CENTER);
-		
 	}
 	
 	public void afficherRevenus(float montant) {
