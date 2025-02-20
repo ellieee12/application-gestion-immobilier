@@ -25,6 +25,7 @@ import modele.Location;
 import modele.LocationDAO;
 import modele.Logement;
 import modele.Maison;
+import modele.MySQLCon;
 
 public class TestLocationDAO {
 	
@@ -38,6 +39,8 @@ public class TestLocationDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.locationDAO = new LocationDAO();
 		bienDAO = new BienDAO();
 		immeubleDAO = new ImmeubleDAO();
@@ -68,36 +71,8 @@ public class TestLocationDAO {
 	
 	@After
 	public void tearDown() throws DAOException {
-		if (this.locationDAO.locationExists("testBien001", "mary123",Date.valueOf("2023-06-23"))) {
-			this.locationDAO.supprimerLocation("testBien001", Date.valueOf("2023-06-23"));
-		}
-		if(this.locationDAO.locationExists("testBien002", "mary123",Date.valueOf("2023-06-23"))){
-			this.locationDAO.supprimerLocation("testBien002", Date.valueOf("2023-06-23"));
-		}
-		if(this.locationDAO.locationExists("testBien003", "johnnyboy", Date.valueOf("2024-03-25"))) {
-			this.locationDAO.supprimerLocation("testBien003", Date.valueOf("2024-01-25"));
-		}
-		if (this.bienDAO.bienExiste("testBien001")) {
-			this.bienDAO.supprimerBien("testBien001");
-		}
-		if (this.bienDAO.bienExiste("testBien002")) {
-			this.bienDAO.supprimerBien("testBien002");
-		}
-		if (this.bienDAO.bienExiste("testBien003")) {
-			this.bienDAO.supprimerBien("testBien003");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat001")) {
-			this.immeubleDAO.supprimerImmeuble("testBat001");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat002")) {
-			this.immeubleDAO.supprimerImmeuble("testBat002");
-		}
-		if (this.locataireDAO.locataireExists("johnnyboy")) {
-			this.locataireDAO.supprimerLocataire("johnnyboy");
-		}
-		if (this.locataireDAO.locataireExists("mary123")) {
-			this.locataireDAO.supprimerLocataire("mary123");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.location1=null;
 		this.location2=null;
 		this.location3=null;
