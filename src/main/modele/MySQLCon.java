@@ -2,11 +2,15 @@ package modele;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class MySQLCon {
 	private static MySQLCon mySQLCon;
 	protected Connection con;
+	private static final Logger logger = Logger.getLogger(BienDAO.class.getName());
 	
 	private MySQLCon() {
 		try {
@@ -36,7 +40,24 @@ public class MySQLCon {
 		}
 	}
 	
-	public static void rollback() {
-		MySQLCon.rollback();
+	public void rollback() throws DAOException{
+		try {
+			if (this.con.getAutoCommit()) {
+	            this.con.setAutoCommit(false);  // Disable auto-commit before rollback
+	        }
+	        this.con.rollback();
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreur de rollback",e);
+			throw new DAOException("Erreurs de rollback",e);
+		}
+	}
+	
+	public void setAutocommit(boolean b) throws DAOException{
+		try {
+			this.con.setAutoCommit(b);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE,"Erreur de autocommit",e);
+			throw new DAOException("Erreurs de autocommit",e);
+		}
 	}
 }

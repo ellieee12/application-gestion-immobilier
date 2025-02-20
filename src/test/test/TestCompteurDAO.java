@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +15,7 @@ import modele.BienDAO;
 import modele.Compteur;
 import modele.CompteurDAO;
 import modele.DAOException;
+import modele.Garage;
 import modele.ImmeubleDAO;
 import modele.Logement;
 
@@ -76,5 +79,23 @@ public class TestCompteurDAO {
 		assertFalse(this.compteurDAO.compteurExists(this.compteur2.getTypecomp(), "testBien001"));
 		assertTrue(this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001"));
 	}
+	
+//	@Test
+//	public void testAjouterBienEtCompteurs() throws DAOException {
+//		String idBatCompt = "testImmeubleCompt";
+//		String idBienGarageCompt = "testBienCompt";
+//		Batiment batCompt = new Batiment(idBatCompt, "Rue test", "99999", "TEST", "1990-2000");
+//		Garage g = new Garage(Date.valueOf("2024-01-12"), idBienGarageCompt,100.0f);
+//		this.imDAO.ajouterImmeuble(batCompt);
+//		CompteurDAO cDAO = new CompteurDAO();
+//		Compteur compteur1 = new Compteur(Compteur.typeCompteur.EAU, 0.99f);
+//		Compteur compteur2 = new Compteur(Compteur.typeCompteur.ELECTRICITE, 0.88f);
+//		List<Compteur> liste = new LinkedList<>(); 
+//		liste.add(compteur1); liste.add(compteur2);
+//		this.bDAO.ajouterBienEtCompteurs(g, idBatCompt, liste);
+//		assertTrue(this.bDAO.bienExiste(idBienGarageCompt));
+//		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.EAU, idBienGarageCompt));
+//		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, idBienGarageCompt));
+//	}
 
 }
