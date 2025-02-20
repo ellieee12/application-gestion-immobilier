@@ -36,15 +36,8 @@ public class TestLocataireDAO {
 	
 	@After
 	public void tearDown() throws DAOException{
-		if (locDAO.locataireExists(loc1.getId_locataire())) {
-			this.locDAO.supprimerLocataire(loc1.getId_locataire());
-		}
-		if (locDAO.locataireExists(loc2.getId_locataire())) {
-			this.locDAO.supprimerLocataire(loc2.getId_locataire());
-		}
-		if (locDAO.locataireExists("jimmyboy")) {
-			this.locDAO.supprimerLocataire("jimmyboy");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.locDAO=null;
 		this.loc1 = null;
 		this.loc2 = null;
