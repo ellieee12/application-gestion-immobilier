@@ -72,20 +72,25 @@ public class ControleurMesLocataires implements ActionListener {
 			JOptionPane pane = new JOptionPane();
 			if (this.vue.getLigneChoisi() == -1) {
 				JOptionPane.showMessageDialog(this.vue, 
-						"Veuillez sélectionner une Locataire avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
+						"Veuillez sélectionner un Locataire avant de supprimer","Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				@SuppressWarnings("static-access")
 				int resultat=pane.showOptionDialog(this.vue, 
-						"Tout les documents associés à ce locataire vont êtres supprimés.",
+						"Voulez-vous vraiment supprimer ce locataire ?",
 						"Attention", 
 						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, options, options[1]);
 				if (resultat == JOptionPane.YES_OPTION) {
 					LocataireDAO locataire = new LocataireDAO();
-					try {
-						locataire.supprimerLocataire(this.locataires.get(this.vue.getLigneChoisi()).getId_locataire());
-						this.Update();
-					} catch (DAOException e1) {
-						e1.printStackTrace();
+					if(checkLocataire(this.locataires.get(this.vue.getLigneChoisi()).getId_locataire(),locataire)){
+						try {
+							locataire.supprimerLocataire(this.locataires.get(this.vue.getLigneChoisi()).getId_locataire());
+							this.Update();
+						} catch (DAOException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						JOptionPane.showMessageDialog(this.vue, 
+								"Vous ne pouvez pas supprimer ce locataire car il a déjà effectué une location","Attention", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				this.Update();
@@ -93,4 +98,15 @@ public class ControleurMesLocataires implements ActionListener {
 		}
 		
 	}
+	
+	//Renvoie true si on peut supprimer, faux sinon
+	private boolean checkLocataire(String id_loc, LocataireDAO dao) {
+		try {
+			return !dao.isInLouer(id_loc);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 }

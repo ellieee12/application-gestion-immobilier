@@ -45,6 +45,7 @@ DROP PROCEDURE IF EXISTS getSommeLoyers12Mois;
 DROP PROCEDURE IF EXISTS getLoyersTermine;
 DROP PROCEDURE IF EXISTS getLoyersCommence;
 DROP PROCEDURE IF EXISTS getMontantTravaux;
+DROP PROCEDURE IF EXISTS isInLouer;
 
 CREATE PROCEDURE getAllBiens()
 BEGIN
@@ -402,6 +403,11 @@ BEGIN
     )
     FROM `facture` 
     WHERE year(date_paiement)=v_annee;
+END;
+
+CREATE PROCEDURE isInLouer(IN v_id_locataire varchar(50))
+BEGIN
+	SELECT count(*) from louer where id_locataire = v_id_locataire;
 END;
 
 DELIMITER ;
