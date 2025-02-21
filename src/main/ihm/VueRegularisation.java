@@ -177,59 +177,101 @@ public class VueRegularisation extends JFramePlus {
 		controleur.setPreviousValue();
 		this.setSizeMulti();
 	}
-
+	/**
+	 * Retourner le champ de l'index eau
+	 * @return String
+	 */
 	public String getChampEau() {
 		return champEau.getText().replace(" ", "");
 	}
-	
+	/**
+	 * Retourner le champ de l'index éléctricité
+	 * @return String
+	 */
 	public String getChampElec() {
 		return champElec.getText().replace(" ", "");
 	}
-	
+	/**
+	 * Modifier le champ de l'index eau
+	 * @return String
+	 */
 	public void setChampEau(int valeur) {
 		champEau.setText(String.valueOf(valeur));;
 	}
-	
+	/**
+	 * Modifier le champ de l'index éléctricité
+	 * @return String
+	 */
 	public void setChampElec(int valeur) {
 		champElec.setText(String.valueOf(valeur));
 	}
-	
+	/**
+	 * Retourner la nouvelle provision saisie
+	 * @return
+	 */
 	public String getChampNouvelleProvision() {
 		return champNouvelleProvision.getText().replace(" ", "");
 	}
-	
+	/**
+	 * Retourner l'ordure saisie
+	 * @return
+	 */
 	public String getChampOrdure() {
 		return champOrdure.getText().replace(" ", "");
 	}
-	
+	/**
+	 * Afficher le montant d'eau
+	 * @param montant
+	 */
 	public void afficherMontantEau(float montant) {
 		this.lblEau.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher le montant d'éléctricité
+	 * @param montant
+	 */
 	public void afficherMontantElec(float montant) {
 		this.lblElec.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher l'entretien 
+	 * @param montant
+	 */
 	public void afficherEntretien(float montant) {
 		this.lblEntretien.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher le montant ordure
+	 * @param montant
+	 */
 	public void afficherMontantOrdure(float montant) {
 		this.lblOrdures.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher le montant total
+	 * @param montant
+	 */
 	public void afficherTotal(float montant) {
 		this.lblTotal.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher la provision
+	 * @param montant
+	 */
 	public void afficherProvision(float montant) {
 		this.lblProvision.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Afficher le reste
+	 * @param montant
+	 */
 	public void afficherReste(float montant) {
 		this.lblReste.setText(String.valueOf(montant)+" €");
 	}
-	
+	/**
+	 * Créer un formatteur pour le champs
+	 * @return
+	 */
 	private NumberFormatter createNumberformatter() {
 		NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);

@@ -10,11 +10,17 @@ import ihm.JPanelPlus;
 public class ControleurFramePlus extends WindowAdapter {
 	
 	private Container vue;
-	
+	/**
+	 * Constructeur ControleurFramePlus
+	 * @param vue
+	 */
 	public ControleurFramePlus(JFramePlus vue) {
 		this.vue = vue;
 	}
-	
+	/**
+	 * Constructeur ControleurFramePlus
+	 * @param vue
+	 */
 	public ControleurFramePlus(JPanelPlus vue) {
 		this.vue = vue;
 	}

@@ -149,11 +149,17 @@ public class VueLogin extends JFramePlus {
 		this.setSizeMulti();
 		this.setLogo();
 	}
-	
+	/**
+	 * Retourner le pseudo saisi
+	 * @return JTextfield
+	 */
 	public JTextField getUsername() {
 		return this.textFieldUsername;
 	}
-	
+	/**
+	 * Retourner le mot de passe saisi
+	 * @return JPasswordField
+	 */
 	public JPasswordField getMDP() {
 		return this.passwordField;
 	}

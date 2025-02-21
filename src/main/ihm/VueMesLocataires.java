@@ -93,10 +93,11 @@ public class VueMesLocataires extends JPanelPlus {
 			this.table.setModel(this.t);
 			
 			scrollPane.setViewportView(table);
-			
-			//this.table.addMouseListener(controleurMesLocations);
 	}
-	
+	/**
+	 * Mettre à jour la table des locataires
+	 * @param controleur
+	 */
 	public void buildTable(ControleurMesLocataires controleur) {
 		this.t.setRowCount(0);
 		for (Locataire l : controleur.getLocataires()) {
@@ -106,11 +107,17 @@ public class VueMesLocataires extends JPanelPlus {
 				});
 		}
 	}
-	
+	/**
+	 * Retourner la ligne sélectionnée
+	 * @return
+	 */
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
-	
+	/**
+	 * Retourner le controleur
+	 * @return
+	 */
 	public ControleurMesLocataires getControleurMesLocataires() {
 		return this.controleur;
 	}

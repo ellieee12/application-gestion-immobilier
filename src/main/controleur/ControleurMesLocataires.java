@@ -16,7 +16,10 @@ public class ControleurMesLocataires implements ActionListener {
 
 	private VueMesLocataires vue;
 	private List<Locataire> locataires;
-	
+	/**
+	 * Constructeur ControleurMesLocataires
+	 * @param vue
+	 */
 	public ControleurMesLocataires(VueMesLocataires vue) {
 		try {
 			this.vue = vue;
@@ -29,11 +32,16 @@ public class ControleurMesLocataires implements ActionListener {
 		}
 		
 	}
-	
+	/**
+	 * Retourner la liste des locataires
+	 * @return List
+	 */
 	public List<Locataire> getLocataires(){
 		return locataires;
 	}
-	
+	/**
+	 * Mettre à jour la liste des locataires
+	 */
 	public void Update() {
 		try {
             this.locataires = new LinkedList<>();
@@ -85,22 +93,4 @@ public class ControleurMesLocataires implements ActionListener {
 		}
 		
 	}
-	/*
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		JTable table = (Table) e.getSource();
-		if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						//la frame qu'on voudra afficher 
-					} catch (Exception e2) {
-						e2.printStackTrace();
-					}
-				}
-			});
-		}
-	}
-	*/	
-
 }

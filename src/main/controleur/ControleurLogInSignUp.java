@@ -25,7 +25,9 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 	private LogInSignUpDAO dao;
 	private Etat etat;
 
-	//VueLogin vueLogin,VueSignUp vueSignUp
+	/**
+	 * Implémentation du singleton
+	 */
 	private ControleurLogInSignUp() {}
 	
 	public void initialiserControleur() {
@@ -111,18 +113,27 @@ public class ControleurLogInSignUp extends MouseAdapter implements ActionListene
 		}
 		
 	}
-	
+	/**
+	 * Retourner une instance du controleur
+	 * @return ControleurLogInSignUp
+	 */
 	public static synchronized ControleurLogInSignUp getControleur() {
 		if (controleur == null) {
 			controleur = new ControleurLogInSignUp();
 		}
 		return controleur;
 	}
-	
+	/**
+	 * Modifier la vue login
+	 * @param vueLogin
+	 */
 	public void setVueLogin(VueLogin vueLogin) {
 		this.vueLogin=vueLogin;
 	}
-	
+	/**
+	 * Modifier la vue signup
+	 * @param vueSignUp
+	 */
 	public void setVueSignUp(VueSignUp vueSignUp) {
 		this.vueSignUp=vueSignUp;
 	}

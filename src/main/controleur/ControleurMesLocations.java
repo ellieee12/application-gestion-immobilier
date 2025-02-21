@@ -16,12 +16,16 @@ import modele.DAOException;
 import modele.Location;
 import modele.LocationDAO;
 
-public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionListener {
+public class ControleurMesLocations implements ActionListener {
 
 	private VueMesLocations vue;
 	private List<Location> location;
 	private LocationDAO locationDAO;
-	
+	/**
+	 * Constructeur ControleurMesLocations
+	 * @param vue
+	 * @throws DAOException
+	 */
 	public ControleurMesLocations(VueMesLocations vue) throws DAOException {
 			this.vue = vue;
 			this.location = new LinkedList<Location>();
@@ -29,11 +33,17 @@ public class ControleurMesLocations /*extends MouseAdapter*/ implements ActionLi
 			locationDAO = new LocationDAO();
 			this.location = locationDAO.getAllLocations();	
 	}
-	
+	/**
+	 * Retourner la liste des locations
+	 * @return
+	 */
 	public List<Location> getLocation(){
 		return location;
 	}
-	
+	/**
+	 * Mettre à jour la liste des locations
+	 * @throws DAOException
+	 */
 	public void Update() throws DAOException {
 		this.location = new LinkedList<>();
 		LocationDAO location = new LocationDAO();

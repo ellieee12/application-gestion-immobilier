@@ -20,7 +20,12 @@ public class ControleurEnregistrerDocument implements ActionListener{
 	private String pathName;
 	private File file;
 	private ControleurAjouterDocuments controleurAjouterDocuments;
-	
+	/**
+	 * Constructeur ControleurEnregistrerDocuments
+	 * @param vue
+	 * @param vueDoc
+	 * @param controleurAjouterDocuments
+	 */
 	public ControleurEnregistrerDocument(VueEnregistrerDocumentsLocation vue, VueAjouterDocuments vueDoc,
 			 ControleurAjouterDocuments controleurAjouterDocuments) {
 		this.vue=vue;
@@ -52,7 +57,9 @@ public class ControleurEnregistrerDocument implements ActionListener{
 		}
 		
 	}
-
+	/**
+	 * Modifier la location du document
+	 */
 	private void setDocumentLocation() {
 		DocumentLocation doc = getSelectedDocument();
 		String etat = this.controleurAjouterDocuments.getDocumentEnCours();
@@ -66,13 +73,19 @@ public class ControleurEnregistrerDocument implements ActionListener{
 			break;
 		}
 	}
-
+	/**
+	 * Retourner le document séléctionné
+	 * @return
+	 */
 	private DocumentLocation getSelectedDocument() {
 		DocumentLocation doc = new DocumentLocation(this.file, this.vue.getDescription(), 
 				new Date(Calendar.getInstance().getTime().getTime()));
 		return doc;
 	}
-	
+	/**
+	 * Séléctionner un fichier
+	 * @return
+	 */
 	private File selectionnerUnFichier() {
 		FileDialog fileChooser = new FileDialog(this.vue);
 		fileChooser.setVisible(true);
@@ -82,7 +95,10 @@ public class ControleurEnregistrerDocument implements ActionListener{
 		}
 		return null;
 	}
-
+	/**
+	 * Retourner le nom du path
+	 * @return
+	 */
 	public String getPathName() {
 		return pathName;
 	}

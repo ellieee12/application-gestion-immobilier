@@ -92,18 +92,27 @@ public class VueListFactures extends JPanelPlus {
 		panel_2.add(this.supprimer, BorderLayout.NORTH);
 		this.supprimer.addActionListener(controleur);
 	}
-	
+	/**
+	 * Mettre à jour la table des factures
+	 * @param controleur
+	 */
 	public void buildTable(ControleurListFactures controleur) {
 		this.t.setRowCount(0);
 		for (Facture f : controleur.getFactures()) {
 			this.t.addRow(new Object[] {f.getNumero(), f.getDate_emission(), f.getDate_paiement(), f.getNumero_devis(), f.getDesignation(), f.getMontant_reel_paye(), f.getMontant(), f.getImputable_locataire(), f.getId_bien()} );
 		}
 	}
-	
+	/**
+	 * Retourner le controleur liste factures
+	 * @return ControleurListFactures
+	 */
 	public ControleurListFactures getControleurMesBiens() {
 		return this.controleur;
 	}
-	
+	/**
+	 * Rétourner la ligne sélectionnée
+	 * @return
+	 */
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}

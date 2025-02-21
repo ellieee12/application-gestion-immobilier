@@ -158,15 +158,24 @@ public class VueSignUp extends JFramePlus {
 		this.setSizeMulti();
 		this.setLogo();
 	}
-
+	/**
+	 * Retourner le nouveau mot de passe
+	 * @return
+	 */
 	public String getNouveauMDP() {
 		return String.valueOf(this.passwordFieldMDP.getPassword());
 	}
-	
+	/**
+	 * Retourner la confirmation du nouveau mot de passe
+	 * @return
+	 */
 	public String getNouveauMDPConfirmation() {
 		return String.valueOf(this.passwordFieldMDPConfirmer.getPassword());
 	}
-	
+	/**
+	 * Retourner le nouveau pseudo
+	 * @return
+	 */
 	public String getNouveauUsername() {
 		return this.txtNomOuEmail.getText();
 	}
