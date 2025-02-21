@@ -99,7 +99,10 @@ public class VueDeclaration extends JPanel {
 		this.btnRegimeReel.setVisible(true);
 	}
 
-	//on affiche les informations du formulaire 2044
+	/**
+	 * on affiche les informations du formulaire 2044
+	 * @param montant
+	 */
 	public void afficherTexteMicroFoncier(float montant) {
 		String text = "Recettes brutes sans abattement 4BE : "+ montant +" €\r\n"
 				+ "       dont recettes de source étrangère ouvrant droit à un crédit d’impôt égal à l’impôt français 4BK : 0 €\r\n"
@@ -108,8 +111,11 @@ public class VueDeclaration extends JPanel {
 		this.textAreaDeclaration.setText(text);
 		this.btnImprimer.setEnabled(true);
 	}
-	
-	//on affiche les informations du formulaire 2044
+	/**
+	 * on affiche les informations du formulaire 2044
+	 * @param revenus
+	 * @param charges
+	 */
 	public void afficherTexteRegimeReel(float revenus, float charges) {
 		float revenuNet = revenus - charges;
 		String text = "";

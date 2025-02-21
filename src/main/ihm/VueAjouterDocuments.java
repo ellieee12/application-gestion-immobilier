@@ -128,35 +128,60 @@ public class VueAjouterDocuments extends JFramePlus {
 		this.setSizeMulti();
 		this.setLogo();
 	}
-	
+	/**
+	 * Retourner JLabel de la caution
+	 * @return JLabel
+	 */
 	public JLabel getCaution() {
 		return this.caution;
 	}
-
+	/**
+	 * Retourner le controleur d'aujouter documents
+	 * @return ControleurAjouterDocuments
+	 */
 	public ControleurAjouterDocuments getControleur() {
 		return controleur;
 	}
-
+	/**
+	 * Retourner le bouton pour l'etat des lieux
+	 * @return JButton
+	 */
 	public JButton getbEtatDesLieux() {
 		return bEtatDesLieux;
 	}
-
+	/**
+	 * Retourner le bouton pour la caution
+	 * @return JButton
+	 */
 	public JButton getbCaution() {
 		return bCaution;
 	}
-
+	/**
+	 * Retourner la location saisie
+	 * @return JButton 
+	 */
 	public Location getLoc() {
 		return loc;
 	}
-
+	/**
+	 * Retourner un identifiant du bien 
+	 * @return String 
+	 */
 	public String getIdBien() {
 		return idBien;
 	}
-
+	/**
+	 * Retourner l'identifiant du locataire
+	 * @return String 
+	 */
 	public String getIdLocataire() {
 		return idLocataire;
 	}
-
+	/**
+	 * Afficher le nom du fichier
+	 * @param nomFichier
+	 * @param label
+	 */
 	public void afficherNomFichier(String nomFichier, JLabel label) {
 		label.setText(nomFichier);
 	}

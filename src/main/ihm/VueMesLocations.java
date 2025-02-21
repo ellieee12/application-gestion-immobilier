@@ -27,22 +27,6 @@ public class VueMesLocations extends JPanelPlus {
 	private ControleurMesLocations controleurMesLocations;
 	private JButton boutonRegu;
 	private JButton boutonSolde;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueMesLocations frame = new VueMesLocations();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -134,7 +118,10 @@ public class VueMesLocations extends JPanelPlus {
 			
 			scrollPane.setViewportView(table);
 	}
-	
+	/**
+	 * Mettre à jour la table des locations
+	 * @param controleur
+	 */
 	public void buildTable(ControleurMesLocations controleur) {
 		this.t.setRowCount(0);
 		for (Location l : controleur.getLocation()) {
@@ -145,15 +132,24 @@ public class VueMesLocations extends JPanelPlus {
 			});
 		}
 	}
-	
+	/**
+	 * Retourner la ligne séléctionnée
+	 * @return int
+	 */
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
-	
+	/**
+	 * Retourner le controleur
+	 * @return ControleurMesLocations
+	 */
 	public ControleurMesLocations getControleurMesLocations() {
 		return this.controleurMesLocations;
 	}
-
+	/**
+	 * Retourner le bouton regu?
+	 * @return JButton
+	 */
 	public JButton getBoutonRegu() {
 		return boutonRegu;
 	}

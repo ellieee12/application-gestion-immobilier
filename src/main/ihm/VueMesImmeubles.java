@@ -94,22 +94,34 @@ public class VueMesImmeubles extends JPanelPlus {
 		
 		this.table.addMouseListener(controleurMesImmeubles);
 	}
-	
+	/**
+	 * Mettre à jour la table des immeubles
+	 * @param controleur
+	 */
 	public void buildTable(ControleurMesImmeubles controleur) {
 		this.t.setRowCount(0);
 		for (Immeuble i : controleur.getImmeuble()) {
 			t.addRow(new Object [] {i.getId_immeuble(),i.getClass().getSimpleName(), i.getAdresse(),i.getCp(),i.getVille(),i.getPeriode_construction()});
 		}
 	}
-	
+	/**
+	 * Retourner l'indice de la ligne séléctionnée
+	 * @return
+	 */
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
-	
+	/**
+	 * Retourner l'identifiant de l'immeuble sélectionné
+	 * @return
+	 */
 	public String getIdImmeubleChoisi() {
 		return (String) this.table.getModel().getValueAt(this.getLigneChoisi(), 0);
 	}
-
+	/**
+	 * Retourner le controleur des immeubles
+	 * @return
+	 */
 	public ControleurMesImmeubles getControleurMesImmeubles() {
 		return this.controleurMesImmeubles;
 	}

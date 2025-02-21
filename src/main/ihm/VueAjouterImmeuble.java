@@ -217,10 +217,5 @@ public class VueAjouterImmeuble extends JFramePlus {
 		this.setLogo();
 	}
 
-	@Override
-	public void updateVue() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

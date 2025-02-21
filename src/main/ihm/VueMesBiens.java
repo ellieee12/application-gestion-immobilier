@@ -147,7 +147,10 @@ public class VueMesBiens extends JFramePlus {
 		this.setSizeMulti();
 		this.setLogo();
 	}
-
+	/**
+	 * Mettre à jour la table des biens
+	 * @param controleur
+	 */
 	public void buildTable(ControleurMesBiens controleur) {
 		this.t.setRowCount(0);
 		for (Bien b : controleur.getBien()) {
@@ -160,16 +163,24 @@ public class VueMesBiens extends JFramePlus {
 					b.getDate_acquisition()} );
 		}
 	}
-
+	/**
+	 * Retourner la ligne séléctionnée
+	 * @return int
+	 */
 	public int getLigneChoisi() {
 		return this.table.getSelectedRow();
 	}
-	
-
+	/**
+	 * Retourner l'identifiant de l'immeuble
+	 * @return String
+	 */
 	public String getIdImmeuble() {
 		return idImmeuble;
 	}
-	
+	/**
+	 * Retourner le controleur Mes Biens
+	 * @return ControleurMesBiens
+	 */
 	public ControleurMesBiens getControleurMesBiens() {
 		return this.controleurMesBiens;
 	}

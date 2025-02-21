@@ -94,15 +94,24 @@ public class VueEnregistrerDocumentsLocation extends JFramePlus {
 		this.setSizeMulti();
 		this.setLogo();
 	}
-	
+	/**
+	 * Afficher le nom du fichier
+	 * @param nomFichier
+	 */
 	public void afficherNomFichier(String nomFichier) {
 		this.lblNomFichier.setText(nomFichier);
 	}
-	
+	/**
+	 * Retourner la desciption
+	 * @return
+	 */
 	public String getDescription() {
 		return this.textAreaDescription.getText();
 	}
-
+	/**
+	 * Retourner le controleur d'enregistrer document
+	 * @return
+	 */
 	public ControleurEnregistrerDocument getControleur() {
 		return controleur;
 	}

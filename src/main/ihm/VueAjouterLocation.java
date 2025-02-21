@@ -39,22 +39,6 @@ public class VueAjouterLocation extends JFramePlus {
 	private JCheckBox chckbxColocation;
 	private JFormattedTextField formattedProvisionCharges;
 	private JFormattedTextField formattedCaution;
-//
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					VueAjouterLocation frame = new VueAjouterLocation();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 	
 	public boolean isComplet() {
 		return !this.getSelectedBien().isEmpty() && this.getDateDebutLocation() != null &&
@@ -161,18 +145,6 @@ public class VueAjouterLocation extends JFramePlus {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		initialiserComboBoxBiens(controleur);
-		
-		
-		
-		
-		
-		
-//		String type = controleur.getNameImmeubles().get(comboBox_Immeuble.getSelectedItem());
-//		if (type.equals("M")) {
-//			initialiserComboBoxMaison();
-//		} else {
-//			initialiserComboBoxBatiment();
-//		}
 		panel.add(comboBoxBiens, BorderLayout.NORTH);
 		
 		JPanel panel_c_colocation = new JPanel();
@@ -247,6 +219,10 @@ public class VueAjouterLocation extends JFramePlus {
 		this.setLogo();
 	}
 
+	/**
+	 * Créer un formatteur pour les champs
+	 * @return
+	 */
 	private NumberFormatter createNumberformatter() {
 		NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
@@ -257,36 +233,54 @@ public class VueAjouterLocation extends JFramePlus {
         formatter.setMaximum(Integer.MAX_VALUE);
 		return formatter;
 	}
-
+	/**
+	 * Initialiser le combo box des biens
+	 * @param controleur
+	 */
 	private void initialiserComboBoxBiens(ControleurAjouterLocation controleur) {
 		comboBoxBiens = new JComboBox<String>();
 		for (String s : controleur.getBiens()) {
 			comboBoxBiens.addItem(s);
 		}
 	}
-
+	/**
+	 * Initialiser le combo box des locataires
+	 * @param controleur
+	 */
 	private void initialiserComboBoxLocataires(ControleurAjouterLocation controleur) {
 		comboBoxLocataire = new JComboBox<String>();
 		for (String s : controleur.getLocataires()) {
 			comboBoxLocataire.addItem(s);
 		}
 	}
-	
+	/**
+	 * Retourner le bien sélectionné
+	 * @return String
+	 */
 	public String getSelectedBien() {
 		return this.comboBoxBiens.getSelectedItem().toString();
 	}
-	
+	/**
+	 * Retourner le locataire séléctionné
+	 * @return String
+	 */
 	public String getSelectedLocataire() {
 		return this.comboBoxLocataire.getSelectedItem().toString();
 	}
-	
+	/**
+	 * Vérifier si la location est en colocation
+	 * @return
+	 */
 	public String isColocation() {
 		if (this.chckbxColocation.isSelected()) {
 			return "Oui";
 		}
 		return "Non";
 	}
-
+	/**
+	 * Retourner la date début de la location
+	 * @return
+	 */
 	public Date getDateDebutLocation() {
 		try {
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -297,7 +291,10 @@ public class VueAjouterLocation extends JFramePlus {
 	        return null; 
 	    }
 	}
-	
+	/**
+	 * Retourner le nombre de mois prévus
+	 * @return
+	 */
 	public Integer getNbMoisPrevus() {
 		if(textFieldNombreMoisPrevus.getText().equals("")) {
 			return null;
@@ -305,7 +302,10 @@ public class VueAjouterLocation extends JFramePlus {
 		return Integer.valueOf(this.textFieldNombreMoisPrevus.getText());
 
 	}
-	
+	/**
+	 * Retourner le loyer 
+	 * @return
+	 */
 	public Float getLoyer() {
 		System.out.println(textFieldNombreMoisPrevus.getText());
 		if(textFieldLoyerLocataire.getText().equals("0")) {
@@ -313,14 +313,20 @@ public class VueAjouterLocation extends JFramePlus {
 		}
 		return Float.valueOf(this.textFieldLoyerLocataire.getText());
 	}
-	
+	/**
+	 * Retourner les provisions de charges
+	 * @return
+	 */
 	public Float getProvisionsCharges() {
 		if(formattedProvisionCharges.getText().equals("0")) {
 			return null;
 		}
 		return Float.valueOf(this.formattedProvisionCharges.getText());
 	}
-	
+	/**
+	 * Retourner la caution 
+	 * @return
+	 */
 	public Float getCaution() {
 		if(formattedCaution.getText().equals("0")) {
 			return null;
