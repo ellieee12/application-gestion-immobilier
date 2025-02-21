@@ -168,10 +168,10 @@ public class ControleurAjouterBien implements ActionListener {
 	 * @throws DAOException
 	 */
 	private void ajouterReleves(Logement l) throws DAOException{
-		String id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
+		Integer id_eau = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.EAU);
 		Releve releveEau = new Releve(this.vue.getChampsEau(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)));
 		this.daoR.ajouterReleve(releveEau, id_eau);
-		String id_elec = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.ELECTRICITE);
+		Integer id_elec = this.daoC.getCompteurFromOneBienSelonType(l.getId_bien(), typeCompteur.ELECTRICITE);
 		Releve releveElec = new Releve(this.vue.getChampsElectricite(),Integer.valueOf(this.vue.getChampsDateAcquisition().toString().substring(0, 4)));
 		this.daoR.ajouterReleve(releveElec, id_elec);
 	}

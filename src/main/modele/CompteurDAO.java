@@ -28,7 +28,7 @@ public class CompteurDAO{
 	 * Récupère l'id compteur associé à un bien donné selon son type
 	 * @throws SQLException
 	 */
-	public String getCompteurFromOneBienSelonType(String idBien, typeCompteur type) throws DAOException {
+	public Integer getCompteurFromOneBienSelonType(String idBien, typeCompteur type) throws DAOException {
 		try {
 			String req = "{CALL getCompteurByBienAndType(?,?)}";
 			CallableStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
@@ -36,7 +36,7 @@ public class CompteurDAO{
 			stmt.setString(2, type.getDénomination());
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				return rs.getString(1);
+				return rs.getInt(1);
 			}
 			return null;
 		} catch (SQLException e) {

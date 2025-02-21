@@ -18,6 +18,7 @@ import modele.DAOException;
 import modele.Garage;
 import modele.ImmeubleDAO;
 import modele.Logement;
+import modele.MySQLCon;
 
 public class TestCompteurDAO {
 	private ImmeubleDAO immeubleDAO;
@@ -28,6 +29,8 @@ public class TestCompteurDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.compteurDAO = new CompteurDAO();
 		this.bienDAO = new BienDAO();
 		this.immeubleDAO = new ImmeubleDAO();
@@ -43,19 +46,8 @@ public class TestCompteurDAO {
 	
 	@After
 	public void tearDown() throws DAOException {
-		if (this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001" )) {
-			this.compteurDAO.supprimerCompteur(this.compteur1.getTypecomp(), "testBien001");
-		}
-		if (this.compteurDAO.compteurExists(this.compteur2.getTypecomp(), "testBien001" )) {
-			this.compteurDAO.supprimerCompteur(this.compteur2.getTypecomp(), "testBien001");
-		}
-		if (this.bienDAO.bienExiste("testBien001")) {
-			this.bienDAO.supprimerBien("testBien001");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat001")) {
-			this.immeubleDAO.supprimerImmeuble("testBat001");
-		}
-	
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.compteurDAO=null;
 		this.bienDAO=null;
 		this.immeubleDAO=null;
@@ -80,22 +72,26 @@ public class TestCompteurDAO {
 		assertTrue(this.compteurDAO.compteurExists(this.compteur1.getTypecomp(), "testBien001"));
 	}
 	
-//	@Test
-//	public void testAjouterBienEtCompteurs() throws DAOException {
-//		String idBatCompt = "testImmeubleCompt";
-//		String idBienGarageCompt = "testBienCompt";
-//		Batiment batCompt = new Batiment(idBatCompt, "Rue test", "99999", "TEST", "1990-2000");
-//		Garage g = new Garage(Date.valueOf("2024-01-12"), idBienGarageCompt,100.0f);
-//		this.imDAO.ajouterImmeuble(batCompt);
-//		CompteurDAO cDAO = new CompteurDAO();
-//		Compteur compteur1 = new Compteur(Compteur.typeCompteur.EAU, 0.99f);
-//		Compteur compteur2 = new Compteur(Compteur.typeCompteur.ELECTRICITE, 0.88f);
-//		List<Compteur> liste = new LinkedList<>(); 
-//		liste.add(compteur1); liste.add(compteur2);
-//		this.bDAO.ajouterBienEtCompteurs(g, idBatCompt, liste);
-//		assertTrue(this.bDAO.bienExiste(idBienGarageCompt));
-//		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.EAU, idBienGarageCompt));
-//		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, idBienGarageCompt));
-//	}
+	@Test
+	public void testAjouterBienEtCompteurs() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
+		String idBatCompt = "testImmeubleCompt";
+		String idBienGarageCompt = "testBienCompt";
+		Batiment batCompt = new Batiment(idBatCompt, "Rue test", "99999", "TEST", "1990-2000");
+		Garage g = new Garage(Date.valueOf("2024-01-12"), idBienGarageCompt,100.0f);
+		this.immeubleDAO.ajouterImmeuble(batCompt);
+		CompteurDAO cDAO = new CompteurDAO();
+		Compteur compteur1 = new Compteur(Compteur.typeCompteur.EAU, 0.99f);
+		Compteur compteur2 = new Compteur(Compteur.typeCompteur.ELECTRICITE, 0.88f);
+		List<Compteur> liste = new LinkedList<>(); 
+		liste.add(compteur1); liste.add(compteur2);
+		this.bienDAO.ajouterBienEtCompteurs(g, idBatCompt, liste);
+		assertTrue(this.bienDAO.bienExiste(idBienGarageCompt));
+		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.EAU, idBienGarageCompt));
+		assertTrue(cDAO.compteurExists(Compteur.typeCompteur.ELECTRICITE, idBienGarageCompt));
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
+	}
 
 }

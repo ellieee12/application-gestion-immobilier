@@ -3,10 +3,8 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -31,8 +29,8 @@ public class ControleurSoldeDeToutCompte implements ActionListener {
 	private ControleurMesLocations controleurMesLocations;
 	private Compteur compteurEau;
 	private Compteur compteurElec;
-	private String idcompteurEau;
-	private String idcompteurElec;
+	private int idcompteurEau;
+	private Integer idcompteurElec;
 	private String id_bien;
 	private Date date_debut;
 	private int annee;
