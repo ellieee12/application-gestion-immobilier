@@ -32,12 +32,18 @@ public class ControleurAjouterLocation implements ActionListener{
 	private List<String> biens;
 	private List<String> id_locataires;	
 	
-	//add a new method
+	/**
+	 * Retourner l'identifiant du locataire
+	 * @param nomPrenom
+	 * @return
+	 */
 	public String getIDLocataire(String nomPrenom) {
 	        return this.id_locataires.get(this.locataires.indexOf(nomPrenom));
 	}
-
-	
+	/**
+	 * Vérifier les champs
+	 * @return
+	 */
 	private boolean verifComplet() {
 		if (!this.vue.isComplet()) {
 			JOptionPane.showMessageDialog(this.vue, 
@@ -47,7 +53,11 @@ public class ControleurAjouterLocation implements ActionListener{
 		return true;
 	}
 	
-	
+	/**
+	 * Vérification du checkbox colocation
+	 * @return
+	 * @throws DAOException
+	 */
 	private int verifcheckBoxColoc() throws DAOException {
 		Location loc = this.locationDAO.getLocationById_Bien(this.vue.getSelectedBien());
 		if (loc == null) {
@@ -67,12 +77,19 @@ public class ControleurAjouterLocation implements ActionListener{
 		return 0;
 		
 	}
-	
+	/**
+	 * Mettre à jour la liste des locations
+	 */
 	private void valider() {
 		this.vueMesLocations.getControleurMesLocations();
 		this.vue.dispose();
 	}
-	
+	/**
+	 * Vérifier si la location existe dans la base de données
+	 * @return
+	 * @throws HeadlessException
+	 * @throws DAOException
+	 */
 	private boolean verifLocationExiste() throws HeadlessException, DAOException {
 		if (this.locationDAO.locationExists(this.vue.getSelectedBien(),
 				this.getIDLocataire(this.vue.getSelectedLocataire()),this.vue.getDateDebutLocation())) {
@@ -82,7 +99,11 @@ public class ControleurAjouterLocation implements ActionListener{
 		}
 		return false;
 	}
-	
+	/**
+	 * Vérification si la colocation est active
+	 * @return
+	 * @throws DAOException
+	 */
 	private boolean verifColocationChecked() throws DAOException {
 		
 		int statutColocation = verifcheckBoxColoc();
@@ -111,12 +132,22 @@ public class ControleurAjouterLocation implements ActionListener{
 	        	return true;
 		}
 	}
-	
-	
+	/**
+	 * Vérifier tous les champs
+	 * @return
+	 * @throws HeadlessException
+	 * @throws DAOException
+	 */
 	private boolean allVerifs() throws HeadlessException, DAOException {
 		return verifComplet() && !verifLocationExiste() && verifColocationChecked();
 	}
-	
+	/**
+	 * Constructeur de ControleurAjouterLocation
+	 * @param vue
+	 * @param vueMesLocations
+	 * @throws SQLException
+	 * @throws DAOException
+	 */
 	public ControleurAjouterLocation(VueAjouterLocation vue, VueMesLocations vueMesLocations) throws SQLException, DAOException {
 		this.vue=vue;
 		this.vueMesLocations = vueMesLocations;
@@ -168,11 +199,17 @@ public class ControleurAjouterLocation implements ActionListener{
 			}
 		}
 	}
-	
+	/**
+	 * Retourner la liste des locataires
+	 * @return
+	 */
 	public List<String> getLocataires(){
 		return this.locataires;
 	}
-	
+	/**
+	 * Retourner la liste des biens
+	 * @return
+	 */
 	public List<String> getBiens(){
 		return this.biens;
 	}

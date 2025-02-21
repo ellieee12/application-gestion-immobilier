@@ -24,7 +24,10 @@ public class ControleurDeclaration implements ActionListener {
 	private VueDeclaration vue;
 	private float revenus;
 	private float charges;
-	
+	/**
+	 * Constructeur de ControleurDeclaration
+	 * @param vue
+	 */
 	public ControleurDeclaration(VueDeclaration vue) {
 		this.vue = vue;
 	}

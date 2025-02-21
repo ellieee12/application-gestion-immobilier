@@ -18,7 +18,10 @@ public class ControleurListFactures implements ActionListener{
 	
 	private VueListFactures vue;
 	private List<Facture> factures;
-	
+	/**
+	 * Constructeur ControleurListFactures
+	 * @param vue
+	 */
 	public ControleurListFactures(VueListFactures vue) {
 		try {
 			this.vue = vue;
@@ -30,7 +33,10 @@ public class ControleurListFactures implements ActionListener{
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Mettre à jour la fenêtre 
+	 * @throws DAOException
+	 */
 	public void Update() throws DAOException {
 		try {
 			this.factures = new LinkedList<>();
@@ -42,7 +48,10 @@ public class ControleurListFactures implements ActionListener{
 		}
 		this.vue.buildTable(this);
     }
-	
+	/**
+	 * Retourner la liste d es factures
+	 * @return
+	 */
 	public List<Facture> getFactures() {
 		return this.factures;
 	}
