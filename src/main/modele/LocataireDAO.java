@@ -119,4 +119,21 @@ public class LocataireDAO {
 		
 	}
 	
+	//renvoie true si le locataire a déjà effectué une location
+	public boolean isInLouer(String idLocataire) throws DAOException {
+		try {
+			String req = "{CALL isInLouer(?)}";
+			PreparedStatement stmt = this.mySQLCon.getConnection().prepareCall(req);
+			stmt.setString(1, idLocataire);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1) > 0;
+			}
+			return false;
+		}catch(SQLException e) {
+			logger.log(Level.SEVERE,"Erreurs lors de la vérification si le locataire est dans louer",e);
+			throw new DAOException("Erreurs lors de la vérification si le locataire est dans louer",e);
+		}
+	}
+	
 }
