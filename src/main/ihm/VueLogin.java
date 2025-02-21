@@ -52,6 +52,7 @@ public class VueLogin extends JFramePlus {
 	}
 	
 	public VueLogin() {
+		setTitle("Connection");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception ex) {

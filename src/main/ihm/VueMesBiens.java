@@ -38,6 +38,7 @@ public class VueMesBiens extends JFramePlus {
 	 */
 	public VueMesBiens(VueMesImmeubles vue,String idImmeuble) throws DAOException {
 		super(vue);
+		setTitle("Biens");
 		this.idImmeuble=idImmeuble;
 		controleurMesBiens = new ControleurMesBiens(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

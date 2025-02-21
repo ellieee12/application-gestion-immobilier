@@ -69,6 +69,7 @@ public class VueAjouterLocation extends JFramePlus {
 	 */
 	public VueAjouterLocation(VueMesLocations vueMesLocations) throws SQLException, DAOException {
 		super(vueMesLocations);
+		setTitle("Ajouter un location");
 		ControleurAjouterLocation controleur = new ControleurAjouterLocation(this, vueMesLocations);
 		//NumberFormatter currencyFormatter = generateCurrencyFormatter();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

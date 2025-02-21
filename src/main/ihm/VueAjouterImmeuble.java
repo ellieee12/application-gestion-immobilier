@@ -81,6 +81,7 @@ public class VueAjouterImmeuble extends JFramePlus {
 	 */
 	public VueAjouterImmeuble(VueMesImmeubles vueImmeubles) {
 		super(vueImmeubles);
+		setTitle("Ajouter un immeuble");
 		ControleurAjouterImmeuble controleur = new ControleurAjouterImmeuble(this,vueImmeubles);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

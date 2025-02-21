@@ -40,6 +40,7 @@ public class VueSoldeDeToutCompte extends JFramePlus {
 	 */
 	public VueSoldeDeToutCompte(VueMesLocations vue, ControleurMesLocations controleurMesLocations, String id_bien, Date date_debut) {		
 		super(vue);
+		setTitle("Solde de tout compte");
 		ControleurSoldeDeToutCompte controleur = new ControleurSoldeDeToutCompte(this,controleurMesLocations,id_bien,date_debut);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 650, 600);

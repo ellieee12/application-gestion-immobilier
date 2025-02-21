@@ -52,6 +52,7 @@ public class VueSignUp extends JFramePlus {
 	 * Create the frame.
 	 */
 	public VueSignUp() {
+		setTitle("Inscription");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception ex) {

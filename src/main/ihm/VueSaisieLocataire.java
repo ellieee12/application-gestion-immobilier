@@ -104,6 +104,7 @@ public class VueSaisieLocataire extends JFramePlus {
 	 */ 	
 	public VueSaisieLocataire(VueMesLocataires vue) {
 		super(vue);
+		setTitle("Saisie Locataire");
 		ControleurSaisieLocataire controleur = new ControleurSaisieLocataire(this, vue);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
