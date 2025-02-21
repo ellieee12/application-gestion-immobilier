@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.After;
@@ -16,6 +18,7 @@ import modele.Facture;
 import modele.FactureDAO;
 import modele.ImmeubleDAO;
 import modele.Logement;
+import modele.MySQLCon;
 
 public class TestFactureDAO {
 	private ImmeubleDAO immeubleDAO;
@@ -26,6 +29,8 @@ public class TestFactureDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.bienDAO = new BienDAO();
 		this.facDAO = new FactureDAO();
 		this.immeubleDAO = new ImmeubleDAO();
@@ -41,21 +46,9 @@ public class TestFactureDAO {
 	
 	@After
 	public void tearDown() throws DAOException{
-		if (this.facDAO.FactureExiste("F12345")) {
-			this.facDAO.supprimerFacture("F12345");
-		}
-		if (this.facDAO.FactureExiste("F54321")) {
-			this.facDAO.supprimerFacture("F54321");
-		}
-		if (this.facDAO.FactureExiste("F99999")) {
-			this.facDAO.supprimerFacture("F99999");
-		}
-		if (this.bienDAO.bienExiste("testBien001")) {
-			this.bienDAO.supprimerBien("testBien001");
-		}
-		if (this.immeubleDAO.immeubleExiste("testBat001")) {
-			this.immeubleDAO.supprimerImmeuble("testBat001");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
+		
 		this.bienDAO = null;
 		this.immeubleDAO = null;
 		this.facDAO = null;
@@ -90,7 +83,21 @@ public class TestFactureDAO {
 
 	@Test
 	public void testgetMontantTravaux()throws DAOException {
-		assertEquals(this.facDAO.getMontantTravaux(2020),this.facture1.getMontant_reel_paye()-facture1.getImputable_locataire(),0.001);
-		assertEquals(this.facDAO.getMontantTravaux(2024),this.facture2.getMontant_reel_paye()-facture2.getImputable_locataire(),0.001);
+		List<Facture> liste = this.facDAO.getAllFactures();
+		float total1 = 0;
+		float total2 = 0;
+		for (Facture f : liste) {
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(f.getDate_paiement());
+			int year = calendar.get(Calendar.YEAR);
+			System.out.println(year);
+			if (year == 2020) {
+				total1+=(f.getMontant_reel_paye()-f.getImputable_locataire());
+			}else if(year==2024) {
+				total2+=(f.getMontant_reel_paye()-f.getImputable_locataire());
+			}
+		}
+		assertEquals(total1,this.facDAO.getMontantTravaux(2020),0.001);
+		assertEquals(total2,this.facDAO.getMontantTravaux(2024),0.001);
 	}
 }

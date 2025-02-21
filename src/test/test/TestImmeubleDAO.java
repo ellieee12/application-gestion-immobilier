@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -19,6 +18,7 @@ import modele.Immeuble;
 import modele.ImmeubleDAO;
 import modele.Logement;
 import modele.Maison;
+import modele.MySQLCon;
 
 public class TestImmeubleDAO {
 	private ImmeubleDAO imDAO;
@@ -29,6 +29,8 @@ public class TestImmeubleDAO {
 
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.idBat = "testImmeuble0010";
 		this.idMaison = "testImmeuble0020";
 		this.imDAO = new ImmeubleDAO();
@@ -39,13 +41,9 @@ public class TestImmeubleDAO {
 	}
 	
 	@After
-	public void tearDown() throws SQLException, DAOException {
-		if (imDAO.immeubleExiste(idBat)) {
-			this.imDAO.supprimerImmeuble(idBat);
-		}
-		if (imDAO.immeubleExiste(idMaison)) {
-			this.imDAO.supprimerImmeuble(idMaison);
-		}
+	public void tearDown() throws DAOException {
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.idMaison=null;
 		this.maison = null;
 		this.bat = null;
@@ -72,20 +70,23 @@ public class TestImmeubleDAO {
 	}
 	
 	@Test
-	public void testGetImmeubleById() throws SQLException, DAOException {
+	public void testGetImmeubleById() throws DAOException {
 		Immeuble b = this.imDAO.getInfoImmeuble(idBat);
 		assertEquals(this.bat, b);
 	}
 	
 	@Test
-	public void testGetImmeublesPourAjouterBienMaisonRemplie() throws DAOException, SQLException {
+	public void testGetImmeublesPourAjouterBienMaisonRemplie() throws DAOException{
+		Logement l = new Logement(Date.valueOf("2004-01-12"), "idBien", 3, 5,21.0f,200.0f);
+		BienDAO bDAO = new BienDAO();
+		bDAO.ajouterBien(l, this.idMaison);
 		List<Immeuble> liste = this.imDAO.getImmeublesPourAjouterBien();
-		assertEquals(2,liste.size());
-		assertEquals(this.bat, liste.get(0));
+		assertTrue(liste.contains(this.bat));
+		assertFalse(liste.contains(this.maison));
 	}
 	
 	@Test
-	public void testGetImmeublesPourAjouterBien() throws DAOException, SQLException {
+	public void testGetImmeublesPourAjouterBien() throws DAOException{
 		List<Immeuble> liste = this.imDAO.getImmeublesPourAjouterBien();
 		assertTrue(liste.contains(this.bat));
 		assertTrue(liste.contains(this.maison));

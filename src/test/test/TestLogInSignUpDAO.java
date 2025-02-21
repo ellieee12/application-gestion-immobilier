@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import modele.DAOException;
 import modele.LogInSignUpDAO;
+import modele.MySQLCon;
 
 public class TestLogInSignUpDAO {
 	
@@ -15,18 +16,16 @@ public class TestLogInSignUpDAO {
 	
 	@Before
 	public void setUp() throws DAOException {
+		MySQLCon.getInstance().setAutocommit(false);
+		MySQLCon.getInstance().rollback();
 		this.dao = new LogInSignUpDAO();
 		this.dao.addCompte("testCompte1", "testMDP1");
 	}
 
 	@After
 	public void tearDown() throws DAOException {
-		if (this.dao.compteExiste("testCompte1")) {
-			this.dao.supprimerCompte("testCompte1");
-		}
-		if (this.dao.compteExiste("testCompte2")) {
-			this.dao.supprimerCompte("testCompte2");
-		}
+		MySQLCon.getInstance().rollback();
+		MySQLCon.getInstance().setAutocommit(true);
 		this.dao=null;
 	}
 	

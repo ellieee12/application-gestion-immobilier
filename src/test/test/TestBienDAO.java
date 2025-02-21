@@ -1,21 +1,17 @@
 package test;
 import java.sql.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import modele.Batiment;
 import modele.Bien;
 import modele.Garage;
 import modele.BienDAO;
-import modele.Compteur;
-import modele.CompteurDAO;
 import modele.DAOException;
 import modele.ImmeubleDAO;
 import modele.Logement;

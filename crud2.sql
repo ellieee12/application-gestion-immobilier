@@ -365,7 +365,7 @@ BEGIN
     UPDATE location set date_fin = v_date_fin where id_bien = v_id_bien and date_debut = v_date_debut;
 END;
 
-CREATE PROCEDURE deleteReleve (v_id_compteur VARCHAR(50),v_annee int)
+CREATE PROCEDURE deleteReleve (v_id_compteur int,v_annee int)
 
 BEGIN 
     delete from Releve where id_compteur = v_id_compteur and annee = v_annee;
