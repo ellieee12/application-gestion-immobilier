@@ -2,21 +2,20 @@ package ihm;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import controleur.ControleurFramePlus;
-
 public class JPanelPlus extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static List<Component> getAllComponents(final Container c) {
 	    Component[] comps = c.getComponents();
 	    List<Component> compList = new ArrayList<Component>();

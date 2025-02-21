@@ -1,8 +1,5 @@
 package ihm;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
@@ -15,14 +12,8 @@ import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 
 import controleur.ControleurListFactures;
-import controleur.ControleurMesBiens;
-import modele.Bien;
 import modele.Facture;
-import modele.Logement;
-
-import java.awt.event.ActionListener;
 import java.util.Date;
-import java.awt.event.ActionEvent;
 
 public class VueListFactures extends JPanelPlus {
 

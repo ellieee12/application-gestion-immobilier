@@ -1,17 +1,13 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,9 +23,6 @@ import org.jdesktop.swingx.prompt.BuddySupport;
 
 import controleur.ControleurAjouterLocation;
 import modele.DAOException;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
 
 public class VueAjouterLocation extends JFramePlus {
 

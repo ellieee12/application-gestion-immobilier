@@ -18,6 +18,11 @@ import controleur.ControleurFramePlus;
 
 public abstract class JFramePlus extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public JFramePlus(JFramePlus vue) {
 		ControleurFramePlus controleur = new ControleurFramePlus(vue);
 		this.addWindowListener(controleur);
